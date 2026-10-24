@@ -23,10 +23,10 @@ import zmq
 
 from pii_toolbox.coref.groups import RESOLVER_NAME, build_groups
 from pii_toolbox.core import Document, EntityGroup, IdentityResolver, PiiType, Span
-from pii_toolbox.evaluation.model_manifest import MODEL_MANIFEST, default_model_dir
+from pii_toolbox.evaluation.model_manifest import default_model_dir
 
 WORKER_DIR = Path(__file__).parent / "worker"
-MAVERICK_MODEL_NAME = "sapienzanlp/maverick-mes-ontonotes"
+ENCODER_CACHE_DIRECTORY = "huggingface_cache"
 DEFAULT_REPLY_TIMEOUT_SECONDS = 120.0
 DEFAULT_MAX_RETRIES = 2
 _POLL_SLICE_MILLISECONDS = 100
@@ -40,10 +40,8 @@ class CorefWorkerError(RuntimeError):
 
 
 def maverick_worker_command(endpoint: str) -> list[str]:
-    """Launches the real worker in its own uv environment, reading the downloaded model."""
-    model_entry = next(entry for entry in MODEL_MANIFEST if entry.name == MAVERICK_MODEL_NAME)
-    model_path = default_model_dir() / model_entry.directory_name
-    return ["uv", "run", "--project", str(WORKER_DIR), "python", str(WORKER_DIR / "server.py"), "--endpoint", endpoint, "--model", str(model_path)]
+    """Launches the real worker in its own uv environment, reading the downloaded models."""
+    return ["uv", "run", "--project", str(WORKER_DIR), "python", str(WORKER_DIR / "server.py"), "--endpoint", endpoint, "--model-dir", str(default_model_dir())]
 
 
 def stub_worker_command(endpoint: str) -> list[str]:
@@ -127,7 +125,7 @@ class MaverickResolver(IdentityResolver):
             self._socket.close(linger=0)
         self._socket = self._context.socket(zmq.DEALER)
         self._socket.connect(self._endpoint)
-        environment = {**os.environ, "HF_HUB_OFFLINE": "1"}
+        environment = {**os.environ, "HF_HUB_OFFLINE": "1", "HF_HUB_CACHE": str(default_model_dir() / ENCODER_CACHE_DIRECTORY)}
         self._process = subprocess.Popen(list(self._worker_command(self._endpoint)), env=environment)
 
     def _stop_worker(self) -> None:

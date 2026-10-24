@@ -7,12 +7,21 @@ model for a pattern-based clusterer so the protocol can be exercised without mod
 """
 
 import argparse
+import atexit
 import json
 import re
+import shutil
+import tempfile
+import zipfile
+from pathlib import Path
 
 import zmq
 
 POLL_INTERVAL_MS = 200
+MAVERICK_DIRECTORY = "sapienzanlp__maverick-mes-ontonotes"
+SPACY_MODEL_NAME = "en_core_web_sm"
+SPACY_MODEL_DIRECTORY = "en_core_web_sm"
+PUNKT_DIRECTORY = "nltk_punkt"
 _NAME_RUN = re.compile(r"(?:(?:Mr|Mrs|Ms|Dr|Prof)\.\s+)?[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*")
 
 
@@ -24,7 +33,26 @@ def stub_clusters(text: str) -> list[list[tuple[int, int]]]:
     return list(by_last_word.values())
 
 
-def maverick_clusters_factory(model_path: str):
+def load_offline_text_resources(model_dir: Path) -> None:
+    """Points Maverick's tokeniser lookups at files under the model directory so nothing is downloaded."""
+    import nltk
+    import spacy
+    from maverick.models import maverick_model
+
+    scratch = Path(tempfile.mkdtemp(prefix="coref-resources-"))
+    atexit.register(shutil.rmtree, scratch, ignore_errors=True)
+    (spacy_wheel,) = (model_dir / SPACY_MODEL_DIRECTORY).glob("*.whl")
+    with zipfile.ZipFile(spacy_wheel) as wheel:
+        wheel.extractall(scratch / "spacy")
+    (spacy_package,) = (scratch / "spacy" / SPACY_MODEL_NAME).glob(f"{SPACY_MODEL_NAME}-*")
+    with zipfile.ZipFile(model_dir / PUNKT_DIRECTORY / "punkt.zip") as punkt:
+        punkt.extractall(scratch / "nltk" / "tokenizers")
+    nltk.data.path.insert(0, str(scratch / "nltk"))
+    nlp = spacy.load(spacy_package, exclude=["tagger", "parser", "lemmatizer", "ner", "textcat"])
+    maverick_model.download_load_spacy = lambda: nlp
+
+
+def maverick_clusters_factory(model_dir: Path):
     import collections
     import typing
 
@@ -39,7 +67,8 @@ def maverick_clusters_factory(model_path: str):
     )
     from maverick import Maverick
 
-    model = Maverick(hf_name_or_path=model_path, device="cpu")
+    load_offline_text_resources(model_dir)
+    model = Maverick(hf_name_or_path=str(model_dir / MAVERICK_DIRECTORY), device="cpu")
 
     def predict(text: str) -> list[list[tuple[int, int]]]:
         output = model.predict(text)
@@ -78,15 +107,15 @@ def serve(endpoint: str, predict) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--endpoint", required=True, help="ipc:// endpoint to bind")
-    parser.add_argument("--model", help="directory holding the Maverick model files")
+    parser.add_argument("--model-dir", type=Path, help="model directory holding the Maverick, spaCy and punkt files")
     parser.add_argument("--stub", action="store_true", help="use the pattern-based clusterer")
     args = parser.parse_args()
     if args.stub:
         predict = stub_clusters
-    elif args.model:
-        predict = maverick_clusters_factory(args.model)
+    elif args.model_dir:
+        predict = maverick_clusters_factory(args.model_dir)
     else:
-        parser.error("either --model or --stub is required")
+        parser.error("either --model-dir or --stub is required")
     serve(args.endpoint, predict)
 
 
