@@ -1,0 +1,38 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "m=$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)/..; for p in node_modules/.bin/pullboard \"$m/node_modules/.bin/pullboard\"; do [ -x \"$p\" ] && exec \"$p\" resume; done; command -v pullboard >/dev/null && exec pullboard resume; true",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(pullboard:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git merge:*)",
+      "Bash(git rebase:*)",
+      "Bash(git switch:*)",
+      "Bash(git checkout:*)",
+      "Bash(git worktree:*)",
+      "Edit(/**)"
+    ]
+  },
+  "sandbox": {
+    "filesystem": {
+      "allowWrite": [
+        "/Users/liam/.pullboard"
+      ]
+    }
+  }
+}
