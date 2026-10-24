@@ -51,4 +51,4 @@ markers = [
 ]
 
 [tool.uv]
-default-groups = ["dev", "coref"]
+default-groups = "all"
