@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Callable
 
 MODEL_DIR_ENV_VAR = "PII_MODEL_DIR"
-COMPLETE_MARKER = ".complete"
+COMPLETE_MARKER_PREFIX = ".complete-"
 
 
 @dataclass(frozen=True)
@@ -23,6 +23,11 @@ class ModelEntry:
     location: str
     # Set when the consumer reads a fixed folder name rather than one derived from the model name.
     directory: str | None = None
+
+    @property
+    def marker_name(self) -> str:
+        """Per-entry so entries sharing one folder are tracked separately."""
+        return COMPLETE_MARKER_PREFIX + self.name.replace("/", "__")
 
     @property
     def directory_name(self) -> str:
@@ -39,6 +44,7 @@ MODEL_MANIFEST: list[ModelEntry] = [
     ModelEntry("sapienzanlp/maverick-mes-ontonotes", "huggingface", "087a90f0380ec1f20ed19732b657f53fd3542c81", "sapienzanlp/maverick-mes-ontonotes"),
     ModelEntry("nltk_punkt", "download", "550b6625bcef1f2abff2ff770a5a0d272c9c6b2a", "https://raw.githubusercontent.com/nltk/nltk_data/550b6625bcef1f2abff2ff770a5a0d272c9c6b2a/packages/tokenizers/punkt.zip", directory="nltk_punkt"),
     ModelEntry("microsoft/deberta-v3-large", "huggingface_cache", "64a8c8eab3e352a784c658aef62be1662607476f", "microsoft/deberta-v3-large", directory="huggingface_cache"),
+    ModelEntry("microsoft/mdeberta-v3-base", "huggingface_cache", "a0484667b22365f84929a935b5e50a51f71f159d", "microsoft/mdeberta-v3-base", directory="huggingface_cache"),
 ]
 
 
@@ -50,7 +56,7 @@ def default_model_dir() -> Path:
 
 
 def is_present(dest: Path, entry: ModelEntry) -> bool:
-    return (dest / entry.directory_name / COMPLETE_MARKER).exists()
+    return (dest / entry.directory_name / entry.marker_name).exists()
 
 
 def download_models(dest: Path, fetch: Fetcher, manifest: list[ModelEntry] | None = None) -> list[ModelEntry]:
@@ -66,7 +72,7 @@ def download_models(dest: Path, fetch: Fetcher, manifest: list[ModelEntry] | Non
         target = dest / entry.directory_name
         target.mkdir(parents=True, exist_ok=True)
         fetch(entry, target)
-        (target / COMPLETE_MARKER).write_text(entry.revision)
+        (target / entry.marker_name).write_text(entry.revision)
         fetched.append(entry)
     return fetched
 

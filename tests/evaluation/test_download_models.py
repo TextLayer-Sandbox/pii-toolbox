@@ -28,6 +28,7 @@ def test_fetches_each_manifest_entry_once_inside_dest(tmp_path):
             "sapienzanlp/maverick-mes-ontonotes",
             "nltk_punkt",
             "microsoft/deberta-v3-large",
+            "microsoft/mdeberta-v3-base",
         ]
     )
     assert len(calls) == len(MODEL_MANIFEST)
@@ -72,5 +73,15 @@ def test_punkt_and_deberta_are_fetched_once_into_their_folders(tmp_path):
     assert calls.count("nltk_punkt") == 1
     assert calls.count("microsoft/deberta-v3-large") == 1
     assert (dest / "nltk_punkt").is_dir()
+    assert (dest / "huggingface_cache").is_dir()
+    assert [p for p in tmp_path.iterdir()] == [dest]
+
+
+def test_mdeberta_is_fetched_once_into_the_shared_huggingface_cache(tmp_path):
+    dest = tmp_path / "models"
+    calls = []
+    download_models(dest, recording_fetcher(calls))
+    assert calls.count("microsoft/mdeberta-v3-base") == 1
+    assert calls.count("microsoft/deberta-v3-large") == 1
     assert (dest / "huggingface_cache").is_dir()
     assert [p for p in tmp_path.iterdir()] == [dest]
