@@ -1,0 +1,27 @@
+[
+ {
+  "text": "Carla Dummy spoke.",
+  "doc_id": "syn-4",
+  "dataset_type": "dev",
+  "meta": {
+   "year": 2001
+  },
+  "annotations": {
+   "annotator1": {
+    "entity_mentions": [
+     {
+      "entity_type": "PERSON",
+      "entity_mention_id": "syn-4_a1_em1",
+      "start_offset": 0,
+      "end_offset": 11,
+      "span_text": "Carla Dummy",
+      "edit_type": "check",
+      "identifier_type": "DIRECT",
+      "entity_id": "syn-4_a1_e1",
+      "confidential_status": "NOT_CONFIDENTIAL"
+     }
+    ]
+   }
+  }
+ }
+]
