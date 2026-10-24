@@ -50,13 +50,23 @@ def _pool(counts: Iterable[MatchCounts]) -> MatchCounts:
     return pooled
 
 
+def _is_applicable(
+    pii_type: PiiType, per_type: Mapping[PiiType, MatchCounts], reported_types: frozenset[PiiType]
+) -> bool:
+    """A type with no answers and no predictions in the scored data says nothing about the detector."""
+    counts = per_type[pii_type]
+    has_data = counts.true_positives + counts.false_positives + counts.false_negatives > 0
+    return pii_type in reported_types and has_data
+
+
 class MatchingDetectionScorer(DetectionScorer):
     """Scores detector output against answers using greedy one-to-one matching.
 
     Beyond the abstract signature, `score` takes an optional keyword `reported_types`
     (default: all six types): the types the detector can report. An unreported type is
     None in the per-type breakdown and is left out of the macro average; its answers still
-    count as misses in the pooled overall score.
+    count as misses in the pooled overall score. A type with no answers and no predictions
+    in the scored data is likewise None and left out of the macro average.
     """
 
     def score(
@@ -76,7 +86,7 @@ class MatchingDetectionScorer(DetectionScorer):
             per_language[document.language] = _add(per_language[document.language], _pool(counts.values()))
 
         by_type: Mapping[PiiType, DetectionScore | None] = {
-            pii_type: score_from_counts(per_type[pii_type]) if pii_type in reported_types else None
+            pii_type: score_from_counts(per_type[pii_type]) if _is_applicable(pii_type, per_type, reported_types) else None
             for pii_type in PiiType
         }
         reported_scores = [score for score in by_type.values() if score is not None]
