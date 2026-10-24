@@ -1,5 +1,5 @@
 {
-  "gate": "pullboard spec check && if [ -f pyproject.toml ]; then uv run pytest -q; fi",
+  "gate": "pullboard spec check && uv run pytest -q",
   "spec": "SPEC.md",
   "practice": "DOCTRINE.md",
   "worktrees": "inside",
