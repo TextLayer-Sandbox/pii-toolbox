@@ -1,0 +1,14 @@
+[project]
+name = "pii-toolbox-coref-worker"
+version = "0.1.0"
+description = "Maverick co-reference worker; its own environment keeps the model's pinned dependencies away from the toolbox."
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "maverick-coref",  # the Maverick co-reference model and its loader
+    "transformers<5",  # Maverick's loader and tokenizer expect the 4.x API
+    "en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl",  # tokeniser Maverick loads for raw text
+    "pyzmq",  # ROUTER socket the main process talks to
+]
+
+[tool.uv]
+package = false
