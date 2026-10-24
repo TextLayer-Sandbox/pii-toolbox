@@ -3,7 +3,11 @@ import re
 import pytest
 
 from pii_toolbox.core import Document, PiiType
-from pii_toolbox.detection.gliner_detector import REQUESTED_LABELS, GlinerDetector
+from pii_toolbox.detection.gliner_detector import (
+    REQUESTED_LABELS,
+    SEGMENT_CHARACTERS,
+    GlinerDetector,
+)
 from pii_toolbox.evaluation.model_manifest import default_model_dir
 
 # Resolved at import so the per-test sandbox home does not hide the downloaded models.
@@ -58,11 +62,16 @@ def test_requested_labels_and_interface_properties():
 
 
 def test_long_text_gives_spans_at_correct_positions_across_segment_joins():
-    filler = "lorem ipsum dolor sit amet "
-    block = filler * ((5000 - len(NAME) - 1) // len(filler)) + NAME + " "
-    text = (block * 21)[:100_000]
+    # A name straddling the first segment's hard cut, then names every 5,000 characters, then one at the end.
+    head = "x" * (SEGMENT_CHARACTERS - 5) + NAME
+    body = ""
+    while len(head) + len(body) + 5000 < 99_000:
+        body += "y" * (5000 - len(NAME) - 1) + " " + NAME
+    text = head + body + "z" * (100_000 - len(head) - len(body) - len(NAME)) + NAME
+    assert len(text) == 100_000
 
     def entities_for(segment):
+        assert len(segment) <= SEGMENT_CHARACTERS, "model was sent more than one segment of text"
         return [
             {"start": m.start(), "end": m.end(), "label": "person", "score": 0.9}
             for m in re.finditer(NAME, segment)
@@ -70,7 +79,8 @@ def test_long_text_gives_spans_at_correct_positions_across_segment_joins():
 
     spans = GlinerDetector(model=StubModel(entities_for)).detect(Document(id="d", text=text, language="en"))
     expected = [m.start() for m in re.finditer(NAME, text)]
-    assert len(expected) >= 19
+    assert expected[0] == SEGMENT_CHARACTERS - 5
+    assert expected[-1] == 100_000 - len(NAME)
     assert [s.start for s in spans] == expected
     assert all(text[s.start : s.end] == NAME for s in spans)
 
@@ -81,3 +91,26 @@ def test_real_model_finds_the_person():
     detector.load_models()
     spans = detector.detect(Document(id="d", text=TEXT, language="en"))
     assert any(s.pii_type is PiiType.PERSON and TEXT[s.start : s.end] == NAME for s in spans)
+
+
+@pytest.mark.model
+def test_real_model_finds_names_at_correct_positions_in_long_text():
+    sentence = "The weather was calm and the market was quiet today. "
+    pieces = []
+    length = 0
+    next_name = 5000
+    while length < 100_000:
+        if length >= next_name:
+            pieces.append(f"{NAME} works at Acme Corp. ")
+            next_name += 5000
+        else:
+            pieces.append(sentence)
+        length += len(pieces[-1])
+    text = "".join(pieces)
+    detector = GlinerDetector(MODEL_DIR)
+    detector.load_models()
+    spans = detector.detect(Document(id="d", text=text, language="en"))
+    expected = {m.start() for m in re.finditer(NAME, text)}
+    found = {s.start for s in spans if s.pii_type is PiiType.PERSON and text[s.start : s.end] == NAME}
+    assert found <= expected
+    assert len(found) >= 0.8 * len(expected)
