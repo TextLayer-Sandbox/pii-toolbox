@@ -54,6 +54,25 @@ def test_default_dir_follows_environment(monkeypatch, tmp_path):
     assert default_data_dir() == tmp_path
 
 
+def looks_like_dataset_file(path: Path, size: int) -> bool:
+    base = path.name.lower()
+    return (
+        size > ONE_MEGABYTE
+        or (base.startswith("tab") and base.endswith(".json"))
+        # Source modules such as the corpus loader may carry the corpus name.
+        or (base.startswith("mapa") and path.suffix != ".py")
+        or base.endswith(".parquet")
+    )
+
+
+def test_dataset_file_rule_flags_dataset_names_and_sizes():
+    assert looks_like_dataset_file(Path("tab_train.json"), 10)
+    assert looks_like_dataset_file(Path("mapa_train.jsonl"), 10)
+    assert looks_like_dataset_file(Path("data.parquet"), 10)
+    assert looks_like_dataset_file(Path("anything.txt"), ONE_MEGABYTE + 1)
+    assert not looks_like_dataset_file(Path("mapa.py"), 10)
+
+
 def test_repository_tracks_no_dataset_files():
     listing = subprocess.run(
         ["git", "ls-files", "-z"], cwd=REPO_ROOT, capture_output=True, check=True
@@ -61,14 +80,8 @@ def test_repository_tracks_no_dataset_files():
     offenders = []
     for name in filter(None, listing.split("\0")):
         path = REPO_ROOT / name
-        base = path.name.lower()
-        too_big = path.is_file() and path.stat().st_size > ONE_MEGABYTE
-        dataset_name = (
-            (base.startswith("tab") and base.endswith(".json"))
-            or base.startswith("mapa")
-            or base.endswith(".parquet")
-        )
-        if too_big or dataset_name:
+        size = path.stat().st_size if path.is_file() else 0
+        if looks_like_dataset_file(path, size):
             offenders.append(name)
     assert offenders == []
 
