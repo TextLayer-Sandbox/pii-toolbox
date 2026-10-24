@@ -17,10 +17,9 @@ def block_network(request, monkeypatch):
 
 
 @pytest.fixture(autouse=True)
-def tmp_sandbox(tmp_path, monkeypatch):
+def tmp_sandbox(tmp_path_factory, monkeypatch):
     """Points home, cache and data directories into the test's temporary folder so nothing outside it is touched."""
-    home = tmp_path / "home"
-    home.mkdir()
+    home = tmp_path_factory.mktemp("sandbox_home")
     monkeypatch.setenv("HOME", str(home))
     monkeypatch.setenv("XDG_CACHE_HOME", str(home / ".cache"))
     monkeypatch.setenv("PII_DATA_DIR", str(home / "data"))

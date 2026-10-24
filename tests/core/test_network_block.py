@@ -48,7 +48,9 @@ def test_network_marked_test_reaches_the_socket_layer(tmp_path):
     assert result.returncode == 0, result.stdout + result.stderr
 
 
-def test_home_points_inside_tmp_path(tmp_path):
-    assert Path(os.environ["HOME"]).is_relative_to(tmp_path)
-    assert Path(os.environ["XDG_CACHE_HOME"]).is_relative_to(tmp_path)
-    assert Path(os.environ["PII_DATA_DIR"]).is_relative_to(tmp_path)
+def test_sandbox_directories_are_inside_the_pytest_temp_root_and_apart_from_tmp_path(tmp_path, tmp_path_factory):
+    root = tmp_path_factory.getbasetemp()
+    for name in ("HOME", "XDG_CACHE_HOME", "PII_DATA_DIR"):
+        path = Path(os.environ[name])
+        assert path.is_relative_to(root)
+        assert not path.is_relative_to(tmp_path)
