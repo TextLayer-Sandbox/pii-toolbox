@@ -1,0 +1,27 @@
+[
+ {
+  "text": "Dmitri Fake spoke.",
+  "doc_id": "syn-5",
+  "dataset_type": "test",
+  "meta": {
+   "year": 2001
+  },
+  "annotations": {
+   "annotator1": {
+    "entity_mentions": [
+     {
+      "entity_type": "PERSON",
+      "entity_mention_id": "syn-5_a1_em1",
+      "start_offset": 0,
+      "end_offset": 11,
+      "span_text": "Dmitri Fake",
+      "edit_type": "check",
+      "identifier_type": "DIRECT",
+      "entity_id": "syn-5_a1_e1",
+      "confidential_status": "NOT_CONFIDENTIAL"
+     }
+    ]
+   }
+  }
+ }
+]

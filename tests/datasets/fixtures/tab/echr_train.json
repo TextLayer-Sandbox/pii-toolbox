@@ -1,0 +1,188 @@
+[
+ {
+  "text": "Anna Testwell lived in Exampleton until 12 May 2001. Anna Testwell paid 300 euros under file X-77.",
+  "doc_id": "syn-1",
+  "dataset_type": "train",
+  "meta": {
+   "year": 2001
+  },
+  "annotations": {
+   "annotator1": {
+    "entity_mentions": [
+     {
+      "entity_type": "PERSON",
+      "entity_mention_id": "syn-1_a1_em1",
+      "start_offset": 0,
+      "end_offset": 13,
+      "span_text": "Anna Testwell",
+      "edit_type": "check",
+      "identifier_type": "DIRECT",
+      "entity_id": "syn-1_a1_e1",
+      "confidential_status": "NOT_CONFIDENTIAL"
+     },
+     {
+      "entity_type": "LOC",
+      "entity_mention_id": "syn-1_a1_em2",
+      "start_offset": 23,
+      "end_offset": 33,
+      "span_text": "Exampleton",
+      "edit_type": "check",
+      "identifier_type": "QUASI",
+      "entity_id": "syn-1_a1_e2",
+      "confidential_status": "NOT_CONFIDENTIAL"
+     },
+     {
+      "entity_type": "DATETIME",
+      "entity_mention_id": "syn-1_a1_em3",
+      "start_offset": 40,
+      "end_offset": 51,
+      "span_text": "12 May 2001",
+      "edit_type": "check",
+      "identifier_type": "QUASI",
+      "entity_id": "syn-1_a1_e3",
+      "confidential_status": "NOT_CONFIDENTIAL"
+     },
+     {
+      "entity_type": "QUANTITY",
+      "entity_mention_id": "syn-1_a1_em4",
+      "start_offset": 72,
+      "end_offset": 81,
+      "span_text": "300 euros",
+      "edit_type": "check",
+      "identifier_type": "NO_MASK",
+      "entity_id": "syn-1_a1_e4",
+      "confidential_status": "NOT_CONFIDENTIAL"
+     }
+    ]
+   },
+   "annotator2": {
+    "entity_mentions": [
+     {
+      "entity_type": "PERSON",
+      "entity_mention_id": "syn-1_a2_em1",
+      "start_offset": 5,
+      "end_offset": 13,
+      "span_text": "Testwell",
+      "edit_type": "check",
+      "identifier_type": "DIRECT",
+      "entity_id": "syn-1_a2_e1",
+      "confidential_status": "NOT_CONFIDENTIAL"
+     },
+     {
+      "entity_type": "CODE",
+      "entity_mention_id": "syn-1_a2_em2",
+      "start_offset": 93,
+      "end_offset": 97,
+      "span_text": "X-77",
+      "edit_type": "check",
+      "identifier_type": "DIRECT",
+      "entity_id": "syn-1_a2_e2",
+      "confidential_status": "NOT_CONFIDENTIAL"
+     }
+    ]
+   }
+  }
+ },
+ {
+  "text": "The applicant, a farmer, objected. The Court noted the Invented Ministry replied.",
+  "doc_id": "syn-2",
+  "dataset_type": "train",
+  "meta": {
+   "year": 2001
+  },
+  "annotations": {
+   "annotator1": {
+    "entity_mentions": [
+     {
+      "entity_type": "DEM",
+      "entity_mention_id": "syn-2_a1_em1",
+      "start_offset": 17,
+      "end_offset": 23,
+      "span_text": "farmer",
+      "edit_type": "check",
+      "identifier_type": "QUASI",
+      "entity_id": "syn-2_a1_e1",
+      "confidential_status": "NOT_CONFIDENTIAL"
+     },
+     {
+      "entity_type": "ORG",
+      "entity_mention_id": "syn-2_a1_em2",
+      "start_offset": 55,
+      "end_offset": 72,
+      "span_text": "Invented Ministry",
+      "edit_type": "check",
+      "identifier_type": "NO_MASK",
+      "entity_id": "syn-2_a1_e2",
+      "confidential_status": "NOT_CONFIDENTIAL"
+     }
+    ]
+   },
+   "annotator2": {
+    "entity_mentions": [
+     {
+      "entity_type": "ORG",
+      "entity_mention_id": "syn-2_a2_em1",
+      "start_offset": 55,
+      "end_offset": 72,
+      "span_text": "Invented Ministry",
+      "edit_type": "check",
+      "identifier_type": "QUASI",
+      "entity_id": "syn-2_a2_e1",
+      "confidential_status": "NOT_CONFIDENTIAL"
+     },
+     {
+      "entity_type": "MISC",
+      "entity_mention_id": "syn-2_a2_em2",
+      "start_offset": 25,
+      "end_offset": 33,
+      "span_text": "objected",
+      "edit_type": "check",
+      "identifier_type": "NO_MASK",
+      "entity_id": "syn-2_a2_e2",
+      "confidential_status": "NOT_CONFIDENTIAL"
+     }
+    ]
+   }
+  }
+ },
+ {
+  "text": "Boris Placeholder filed no. 555/00 in Samplecity.",
+  "doc_id": "syn-3",
+  "dataset_type": "train",
+  "meta": {
+   "year": 2001
+  },
+  "annotations": {
+   "annotator1": {
+    "entity_mentions": [
+     {
+      "entity_type": "PERSON",
+      "entity_mention_id": "syn-3_a1_em1",
+      "start_offset": 0,
+      "end_offset": 17,
+      "span_text": "Boris Placeholder",
+      "edit_type": "check",
+      "identifier_type": "DIRECT",
+      "entity_id": "syn-3_a1_e1",
+      "confidential_status": "NOT_CONFIDENTIAL"
+     }
+    ]
+   },
+   "annotator2": {
+    "entity_mentions": [
+     {
+      "entity_type": "LOC",
+      "entity_mention_id": "syn-3_a2_em1",
+      "start_offset": 38,
+      "end_offset": 48,
+      "span_text": "Samplecity",
+      "edit_type": "check",
+      "identifier_type": "QUASI",
+      "entity_id": "syn-3_a2_e1",
+      "confidential_status": "NOT_CONFIDENTIAL"
+     }
+    ]
+   }
+  }
+ }
+]
