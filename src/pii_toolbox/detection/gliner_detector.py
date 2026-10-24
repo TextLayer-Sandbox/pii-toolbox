@@ -3,6 +3,9 @@
 GLiNER reads a limited number of tokens, so long text is cut into overlapping segments.
 """
 
+import os
+from collections.abc import Iterator
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
@@ -15,6 +18,29 @@ REQUESTED_LABELS = ("person", "organization", "location", "address")
 SEGMENT_CHARACTERS = 1200
 SEGMENT_OVERLAP_CHARACTERS = 150
 SCORE_THRESHOLD = 0.5
+HUGGINGFACE_CACHE_FOLDER = "huggingface_cache"
+
+
+@contextmanager
+def _offline_huggingface(cache_dir: Path) -> Iterator[None]:
+    """Makes Hugging Face loaders read only `cache_dir`, because the GLiNER config names a backbone model it fetches by hub name."""
+    from huggingface_hub import constants
+
+    previous_env = {name: os.environ.get(name) for name in ("HF_HUB_OFFLINE", "HF_HUB_CACHE")}
+    previous_constants = (constants.HF_HUB_OFFLINE, constants.HF_HUB_CACHE)
+    os.environ["HF_HUB_OFFLINE"] = "1"
+    os.environ["HF_HUB_CACHE"] = str(cache_dir)
+    constants.HF_HUB_OFFLINE = True
+    constants.HF_HUB_CACHE = str(cache_dir)
+    try:
+        yield
+    finally:
+        constants.HF_HUB_OFFLINE, constants.HF_HUB_CACHE = previous_constants
+        for name, value in previous_env.items():
+            if value is None:
+                os.environ.pop(name, None)
+            else:
+                os.environ[name] = value
 
 
 class GlinerDetector(Detector):
@@ -44,10 +70,12 @@ class GlinerDetector(Detector):
     def load_models(self) -> None:
         from gliner import GLiNER
 
-        path = (self._model_dir or default_model_dir()) / MODEL_FOLDER
+        model_dir = self._model_dir or default_model_dir()
+        path = model_dir / MODEL_FOLDER
         if not path.exists():
             raise FileNotFoundError(f"model folder missing: {path}; run scripts/download_models.py")
-        self._model = GLiNER.from_pretrained(str(path), local_files_only=True)
+        with _offline_huggingface(model_dir / HUGGINGFACE_CACHE_FOLDER):
+            self._model = GLiNER.from_pretrained(str(path), local_files_only=True)
 
     def detect(self, document: Document) -> list[Span]:
         if self._model is None:
