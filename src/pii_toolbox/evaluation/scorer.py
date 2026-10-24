@@ -59,6 +59,41 @@ def _is_applicable(
     return pii_type in reported_types and has_data
 
 
+def count_matches(
+    results: Iterable[tuple[Document, Sequence[Span], Sequence[AnswerSpan]]], rule: SpanMatchRule
+) -> tuple[dict[PiiType, MatchCounts], dict[str, MatchCounts]]:
+    """Match counts pooled per type and, over all types, per document language."""
+    matcher = GreedySpanMatcher()
+    per_type: dict[PiiType, MatchCounts] = dict.fromkeys(PiiType, MatchCounts(0, 0, 0))
+    per_language: dict[str, MatchCounts] = defaultdict(lambda: MatchCounts(0, 0, 0))
+    for document, predicted, answers in results:
+        counts = matcher.match(predicted, answers, rule)
+        for pii_type, type_counts in counts.items():
+            per_type[pii_type] = _add(per_type[pii_type], type_counts)
+        per_language[document.language] = _add(per_language[document.language], _pool(counts.values()))
+    return per_type, dict(per_language)
+
+
+def overall_scores(
+    per_type: Mapping[PiiType, MatchCounts], types: frozenset[PiiType], reported_types: frozenset[PiiType]
+) -> tuple[Mapping[PiiType, DetectionScore | None], DetectionScore, DetectionScore]:
+    """Per-type scores, pooled micro score and macro mean over the given types only."""
+    by_type: Mapping[PiiType, DetectionScore | None] = {
+        pii_type: score_from_counts(per_type[pii_type]) if _is_applicable(pii_type, per_type, reported_types) else None
+        for pii_type in PiiType
+        if pii_type in types
+    }
+    reported_scores = [score for score in by_type.values() if score is not None]
+    count = len(reported_scores)
+    macro = DetectionScore(
+        _ratio(sum(score.precision for score in reported_scores), count),
+        _ratio(sum(score.recall for score in reported_scores), count),
+        _ratio(sum(score.f2 for score in reported_scores), count),
+    )
+    micro = score_from_counts(_pool(per_type[pii_type] for pii_type in types))
+    return by_type, micro, macro
+
+
 class MatchingDetectionScorer(DetectionScorer):
     """Scores detector output against answers using greedy one-to-one matching.
 
@@ -76,29 +111,11 @@ class MatchingDetectionScorer(DetectionScorer):
         *,
         reported_types: frozenset[PiiType] = frozenset(PiiType),
     ) -> DetectionReport:
-        matcher = GreedySpanMatcher()
-        per_type: dict[PiiType, MatchCounts] = dict.fromkeys(PiiType, MatchCounts(0, 0, 0))
-        per_language: dict[str, MatchCounts] = defaultdict(lambda: MatchCounts(0, 0, 0))
-        for document, predicted, answers in results:
-            counts = matcher.match(predicted, answers, rule)
-            for pii_type, type_counts in counts.items():
-                per_type[pii_type] = _add(per_type[pii_type], type_counts)
-            per_language[document.language] = _add(per_language[document.language], _pool(counts.values()))
-
-        by_type: Mapping[PiiType, DetectionScore | None] = {
-            pii_type: score_from_counts(per_type[pii_type]) if _is_applicable(pii_type, per_type, reported_types) else None
-            for pii_type in PiiType
-        }
-        reported_scores = [score for score in by_type.values() if score is not None]
-        count = len(reported_scores)
-        macro = DetectionScore(
-            _ratio(sum(score.precision for score in reported_scores), count),
-            _ratio(sum(score.recall for score in reported_scores), count),
-            _ratio(sum(score.f2 for score in reported_scores), count),
-        )
+        per_type, per_language = count_matches(results, rule)
+        by_type, micro, macro = overall_scores(per_type, frozenset(PiiType), reported_types)
         return DetectionReport(
             rule=rule,
-            overall_micro=score_from_counts(_pool(per_type.values())),
+            overall_micro=micro,
             macro=macro,
             by_type=by_type,
             by_language={language: score_from_counts(counts) for language, counts in per_language.items()},
