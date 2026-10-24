@@ -106,7 +106,19 @@ class Session(RedactionSession):
         return MaskResult(masked, tuple(minted))
 
     def restore(self, text: str) -> RestoreResult:
-        raise NotImplementedError
+        minted_labels = self._store.labels(self._id)
+        leftovers: list[str] = []
+        restored = text
+
+        # Substituting from the last token to the first keeps the earlier offsets valid.
+        for token in sorted(self._format.parse(text), key=lambda t: t.start, reverse=True):
+            original = self._store.original(self._id, token.placeholder)
+            if original is not None:
+                restored = restored[: token.start] + original + restored[token.end :]
+            elif token.placeholder.label in minted_labels:
+                leftovers.append(text[token.start : token.end])
+
+        return RestoreResult(restored, tuple(reversed(leftovers)))
 
     def close(self) -> None:
         self._store.discard(self._id)

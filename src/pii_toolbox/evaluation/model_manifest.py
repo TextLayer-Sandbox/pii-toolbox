@@ -21,10 +21,12 @@ class ModelEntry:
     source: str
     revision: str
     location: str
+    # Set when the consumer reads a fixed folder name rather than one derived from the model name.
+    directory: str | None = None
 
     @property
     def directory_name(self) -> str:
-        return self.name.replace("/", "__")
+        return self.directory or self.name.replace("/", "__")
 
 
 Fetcher = Callable[[ModelEntry, Path], None]
@@ -35,6 +37,8 @@ MODEL_MANIFEST: list[ModelEntry] = [
     ModelEntry("en_core_web_lg", "spacy", "3.8.0", "https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl"),
     ModelEntry("en_core_web_sm", "spacy", "3.8.0", "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl"),
     ModelEntry("sapienzanlp/maverick-mes-ontonotes", "huggingface", "087a90f0380ec1f20ed19732b657f53fd3542c81", "sapienzanlp/maverick-mes-ontonotes"),
+    ModelEntry("nltk_punkt", "download", "550b6625bcef1f2abff2ff770a5a0d272c9c6b2a", "https://raw.githubusercontent.com/nltk/nltk_data/550b6625bcef1f2abff2ff770a5a0d272c9c6b2a/packages/tokenizers/punkt.zip", directory="nltk_punkt"),
+    ModelEntry("microsoft/deberta-v3-large", "huggingface_cache", "64a8c8eab3e352a784c658aef62be1662607476f", "microsoft/deberta-v3-large", directory="huggingface_cache"),
 ]
 
 
@@ -74,7 +78,12 @@ def network_fetch(entry: ModelEntry, target: Path) -> None:
 
         snapshot_download(entry.location, revision=entry.revision, local_dir=target)
         return
-    if entry.source == "spacy":
+    if entry.source == "huggingface_cache":
+        from huggingface_hub import snapshot_download
+
+        snapshot_download(entry.location, revision=entry.revision, cache_dir=target)
+        return
+    if entry.source in ("spacy", "download"):
         import urllib.request
 
         urllib.request.urlretrieve(entry.location, target / entry.location.rsplit("/", 1)[-1])
