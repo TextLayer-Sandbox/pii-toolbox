@@ -41,7 +41,7 @@ class Span:
     # The detector's own detailed name (e.g. EMAIL_ADDRESS, IBAN_CODE, both IDENTIFIER);
     # used in placeholders so text read downstream still says what kind of value was masked.
     detector_label: str
-    source: str  # the registered name of the detector that found it
+    source: tuple[str, ...]  # names of every detector that contributed; more than one after a merge
     score: float | None  # detector confidence, None when the detector gives none
 
 
@@ -84,7 +84,11 @@ class AnnotatedDocument:
 
 @dataclass(frozen=True, slots=True)
 class EntityGroup:
-    """Spans that refer to the same person. Holds positions only, never text."""
+    """Spans that refer to the same person. Holds positions only, never text.
+
+    A group may hold a span the detector did not find; such a span's `source` names the
+    resolver. A group always holds at least one detected name.
+    """
 
     spans: tuple[Span, ...]
     canonical: Span  # the fullest form of the name; one of `spans`
@@ -113,7 +117,8 @@ class Detector(ABC):
     def detects(self) -> frozenset[PiiType]:
         """The common types this configured detector can report.
 
-        Types outside it are scored as not applicable rather than as misses.
+        Types outside it count as misses in the overall score and are marked not applicable
+        in the per-type breakdown.
         """
         ...
 
@@ -133,7 +138,9 @@ class Detector(ABC):
 class DetectorUnion(Detector):
     """Runs several detectors and returns the union of their spans.
 
-    Overlapping spans are merged into the widest.
+    Overlapping spans merge into the widest; the merged span takes the type and detector
+    label of the longest contributing span, ties broken by the higher score, and its score
+    is the highest among contributors.
     """
 
     @property
@@ -194,6 +201,29 @@ class Placeholder:
 
 
 @dataclass(frozen=True, slots=True)
+class PlaceholderToken:
+    """A placeholder-shaped token found in text, with the placeholder it reads as."""
+
+    start: int
+    end: int
+    placeholder: Placeholder
+
+
+class PlaceholderFormat(ABC):
+    """The single definition of what a placeholder looks like in text, shared by masking and restoring."""
+
+    @abstractmethod
+    def render(self, placeholder: Placeholder) -> str:
+        """The exact text written into masked output, such as <PERSON_1>."""
+        ...
+
+    @abstractmethod
+    def parse(self, text: str) -> list[PlaceholderToken]:
+        """Finds whole tokens that read as placeholders, tolerating dropped brackets and changed case."""
+        ...
+
+
+@dataclass(frozen=True, slots=True)
 class MaskResult:
     masked_text: str
     minted: tuple[Placeholder, ...]  # placeholders created by this call only
@@ -202,7 +232,7 @@ class MaskResult:
 @dataclass(frozen=True, slots=True)
 class RestoreResult:
     restored_text: str
-    leftovers: tuple[str, ...]  # placeholder-shaped tokens that did not resolve
+    leftovers: tuple[str, ...]  # tokens that read as a placeholder with a label this session has minted but did not resolve; look-alikes with unknown labels are not reported
 
 
 class PlaceholderStore(ABC):
@@ -212,16 +242,27 @@ class PlaceholderStore(ABC):
     """
 
     @abstractmethod
-    def put(self, session_id: str, placeholder: Placeholder, original: str) -> None: ...
+    def get_or_mint(self, session_id: str, label: str, original: str) -> tuple[Placeholder, bool]:
+        """Returns the existing placeholder for the original, or mints the next-numbered one for the label.
+
+        The bool is True when the placeholder was minted by this call.
+        """
+        ...
 
     @abstractmethod
-    def find(self, session_id: str, original: str) -> Placeholder | None: ...
+    def alias(self, session_id: str, original: str, placeholder: Placeholder) -> None:
+        """Makes another original resolve to an existing placeholder, so different forms of one name share it."""
+        ...
 
     @abstractmethod
-    def original(self, session_id: str, placeholder: Placeholder) -> str | None: ...
+    def original(self, session_id: str, placeholder: Placeholder) -> str | None:
+        """Returns the stored value; when aliases exist, this is the fullest form."""
+        ...
 
     @abstractmethod
-    def next_number(self, session_id: str, label: str) -> int: ...
+    def labels(self, session_id: str) -> frozenset[str]:
+        """Every label that has been minted in the session."""
+        ...
 
     @abstractmethod
     def discard(self, session_id: str) -> None:
@@ -230,11 +271,38 @@ class PlaceholderStore(ABC):
 
 
 class RedactionSession(ABC):
-    """One case's masking context. The same original always gets the same placeholder."""
+    """One case's masking context. The same original always gets the same placeholder.
+
+    A session is built from a detector, an optional resolver, a placeholder store, a placeholder format and a language.
+    """
 
     @property
     @abstractmethod
     def id(self) -> str: ...
+
+    @property
+    @abstractmethod
+    def language(self) -> str:
+        """ISO 639-1 code given when the session is opened; every text masked in it is taken to be in this language."""
+        ...
+
+    @property
+    @abstractmethod
+    def store(self) -> PlaceholderStore: ...
+
+    @property
+    @abstractmethod
+    def format(self) -> PlaceholderFormat: ...
+
+    @property
+    @abstractmethod
+    def detector(self) -> Detector: ...
+
+    @property
+    @abstractmethod
+    def resolver(self) -> IdentityResolver | None:
+        """None means name forms are not linked."""
+        ...
 
     @abstractmethod
     def mask(self, text: str) -> MaskResult: ...
@@ -307,8 +375,8 @@ class DetectionScore:
 class DetectionReport:
     rule: SpanMatchRule
     overall_micro: DetectionScore  # counts pooled over all types
-    macro: DetectionScore  # plain average of the per-type scores
-    by_type: Mapping[PiiType, DetectionScore]
+    macro: DetectionScore  # plain average of the per-type scores; averages only the reported types
+    by_type: Mapping[PiiType, DetectionScore | None]  # None marks a type the detector does not report
     by_language: Mapping[str, DetectionScore]
 
 
@@ -335,11 +403,27 @@ class DetectionScorer(ABC):
         ...
 
 
+class AnswerKeyBuilder(ABC):
+    @abstractmethod
+    def build(self, answers: Sequence[AnswerSpan]) -> tuple[AnswerSpan, ...]:
+        """Collapses several annotators into one answer key: a span is PII if any annotator marked it DIRECT or QUASI; distinct boundaries stay distinct spans."""
+        ...
+
+
 @dataclass(frozen=True, slots=True)
 class TabOfficialMetrics:
     er_di: float  # entity-level recall on direct identifiers
     er_qi: float  # entity-level recall on quasi-identifiers
     wp: float  # token-level weighted precision
+
+
+class TabMetricsScorer(ABC):
+    @abstractmethod
+    def score(
+        self, results: Iterable[tuple[AnnotatedDocument, Sequence[Span]]]
+    ) -> TabOfficialMetrics:
+        """Computes TAB's own metrics by its definitions, micro-averaged over annotators."""
+        ...
 
 
 @dataclass(frozen=True, slots=True)
