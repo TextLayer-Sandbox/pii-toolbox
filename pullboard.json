@@ -1,5 +1,5 @@
 {
-  "gate": "",
+  "gate": "pullboard spec check && if [ -f pyproject.toml ]; then uv run pytest -q; fi",
   "spec": "SPEC.md",
   "practice": "DOCTRINE.md",
   "worktrees": "inside",
@@ -15,6 +15,45 @@
     "review": {
       "owns": [],
       "starts": "any time: verifiers check submitted work and own no folders"
+    },
+    "core": {
+      "owns": [
+        "pyproject.toml",
+        "uv.lock",
+        "src/pii_toolbox/__init__.py",
+        "src/pii_toolbox/core/",
+        "tests/conftest.py",
+        "tests/core/"
+      ]
+    },
+    "detect": {
+      "owns": [
+        "src/pii_toolbox/detection/",
+        "tests/detection/"
+      ]
+    },
+    "coref": {
+      "owns": [
+        "src/pii_toolbox/coref/",
+        "tests/coref/"
+      ]
+    },
+    "session": {
+      "owns": [
+        "src/pii_toolbox/session/",
+        "examples/",
+        "tests/session/"
+      ]
+    },
+    "eval": {
+      "owns": [
+        "src/pii_toolbox/evaluation/",
+        "src/pii_toolbox/datasets/",
+        "scripts/",
+        "results/",
+        "tests/evaluation/",
+        "tests/datasets/"
+      ]
     }
   },
   "shared": [],
