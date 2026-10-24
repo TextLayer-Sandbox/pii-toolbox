@@ -69,7 +69,7 @@ def test_empty_input_gives_zeros_not_an_error():
     report = score([])
     assert report.overall_micro.f2 == 0.0
     assert report.macro.f2 == 0.0
-    assert report.by_type[PiiType.PERSON].precision == 0.0
+    assert report.by_type[PiiType.PERSON] is None
     assert report.by_language == {}
 
 
@@ -89,3 +89,27 @@ def test_each_rule_has_its_own_report():
     assert strict.rule is SpanMatchRule.EXACT_BOUNDARIES
     assert relaxed.by_type[PiiType.PERSON].f2 == 1.0
     assert strict.by_type[PiiType.PERSON].f2 == 0.0
+
+
+def mapa_like_results():
+    """PERSON and LOCATION have answers and predictions; IDENTIFIER has neither."""
+    person_answers = [answer(0, 5, PiiType.PERSON), answer(10, 15, PiiType.PERSON)]
+    spans = [predicted(0, 5, PiiType.PERSON), predicted(100, 105, PiiType.LOCATION)]
+    return [(Document("d", "x" * 200, "en"), spans, person_answers)]
+
+
+def test_type_with_no_answers_and_no_predictions_is_left_out_of_macro():
+    report = score(mapa_like_results())
+    assert report.by_type[PiiType.IDENTIFIER] is None
+    assert report.by_type[PiiType.QUANTITY] is None
+    person = report.by_type[PiiType.PERSON]
+    location = report.by_type[PiiType.LOCATION]
+    assert report.macro.recall == pytest.approx((person.recall + location.recall) / 2)
+    assert report.macro.f2 == pytest.approx((person.f2 + location.f2) / 2)
+
+
+def test_type_with_answers_but_no_predictions_still_scores_zero():
+    results = [(Document("d", "x" * 50, "en"), [], [answer(0, 5, PiiType.IDENTIFIER)])]
+    report = score(results)
+    assert report.by_type[PiiType.IDENTIFIER].recall == 0.0
+    assert report.by_type[PiiType.PERSON] is None
