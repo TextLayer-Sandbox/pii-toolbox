@@ -8,6 +8,7 @@ import pytest
 from pii_toolbox.core import Document, PiiType
 from pii_toolbox.detection.gliner_detector import GlinerDetector
 from pii_toolbox.detection.llm_detector import LlmDetector
+from pii_toolbox.detection.presidio_structured import PresidioStructuredDetector
 from pii_toolbox.detection.registry import (
     FixedDetectorRegistry,
     UnknownDetectorError,
@@ -59,6 +60,23 @@ def stub_registry():
 
 def test_registry_names():
     assert FixedDetectorRegistry().names() == EXPECTED_NAMES
+
+
+@pytest.mark.parametrize(
+    ("name", "expected_class"),
+    [
+        ("presidio_structured", PresidioStructuredDetector),
+        ("spacy_lg", SpacyDetector),
+        ("spacy_sm", SpacyDetector),
+        ("roberta", RobertaDetector),
+        ("gliner", GlinerDetector),
+        ("llm", LlmDetector),
+    ],
+)
+def test_each_entry_builds_the_detector_of_its_name_and_class(name, expected_class):
+    detector = FixedDetectorRegistry().build(name)
+    assert detector.name == name
+    assert isinstance(detector, expected_class)
 
 
 def test_unknown_name_raises_at_startup_listing_every_known_name():
