@@ -26,10 +26,20 @@ def synthetic_text(size: int) -> str:
     return (SYNTHETIC_SENTENCE * repeats)[:size]
 
 
+def accelerator_memory_bytes() -> int:
+    """Memory held by the Apple GPU allocator, which process RSS does not include."""
+    torch = sys.modules.get("torch")
+    if torch is None or not torch.backends.mps.is_available():
+        return 0
+    return torch.mps.driver_allocated_memory()
+
+
 def peak_memory_bytes() -> int:
+    """Peak process memory plus whatever the GPU allocator holds at the end of the run."""
     peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
     # Linux reports kilobytes, macOS reports bytes.
-    return peak if sys.platform == "darwin" else peak * 1024
+    process_peak = peak if sys.platform == "darwin" else peak * 1024
+    return process_peak + accelerator_memory_bytes()
 
 
 def load_registry(spec: str) -> DetectorRegistry:

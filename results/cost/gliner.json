@@ -1,0 +1,32 @@
+{
+  "setup": "gliner",
+  "peak_memory_bytes": 2987048960,
+  "load_seconds": 6.000839415937662,
+  "throughput_chars_per_second": {
+    "1000": 9991.507214683848,
+    "10000": 8905.48640354349,
+    "100000": 8914.18225430024
+  },
+  "latency_per_1000_chars_median_seconds": 0.1120282637514174,
+  "fits_lambda": true,
+  "environment": {
+    "machine": "Apple M5",
+    "memory_bytes": 34359738368,
+    "cpu_cores": "10",
+    "os": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.12.14",
+    "library_versions": {
+      "presidio-analyzer": "2.2.364",
+      "spacy": "3.8.16",
+      "gliner": "0.2.24",
+      "transformers": "5.20.2",
+      "torch": "2.14.1",
+      "huggingface_hub": "2.3.0",
+      "numpy": "2.4.6",
+      "psutil": "7.2.2"
+    }
+  },
+  "not_measured": [
+    "language model: no model has been selected yet"
+  ]
+}
