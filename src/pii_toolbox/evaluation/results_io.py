@@ -2,6 +2,7 @@
 
 import json
 from collections.abc import Mapping
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
@@ -21,6 +22,19 @@ ENVIRONMENT_FILE_NAME = "environment.json"
 
 class SelectionFromTestSplitError(ValueError):
     """Raised when a choice would be made from a result measured on the test split."""
+
+
+@dataclass(frozen=True)
+class ResultRecord:
+    """A saved run with the facts about its detector that the tables need.
+
+    `languages` is the detector's supported ISO codes, None meaning any language;
+    `detects` is the set of types the detector can report.
+    """
+
+    run: EvaluationRun
+    languages: frozenset[str] | None
+    detects: frozenset[PiiType]
 
 
 def run_file_name(tool: str, dataset: str, split: DatasetSplit, coreference: bool) -> str:
@@ -99,19 +113,33 @@ def run_from_dict(raw: Mapping[str, Any]) -> EvaluationRun:
     )
 
 
-def write_run(run: EvaluationRun, out_dir: Path) -> Path:
-    """Writes the run's result file and the environment file into out_dir; returns the result file path."""
+def write_run(record: ResultRecord, out_dir: Path) -> Path:
+    """Writes the result file and the environment file into out_dir; returns the result file path."""
+    run = record.run
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / run_file_name(run.tool, run.dataset, run.split, run.coreference)
-    path.write_text(json.dumps(run_to_dict(run), indent=2) + "\n", encoding="utf-8")
+    content = run_to_dict(run)
+    content["detector_languages"] = None if record.languages is None else sorted(record.languages)
+    content["detector_detects"] = sorted(pii_type.name for pii_type in record.detects)
+    path.write_text(json.dumps(content, indent=2) + "\n", encoding="utf-8")
     (out_dir / ENVIRONMENT_FILE_NAME).write_text(
         json.dumps(_environment_to_dict(run.environment), indent=2) + "\n", encoding="utf-8"
     )
     return path
 
 
+def read_record(path: Path) -> ResultRecord:
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    languages = raw["detector_languages"]
+    return ResultRecord(
+        run=run_from_dict(raw),
+        languages=None if languages is None else frozenset(languages),
+        detects=frozenset(PiiType[name] for name in raw["detector_detects"]),
+    )
+
+
 def read_run(path: Path) -> EvaluationRun:
-    return run_from_dict(json.loads(path.read_text(encoding="utf-8")))
+    return read_record(path).run
 
 
 def load_for_selection(path: Path) -> EvaluationRun:

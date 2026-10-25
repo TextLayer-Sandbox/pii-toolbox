@@ -69,8 +69,8 @@ def main(
         resolver = _default_resolver()
     request = RunRequest(args.tool, dataset, SPLIT_NAMES[args.split], coreference, args.language)
     with resolver if hasattr(resolver, "__enter__") else nullcontext():
-        run = run_evaluation(request, registry or FixedDetectorRegistry(), tab_scorer, resolver, environment)
-    return write_run(run, args.out)
+        record = run_evaluation(request, registry or FixedDetectorRegistry(), tab_scorer, resolver, environment)
+    return write_run(record, args.out)
 
 
 if __name__ == "__main__":

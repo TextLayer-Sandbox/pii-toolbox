@@ -53,6 +53,16 @@
         "precision": 0.55,
         "recall": 0.7,
         "f2": 0.6638
+      },
+      "de": {
+        "precision": 0.45,
+        "recall": 0.6,
+        "f2": 0.5625
+      },
+      "es": {
+        "precision": 0.35,
+        "recall": 0.5,
+        "f2": 0.4605
       }
     }
   },
@@ -106,6 +116,16 @@
         "precision": 0.65,
         "recall": 0.7999999999999999,
         "f2": 0.7647
+      },
+      "de": {
+        "precision": 0.55,
+        "recall": 0.7,
+        "f2": 0.6638
+      },
+      "es": {
+        "precision": 0.44999999999999996,
+        "recall": 0.6,
+        "f2": 0.5625
       }
     }
   },
@@ -117,5 +137,13 @@
     "library_versions": {
       "examplelib": "1.0"
     }
-  }
+  },
+  "detector_languages": null,
+  "detector_detects": [
+    "DATE_TIME",
+    "LOCATION",
+    "ORGANIZATION",
+    "PERSON",
+    "QUANTITY"
+  ]
 }

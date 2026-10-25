@@ -111,5 +111,15 @@
     "library_versions": {
       "examplelib": "1.0"
     }
-  }
+  },
+  "detector_languages": [
+    "en"
+  ],
+  "detector_detects": [
+    "DATE_TIME",
+    "LOCATION",
+    "ORGANIZATION",
+    "PERSON",
+    "QUANTITY"
+  ]
 }

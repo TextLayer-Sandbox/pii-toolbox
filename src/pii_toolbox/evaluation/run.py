@@ -23,6 +23,7 @@ from pii_toolbox.core import (
 from pii_toolbox.datasets.answer_key import AnyAnnotatorAnswerKeyBuilder
 from pii_toolbox.detection.registry import build_from_config
 from pii_toolbox.evaluation.environment import collect_environment
+from pii_toolbox.evaluation.results_io import ResultRecord
 from pii_toolbox.evaluation.scorer import MatchingDetectionScorer
 
 TAB_DATASET_NAME = "tab"
@@ -65,8 +66,8 @@ def run_evaluation(
     tab_scorer: TabMetricsScorer | None = None,
     resolver: IdentityResolver | None = None,
     environment: RunEnvironment | None = None,
-) -> EvaluationRun:
-    """Scores the configuration on the split.
+) -> ResultRecord:
+    """Scores the configuration on the split and records what the detector supports.
 
     Documents in a language the detector does not support are left out, and so are non-English
     documents when co-reference is on. `tab_scorer` is needed only for the TAB dataset.
@@ -91,7 +92,7 @@ def run_evaluation(
     is_tab = request.dataset.name.lower() == TAB_DATASET_NAME
     if is_tab and tab_scorer is None:
         raise ValueError("the TAB dataset needs a TAB metrics scorer")
-    return EvaluationRun(
+    run = EvaluationRun(
         tool=request.tool,
         coreference=request.coreference,
         dataset=request.dataset.name.lower(),
@@ -101,3 +102,4 @@ def run_evaluation(
         tab_metrics=tab_scorer.score(scored) if is_tab else None,
         environment=environment or collect_environment(),
     )
+    return ResultRecord(run, detector.languages, detector.detects)

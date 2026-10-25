@@ -23,6 +23,7 @@ from pii_toolbox.evaluation.results_io import (
     ENVIRONMENT_FILE_NAME,
     SelectionFromTestSplitError,
     load_for_selection,
+    read_record,
     read_run,
     write_run,
 )
@@ -138,7 +139,7 @@ def test_result_files_hold_no_document_text_and_no_span_lists(tmp_path):
         assert CANARY not in content
         assert "Anna" not in content
         tree = json.loads(content)
-        assert not [node for node in walk(tree) if isinstance(node, list)]
+        assert not [node for node in walk(tree) if isinstance(node, list) and any(not isinstance(i, str) for i in node)]
         assert not [node for node in walk(tree) if isinstance(node, dict) and {"start", "end"} <= set(node)]
 
 
@@ -170,7 +171,13 @@ def test_selection_loader_refuses_test_split_results(tmp_path):
         load_for_selection(path)
 
 
+def test_result_file_records_the_detectors_languages_and_reported_types(tmp_path):
+    record = read_record(run_cli(tmp_path))
+    assert record.languages == frozenset({"en"})
+    assert record.detects == frozenset({PiiType.PERSON})
+
+
 def test_write_run_round_trips(tmp_path):
-    run = read_run(run_cli(tmp_path / "first"))
-    again = write_run(run, tmp_path / "second")
-    assert read_run(again) == run
+    record = read_record(run_cli(tmp_path / "first"))
+    again = write_run(record, tmp_path / "second")
+    assert read_record(again) == record

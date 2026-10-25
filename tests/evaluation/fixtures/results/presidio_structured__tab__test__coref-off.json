@@ -79,5 +79,9 @@
     "library_versions": {
       "examplelib": "1.0"
     }
-  }
+  },
+  "detector_languages": null,
+  "detector_detects": [
+    "IDENTIFIER"
+  ]
 }
