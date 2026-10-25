@@ -85,7 +85,7 @@ class GlinerDetector(Detector):
     def _detect_segment(self, text: str) -> list[Span]:
         spans = []
         for entity in self._model.predict_entities(text, list(REQUESTED_LABELS), threshold=SCORE_THRESHOLD):
-            if entity["label"] not in REQUESTED_LABELS or entity["start"] >= entity["end"]:
+            if entity["label"] not in REQUESTED_LABELS or not any(c.isalnum() for c in text[entity["start"] : entity["end"]]):
                 continue
             spans.append(
                 Span(

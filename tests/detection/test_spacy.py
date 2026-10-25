@@ -75,3 +75,15 @@ def test_real_model_finds_the_person(factory):
     spans = detector.detect(DOCUMENT)
     assert any(s.pii_type is PiiType.PERSON and TEXT[s.start : s.end] == "Maria Gonzalez" for s in spans)
     assert all(0 <= s.start < s.end <= len(TEXT) for s in spans)
+
+
+def test_punctuation_only_span_is_dropped_and_name_remains():
+    text = "Maria Gonzalez works at Acme Corp."
+    dot = text.rindex(".")
+    entities = [
+        SimpleNamespace(start_char=0, end_char=len("Maria Gonzalez"), label_="PERSON"),
+        SimpleNamespace(start_char=dot, end_char=dot + 1, label_="ORG"),
+    ]
+    detector = SpacyDetector("stub", "stub_model", pipeline=lambda t: SimpleNamespace(ents=entities))
+    spans = detector.detect(Document(id="d", text=text, language="en"))
+    assert [text[s.start : s.end] for s in spans] == ["Maria Gonzalez"]

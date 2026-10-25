@@ -3,7 +3,7 @@ import re
 import pytest
 
 from pii_toolbox.core import Document, PiiType
-from pii_toolbox.detection.roberta_detector import RobertaDetector
+from pii_toolbox.detection.roberta_detector import SEGMENT_CHARACTERS, RobertaDetector
 from pii_toolbox.evaluation.model_manifest import default_model_dir
 
 # Resolved at import so the per-test sandbox home does not hide the downloaded models.
@@ -43,16 +43,17 @@ def test_interface_properties():
 
 
 def test_long_text_gives_spans_at_correct_positions_across_segment_joins():
-    filler = "lorem ipsum dolor sit amet "
-    pieces = []
-    length = 0
-    while length < 100_000:
-        block = filler * ((5000 - len(NAME) - 1) // len(filler)) + NAME + " "
-        pieces.append(block)
-        length += len(block)
-    text = "".join(pieces)[:100_000]
+    # A name straddling the first segment's hard cut, then names every 5,000 characters, then one at the end.
+    head = "x" * (SEGMENT_CHARACTERS - 5) + NAME
+    body = ""
+    while len(head) + len(body) + 5000 < 99_000:
+        body += "y" * (5000 - len(NAME) - 1) + " " + NAME
+    text = head + body + "z" * (100_000 - len(head) - len(body) - len(NAME)) + NAME
+    assert len(text) == 100_000
 
     def stub_pipeline(segment):
+        if len(segment) > SEGMENT_CHARACTERS:
+            return []
         return [
             {"entity_group": "PER", "score": 0.9, "start": m.start(), "end": m.end()}
             for m in re.finditer(NAME, segment)
@@ -61,7 +62,8 @@ def test_long_text_gives_spans_at_correct_positions_across_segment_joins():
     detector = RobertaDetector(pipeline=stub_pipeline)
     spans = detector.detect(Document(id="d", text=text, language="en"))
     expected = [m.start() for m in re.finditer(NAME, text)]
-    assert len(expected) >= 19
+    assert expected[0] == SEGMENT_CHARACTERS - 5
+    assert expected[-1] == 100_000 - len(NAME)
     assert [s.start for s in spans] == expected
     assert all(text[s.start : s.end] == NAME for s in spans)
 
@@ -72,3 +74,14 @@ def test_real_model_finds_the_person():
     detector.load_models()
     spans = detector.detect(Document(id="d", text=TEXT, language="en"))
     assert any(s.pii_type is PiiType.PERSON and TEXT[s.start : s.end] == NAME for s in spans)
+
+
+def test_punctuation_only_span_is_dropped_and_name_remains():
+    text = "Maria Gonzalez works at Acme Corp."
+    dot = text.rindex(".")
+    entities = [
+        {"entity_group": "PER", "score": 0.9, "start": 0, "end": len(NAME)},
+        {"entity_group": "ORG", "score": 0.9, "start": dot, "end": dot + 1},
+    ]
+    spans = RobertaDetector(pipeline=lambda segment: entities).detect(Document(id="d", text=text, language="en"))
+    assert [text[s.start : s.end] for s in spans] == [NAME]

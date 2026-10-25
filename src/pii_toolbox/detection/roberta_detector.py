@@ -57,7 +57,7 @@ class RobertaDetector(Detector):
         spans = []
         for entity in self._pipeline(text):
             pii_type = to_pii_type(ROBERTA_LABELS, entity["entity_group"])
-            if pii_type is None or entity["start"] >= entity["end"]:
+            if pii_type is None or not any(c.isalnum() for c in text[entity["start"] : entity["end"]]):
                 continue
             spans.append(
                 Span(
