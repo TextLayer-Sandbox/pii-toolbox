@@ -1,4 +1,4 @@
-"""Tables 1, 2, 3 and 5 of the article, built from saved result files only.
+"""Tables 1 to 5 of the article, built from saved result files only.
 
 Each builder reads the result JSON files of one split with co-reference off and writes a
 Markdown and a CSV file per table. Rows are tools, single detectors first and then
@@ -18,7 +18,8 @@ from pii_toolbox.evaluation.results_io import ResultRecord, read_record
 DATASETS = ("tab", "mapa")
 DATASET_TITLES = {"tab": "TAB", "mapa": "MAPA"}
 NOT_APPLICABLE = "n/a"
-RESULT_FILE_PATTERN = "*__*__*__coref-off.json"
+ENGLISH = "en"
+RESULT_FILE_PATTERN = "*__*__*__coref-*.json"
 
 
 @dataclass(frozen=True)
@@ -55,12 +56,14 @@ def _tool_order(tool: str) -> tuple[int, str]:
     return tool.count("+"), tool
 
 
-def load_records(results_dir: Path, split: DatasetSplit) -> dict[tuple[str, str], ResultRecord]:
-    """The co-reference-off results of the split, keyed by (tool, dataset)."""
+def load_records(
+    results_dir: Path, split: DatasetSplit, coreference: bool = False
+) -> dict[tuple[str, str], ResultRecord]:
+    """The results of the split with co-reference off (or on), keyed by (tool, dataset)."""
     records = {}
     for path in sorted(results_dir.glob(RESULT_FILE_PATTERN)):
         record = read_record(path)
-        if record.run.split is split and not record.run.coreference:
+        if record.run.split is split and record.run.coreference is coreference:
             records[(record.run.tool, record.run.dataset)] = record
     return records
 
@@ -137,6 +140,44 @@ def table3(runs: dict[tuple[str, str], EvaluationRun]) -> Table:
     return Table("table3", "Table 3: TAB official metrics", header, tuple(rows))
 
 
+def _change(off: float, on: float) -> str:
+    return f"{on - off:+.3f}"
+
+
+def table4(off: dict[tuple[str, str], ResultRecord], on: dict[tuple[str, str], ResultRecord]) -> Table:
+    """F2 and TAB entity-level recall with co-reference off, on and the change; English text only.
+
+    MAPA rows use the English figures of the run. MAPA has no entity ids, so its recall cells are blank.
+    """
+    header = (
+        "Dataset", "Detector", "F2 off", "F2 on", "F2 change",
+        "ER_di off", "ER_di on", "ER_di change", "ER_qi off", "ER_qi on", "ER_qi change",
+    )
+    rows = []
+    for dataset in DATASETS:
+        for tool in sorted({tool for tool, name in off if name == dataset}, key=_tool_order):
+            if (tool, dataset) not in on:
+                continue
+            before, after = off[(tool, dataset)].run, on[(tool, dataset)].run
+            if dataset == "mapa":
+                scores = [r.exact_boundaries.by_language.get(ENGLISH) for r in (before, after)]
+                if None in scores:
+                    continue
+                f2_off, f2_on = scores[0].f2, scores[1].f2
+            else:
+                f2_off, f2_on = before.exact_boundaries.overall_micro.f2, after.exact_boundaries.overall_micro.f2
+            recall = ["", "", "", "", "", ""]
+            if before.tab_metrics and after.tab_metrics:
+                recall = [
+                    _number(before.tab_metrics.er_di), _number(after.tab_metrics.er_di),
+                    _change(before.tab_metrics.er_di, after.tab_metrics.er_di),
+                    _number(before.tab_metrics.er_qi), _number(after.tab_metrics.er_qi),
+                    _change(before.tab_metrics.er_qi, after.tab_metrics.er_qi),
+                ]
+            rows.append((DATASET_TITLES[dataset], tool, _number(f2_off), _number(f2_on), _change(f2_off, f2_on), *recall))
+    return Table("table4", "Table 4: Co-reference off versus on (English text, strict matching)", header, tuple(rows))
+
+
 HEADLINE_LANGUAGES = ("en", "fr", "de")
 TAB_REFERENCE_COLUMN = "TAB (English reference)"
 
@@ -205,3 +246,7 @@ def build_table5(
     rule: SpanMatchRule = SpanMatchRule.EXACT_BOUNDARIES,
 ) -> list[Path]:
     return _write([table5(load_records(results_dir, split), rule)], out_dir)
+
+
+def build_table4(results_dir: Path, out_dir: Path, split: DatasetSplit = DatasetSplit.TEST) -> list[Path]:
+    return _write([table4(load_records(results_dir, split), load_records(results_dir, split, coreference=True))], out_dir)

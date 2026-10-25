@@ -1,0 +1,85 @@
+{
+  "tool": "spacy_lg",
+  "coreference": true,
+  "dataset": "mapa",
+  "split": "TEST",
+  "exact_boundaries": {
+    "rule": "EXACT_BOUNDARIES",
+    "overall_micro": {
+      "precision": 0.2,
+      "recall": 0.35,
+      "f2": 0.3043
+    },
+    "macro": {
+      "precision": 0.2,
+      "recall": 0.35,
+      "f2": 0.3043
+    },
+    "by_type": {
+      "PERSON": {
+        "precision": 0.2,
+        "recall": 0.35,
+        "f2": 0.3043
+      },
+      "ORGANIZATION": null,
+      "LOCATION": null,
+      "DATE_TIME": null,
+      "QUANTITY": null,
+      "IDENTIFIER": null
+    },
+    "by_language": {
+      "en": {
+        "precision": 0.69,
+        "recall": 0.66,
+        "f2": 0.6658
+      }
+    }
+  },
+  "any_overlap": {
+    "rule": "ANY_OVERLAP",
+    "overall_micro": {
+      "precision": 0.2,
+      "recall": 0.35,
+      "f2": 0.3043
+    },
+    "macro": {
+      "precision": 0.2,
+      "recall": 0.35,
+      "f2": 0.3043
+    },
+    "by_type": {
+      "PERSON": {
+        "precision": 0.2,
+        "recall": 0.35,
+        "f2": 0.3043
+      },
+      "ORGANIZATION": null,
+      "LOCATION": null,
+      "DATE_TIME": null,
+      "QUANTITY": null,
+      "IDENTIFIER": null
+    },
+    "by_language": {
+      "en": {
+        "precision": 0.69,
+        "recall": 0.66,
+        "f2": 0.6658
+      }
+    }
+  },
+  "tab_metrics": null,
+  "environment": {
+    "machine": "arm64, 8 cores, synthetic",
+    "os": "SyntheticOS 1.0",
+    "runtime": "CPython 3.12.0",
+    "library_versions": {
+      "examplelib": "1.0"
+    }
+  },
+  "detector_languages": [
+    "en"
+  ],
+  "detector_detects": [
+    "PERSON"
+  ]
+}
