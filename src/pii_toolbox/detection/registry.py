@@ -7,6 +7,7 @@ from typing import Any
 
 from pii_toolbox.core import Detector, DetectorRegistry
 from pii_toolbox.detection.gliner_detector import GlinerDetector
+from pii_toolbox.detection.known_names import KnownNamesDetector
 from pii_toolbox.detection.llm_detector import LlmDetector, LlmRuntime
 from pii_toolbox.detection.llm_runtimes import LlamaCppRuntime, MlxRuntime
 from pii_toolbox.detection.presidio_structured import PresidioStructuredDetector
@@ -71,6 +72,8 @@ class FixedDetectorRegistry(DetectorRegistry):
         model_dir: Path | None = None,
         llm_model_path: Path | None = None,
         llm_runtime: str = "llama_cpp",
+        known_names: Sequence[str] = (),
+        known_names_case_insensitive: bool = False,
         factory_overrides: Mapping[str, DetectorFactory] | None = None,
     ) -> None:
         self._llm_model_path = llm_model_path
@@ -80,6 +83,7 @@ class FixedDetectorRegistry(DetectorRegistry):
             "spacy_sm": lambda: spacy_sm_detector(model_dir),
             "roberta": lambda: RobertaDetector(model_dir),
             "gliner": lambda: GlinerDetector(model_dir),
+            "known_names": lambda: KnownNamesDetector(known_names, known_names_case_insensitive),
             "llm": lambda: _ConfiguredLlmDetector(_LoadOnDemandRuntime(llm_runtime, self._resolved_llm_model_path())),
         }
         self._factories.update(factory_overrides or {})
