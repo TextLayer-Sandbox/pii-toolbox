@@ -29,6 +29,14 @@ def test_capitalised_only_is_the_default_and_skips_lowercase():
     assert detect(KnownNamesDetector(["Rose"]), "A rose and Rose.") == ["Rose"]
 
 
+def test_capitalised_only_matches_an_all_uppercase_occurrence():
+    assert detect(KnownNamesDetector(["Rose"]), "ROSE, rose and Rose.") == ["ROSE", "Rose"]
+
+
+def test_capitalised_only_matches_the_rest_of_the_name_in_any_case():
+    assert detect(KnownNamesDetector(["Zephyrine Quill"]), "Zephyrine QUILL and zephyrine quill") == ["Zephyrine QUILL"]
+
+
 def test_case_insensitive_matches_lowercase():
     assert detect(KnownNamesDetector(["Rose"], case_insensitive=True), "A rose and Rose.") == ["rose", "Rose"]
 

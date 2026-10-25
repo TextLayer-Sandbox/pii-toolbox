@@ -19,17 +19,18 @@ def read_names_file(path: Path) -> list[str]:
 class KnownNamesDetector(Detector):
     """Reports every whole-word occurrence of a listed name as a person.
 
-    By default a name matches only with the letter case it is listed in, so listed 'Rose'
-    matches 'Rose' and not 'rose'. With `case_insensitive` it matches in any letter case.
-    Multi-word names match as written, with the listed spacing.
+    By default an occurrence must start with an upper-case letter and may continue in any
+    case, so listed 'Rose' matches 'Rose' and 'ROSE' but not 'rose'. With `case_insensitive`
+    it matches in any letter case. Multi-word names match as written, with the listed spacing.
     """
 
     def __init__(self, names: Iterable[str], case_insensitive: bool = False) -> None:
         unique_names = sorted({name.strip() for name in names if name.strip()}, key=len, reverse=True)
+        self._case_insensitive = case_insensitive
         self._pattern = (
             re.compile(
                 r"(?<!\w)(?:" + "|".join(re.escape(name) for name in unique_names) + r")(?!\w)",
-                re.IGNORECASE if case_insensitive else 0,
+                re.IGNORECASE,
             )
             if unique_names
             else None
@@ -67,4 +68,5 @@ class KnownNamesDetector(Detector):
                 score=1.0,
             )
             for match in self._pattern.finditer(document.text)
+            if self._case_insensitive or match.group()[0].isupper()
         ]
