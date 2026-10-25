@@ -1,0 +1,123 @@
+"""Tests of the co-reference worker protocol using the pattern-based stub worker."""
+
+import json
+import sys
+
+import pytest
+import zmq
+
+from pii_toolbox.coref.nickname_step import NicknameConfig
+from pii_toolbox.coref.resolver import CorefWorkerError, MaverickResolver, stub_worker_command
+from pii_toolbox.core import Document, PiiType, Span
+
+PASSAGE = "David Parker joined in May. Dave was glad, and Mr. Parker thanked the team. Anna Lee waved."
+DOCUMENT = Document(id="d1", text=PASSAGE, language="en")
+MAX_STRING_LENGTH = 20
+MIN_TEXT_FRAGMENT = 4
+
+
+@pytest.fixture
+def runtime_dir(tmp_path_factory):
+    # A short name keeps the ipc socket path under the operating system's socket path limit.
+    return tmp_path_factory.mktemp("c")
+
+
+def person(needle: str) -> Span:
+    start = PASSAGE.index(needle)
+    return Span(start, start + len(needle), PiiType.PERSON, "PERSON", ("fake",), 0.9)
+
+
+def walk(value):
+    yield value
+    if isinstance(value, dict):
+        for key, item in value.items():
+            yield key
+            yield from walk(item)
+    elif isinstance(value, list):
+        for item in value:
+            yield from walk(item)
+
+
+def assert_positions_only(reply: dict) -> None:
+    for value in walk(reply):
+        if isinstance(value, str):
+            assert len(value) <= MAX_STRING_LENGTH
+            assert not (len(value) >= MIN_TEXT_FRAGMENT and value in PASSAGE)
+
+
+def test_worker_reply_holds_positions_only(runtime_dir):
+    with MaverickResolver(stub_worker_command, reply_timeout_seconds=20, runtime_dir=runtime_dir) as resolver:
+        socket = resolver._context.socket(zmq.DEALER)
+        socket.connect(resolver._endpoint)
+        names = [[0, 12]]
+        socket.send(json.dumps({"id": 7, "text": PASSAGE, "names": names}).encode())
+        assert socket.poll(20000)
+        reply = json.loads(socket.recv())
+        socket.close(linger=0)
+    assert reply["id"] == 7
+    assert reply["clusters"]
+    assert_positions_only(reply)
+    for cluster in reply["clusters"]:
+        for start, end in cluster:
+            assert isinstance(start, int) and isinstance(end, int)
+
+
+def test_resolver_returns_group_of_name_forms(runtime_dir):
+    with MaverickResolver(stub_worker_command, reply_timeout_seconds=20, runtime_dir=runtime_dir) as resolver:
+        groups = resolver.resolve(DOCUMENT, [person("David Parker")])
+    assert resolver.name == "maverick"
+    assert resolver.languages == frozenset({"en"})
+    (group,) = groups
+    texts = [PASSAGE[span.start : span.end] for span in group.spans]
+    assert texts == ["David Parker", "Mr. Parker"]
+
+
+def test_detected_nickname_joins_the_group_through_the_nickname_list(runtime_dir):
+    with MaverickResolver(stub_worker_command, reply_timeout_seconds=20, runtime_dir=runtime_dir) as resolver:
+        (group,) = resolver.resolve(DOCUMENT, [person("David Parker"), person("Dave")])
+    assert [PASSAGE[span.start : span.end] for span in group.spans] == ["David Parker", "Dave", "Mr. Parker"]
+
+
+def test_detected_nickname_stays_unlinked_with_the_list_off(runtime_dir):
+    resolver = MaverickResolver(
+        stub_worker_command, reply_timeout_seconds=20, runtime_dir=runtime_dir, nickname_config=NicknameConfig(None)
+    )
+    with resolver:
+        (group,) = resolver.resolve(DOCUMENT, [person("David Parker"), person("Dave")])
+    assert [PASSAGE[span.start : span.end] for span in group.spans] == ["David Parker", "Mr. Parker"]
+
+
+def test_killed_worker_is_restarted_and_request_succeeds(runtime_dir):
+    with MaverickResolver(stub_worker_command, reply_timeout_seconds=20, runtime_dir=runtime_dir) as resolver:
+        assert resolver.resolve(DOCUMENT, [person("David Parker")])
+        first = resolver.worker_process
+        first.kill()
+        first.wait()
+        groups = resolver.resolve(DOCUMENT, [person("David Parker")])
+        assert resolver.worker_process.pid != first.pid
+        assert resolver.worker_process.poll() is None
+    assert len(groups) == 1
+
+
+def test_unresponsive_worker_raises_after_capped_retries(runtime_dir):
+    launches = []
+
+    def silent_worker(endpoint: str) -> list[str]:
+        launches.append(endpoint)
+        return [sys.executable, "-c", "import time; time.sleep(60)"]
+
+    with MaverickResolver(silent_worker, reply_timeout_seconds=0.3, max_retries=2, runtime_dir=runtime_dir) as resolver:
+        with pytest.raises(CorefWorkerError):
+            resolver.resolve(DOCUMENT, [person("David Parker")])
+    assert len(launches) == 3
+
+
+def test_resolve_before_start_raises(runtime_dir):
+    resolver = MaverickResolver(stub_worker_command, runtime_dir=runtime_dir)
+    with pytest.raises(CorefWorkerError):
+        resolver.resolve(DOCUMENT, [person("David Parker")])
+
+
+def test_no_person_spans_needs_no_worker(runtime_dir):
+    resolver = MaverickResolver(stub_worker_command, runtime_dir=runtime_dir)
+    assert resolver.resolve(DOCUMENT, []) == []

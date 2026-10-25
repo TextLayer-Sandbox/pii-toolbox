@@ -1,0 +1,13 @@
+[project]
+name = "pii-toolbox-coref-worker"
+version = "0.1.0"
+description = "Maverick co-reference worker; its own environment keeps the model's pinned dependencies away from the toolbox."
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "maverick-coref",  # the Maverick co-reference model and its loader
+    "transformers<5",  # Maverick's loader and tokenizer expect the 4.x API
+    "pyzmq",  # ROUTER socket the main process talks to
+]
+
+[tool.uv]
+package = false
