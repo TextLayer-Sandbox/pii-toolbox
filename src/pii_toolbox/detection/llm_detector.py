@@ -10,6 +10,7 @@ from typing import Any, Protocol
 
 from pii_toolbox.core import Detector, Document, PiiType, Span
 from pii_toolbox.detection.llm_matching import DEFAULT_LABEL_MAP, match_items
+from pii_toolbox.detection.segmenter import OverlappingTextSegmenter, detect_segmented
 
 
 class LlmRuntime(Protocol):
@@ -46,6 +47,11 @@ _PROMPT_TEMPLATE = (
 )
 
 
+# Characters, about 3,000 tokens, leaving room for the reply inside an 8,192-token window.
+DEFAULT_PROMPT_LENGTH = 12000
+DEFAULT_SEGMENT_OVERLAP = 500
+
+
 def build_prompt(text: str) -> str:
     return _PROMPT_TEMPLATE.format(types=", ".join(pii_type.value for pii_type in PiiType), text=text)
 
@@ -69,13 +75,24 @@ def parse_items(reply: str) -> list[tuple[str, str]]:
 class LlmDetector(Detector):
     """Detects PII with any language model runtime.
 
+    Documents whose prompt would exceed `prompt_length` characters are read in overlapping
+    segments, one prompt each, so the model's context window is never overrun.
     `failed_calls` counts replies that could not be parsed; `unmatched_items` counts items
-    that could not be found in the passage or carried an unknown type.
+    that could not be found in the passage or carried an unknown type, across all segments.
     """
 
-    def __init__(self, runtime: LlmRuntime, name: str = "llm") -> None:
+    def __init__(
+        self,
+        runtime: LlmRuntime,
+        name: str = "llm",
+        prompt_length: int = DEFAULT_PROMPT_LENGTH,
+        segment_overlap: int = DEFAULT_SEGMENT_OVERLAP,
+    ) -> None:
         self._runtime = runtime
         self._name = name
+        self._segmenter = OverlappingTextSegmenter(
+            length=prompt_length - len(build_prompt("")), overlap=segment_overlap
+        )
         self.failed_calls = 0
         self.unmatched_items = 0
 
@@ -95,12 +112,15 @@ class LlmDetector(Detector):
         """The runtime is supplied already loaded."""
 
     def detect(self, document: Document) -> list[Span]:
-        reply = self._runtime.generate_structured(build_prompt(document.text), PII_ITEMS_SCHEMA)
+        return detect_segmented(document.text, self._segmenter, self._detect_passage)
+
+    def _detect_passage(self, passage: str) -> list[Span]:
+        reply = self._runtime.generate_structured(build_prompt(passage), PII_ITEMS_SCHEMA)
         try:
             items = parse_items(reply)
         except ValueError:
             self.failed_calls += 1
             return []
-        spans, unmatched = match_items(document.text, items, DEFAULT_LABEL_MAP, source=self._name)
+        spans, unmatched = match_items(passage, items, DEFAULT_LABEL_MAP, source=self._name)
         self.unmatched_items += len(unmatched)
         return spans

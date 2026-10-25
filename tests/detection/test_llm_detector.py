@@ -1,7 +1,7 @@
 import json
 
 from pii_toolbox.core import Document, PiiType
-from pii_toolbox.detection.llm_detector import PII_ITEMS_SCHEMA, LlmDetector
+from pii_toolbox.detection.llm_detector import PII_ITEMS_SCHEMA, LlmDetector, build_prompt
 
 TEXT = "Ana Souza works at Nordwind Labs in Lisbon. Call 555-0100."
 
@@ -79,3 +79,43 @@ def test_interface_properties():
     assert detector.languages is None
     assert detector.detects == frozenset(PiiType)
     detector.load_models()
+
+
+class PassageReadingRuntime:
+    """Reports every known name found whole in the passage it is sent."""
+
+    def __init__(self, names):
+        self.names = names
+        self.prompts = []
+
+    def generate_structured(self, prompt, json_schema):
+        self.prompts.append(prompt)
+        passage = prompt.split("Passage:\n", 1)[1]
+        items = [{"text": name, "type": "PERSON"} for name in self.names if name in passage]
+        return json.dumps({"items": items})
+
+
+def test_long_document_is_read_in_segments_with_full_text_positions():
+    prompt_length = 12000
+    budget = prompt_length - len(build_prompt(""))
+    boundary_name = "Ana Souza"
+    tail_name = "Bruno Keller"
+    text = "x" * (budget - 4) + boundary_name + "y" * 30_000
+    text = text[:30_000 - len(tail_name) - 10] + tail_name + "z" * 10
+    assert len(text) == 30_000
+    runtime = PassageReadingRuntime([boundary_name, tail_name])
+    detector = LlmDetector(runtime, prompt_length=prompt_length)
+    spans = detector.detect(doc(text))
+    assert len(runtime.prompts) > 2
+    assert all(len(prompt) <= prompt_length for prompt in runtime.prompts)
+    assert [(text[s.start : s.end], s.start) for s in spans] == [
+        (boundary_name, budget - 4),
+        (tail_name, 30_000 - len(tail_name) - 10),
+    ]
+
+
+def test_short_document_is_one_prompt():
+    runtime = PassageReadingRuntime(["Ana Souza"])
+    detector = LlmDetector(runtime)
+    detector.detect(doc())
+    assert len(runtime.prompts) == 1

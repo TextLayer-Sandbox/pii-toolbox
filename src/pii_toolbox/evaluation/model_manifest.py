@@ -59,6 +59,14 @@ def is_present(dest: Path, entry: ModelEntry) -> bool:
     return (dest / entry.directory_name / entry.marker_name).exists()
 
 
+def write_hub_ref(cache_dir: Path, entry: ModelEntry) -> None:
+    """Records the pinned revision as the cache's main ref so loading by hub name works offline."""
+    organisation, name = entry.location.split("/")
+    refs = cache_dir / f"models--{organisation}--{name}" / "refs"
+    refs.mkdir(parents=True, exist_ok=True)
+    (refs / "main").write_text(entry.revision)
+
+
 def download_models(dest: Path, fetch: Fetcher, manifest: list[ModelEntry] | None = None) -> list[ModelEntry]:
     """Fetch every manifest entry not yet present under dest; return the entries fetched.
 
@@ -72,6 +80,8 @@ def download_models(dest: Path, fetch: Fetcher, manifest: list[ModelEntry] | Non
         target = dest / entry.directory_name
         target.mkdir(parents=True, exist_ok=True)
         fetch(entry, target)
+        if entry.source == "huggingface_cache":
+            write_hub_ref(target, entry)
         (target / entry.marker_name).write_text(entry.revision)
         fetched.append(entry)
     return fetched

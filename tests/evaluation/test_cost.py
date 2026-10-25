@@ -90,3 +90,17 @@ def test_warm_up_is_excluded_and_median_of_five_is_taken():
     assert result["load_seconds"] == 0.5
     assert result["throughput_chars_per_second"]["1000"] == 1000 / 3
     assert result["latency_per_1000_chars_median_seconds"] == 3
+
+
+def test_gpu_allocator_memory_is_added_to_peak_memory(monkeypatch):
+    import types
+
+    from pii_toolbox.evaluation import cost_child
+
+    fake_torch = types.SimpleNamespace(
+        backends=types.SimpleNamespace(mps=types.SimpleNamespace(is_available=lambda: True)),
+        mps=types.SimpleNamespace(driver_allocated_memory=lambda: 5_000_000_000),
+    )
+    without_gpu = cost_child.peak_memory_bytes()
+    monkeypatch.setitem(__import__("sys").modules, "torch", fake_torch)
+    assert cost_child.peak_memory_bytes() - without_gpu >= 4_000_000_000
