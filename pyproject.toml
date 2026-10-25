@@ -49,3 +49,6 @@ markers = [
     "data: needs a dataset downloaded",
     "network: needs network access",
 ]
+
+[tool.uv]
+default-groups = "all"

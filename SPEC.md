@@ -40,6 +40,7 @@ Write each requirement as one row under its section, in this format. The fence k
 - D13 [approved, must] Measured setups: Presidio alone, each model tool alone, and each model tool with Presidio. | gate: review: config list has Presidio alone, each model alone, each model with Presidio, and no model-on-model unions
 - D14 [approved, must] An English-only detector is shown as not applicable for other languages, not scored as missing everything. | gate: test: a detector reports only languages it supports; others show n/a in Table 5
 - D15 [approved, must] Agents shortlist and score language models on dev splits; the person picks the model and quantisation. | gate: review: comparison table committed and person's pick recorded
+- D16 [approved, must] A pluggable list of names to always recognise: every exact, whole-word occurrence of a listed name is detected as a person, even when no model finds it. Configuration chooses capitalised-only matching (the default; 'Rose' matches, 'rose' does not) or case-insensitive matching. No fuzzy or typo matching. | gate: test: a listed name no model finds is detected; capitalised-only skips 'rose' for listed 'Rose' and case-insensitive matches it; a one-letter typo is never matched
 
 ## R · Co-reference (identity resolution)
 - R1 [approved, must] A Maverick-based co-reference step groups mentions of the same person, names only. | gate: test: "David Parker", "Dave", "Mr. Parker" in one passage share one group
@@ -48,6 +49,7 @@ Write each requirement as one row under its section, in this format. The fence k
 - R4 [approved, must] Co-reference runs in a separate worker process and returns only character positions, never text. | gate: test: worker reply contains only integers and labels
 - R5 [approved, must] Every detector and the best combination are measured with co-reference off and on. | gate: review: every evaluation config runs with co-reference off and on
 - R6 [approved, must] Co-reference is measured on English text only (TAB and MAPA English); Maverick is English-only. | gate: review: Table 4 has English rows only
+- R7 [approved, must] Co-reference also links name forms through a pluggable nickname list in which every nickname points to exactly one standard given name. The default list is built from carltonnorthern/nicknames (Apache-2.0, its notice kept beside the file) plus added nicknames; configuration can replace it with another file of the same shape or turn it off. | gate: test: 'Dave' joins the 'David Parker' group; 'Matt' and 'Matty' both map to 'Matthew', and neither ever restores to the other; a configured replacement list is used instead of the default
 
 ## S · Session: swapping PII out and back in
 - S1 [approved, must] One session per case; placeholders like <PERSON_1> count each label within the session. | gate: test: two texts in one session share numbering; a new session restarts at 1

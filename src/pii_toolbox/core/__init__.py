@@ -1,5 +1,14 @@
 """Shared types and interfaces used by every part of the toolbox."""
 
+from pii_toolbox.core.label_maps import (
+    GLINER_LABELS,
+    MAPA_LABELS,
+    PRESIDIO_LABELS,
+    ROBERTA_LABELS,
+    TAB_LABELS,
+    OptionalLabelMap,
+    to_pii_type,
+)
 from pii_toolbox.core.types import (
     AnnotatedDocument,
     AnswerKeyBuilder,
@@ -40,6 +49,13 @@ from pii_toolbox.core.types import (
 )
 
 __all__ = [
+    "GLINER_LABELS",
+    "MAPA_LABELS",
+    "OptionalLabelMap",
+    "PRESIDIO_LABELS",
+    "ROBERTA_LABELS",
+    "TAB_LABELS",
+    "to_pii_type",
     "AnnotatedDocument",
     "AnswerKeyBuilder",
     "AnswerSpan",
