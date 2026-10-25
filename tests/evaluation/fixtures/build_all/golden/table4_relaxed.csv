@@ -1,0 +1,5 @@
+Dataset,Detector,F2 off,F2 on,F2 change,ER_di off,ER_di on,ER_di change,ER_qi off,ER_qi on,ER_qi change
+TAB,gliner,0.851,0.880,+0.029,0.800,0.850,+0.050,0.700,0.750,+0.050
+TAB,spacy_lg,0.768,0.824,+0.056,0.900,0.950,+0.050,0.500,0.600,+0.100
+MAPA,gliner,0.828,0.863,+0.035,,,,,,
+MAPA,spacy_lg,0.718,0.766,+0.048,,,,,,

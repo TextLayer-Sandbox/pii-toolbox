@@ -19,7 +19,7 @@ from matplotlib.figure import Figure  # noqa: E402
 from pii_toolbox.core import DatasetSplit, DetectionReport, EvaluationRun, PiiType, SpanMatchRule  # noqa: E402
 from pii_toolbox.evaluation.tables import (  # noqa: E402
     HEADLINE_LANGUAGES,
-    _tool_order,
+    tool_order,
     load_cost_results,
     load_records,
     load_runs,
@@ -78,7 +78,7 @@ def _rule_name(rule: SpanMatchRule) -> str:
 def _runs_of(results_dir: Path, dataset: str, split: DatasetSplit, coreference: bool = False) -> list[EvaluationRun]:
     records = load_records(results_dir, split, coreference)
     runs = [record.run for record in records.values() if record.run.dataset == dataset]
-    return sorted(runs, key=lambda run: _tool_order(run.tool))
+    return sorted(runs, key=lambda run: tool_order(run.tool))
 
 
 def _save(figure: Figure, out_dir: Path, file_name: str) -> Path:

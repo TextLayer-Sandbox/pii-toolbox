@@ -53,7 +53,7 @@ def _number(value: float) -> str:
     return f"{value:.3f}"
 
 
-def _tool_order(tool: str) -> tuple[int, str]:
+def tool_order(tool: str) -> tuple[int, str]:
     return tool.count("+"), tool
 
 
@@ -75,7 +75,11 @@ def load_runs(results_dir: Path, split: DatasetSplit) -> dict[tuple[str, str], E
 
 
 def _tools(runs: dict[tuple[str, str], EvaluationRun], datasets: Sequence[str] = DATASETS) -> list[str]:
-    return sorted({tool for tool, dataset in runs if dataset in datasets}, key=_tool_order)
+    return sorted({tool for tool, dataset in runs if dataset in datasets}, key=tool_order)
+
+
+def _rule_report(run: EvaluationRun, rule: SpanMatchRule) -> DetectionReport:
+    return run.exact_boundaries if rule is SpanMatchRule.EXACT_BOUNDARIES else run.any_overlap
 
 
 def _reports(run: EvaluationRun) -> tuple[DetectionReport, DetectionReport]:
@@ -145,10 +149,15 @@ def _change(off: float, on: float) -> str:
     return f"{on - off:+.3f}"
 
 
-def table4(off: dict[tuple[str, str], ResultRecord], on: dict[tuple[str, str], ResultRecord]) -> Table:
+def table4(
+    off: dict[tuple[str, str], ResultRecord],
+    on: dict[tuple[str, str], ResultRecord],
+    rule: SpanMatchRule = SpanMatchRule.EXACT_BOUNDARIES,
+) -> Table:
     """F2 and TAB entity-level recall with co-reference off, on and the change; English text only.
 
     MAPA rows use the English figures of the run. MAPA has no entity ids, so its recall cells are blank.
+    The F2 columns follow `rule`; the entity-level recall columns are TAB's own metric.
     """
     header = (
         "Dataset", "Detector", "F2 off", "F2 on", "F2 change",
@@ -156,17 +165,17 @@ def table4(off: dict[tuple[str, str], ResultRecord], on: dict[tuple[str, str], R
     )
     rows = []
     for dataset in DATASETS:
-        for tool in sorted({tool for tool, name in off if name == dataset}, key=_tool_order):
+        for tool in sorted({tool for tool, name in off if name == dataset}, key=tool_order):
             if (tool, dataset) not in on:
                 continue
             before, after = off[(tool, dataset)].run, on[(tool, dataset)].run
             if dataset == "mapa":
-                scores = [r.exact_boundaries.by_language.get(ENGLISH) for r in (before, after)]
+                scores = [_rule_report(r, rule).by_language.get(ENGLISH) for r in (before, after)]
                 if None in scores:
                     continue
                 f2_off, f2_on = scores[0].f2, scores[1].f2
             else:
-                f2_off, f2_on = before.exact_boundaries.overall_micro.f2, after.exact_boundaries.overall_micro.f2
+                f2_off, f2_on = _rule_report(before, rule).overall_micro.f2, _rule_report(after, rule).overall_micro.f2
             recall = ["", "", "", "", "", ""]
             if before.tab_metrics and after.tab_metrics:
                 recall = [
@@ -176,7 +185,10 @@ def table4(off: dict[tuple[str, str], ResultRecord], on: dict[tuple[str, str], R
                     _change(before.tab_metrics.er_qi, after.tab_metrics.er_qi),
                 ]
             rows.append((DATASET_TITLES[dataset], tool, _number(f2_off), _number(f2_on), _change(f2_off, f2_on), *recall))
-    return Table("table4", "Table 4: Co-reference off versus on (English text, strict matching)", header, tuple(rows))
+    variant = "strict" if rule is SpanMatchRule.EXACT_BOUNDARIES else "relaxed"
+    return Table(
+        "table4", f"Table 4: Co-reference off versus on (English text, {variant} matching)", header, tuple(rows)
+    )
 
 
 LAMBDA_MEMORY_BYTES = 10 * 1024**3
@@ -187,7 +199,7 @@ _BYTES_PER_GIB = 1024**3
 def load_cost_results(cost_dir: Path) -> list[dict]:
     """The saved cost measurements, one per setup, ordered single tools first then combinations."""
     results = [json.loads(path.read_text(encoding="utf-8")) for path in sorted(cost_dir.glob("*.json"))]
-    return sorted(results, key=lambda result: _tool_order(result["setup"]))
+    return sorted(results, key=lambda result: tool_order(result["setup"]))
 
 
 def table6(results: Sequence[dict]) -> Table:
@@ -240,7 +252,7 @@ def table5(records: dict[tuple[str, str], ResultRecord], rule: SpanMatchRule = S
     languages = [*HEADLINE_LANGUAGES, *sorted(seen - set(HEADLINE_LANGUAGES))]
     header = ("Tool", *languages, TAB_REFERENCE_COLUMN)
     rows = []
-    for tool in sorted({tool for tool, _ in records}, key=_tool_order):
+    for tool in sorted({tool for tool, _ in records}, key=tool_order):
         cells = []
         for language in languages:
             record = mapa.get(tool)
@@ -253,7 +265,7 @@ def table5(records: dict[tuple[str, str], ResultRecord], rule: SpanMatchRule = S
     return Table("table5", f"Table 5: F2 by language, {variant} matching (MAPA; TAB as the English reference)", header, tuple(rows))
 
 
-def _write(tables: Sequence[Table], out_dir: Path) -> list[Path]:
+def write_tables(tables: Sequence[Table], out_dir: Path) -> list[Path]:
     out_dir.mkdir(parents=True, exist_ok=True)
     written = []
     for table in tables:
@@ -265,16 +277,16 @@ def _write(tables: Sequence[Table], out_dir: Path) -> list[Path]:
 
 
 def build_table1(results_dir: Path, out_dir: Path, split: DatasetSplit = DatasetSplit.TEST) -> list[Path]:
-    return _write([table1(load_runs(results_dir, split))], out_dir)
+    return write_tables([table1(load_runs(results_dir, split))], out_dir)
 
 
 def build_table2(results_dir: Path, out_dir: Path, split: DatasetSplit = DatasetSplit.TEST) -> list[Path]:
     runs = load_runs(results_dir, split)
-    return _write([table2(runs, SpanMatchRule.EXACT_BOUNDARIES), table2(runs, SpanMatchRule.ANY_OVERLAP)], out_dir)
+    return write_tables([table2(runs, SpanMatchRule.EXACT_BOUNDARIES), table2(runs, SpanMatchRule.ANY_OVERLAP)], out_dir)
 
 
 def build_table3(results_dir: Path, out_dir: Path, split: DatasetSplit = DatasetSplit.TEST) -> list[Path]:
-    return _write([table3(load_runs(results_dir, split))], out_dir)
+    return write_tables([table3(load_runs(results_dir, split))], out_dir)
 
 
 def build_table5(
@@ -283,12 +295,12 @@ def build_table5(
     split: DatasetSplit = DatasetSplit.TEST,
     rule: SpanMatchRule = SpanMatchRule.EXACT_BOUNDARIES,
 ) -> list[Path]:
-    return _write([table5(load_records(results_dir, split), rule)], out_dir)
+    return write_tables([table5(load_records(results_dir, split), rule)], out_dir)
 
 
 def build_table4(results_dir: Path, out_dir: Path, split: DatasetSplit = DatasetSplit.TEST) -> list[Path]:
-    return _write([table4(load_records(results_dir, split), load_records(results_dir, split, coreference=True))], out_dir)
+    return write_tables([table4(load_records(results_dir, split), load_records(results_dir, split, coreference=True))], out_dir)
 
 
 def build_table6(cost_dir: Path, out_dir: Path) -> list[Path]:
-    return _write([table6(load_cost_results(cost_dir))], out_dir)
+    return write_tables([table6(load_cost_results(cost_dir))], out_dir)

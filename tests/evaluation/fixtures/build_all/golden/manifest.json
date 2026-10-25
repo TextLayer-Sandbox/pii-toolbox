@@ -1,0 +1,638 @@
+{
+  "charts": {
+    "chart_a.svg": [
+      "gliner__tab__test__coref-off.json",
+      "presidio_structured__tab__test__coref-off.json",
+      "spacy_lg__tab__test__coref-off.json"
+    ],
+    "chart_b.svg": [
+      "gliner__tab__test__coref-off.json",
+      "presidio_structured__tab__test__coref-off.json",
+      "spacy_lg__tab__test__coref-off.json"
+    ],
+    "chart_c.svg": [
+      "gliner__tab__test__coref-off.json",
+      "presidio_structured__tab__test__coref-off.json",
+      "spacy_lg__tab__test__coref-off.json"
+    ],
+    "chart_d.svg": [
+      "gliner__tab__test__coref-off.json",
+      "presidio_structured__tab__test__coref-off.json",
+      "spacy_lg__tab__test__coref-off.json",
+      "cost/gliner.json",
+      "cost/presidio_structured.json",
+      "cost/spacy_lg.json"
+    ],
+    "chart_e.svg": [
+      "gliner__mapa__test__coref-off.json",
+      "spacy_lg__mapa__test__coref-off.json"
+    ],
+    "chart_f.svg": [
+      "gliner__tab__test__coref-off.json",
+      "presidio_structured__tab__test__coref-off.json",
+      "spacy_lg__tab__test__coref-off.json",
+      "gliner__tab__test__coref-on.json",
+      "spacy_lg__tab__test__coref-on.json"
+    ]
+  },
+  "tables": {
+    "table1": {
+      "gliner | MAPA F2 relaxed": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "gliner | MAPA F2 strict": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "gliner | MAPA P relaxed": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "gliner | MAPA P strict": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "gliner | MAPA R relaxed": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "gliner | MAPA R strict": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "gliner | TAB F2 relaxed": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "gliner | TAB F2 strict": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "gliner | TAB P relaxed": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "gliner | TAB P strict": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "gliner | TAB R relaxed": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "gliner | TAB R strict": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "presidio_structured | TAB F2 relaxed": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "presidio_structured | TAB F2 strict": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "presidio_structured | TAB P relaxed": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "presidio_structured | TAB P strict": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "presidio_structured | TAB R relaxed": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "presidio_structured | TAB R strict": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "spacy_lg | MAPA F2 relaxed": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "spacy_lg | MAPA F2 strict": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "spacy_lg | MAPA P relaxed": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "spacy_lg | MAPA P strict": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "spacy_lg | MAPA R relaxed": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "spacy_lg | MAPA R strict": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "spacy_lg | TAB F2 relaxed": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "spacy_lg | TAB F2 strict": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "spacy_lg | TAB P relaxed": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "spacy_lg | TAB P strict": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "spacy_lg | TAB R relaxed": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "spacy_lg | TAB R strict": [
+        "spacy_lg__tab__test__coref-off.json"
+      ]
+    },
+    "table2_relaxed": {
+      "MAPA / gliner | DATE_TIME": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "MAPA / gliner | LOCATION": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "MAPA / gliner | ORGANIZATION": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "MAPA / gliner | PERSON": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "MAPA / gliner | QUANTITY": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | DATE_TIME": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | LOCATION": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | ORGANIZATION": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | PERSON": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | QUANTITY": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "TAB / gliner | DATE_TIME": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "TAB / gliner | IDENTIFIER": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "TAB / gliner | LOCATION": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "TAB / gliner | ORGANIZATION": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "TAB / gliner | PERSON": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "TAB / gliner | QUANTITY": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | DATE_TIME": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | IDENTIFIER": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | LOCATION": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | ORGANIZATION": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | PERSON": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | QUANTITY": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | DATE_TIME": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | IDENTIFIER": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | LOCATION": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | ORGANIZATION": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | PERSON": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | QUANTITY": [
+        "spacy_lg__tab__test__coref-off.json"
+      ]
+    },
+    "table2_strict": {
+      "MAPA / gliner | DATE_TIME": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "MAPA / gliner | LOCATION": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "MAPA / gliner | ORGANIZATION": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "MAPA / gliner | PERSON": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "MAPA / gliner | QUANTITY": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | DATE_TIME": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | LOCATION": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | ORGANIZATION": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | PERSON": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | QUANTITY": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "TAB / gliner | DATE_TIME": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "TAB / gliner | IDENTIFIER": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "TAB / gliner | LOCATION": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "TAB / gliner | ORGANIZATION": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "TAB / gliner | PERSON": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "TAB / gliner | QUANTITY": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | DATE_TIME": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | IDENTIFIER": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | LOCATION": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | ORGANIZATION": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | PERSON": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | QUANTITY": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | DATE_TIME": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | IDENTIFIER": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | LOCATION": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | ORGANIZATION": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | PERSON": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | QUANTITY": [
+        "spacy_lg__tab__test__coref-off.json"
+      ]
+    },
+    "table3": {
+      "gliner | Any-annotator F2 relaxed": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "gliner | Any-annotator F2 strict": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "gliner | ER_di": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "gliner | ER_qi": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "gliner | WP": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "presidio_structured | Any-annotator F2 relaxed": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "presidio_structured | Any-annotator F2 strict": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "presidio_structured | ER_di": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "presidio_structured | ER_qi": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "presidio_structured | WP": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "spacy_lg | Any-annotator F2 relaxed": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "spacy_lg | Any-annotator F2 strict": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "spacy_lg | ER_di": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "spacy_lg | ER_qi": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "spacy_lg | WP": [
+        "spacy_lg__tab__test__coref-off.json"
+      ]
+    },
+    "table4_relaxed": {
+      "MAPA / gliner | F2 change": [
+        "gliner__mapa__test__coref-off.json",
+        "gliner__mapa__test__coref-on.json"
+      ],
+      "MAPA / gliner | F2 off": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "MAPA / gliner | F2 on": [
+        "gliner__mapa__test__coref-on.json"
+      ],
+      "MAPA / spacy_lg | F2 change": [
+        "spacy_lg__mapa__test__coref-off.json",
+        "spacy_lg__mapa__test__coref-on.json"
+      ],
+      "MAPA / spacy_lg | F2 off": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | F2 on": [
+        "spacy_lg__mapa__test__coref-on.json"
+      ],
+      "TAB / gliner | ER_di change": [
+        "gliner__tab__test__coref-off.json",
+        "gliner__tab__test__coref-on.json"
+      ],
+      "TAB / gliner | ER_di off": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "TAB / gliner | ER_di on": [
+        "gliner__tab__test__coref-on.json"
+      ],
+      "TAB / gliner | ER_qi change": [
+        "gliner__tab__test__coref-off.json",
+        "gliner__tab__test__coref-on.json"
+      ],
+      "TAB / gliner | ER_qi off": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "TAB / gliner | ER_qi on": [
+        "gliner__tab__test__coref-on.json"
+      ],
+      "TAB / gliner | F2 change": [
+        "gliner__tab__test__coref-off.json",
+        "gliner__tab__test__coref-on.json"
+      ],
+      "TAB / gliner | F2 off": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "TAB / gliner | F2 on": [
+        "gliner__tab__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | ER_di change": [
+        "spacy_lg__tab__test__coref-off.json",
+        "spacy_lg__tab__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | ER_di off": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | ER_di on": [
+        "spacy_lg__tab__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | ER_qi change": [
+        "spacy_lg__tab__test__coref-off.json",
+        "spacy_lg__tab__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | ER_qi off": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | ER_qi on": [
+        "spacy_lg__tab__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | F2 change": [
+        "spacy_lg__tab__test__coref-off.json",
+        "spacy_lg__tab__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | F2 off": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | F2 on": [
+        "spacy_lg__tab__test__coref-on.json"
+      ]
+    },
+    "table4_strict": {
+      "MAPA / gliner | F2 change": [
+        "gliner__mapa__test__coref-off.json",
+        "gliner__mapa__test__coref-on.json"
+      ],
+      "MAPA / gliner | F2 off": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "MAPA / gliner | F2 on": [
+        "gliner__mapa__test__coref-on.json"
+      ],
+      "MAPA / spacy_lg | F2 change": [
+        "spacy_lg__mapa__test__coref-off.json",
+        "spacy_lg__mapa__test__coref-on.json"
+      ],
+      "MAPA / spacy_lg | F2 off": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | F2 on": [
+        "spacy_lg__mapa__test__coref-on.json"
+      ],
+      "TAB / gliner | ER_di change": [
+        "gliner__tab__test__coref-off.json",
+        "gliner__tab__test__coref-on.json"
+      ],
+      "TAB / gliner | ER_di off": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "TAB / gliner | ER_di on": [
+        "gliner__tab__test__coref-on.json"
+      ],
+      "TAB / gliner | ER_qi change": [
+        "gliner__tab__test__coref-off.json",
+        "gliner__tab__test__coref-on.json"
+      ],
+      "TAB / gliner | ER_qi off": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "TAB / gliner | ER_qi on": [
+        "gliner__tab__test__coref-on.json"
+      ],
+      "TAB / gliner | F2 change": [
+        "gliner__tab__test__coref-off.json",
+        "gliner__tab__test__coref-on.json"
+      ],
+      "TAB / gliner | F2 off": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "TAB / gliner | F2 on": [
+        "gliner__tab__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | ER_di change": [
+        "spacy_lg__tab__test__coref-off.json",
+        "spacy_lg__tab__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | ER_di off": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | ER_di on": [
+        "spacy_lg__tab__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | ER_qi change": [
+        "spacy_lg__tab__test__coref-off.json",
+        "spacy_lg__tab__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | ER_qi off": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | ER_qi on": [
+        "spacy_lg__tab__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | F2 change": [
+        "spacy_lg__tab__test__coref-off.json",
+        "spacy_lg__tab__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | F2 off": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | F2 on": [
+        "spacy_lg__tab__test__coref-on.json"
+      ]
+    },
+    "table5_relaxed": {
+      "gliner | TAB (English reference)": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "gliner | de": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "gliner | en": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "gliner | fr": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "presidio_structured | TAB (English reference)": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "spacy_lg | TAB (English reference)": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "spacy_lg | de": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "spacy_lg | en": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "spacy_lg | fr": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ]
+    },
+    "table5_strict": {
+      "gliner | TAB (English reference)": [
+        "gliner__tab__test__coref-off.json"
+      ],
+      "gliner | de": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "gliner | en": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "gliner | fr": [
+        "gliner__mapa__test__coref-off.json"
+      ],
+      "presidio_structured | TAB (English reference)": [
+        "presidio_structured__tab__test__coref-off.json"
+      ],
+      "spacy_lg | TAB (English reference)": [
+        "spacy_lg__tab__test__coref-off.json"
+      ],
+      "spacy_lg | de": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "spacy_lg | en": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ],
+      "spacy_lg | fr": [
+        "spacy_lg__mapa__test__coref-off.json"
+      ]
+    },
+    "table6": {
+      "gliner | Latency per 1,000 chars (s)": [
+        "cost/gliner.json"
+      ],
+      "gliner | Load time (s)": [
+        "cost/gliner.json"
+      ],
+      "gliner | Peak memory (GiB)": [
+        "cost/gliner.json"
+      ],
+      "gliner | Throughput at 100k chars (chars/s)": [
+        "cost/gliner.json"
+      ],
+      "gliner | Throughput at 10k chars (chars/s)": [
+        "cost/gliner.json"
+      ],
+      "gliner | Throughput at 1k chars (chars/s)": [
+        "cost/gliner.json"
+      ],
+      "gliner | fits Lambda (10 GB)": [
+        "cost/gliner.json"
+      ],
+      "presidio_structured | Latency per 1,000 chars (s)": [
+        "cost/presidio_structured.json"
+      ],
+      "presidio_structured | Load time (s)": [
+        "cost/presidio_structured.json"
+      ],
+      "presidio_structured | Peak memory (GiB)": [
+        "cost/presidio_structured.json"
+      ],
+      "presidio_structured | Throughput at 100k chars (chars/s)": [
+        "cost/presidio_structured.json"
+      ],
+      "presidio_structured | Throughput at 10k chars (chars/s)": [
+        "cost/presidio_structured.json"
+      ],
+      "presidio_structured | Throughput at 1k chars (chars/s)": [
+        "cost/presidio_structured.json"
+      ],
+      "presidio_structured | fits Lambda (10 GB)": [
+        "cost/presidio_structured.json"
+      ],
+      "spacy_lg | Latency per 1,000 chars (s)": [
+        "cost/spacy_lg.json"
+      ],
+      "spacy_lg | Load time (s)": [
+        "cost/spacy_lg.json"
+      ],
+      "spacy_lg | Peak memory (GiB)": [
+        "cost/spacy_lg.json"
+      ],
+      "spacy_lg | Throughput at 100k chars (chars/s)": [
+        "cost/spacy_lg.json"
+      ],
+      "spacy_lg | Throughput at 10k chars (chars/s)": [
+        "cost/spacy_lg.json"
+      ],
+      "spacy_lg | Throughput at 1k chars (chars/s)": [
+        "cost/spacy_lg.json"
+      ],
+      "spacy_lg | fits Lambda (10 GB)": [
+        "cost/spacy_lg.json"
+      ]
+    }
+  }
+}

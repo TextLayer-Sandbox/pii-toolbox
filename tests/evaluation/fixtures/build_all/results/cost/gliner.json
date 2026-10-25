@@ -1,0 +1,14 @@
+{
+  "setup": "gliner",
+  "peak_memory_bytes": 3221225472,
+  "load_seconds": 1.5,
+  "throughput_chars_per_second": {
+    "1000": 9000.0,
+    "10000": 9500.0,
+    "100000": 9200.0
+  },
+  "latency_per_1000_chars_median_seconds": 0.4,
+  "fits_lambda": true,
+  "environment": {},
+  "not_measured": []
+}
