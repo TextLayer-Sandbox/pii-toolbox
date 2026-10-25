@@ -24,11 +24,13 @@ def test_fetches_each_manifest_entry_once_inside_dest(tmp_path):
             "urchade/gliner_multi_pii-v1",
             "Jean-Baptiste/roberta-large-ner-english",
             "en_core_web_lg",
+            "en_core_web_md",
             "en_core_web_sm",
             "sapienzanlp/maverick-mes-ontonotes",
             "nltk_punkt",
             "microsoft/deberta-v3-large",
             "microsoft/mdeberta-v3-base",
+            "google-bert/bert-base-uncased",
         ]
     )
     assert len(calls) == len(MODEL_MANIFEST)
