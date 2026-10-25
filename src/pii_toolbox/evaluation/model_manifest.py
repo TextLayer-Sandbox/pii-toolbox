@@ -40,11 +40,13 @@ MODEL_MANIFEST: list[ModelEntry] = [
     ModelEntry("urchade/gliner_multi_pii-v1", "huggingface", "1fcf13e85f4eef5394e1fcd406cf2ca9ea82351d", "urchade/gliner_multi_pii-v1"),
     ModelEntry("Jean-Baptiste/roberta-large-ner-english", "huggingface", "8f3abc1ef81ffbbb0e80568d4fed1dd10d459548", "Jean-Baptiste/roberta-large-ner-english"),
     ModelEntry("en_core_web_lg", "spacy", "3.8.0", "https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl"),
+    ModelEntry("en_core_web_md", "spacy", "3.8.0", "https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.8.0/en_core_web_md-3.8.0-py3-none-any.whl"),
     ModelEntry("en_core_web_sm", "spacy", "3.8.0", "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl"),
     ModelEntry("sapienzanlp/maverick-mes-ontonotes", "huggingface", "087a90f0380ec1f20ed19732b657f53fd3542c81", "sapienzanlp/maverick-mes-ontonotes"),
     ModelEntry("nltk_punkt", "download", "550b6625bcef1f2abff2ff770a5a0d272c9c6b2a", "https://raw.githubusercontent.com/nltk/nltk_data/550b6625bcef1f2abff2ff770a5a0d272c9c6b2a/packages/tokenizers/punkt.zip", directory="nltk_punkt"),
     ModelEntry("microsoft/deberta-v3-large", "huggingface_cache", "64a8c8eab3e352a784c658aef62be1662607476f", "microsoft/deberta-v3-large", directory="huggingface_cache"),
     ModelEntry("microsoft/mdeberta-v3-base", "huggingface_cache", "a0484667b22365f84929a935b5e50a51f71f159d", "microsoft/mdeberta-v3-base", directory="huggingface_cache"),
+    ModelEntry("google-bert/bert-base-uncased", "huggingface_cache", "86b5e0934494bd15c9632b12f734a8a67f723594", "google-bert/bert-base-uncased", directory="huggingface_cache"),
 ]
 
 
