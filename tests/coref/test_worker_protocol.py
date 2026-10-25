@@ -6,6 +6,7 @@ import sys
 import pytest
 import zmq
 
+from pii_toolbox.coref.nickname_step import NicknameConfig
 from pii_toolbox.coref.resolver import CorefWorkerError, MaverickResolver, stub_worker_command
 from pii_toolbox.core import Document, PiiType, Span
 
@@ -69,6 +70,21 @@ def test_resolver_returns_group_of_name_forms(runtime_dir):
     (group,) = groups
     texts = [PASSAGE[span.start : span.end] for span in group.spans]
     assert texts == ["David Parker", "Mr. Parker"]
+
+
+def test_detected_nickname_joins_the_group_through_the_nickname_list(runtime_dir):
+    with MaverickResolver(stub_worker_command, reply_timeout_seconds=20, runtime_dir=runtime_dir) as resolver:
+        (group,) = resolver.resolve(DOCUMENT, [person("David Parker"), person("Dave")])
+    assert [PASSAGE[span.start : span.end] for span in group.spans] == ["David Parker", "Dave", "Mr. Parker"]
+
+
+def test_detected_nickname_stays_unlinked_with_the_list_off(runtime_dir):
+    resolver = MaverickResolver(
+        stub_worker_command, reply_timeout_seconds=20, runtime_dir=runtime_dir, nickname_config=NicknameConfig(None)
+    )
+    with resolver:
+        (group,) = resolver.resolve(DOCUMENT, [person("David Parker"), person("Dave")])
+    assert [PASSAGE[span.start : span.end] for span in group.spans] == ["David Parker", "Mr. Parker"]
 
 
 def test_killed_worker_is_restarted_and_request_succeeds(runtime_dir):

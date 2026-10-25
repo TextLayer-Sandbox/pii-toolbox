@@ -22,6 +22,7 @@ from typing import Self
 import zmq
 
 from pii_toolbox.coref.groups import RESOLVER_NAME, build_groups
+from pii_toolbox.coref.nickname_step import NicknameConfig, apply_nickname_step
 from pii_toolbox.core import Document, EntityGroup, IdentityResolver, PiiType, Span
 from pii_toolbox.evaluation.model_manifest import default_model_dir
 
@@ -52,7 +53,9 @@ def stub_worker_command(endpoint: str) -> list[str]:
 class MaverickResolver(IdentityResolver):
     """Groups mentions of one person by asking a co-reference worker process.
 
-    Starting the worker is explicit: call start() or use the resolver as a context manager.
+    Detected names the model left unlinked then join a group through the nickname list chosen by
+    `nickname_config`. Starting the worker is explicit: call start() or use the resolver as a
+    context manager.
     """
 
     languages = frozenset({"en"})
@@ -63,11 +66,13 @@ class MaverickResolver(IdentityResolver):
         reply_timeout_seconds: float = DEFAULT_REPLY_TIMEOUT_SECONDS,
         max_retries: int = DEFAULT_MAX_RETRIES,
         runtime_dir: Path | None = None,
+        nickname_config: NicknameConfig = NicknameConfig(),
     ) -> None:
         self._worker_command = worker_command
         self._reply_timeout_seconds = reply_timeout_seconds
         self._max_retries = max_retries
         self._runtime_dir = runtime_dir
+        self._nickname_config = nickname_config
         self._own_runtime_dir: tempfile.TemporaryDirectory | None = None
         self._context: zmq.Context | None = None
         self._socket: zmq.Socket | None = None
@@ -118,7 +123,8 @@ class MaverickResolver(IdentityResolver):
         if not person_spans:
             return []
         clusters = self._request_clusters(document.text, [(span.start, span.end) for span in person_spans])
-        return build_groups(document, spans, clusters)
+        groups = build_groups(document, spans, clusters)
+        return apply_nickname_step(document, spans, groups, self._nickname_config)
 
     def _launch(self) -> None:
         if self._socket is not None:

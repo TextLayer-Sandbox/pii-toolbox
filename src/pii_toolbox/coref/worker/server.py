@@ -26,11 +26,11 @@ _NAME_RUN = re.compile(r"(?:(?:Mr|Mrs|Ms|Dr|Prof)\.\s+)?[A-Z][a-z]+(?:\s+[A-Z][a
 
 
 def stub_clusters(text: str) -> list[list[tuple[int, int]]]:
-    """Clusters every capitalised name run by its last word; a deterministic stand-in for the model."""
+    """Clusters capitalised name runs that share a last word, reporting only clusters of two or more mentions."""
     by_last_word: dict[str, list[tuple[int, int]]] = {}
     for match in _NAME_RUN.finditer(text):
         by_last_word.setdefault(match.group().split()[-1], []).append((match.start(), match.end()))
-    return list(by_last_word.values())
+    return [cluster for cluster in by_last_word.values() if len(cluster) > 1]
 
 
 def load_offline_text_resources(model_dir: Path) -> None:
