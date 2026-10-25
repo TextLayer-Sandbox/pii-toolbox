@@ -40,9 +40,13 @@ class CorefWorkerError(RuntimeError):
     """The worker did not answer after every allowed restart, or was used before it was started."""
 
 
-def maverick_worker_command(endpoint: str) -> list[str]:
-    """Launches the real worker in its own uv environment, reading the downloaded models."""
-    return ["uv", "run", "--project", str(WORKER_DIR), "python", str(WORKER_DIR / "server.py"), "--endpoint", endpoint, "--model-dir", str(default_model_dir())]
+def maverick_worker_command(model_dir: Path) -> WorkerCommand:
+    """Builds the command that launches the real worker in its own uv environment, reading models from `model_dir`."""
+
+    def command(endpoint: str) -> list[str]:
+        return ["uv", "run", "--project", str(WORKER_DIR), "python", str(WORKER_DIR / "server.py"), "--endpoint", endpoint, "--model-dir", str(model_dir)]
+
+    return command
 
 
 def stub_worker_command(endpoint: str) -> list[str]:
@@ -54,21 +58,24 @@ class MaverickResolver(IdentityResolver):
     """Groups mentions of one person by asking a co-reference worker process.
 
     Detected names the model left unlinked then join a group through the nickname list chosen by
-    `nickname_config`. Starting the worker is explicit: call start() or use the resolver as a
-    context manager.
+    `nickname_config`. The real worker reads its models from `model_dir` (the default model
+    directory when omitted); a custom `worker_command` replaces the real worker.
+    Starting the worker is explicit: call start() or use the resolver as a context manager.
     """
 
     languages = frozenset({"en"})
 
     def __init__(
         self,
-        worker_command: WorkerCommand = maverick_worker_command,
+        worker_command: WorkerCommand | None = None,
         reply_timeout_seconds: float = DEFAULT_REPLY_TIMEOUT_SECONDS,
         max_retries: int = DEFAULT_MAX_RETRIES,
         runtime_dir: Path | None = None,
         nickname_config: NicknameConfig = NicknameConfig(),
+        model_dir: Path | None = None,
     ) -> None:
-        self._worker_command = worker_command
+        self._model_dir = model_dir or default_model_dir()
+        self._worker_command = worker_command or maverick_worker_command(self._model_dir)
         self._reply_timeout_seconds = reply_timeout_seconds
         self._max_retries = max_retries
         self._runtime_dir = runtime_dir
@@ -131,7 +138,7 @@ class MaverickResolver(IdentityResolver):
             self._socket.close(linger=0)
         self._socket = self._context.socket(zmq.DEALER)
         self._socket.connect(self._endpoint)
-        environment = {**os.environ, "HF_HUB_OFFLINE": "1", "HF_HUB_CACHE": str(default_model_dir() / ENCODER_CACHE_DIRECTORY)}
+        environment = {**os.environ, "HF_HUB_OFFLINE": "1", "HF_HUB_CACHE": str(self._model_dir / ENCODER_CACHE_DIRECTORY)}
         self._process = subprocess.Popen(list(self._worker_command(self._endpoint)), env=environment)
 
     def _stop_worker(self) -> None:
