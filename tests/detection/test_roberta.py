@@ -74,3 +74,14 @@ def test_real_model_finds_the_person():
     detector.load_models()
     spans = detector.detect(Document(id="d", text=TEXT, language="en"))
     assert any(s.pii_type is PiiType.PERSON and TEXT[s.start : s.end] == NAME for s in spans)
+
+
+def test_punctuation_only_span_is_dropped_and_name_remains():
+    text = "Maria Gonzalez works at Acme Corp."
+    dot = text.rindex(".")
+    entities = [
+        {"entity_group": "PER", "score": 0.9, "start": 0, "end": len(NAME)},
+        {"entity_group": "ORG", "score": 0.9, "start": dot, "end": dot + 1},
+    ]
+    spans = RobertaDetector(pipeline=lambda segment: entities).detect(Document(id="d", text=text, language="en"))
+    assert [text[s.start : s.end] for s in spans] == [NAME]

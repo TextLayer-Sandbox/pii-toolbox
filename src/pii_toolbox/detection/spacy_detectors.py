@@ -87,7 +87,7 @@ class SpacyDetector(Detector):
                 score=None,
             )
             for entity in self._pipeline(document.text).ents
-            if entity.label_ in SPACY_LABELS and entity.start_char < entity.end_char
+            if entity.label_ in SPACY_LABELS and any(c.isalnum() for c in document.text[entity.start_char : entity.end_char])
         ]
 
 

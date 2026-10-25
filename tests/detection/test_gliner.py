@@ -114,3 +114,15 @@ def test_real_model_finds_names_at_correct_positions_in_long_text():
     found = {s.start for s in spans if s.pii_type is PiiType.PERSON and text[s.start : s.end] == NAME}
     assert found <= expected
     assert len(found) >= 0.8 * len(expected)
+
+
+def test_punctuation_only_span_is_dropped_and_name_remains():
+    text = "Maria Gonzalez works at Acme Corp."
+    dot = text.rindex(".")
+    entities = [
+        {"start": 0, "end": len(NAME), "label": "person", "score": 0.9},
+        {"start": dot, "end": dot + 1, "label": "organization", "score": 0.9},
+    ]
+    detector = GlinerDetector(model=StubModel(lambda segment: entities))
+    spans = detector.detect(Document(id="d", text=text, language="en"))
+    assert [text[s.start : s.end] for s in spans] == [NAME]
