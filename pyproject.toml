@@ -36,6 +36,9 @@ evaluation = [
     "numpy",  # score and statistics arithmetic
     "matplotlib",  # result figures
     "psutil",  # peak memory measurement in cost runs
+    "tqdm",  # progress bars in TAB's evaluation script
+    "pandas",  # TAB's evaluation script reads and joins annotation tables
+    "intervaltree",  # TAB's evaluation script looks up character spans
 ]
 coref = [
     "pyzmq",  # carries messages to the co-reference worker running in its own environment
