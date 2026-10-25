@@ -1,0 +1,21 @@
+{
+  "setup": "just_over_model",
+  "peak_memory_bytes": 10844792422,
+  "load_seconds": 31.5,
+  "throughput_chars_per_second": {
+    "1000": 800.0,
+    "10000": 900.0,
+    "100000": 850.0
+  },
+  "latency_per_1000_chars_median_seconds": 1.2,
+  "fits_lambda": true,
+  "environment": {
+    "machine": "Synthetic",
+    "memory_bytes": 0,
+    "cpu_cores": "8",
+    "os": "SyntheticOS",
+    "python": "3.12.0",
+    "library_versions": {}
+  },
+  "not_measured": []
+}

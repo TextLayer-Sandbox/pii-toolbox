@@ -1,0 +1,8 @@
+**Table 4: Co-reference off versus on (English text, strict matching)**
+
+| Dataset | Detector | F2 off | F2 on | F2 change | ER_di off | ER_di on | ER_di change | ER_qi off | ER_qi on | ER_qi change |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| TAB | gliner | 0.750 | 0.778 | +0.028 | 0.800 | 0.850 | +0.050 | 0.700 | 0.750 | +0.050 |
+| TAB | spacy_lg | 0.668 | 0.724 | +0.056 | 0.900 | 0.950 | +0.050 | 0.500 | 0.600 | +0.100 |
+| MAPA | gliner | 0.728 | 0.762 | +0.034 |  |  |  |  |  |  |
+| MAPA | spacy_lg | 0.618 | 0.666 | +0.048 |  |  |  |  |  |  |

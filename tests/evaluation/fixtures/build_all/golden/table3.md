@@ -1,0 +1,7 @@
+**Table 3: TAB official metrics**
+
+| Tool | ER_di | ER_qi | WP | Any-annotator F2 strict | Any-annotator F2 relaxed |
+| --- | --- | --- | --- | --- | --- |
+| gliner | 0.800 | 0.700 | 0.200 | 0.750 | 0.851 |
+| presidio_structured | 0.100 | 0.100 | 0.500 | 0.292 | 0.402 |
+| spacy_lg | 0.900 | 0.500 | 0.250 | 0.668 | 0.768 |

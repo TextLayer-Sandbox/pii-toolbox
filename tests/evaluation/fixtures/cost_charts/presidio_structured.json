@@ -1,0 +1,14 @@
+{
+  "setup": "presidio_structured",
+  "peak_memory_bytes": 536870912,
+  "load_seconds": 1.0,
+  "throughput_chars_per_second": {
+    "1000": 1.0,
+    "10000": 1.0,
+    "100000": 1.0
+  },
+  "latency_per_1000_chars_median_seconds": 0.02,
+  "fits_lambda": true,
+  "environment": {},
+  "not_measured": []
+}

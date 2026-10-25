@@ -1,0 +1,6 @@
+Tool,Peak memory (GiB),Load time (s),Throughput at 1k chars (chars/s),Throughput at 10k chars (chars/s),Throughput at 100k chars (chars/s),"Latency per 1,000 chars (s)",fits Lambda (10 GB)
+just_over_model,10.10,31.50,800,900,850,1.200,no
+just_under_model,9.90,30.00,900,1000,950,1.000,yes
+presidio_structured,0.50,0.25,50000,52000,51000,0.020,yes
+small_model,1.50,1.50,8000,9000,8500,0.125,yes
+small_model+presidio_structured,1.75,1.75,7000,8000,7500,0.140,yes

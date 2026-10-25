@@ -1,0 +1,89 @@
+{
+  "tool": "spacy_lg",
+  "coreference": true,
+  "dataset": "tab",
+  "split": "TEST",
+  "exact_boundaries": {
+    "rule": "EXACT_BOUNDARIES",
+    "overall_micro": {
+      "precision": 0.74,
+      "recall": 0.72,
+      "f2": 0.7239
+    },
+    "macro": {
+      "precision": 0.74,
+      "recall": 0.72,
+      "f2": 0.7239
+    },
+    "by_type": {
+      "PERSON": {
+        "precision": 0.74,
+        "recall": 0.72,
+        "f2": 0.7239
+      },
+      "ORGANIZATION": null,
+      "LOCATION": null,
+      "DATE_TIME": null,
+      "QUANTITY": null,
+      "IDENTIFIER": null
+    },
+    "by_language": {
+      "en": {
+        "precision": 0.74,
+        "recall": 0.72,
+        "f2": 0.7239
+      }
+    }
+  },
+  "any_overlap": {
+    "rule": "ANY_OVERLAP",
+    "overall_micro": {
+      "precision": 0.74,
+      "recall": 0.72,
+      "f2": 0.7239
+    },
+    "macro": {
+      "precision": 0.74,
+      "recall": 0.72,
+      "f2": 0.7239
+    },
+    "by_type": {
+      "PERSON": {
+        "precision": 0.74,
+        "recall": 0.72,
+        "f2": 0.7239
+      },
+      "ORGANIZATION": null,
+      "LOCATION": null,
+      "DATE_TIME": null,
+      "QUANTITY": null,
+      "IDENTIFIER": null
+    },
+    "by_language": {
+      "en": {
+        "precision": 0.74,
+        "recall": 0.72,
+        "f2": 0.7239
+      }
+    }
+  },
+  "tab_metrics": {
+    "er_di": 0.95,
+    "er_qi": 0.6,
+    "wp": 0.24
+  },
+  "environment": {
+    "machine": "arm64, 8 cores, synthetic",
+    "os": "SyntheticOS 1.0",
+    "runtime": "CPython 3.12.0",
+    "library_versions": {
+      "examplelib": "1.0"
+    }
+  },
+  "detector_languages": [
+    "en"
+  ],
+  "detector_detects": [
+    "PERSON"
+  ]
+}

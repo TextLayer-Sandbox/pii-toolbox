@@ -1,0 +1,21 @@
+{
+  "setup": "small_model+presidio_structured",
+  "peak_memory_bytes": 1879048192,
+  "load_seconds": 1.75,
+  "throughput_chars_per_second": {
+    "1000": 7000.0,
+    "10000": 8000.0,
+    "100000": 7500.0
+  },
+  "latency_per_1000_chars_median_seconds": 0.14,
+  "fits_lambda": true,
+  "environment": {
+    "machine": "Synthetic",
+    "memory_bytes": 0,
+    "cpu_cores": "8",
+    "os": "SyntheticOS",
+    "python": "3.12.0",
+    "library_versions": {}
+  },
+  "not_measured": []
+}
