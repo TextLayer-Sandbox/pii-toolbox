@@ -8,6 +8,7 @@ import pytest
 from pii_toolbox.core import Document, PiiType
 from pii_toolbox.detection.gliner_detector import GlinerDetector
 from pii_toolbox.detection.llm_detector import LlmDetector
+from pii_toolbox.detection.known_names import KnownNamesDetector
 from pii_toolbox.detection.presidio_structured import PresidioStructuredDetector
 from pii_toolbox.detection.registry import (
     FixedDetectorRegistry,
@@ -25,7 +26,7 @@ MODEL_DIR = default_model_dir()
 TEXT = "Maria Gonzalez works at Acme Corp in Lisbon."
 DOCUMENT = Document(id="d", text=TEXT, language="en")
 NAME = "Maria Gonzalez"
-EXPECTED_NAMES = {"presidio_structured", "spacy_lg", "spacy_sm", "roberta", "gliner", "llm"}
+EXPECTED_NAMES = {"presidio_structured", "spacy_lg", "spacy_sm", "roberta", "gliner", "llm", "known_names"}
 
 
 def stub_registry():
@@ -71,6 +72,7 @@ def test_registry_names():
         ("roberta", RobertaDetector),
         ("gliner", GlinerDetector),
         ("llm", LlmDetector),
+        ("known_names", KnownNamesDetector),
     ],
 )
 def test_each_entry_builds_the_detector_of_its_name_and_class(name, expected_class):
@@ -107,7 +109,7 @@ def test_plus_builds_a_union():
     assert detectors[1].name == "gliner"
 
 
-@pytest.mark.parametrize("name", sorted(EXPECTED_NAMES - {"presidio_structured"}))
+@pytest.mark.parametrize("name", sorted(EXPECTED_NAMES - {"presidio_structured", "known_names"}))
 def test_stubbed_detectors_return_valid_spans(name):
     spans = stub_registry().build(name).detect(DOCUMENT)
     assert spans
