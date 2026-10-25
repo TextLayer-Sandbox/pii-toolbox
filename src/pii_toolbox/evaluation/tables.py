@@ -1,4 +1,4 @@
-"""Tables 1 to 5 of the article, built from saved result files only.
+"""Tables 1 to 6 of the article, built from saved result files only.
 
 Each builder reads the result JSON files of one split with co-reference off and writes a
 Markdown and a CSV file per table. Rows are tools, single detectors first and then
@@ -8,6 +8,7 @@ the same on every run.
 
 import csv
 import io
+import json
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
@@ -178,6 +179,43 @@ def table4(off: dict[tuple[str, str], ResultRecord], on: dict[tuple[str, str], R
     return Table("table4", "Table 4: Co-reference off versus on (English text, strict matching)", header, tuple(rows))
 
 
+LAMBDA_MEMORY_BYTES = 10 * 1024**3
+COST_INPUT_SIZES = ("1000", "10000", "100000")
+_BYTES_PER_GIB = 1024**3
+
+
+def load_cost_results(cost_dir: Path) -> list[dict]:
+    """The saved cost measurements, one per setup, ordered single tools first then combinations."""
+    results = [json.loads(path.read_text(encoding="utf-8")) for path in sorted(cost_dir.glob("*.json"))]
+    return sorted(results, key=lambda result: _tool_order(result["setup"]))
+
+
+def table6(results: Sequence[dict]) -> Table:
+    """Peak memory, load time, throughput, latency and whether the setup fits AWS Lambda's 10 GB."""
+    header = (
+        "Tool",
+        "Peak memory (GiB)",
+        "Load time (s)",
+        *(f"Throughput at {int(size) // 1000}k chars (chars/s)" for size in COST_INPUT_SIZES),
+        "Latency per 1,000 chars (s)",
+        "fits Lambda (10 GB)",
+    )
+    rows = []
+    for result in results:
+        peak = result["peak_memory_bytes"]
+        rows.append(
+            (
+                result["setup"],
+                f"{peak / _BYTES_PER_GIB:.2f}",
+                f"{result['load_seconds']:.2f}",
+                *(f"{result['throughput_chars_per_second'][size]:.0f}" for size in COST_INPUT_SIZES),
+                f"{result['latency_per_1000_chars_median_seconds']:.3f}",
+                "yes" if peak < LAMBDA_MEMORY_BYTES else "no",
+            )
+        )
+    return Table("table6", "Table 6: Cost and speed", header, tuple(rows))
+
+
 HEADLINE_LANGUAGES = ("en", "fr", "de")
 TAB_REFERENCE_COLUMN = "TAB (English reference)"
 
@@ -250,3 +288,7 @@ def build_table5(
 
 def build_table4(results_dir: Path, out_dir: Path, split: DatasetSplit = DatasetSplit.TEST) -> list[Path]:
     return _write([table4(load_records(results_dir, split), load_records(results_dir, split, coreference=True))], out_dir)
+
+
+def build_table6(cost_dir: Path, out_dir: Path) -> list[Path]:
+    return _write([table6(load_cost_results(cost_dir))], out_dir)
