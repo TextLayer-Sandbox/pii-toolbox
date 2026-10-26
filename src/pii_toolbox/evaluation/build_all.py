@@ -20,7 +20,7 @@ COST_FOLDER_NAME = "cost"
 MANIFEST_FILE_NAME = "manifest.json"
 PUBLISHED_SPLIT = DatasetSplit.TEST
 
-Records = Mapping[tuple[str, str, bool], tuple[ResultRecord, str]]
+Records = Mapping[tuple[str, str, str | None, bool], tuple[ResultRecord, str]]
 CellSources = Callable[[Sequence[str], str], list[str]]
 
 
@@ -33,7 +33,7 @@ class MissingCostResultsError(FileNotFoundError):
 
 
 def _index_results(results_dir: Path) -> dict[tuple[str, str, bool], tuple[ResultRecord, str]]:
-    """Reads every run result file, refusing any that is not a test-split result; keyed by (tool, dataset, co-reference)."""
+    """Reads every run result file, refusing any that is not a test-split result; keyed by (tool, dataset, language, co-reference)."""
     index = {}
     for path in sorted(results_dir.glob(tables.RESULT_FILE_PATTERN)):
         record = read_record(path)
@@ -41,17 +41,23 @@ def _index_results(results_dir: Path) -> dict[tuple[str, str, bool], tuple[Resul
             raise NonTestResultError(
                 f"{path.name} was measured on the {record.run.split.name.lower()} split; only test results are published"
             )
-        index[(record.run.tool, record.run.dataset, record.run.coreference)] = (record, path.name)
+        index[(record.run.tool, record.run.dataset, record.language, record.run.coreference)] = (record, path.name)
     return index
 
 
-def _records(index: Records, coreference: bool) -> dict[tuple[str, str], ResultRecord]:
-    return {(tool, dataset): record for (tool, dataset, coref), (record, _) in index.items() if coref is coreference}
+def _records(index: Records, coreference: bool) -> dict[tuple[str, str, str | None], ResultRecord]:
+    return {
+        (tool, dataset, language): record
+        for (tool, dataset, language, coref), (record, _) in index.items()
+        if coref is coreference
+    }
 
 
 def _file(index: Records, tool: str, dataset: str, coreference: bool = False) -> list[str]:
-    entry = index.get((tool, dataset, coreference))
-    return [entry[1]] if entry else []
+    """The source files of a tool's dataset results; a dataset measured per language has one file per language."""
+    return sorted(
+        name for (t, d, _, coref), (_, name) in index.items() if (t, d, coref) == (tool, dataset, coreference)
+    )
 
 
 def _table_sources(
@@ -74,7 +80,7 @@ def _write_tables(
     off, on = _records(index, False), _records(index, True)
     strict, relaxed = SpanMatchRule.EXACT_BOUNDARIES, SpanMatchRule.ANY_OVERLAP
     cost_results = tables.load_cost_results(results_dir / COST_FOLDER_NAME)
-    off_runs = {key: record.run for key, record in off.items()}
+    off_runs = {(tool, dataset): record.run for (tool, dataset, language), record in off.items() if language is None}
 
     def named(table: Table, name: str) -> Table:
         return replace(table, name=name)
@@ -124,9 +130,9 @@ def _write_tables(
 
 
 def _chart_sources(index: Records, results_dir: Path) -> dict[str, list[str]]:
-    tab_off = sorted(name for (tool, dataset, coref), (_, name) in index.items() if dataset == "tab" and not coref)
-    tab_on = sorted(name for (tool, dataset, coref), (_, name) in index.items() if dataset == "tab" and coref)
-    mapa_off = sorted(name for (tool, dataset, coref), (_, name) in index.items() if dataset == "mapa" and not coref)
+    tab_off = sorted(name for (tool, dataset, _, coref), (_, name) in index.items() if dataset == "tab" and not coref)
+    tab_on = sorted(name for (tool, dataset, _, coref), (_, name) in index.items() if dataset == "tab" and coref)
+    mapa_off = sorted(name for (tool, dataset, _, coref), (_, name) in index.items() if dataset == "mapa" and not coref)
     cost = sorted(f"{COST_FOLDER_NAME}/{path.name}" for path in (results_dir / COST_FOLDER_NAME).glob("*.json"))
     return {
         "chart_a.svg": tab_off,
