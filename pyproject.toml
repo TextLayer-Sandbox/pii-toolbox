@@ -26,10 +26,6 @@ models = [
     "transformers",  # RoBERTa token-classification pipeline
     "torch",  # backend for the transformer and GLiNER models
 ]
-llm = [
-    "llama-cpp-python; sys_platform == 'darwin'",  # local quantised language model via llama.cpp
-    "mlx-lm; sys_platform == 'darwin'",  # local quantised language model via MLX
-]
 evaluation = [
     "datasets",  # loads MAPA from Hugging Face
     "huggingface_hub",  # downloads model files and datasets
