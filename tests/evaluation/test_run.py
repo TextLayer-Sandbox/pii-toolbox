@@ -18,7 +18,7 @@ from pii_toolbox.core import (
     TabOfficialMetrics,
 )
 from pii_toolbox.detection.registry import FixedDetectorRegistry
-from pii_toolbox.evaluation.__main__ import main
+from pii_toolbox.evaluation.__main__ import DATASET_FACTORIES, main
 from pii_toolbox.evaluation.results_io import (
     ENVIRONMENT_FILE_NAME,
     SelectionFromTestSplitError,
@@ -107,6 +107,10 @@ def walk(node):
     elif isinstance(node, list):
         for value in node:
             yield from walk(value)
+
+
+def test_dataset_factories_include_worldwide():
+    assert "worldwide" in DATASET_FACTORIES
 
 
 def test_run_writes_the_named_result_file_and_environment_file(tmp_path):

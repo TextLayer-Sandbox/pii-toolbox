@@ -9,13 +9,18 @@ from pii_toolbox.core import Dataset, DatasetSplit, DetectorRegistry, IdentityRe
 from pii_toolbox.datasets.download import default_data_dir
 from pii_toolbox.datasets.mapa import MapaDataset
 from pii_toolbox.datasets.tab import TabDataset
+from pii_toolbox.datasets.worldwide import WorldwideDataset
 from pii_toolbox.detection.registry import FixedDetectorRegistry
 from pii_toolbox.evaluation.results_io import write_run
 from pii_toolbox.evaluation.run import RunRequest, run_evaluation
 
 DatasetFactory = Callable[[Path], Dataset]
 
-DATASET_FACTORIES: Mapping[str, DatasetFactory] = {"tab": TabDataset, "mapa": MapaDataset}
+DATASET_FACTORIES: Mapping[str, DatasetFactory] = {
+    "tab": TabDataset,
+    "mapa": MapaDataset,
+    "worldwide": WorldwideDataset,
+}
 SPLIT_NAMES: Mapping[str, DatasetSplit] = {
     "train": DatasetSplit.TRAIN,
     "dev": DatasetSplit.DEV,

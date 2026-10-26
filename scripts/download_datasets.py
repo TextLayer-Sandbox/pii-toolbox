@@ -1,4 +1,4 @@
-"""Command line entry point that downloads TAB and MAPA into PII_DATA_DIR."""
+"""Command line entry point that downloads TAB, MAPA and Worldwide English NER into PII_DATA_DIR."""
 
 import argparse
 from pathlib import Path
@@ -8,7 +8,7 @@ from pii_toolbox.datasets.download import default_data_dir, download_datasets, n
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Download the TAB and MAPA corpora. Skips files already present."
+        description="Download the TAB, MAPA and Worldwide English NER corpora. Skips files already present."
     )
     parser.add_argument(
         "--dest",
@@ -20,7 +20,7 @@ def main() -> None:
     dest = args.dest or default_data_dir()
     fetched = download_datasets(dest, network_fetch)
     print(f"datasets in {dest}: fetched {len(fetched)} files")
-    for sub in ("tab", "mapa"):
+    for sub in ("tab", "mapa", "worldwide"):
         count = len(list((dest / sub).glob("*")))
         print(f"  {sub}: {count} files")
 
