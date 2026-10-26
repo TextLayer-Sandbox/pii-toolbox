@@ -52,9 +52,12 @@ def mlx_lm_stub(monkeypatch):
         def apply_chat_template(self, messages, **kwargs):
             return messages[0]["content"]
 
+    tokenizer_object = StubTokenizer()
+    calls["tokenizer_object"] = tokenizer_object
+
     def load(path):
         calls["model_path"] = path
-        return "model-object", StubTokenizer()
+        return "model-object", tokenizer_object
 
     def generate(model, tokenizer, prompt, max_tokens, **kwargs):
         calls["generate"] = (model, tokenizer, prompt)
@@ -84,7 +87,7 @@ def test_mlx_states_schema_in_prompt_and_returns_text(model_file, mlx_lm_stub):
     assert runtime.generate_structured("list pii", SCHEMA) == '{"items": []}'
     assert mlx_lm_stub["model_path"] == str(model_file)
     model, tokenizer, prompt = mlx_lm_stub["generate"]
-    assert model == "model-object"
+    assert (model, tokenizer) == ("model-object", mlx_lm_stub["tokenizer_object"])
     assert prompt.startswith("list pii")
     assert json.dumps(SCHEMA) in prompt
 
