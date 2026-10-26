@@ -32,10 +32,10 @@ def llama_cpp_stub(monkeypatch):
         def __init__(self, model_path, **kwargs):
             calls["model_path"] = model_path
 
-        def create_completion(self, prompt, grammar, **kwargs):
-            calls["prompt"] = prompt
+        def create_chat_completion(self, messages, grammar, **kwargs):
+            calls["prompt"] = messages[0]["content"]
             calls["grammar"] = grammar
-            return {"choices": [{"text": '{"items": []}'}]}
+            return {"choices": [{"message": {"content": '{"items": []}'}}]}
 
     stub = types.ModuleType("llama_cpp")
     stub.Llama = StubLlama
@@ -48,18 +48,28 @@ def llama_cpp_stub(monkeypatch):
 def mlx_lm_stub(monkeypatch):
     calls = {}
 
+    class StubTokenizer:
+        def apply_chat_template(self, messages, **kwargs):
+            return messages[0]["content"]
+
+    tokenizer_object = StubTokenizer()
+    calls["tokenizer_object"] = tokenizer_object
+
     def load(path):
         calls["model_path"] = path
-        return "model-object", "tokenizer-object"
+        return "model-object", tokenizer_object
 
-    def generate(model, tokenizer, prompt, max_tokens):
+    def generate(model, tokenizer, prompt, max_tokens, **kwargs):
         calls["generate"] = (model, tokenizer, prompt)
         return '{"items": []}'
 
     stub = types.ModuleType("mlx_lm")
     stub.load = load
     stub.generate = generate
+    sample_utils = types.ModuleType("mlx_lm.sample_utils")
+    sample_utils.make_logits_processors = lambda **kwargs: []
     monkeypatch.setitem(sys.modules, "mlx_lm", stub)
+    monkeypatch.setitem(sys.modules, "mlx_lm.sample_utils", sample_utils)
     return calls
 
 
@@ -77,7 +87,7 @@ def test_mlx_states_schema_in_prompt_and_returns_text(model_file, mlx_lm_stub):
     assert runtime.generate_structured("list pii", SCHEMA) == '{"items": []}'
     assert mlx_lm_stub["model_path"] == str(model_file)
     model, tokenizer, prompt = mlx_lm_stub["generate"]
-    assert (model, tokenizer) == ("model-object", "tokenizer-object")
+    assert (model, tokenizer) == ("model-object", mlx_lm_stub["tokenizer_object"])
     assert prompt.startswith("list pii")
     assert json.dumps(SCHEMA) in prompt
 
