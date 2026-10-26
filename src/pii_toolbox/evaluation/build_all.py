@@ -1,6 +1,6 @@
 """Rebuilds Tables 1 to 6 and Charts A to F from saved result files, with a manifest of where every cell came from.
 
-Inputs are the result files of one folder (plus its `cost` subfolder) and nothing else: no
+Inputs are the result files of one folder plus a cost folder (by default its `cost` subfolder) and nothing else: no
 dataset is read and no model is loaded. Only results measured on the test split are accepted,
 so every published number comes from TAB test and MAPA test. Outputs are byte-for-byte
 reproducible.
@@ -17,6 +17,7 @@ from pii_toolbox.evaluation.results_io import ResultRecord, language_from_file_n
 from pii_toolbox.evaluation.tables import Table
 
 COST_FOLDER_NAME = "cost"
+REPO_ROOT = Path(__file__).resolve().parents[3]
 MANIFEST_FILE_NAME = "manifest.json"
 PUBLISHED_SPLIT = DatasetSplit.TEST
 
@@ -29,7 +30,7 @@ class NonTestResultError(ValueError):
 
 
 class MissingCostResultsError(FileNotFoundError):
-    """Raised when the results folder has no cost subfolder."""
+    """Raised when the cost folder does not exist."""
 
 
 def _index_results(results_dir: Path) -> dict[tuple[str, str, bool], tuple[ResultRecord, str]]:
@@ -74,12 +75,20 @@ def _table_sources(
     return mapping
 
 
+def cost_source_path(cost_file: Path) -> str:
+    """Real location of a cost file: relative to the repo root when under it, absolute otherwise."""
+    resolved = cost_file.resolve()
+    if resolved.is_relative_to(REPO_ROOT):
+        return resolved.relative_to(REPO_ROOT).as_posix()
+    return resolved.as_posix()
+
+
 def _write_tables(
-    results_dir: Path, out_dir: Path, index: Records
+    cost_dir: Path, out_dir: Path, index: Records
 ) -> tuple[list[Table], dict[str, dict[str, list[str]]]]:
     off, on = _records(index, False), _records(index, True)
     strict, relaxed = SpanMatchRule.EXACT_BOUNDARIES, SpanMatchRule.ANY_OVERLAP
-    cost_results = tables.load_cost_results(results_dir / COST_FOLDER_NAME)
+    cost_results = tables.load_cost_results(cost_dir)
     off_runs = {(tool, dataset): record.run for (tool, dataset, language), record in off.items() if language is None}
 
     def named(table: Table, name: str) -> Table:
@@ -109,7 +118,7 @@ def _write_tables(
         return _file(index, row[0], dataset)
 
     def cost_cell(row: Sequence[str], column: str) -> list[str]:
-        return [f"{COST_FOLDER_NAME}/{row[0].replace('+', '__')}.json"]
+        return [cost_source_path(cost_dir / f"{row[0].replace('+', '__')}.json")]
 
     plan: list[tuple[Table, CellSources, int]] = [
         (named(tables.table1(off), "table1"), by_dataset_column, 1),
@@ -130,11 +139,11 @@ def _write_tables(
     return built, manifest
 
 
-def _chart_sources(index: Records, results_dir: Path) -> dict[str, list[str]]:
+def _chart_sources(index: Records, cost_dir: Path) -> dict[str, list[str]]:
     tab_off = sorted(name for (tool, dataset, _, coref), (_, name) in index.items() if dataset == "tab" and not coref)
     tab_on = sorted(name for (tool, dataset, _, coref), (_, name) in index.items() if dataset == "tab" and coref)
     mapa_off = sorted(name for (tool, dataset, _, coref), (_, name) in index.items() if dataset == "mapa" and not coref)
-    cost = sorted(f"{COST_FOLDER_NAME}/{path.name}" for path in (results_dir / COST_FOLDER_NAME).glob("*.json"))
+    cost = sorted(cost_source_path(path) for path in cost_dir.glob("*.json"))
     return {
         "chart_a.svg": tab_off,
         "chart_b.svg": tab_off,
@@ -145,14 +154,18 @@ def _chart_sources(index: Records, results_dir: Path) -> dict[str, list[str]]:
     }
 
 
-def build_outputs(results_dir: Path, out_dir: Path) -> list[Path]:
-    """Writes every table, chart and the manifest into out_dir; returns the files written."""
-    if not (results_dir / COST_FOLDER_NAME).is_dir():
-        raise MissingCostResultsError(f"{results_dir / COST_FOLDER_NAME} does not exist")
+def build_outputs(results_dir: Path, out_dir: Path, cost_dir: Path | None = None) -> list[Path]:
+    """Writes every table, chart and the manifest into out_dir; returns the files written.
+
+    cost_dir holds the cost result files and defaults to the `cost` subfolder of results_dir.
+    """
+    if cost_dir is None:
+        cost_dir = results_dir / COST_FOLDER_NAME
+    if not cost_dir.is_dir():
+        raise MissingCostResultsError(f"{cost_dir} does not exist")
     index = _index_results(results_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    _, table_manifest = _write_tables(results_dir, out_dir, index)
-    cost_dir = results_dir / COST_FOLDER_NAME
+    _, table_manifest = _write_tables(cost_dir, out_dir, index)
     chart_paths = [
         charts.build_chart_a(results_dir, out_dir),
         charts.build_chart_b(results_dir, out_dir),
@@ -161,7 +174,7 @@ def build_outputs(results_dir: Path, out_dir: Path) -> list[Path]:
         charts.build_chart_e(results_dir, out_dir),
         charts.build_chart_f(results_dir, out_dir),
     ]
-    manifest = {"tables": table_manifest, "charts": _chart_sources(index, results_dir)}
+    manifest = {"tables": table_manifest, "charts": _chart_sources(index, cost_dir)}
     manifest_path = out_dir / MANIFEST_FILE_NAME
     manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return sorted([*out_dir.glob("table*"), *chart_paths, manifest_path])

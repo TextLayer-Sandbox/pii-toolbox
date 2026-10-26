@@ -1,0 +1,1698 @@
+{
+  "charts": {
+    "chart_a.svg": [
+      "gliner+presidio_structured__tab__en__test__coref-off.json",
+      "gliner__tab__en__test__coref-off.json",
+      "presidio_structured__tab__en__test__coref-off.json",
+      "roberta+presidio_structured__tab__en__test__coref-off.json",
+      "roberta__tab__en__test__coref-off.json",
+      "spacy_lg+presidio_structured__tab__en__test__coref-off.json",
+      "spacy_lg__tab__en__test__coref-off.json",
+      "spacy_sm+presidio_structured__tab__en__test__coref-off.json",
+      "spacy_sm__tab__en__test__coref-off.json"
+    ],
+    "chart_b.svg": [
+      "gliner+presidio_structured__tab__en__test__coref-off.json",
+      "gliner__tab__en__test__coref-off.json",
+      "presidio_structured__tab__en__test__coref-off.json",
+      "roberta+presidio_structured__tab__en__test__coref-off.json",
+      "roberta__tab__en__test__coref-off.json",
+      "spacy_lg+presidio_structured__tab__en__test__coref-off.json",
+      "spacy_lg__tab__en__test__coref-off.json",
+      "spacy_sm+presidio_structured__tab__en__test__coref-off.json",
+      "spacy_sm__tab__en__test__coref-off.json"
+    ],
+    "chart_c.svg": [
+      "gliner+presidio_structured__tab__en__test__coref-off.json",
+      "gliner__tab__en__test__coref-off.json",
+      "presidio_structured__tab__en__test__coref-off.json",
+      "roberta+presidio_structured__tab__en__test__coref-off.json",
+      "roberta__tab__en__test__coref-off.json",
+      "spacy_lg+presidio_structured__tab__en__test__coref-off.json",
+      "spacy_lg__tab__en__test__coref-off.json",
+      "spacy_sm+presidio_structured__tab__en__test__coref-off.json",
+      "spacy_sm__tab__en__test__coref-off.json"
+    ],
+    "chart_d.svg": [
+      "gliner+presidio_structured__tab__en__test__coref-off.json",
+      "gliner__tab__en__test__coref-off.json",
+      "presidio_structured__tab__en__test__coref-off.json",
+      "roberta+presidio_structured__tab__en__test__coref-off.json",
+      "roberta__tab__en__test__coref-off.json",
+      "spacy_lg+presidio_structured__tab__en__test__coref-off.json",
+      "spacy_lg__tab__en__test__coref-off.json",
+      "spacy_sm+presidio_structured__tab__en__test__coref-off.json",
+      "spacy_sm__tab__en__test__coref-off.json",
+      "results/cost/gliner.json",
+      "results/cost/gliner__presidio_structured.json",
+      "results/cost/presidio_structured.json",
+      "results/cost/roberta.json",
+      "results/cost/roberta__presidio_structured.json",
+      "results/cost/spacy_lg.json",
+      "results/cost/spacy_lg__presidio_structured.json",
+      "results/cost/spacy_sm.json",
+      "results/cost/spacy_sm__presidio_structured.json"
+    ],
+    "chart_e.svg": [
+      "gliner+presidio_structured__mapa__de__test__coref-off.json",
+      "gliner+presidio_structured__mapa__en__test__coref-off.json",
+      "gliner+presidio_structured__mapa__fr__test__coref-off.json",
+      "gliner__mapa__de__test__coref-off.json",
+      "gliner__mapa__en__test__coref-off.json",
+      "gliner__mapa__fr__test__coref-off.json",
+      "presidio_structured__mapa__de__test__coref-off.json",
+      "presidio_structured__mapa__en__test__coref-off.json",
+      "presidio_structured__mapa__fr__test__coref-off.json",
+      "roberta+presidio_structured__mapa__de__test__coref-off.json",
+      "roberta+presidio_structured__mapa__en__test__coref-off.json",
+      "roberta+presidio_structured__mapa__fr__test__coref-off.json",
+      "roberta__mapa__de__test__coref-off.json",
+      "roberta__mapa__en__test__coref-off.json",
+      "roberta__mapa__fr__test__coref-off.json",
+      "spacy_lg+presidio_structured__mapa__de__test__coref-off.json",
+      "spacy_lg+presidio_structured__mapa__en__test__coref-off.json",
+      "spacy_lg+presidio_structured__mapa__fr__test__coref-off.json",
+      "spacy_lg__mapa__de__test__coref-off.json",
+      "spacy_lg__mapa__en__test__coref-off.json",
+      "spacy_lg__mapa__fr__test__coref-off.json",
+      "spacy_sm+presidio_structured__mapa__de__test__coref-off.json",
+      "spacy_sm+presidio_structured__mapa__en__test__coref-off.json",
+      "spacy_sm+presidio_structured__mapa__fr__test__coref-off.json",
+      "spacy_sm__mapa__de__test__coref-off.json",
+      "spacy_sm__mapa__en__test__coref-off.json",
+      "spacy_sm__mapa__fr__test__coref-off.json"
+    ],
+    "chart_f.svg": [
+      "gliner+presidio_structured__tab__en__test__coref-off.json",
+      "gliner__tab__en__test__coref-off.json",
+      "presidio_structured__tab__en__test__coref-off.json",
+      "roberta+presidio_structured__tab__en__test__coref-off.json",
+      "roberta__tab__en__test__coref-off.json",
+      "spacy_lg+presidio_structured__tab__en__test__coref-off.json",
+      "spacy_lg__tab__en__test__coref-off.json",
+      "spacy_sm+presidio_structured__tab__en__test__coref-off.json",
+      "spacy_sm__tab__en__test__coref-off.json",
+      "gliner+presidio_structured__tab__en__test__coref-on.json",
+      "gliner__tab__en__test__coref-on.json",
+      "presidio_structured__tab__en__test__coref-on.json",
+      "roberta+presidio_structured__tab__en__test__coref-on.json",
+      "roberta__tab__en__test__coref-on.json",
+      "spacy_lg+presidio_structured__tab__en__test__coref-on.json",
+      "spacy_lg__tab__en__test__coref-on.json",
+      "spacy_sm+presidio_structured__tab__en__test__coref-on.json",
+      "spacy_sm__tab__en__test__coref-on.json"
+    ]
+  },
+  "tables": {
+    "table1": {
+      "gliner | MAPA (en) F2 relaxed": [
+        "gliner__mapa__en__test__coref-off.json"
+      ],
+      "gliner | MAPA (en) F2 strict": [
+        "gliner__mapa__en__test__coref-off.json"
+      ],
+      "gliner | MAPA (en) P relaxed": [
+        "gliner__mapa__en__test__coref-off.json"
+      ],
+      "gliner | MAPA (en) P strict": [
+        "gliner__mapa__en__test__coref-off.json"
+      ],
+      "gliner | MAPA (en) R relaxed": [
+        "gliner__mapa__en__test__coref-off.json"
+      ],
+      "gliner | MAPA (en) R strict": [
+        "gliner__mapa__en__test__coref-off.json"
+      ],
+      "gliner | TAB F2 relaxed": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "gliner | TAB F2 strict": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "gliner | TAB P relaxed": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "gliner | TAB P strict": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "gliner | TAB R relaxed": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "gliner | TAB R strict": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | MAPA (en) F2 relaxed": [
+        "gliner+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | MAPA (en) F2 strict": [
+        "gliner+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | MAPA (en) P relaxed": [
+        "gliner+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | MAPA (en) P strict": [
+        "gliner+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | MAPA (en) R relaxed": [
+        "gliner+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | MAPA (en) R strict": [
+        "gliner+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | TAB F2 relaxed": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | TAB F2 strict": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | TAB P relaxed": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | TAB P strict": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | TAB R relaxed": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | TAB R strict": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "presidio_structured | MAPA (en) F2 relaxed": [
+        "presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "presidio_structured | MAPA (en) F2 strict": [
+        "presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "presidio_structured | MAPA (en) P relaxed": [
+        "presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "presidio_structured | MAPA (en) P strict": [
+        "presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "presidio_structured | MAPA (en) R relaxed": [
+        "presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "presidio_structured | MAPA (en) R strict": [
+        "presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "presidio_structured | TAB F2 relaxed": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "presidio_structured | TAB F2 strict": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "presidio_structured | TAB P relaxed": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "presidio_structured | TAB P strict": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "presidio_structured | TAB R relaxed": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "presidio_structured | TAB R strict": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "roberta | MAPA (en) F2 relaxed": [
+        "roberta__mapa__en__test__coref-off.json"
+      ],
+      "roberta | MAPA (en) F2 strict": [
+        "roberta__mapa__en__test__coref-off.json"
+      ],
+      "roberta | MAPA (en) P relaxed": [
+        "roberta__mapa__en__test__coref-off.json"
+      ],
+      "roberta | MAPA (en) P strict": [
+        "roberta__mapa__en__test__coref-off.json"
+      ],
+      "roberta | MAPA (en) R relaxed": [
+        "roberta__mapa__en__test__coref-off.json"
+      ],
+      "roberta | MAPA (en) R strict": [
+        "roberta__mapa__en__test__coref-off.json"
+      ],
+      "roberta | TAB F2 relaxed": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "roberta | TAB F2 strict": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "roberta | TAB P relaxed": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "roberta | TAB P strict": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "roberta | TAB R relaxed": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "roberta | TAB R strict": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | MAPA (en) F2 relaxed": [
+        "roberta+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | MAPA (en) F2 strict": [
+        "roberta+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | MAPA (en) P relaxed": [
+        "roberta+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | MAPA (en) P strict": [
+        "roberta+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | MAPA (en) R relaxed": [
+        "roberta+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | MAPA (en) R strict": [
+        "roberta+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | TAB F2 relaxed": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | TAB F2 strict": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | TAB P relaxed": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | TAB P strict": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | TAB R relaxed": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | TAB R strict": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg | MAPA (en) F2 relaxed": [
+        "spacy_lg__mapa__en__test__coref-off.json"
+      ],
+      "spacy_lg | MAPA (en) F2 strict": [
+        "spacy_lg__mapa__en__test__coref-off.json"
+      ],
+      "spacy_lg | MAPA (en) P relaxed": [
+        "spacy_lg__mapa__en__test__coref-off.json"
+      ],
+      "spacy_lg | MAPA (en) P strict": [
+        "spacy_lg__mapa__en__test__coref-off.json"
+      ],
+      "spacy_lg | MAPA (en) R relaxed": [
+        "spacy_lg__mapa__en__test__coref-off.json"
+      ],
+      "spacy_lg | MAPA (en) R strict": [
+        "spacy_lg__mapa__en__test__coref-off.json"
+      ],
+      "spacy_lg | TAB F2 relaxed": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg | TAB F2 strict": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg | TAB P relaxed": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg | TAB P strict": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg | TAB R relaxed": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg | TAB R strict": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | MAPA (en) F2 relaxed": [
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | MAPA (en) F2 strict": [
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | MAPA (en) P relaxed": [
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | MAPA (en) P strict": [
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | MAPA (en) R relaxed": [
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | MAPA (en) R strict": [
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | TAB F2 relaxed": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | TAB F2 strict": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | TAB P relaxed": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | TAB P strict": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | TAB R relaxed": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | TAB R strict": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm | MAPA (en) F2 relaxed": [
+        "spacy_sm__mapa__en__test__coref-off.json"
+      ],
+      "spacy_sm | MAPA (en) F2 strict": [
+        "spacy_sm__mapa__en__test__coref-off.json"
+      ],
+      "spacy_sm | MAPA (en) P relaxed": [
+        "spacy_sm__mapa__en__test__coref-off.json"
+      ],
+      "spacy_sm | MAPA (en) P strict": [
+        "spacy_sm__mapa__en__test__coref-off.json"
+      ],
+      "spacy_sm | MAPA (en) R relaxed": [
+        "spacy_sm__mapa__en__test__coref-off.json"
+      ],
+      "spacy_sm | MAPA (en) R strict": [
+        "spacy_sm__mapa__en__test__coref-off.json"
+      ],
+      "spacy_sm | TAB F2 relaxed": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm | TAB F2 strict": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm | TAB P relaxed": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm | TAB P strict": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm | TAB R relaxed": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm | TAB R strict": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | MAPA (en) F2 relaxed": [
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | MAPA (en) F2 strict": [
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | MAPA (en) P relaxed": [
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | MAPA (en) P strict": [
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | MAPA (en) R relaxed": [
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | MAPA (en) R strict": [
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | TAB F2 relaxed": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | TAB F2 strict": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | TAB P relaxed": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | TAB P strict": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | TAB R relaxed": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | TAB R strict": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ]
+    },
+    "table2_relaxed": {},
+    "table2_strict": {},
+    "table3": {},
+    "table4_relaxed": {
+      "MAPA / gliner | F2 change": [
+        "gliner__mapa__de__test__coref-off.json",
+        "gliner__mapa__en__test__coref-off.json",
+        "gliner__mapa__fr__test__coref-off.json",
+        "gliner__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / gliner | F2 off": [
+        "gliner__mapa__de__test__coref-off.json",
+        "gliner__mapa__en__test__coref-off.json",
+        "gliner__mapa__fr__test__coref-off.json"
+      ],
+      "MAPA / gliner | F2 on": [
+        "gliner__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / gliner+presidio_structured | F2 change": [
+        "gliner+presidio_structured__mapa__de__test__coref-off.json",
+        "gliner+presidio_structured__mapa__en__test__coref-off.json",
+        "gliner+presidio_structured__mapa__fr__test__coref-off.json",
+        "gliner+presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / gliner+presidio_structured | F2 off": [
+        "gliner+presidio_structured__mapa__de__test__coref-off.json",
+        "gliner+presidio_structured__mapa__en__test__coref-off.json",
+        "gliner+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "MAPA / gliner+presidio_structured | F2 on": [
+        "gliner+presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / presidio_structured | F2 change": [
+        "presidio_structured__mapa__de__test__coref-off.json",
+        "presidio_structured__mapa__en__test__coref-off.json",
+        "presidio_structured__mapa__fr__test__coref-off.json",
+        "presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / presidio_structured | F2 off": [
+        "presidio_structured__mapa__de__test__coref-off.json",
+        "presidio_structured__mapa__en__test__coref-off.json",
+        "presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "MAPA / presidio_structured | F2 on": [
+        "presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / roberta | F2 change": [
+        "roberta__mapa__de__test__coref-off.json",
+        "roberta__mapa__en__test__coref-off.json",
+        "roberta__mapa__fr__test__coref-off.json",
+        "roberta__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / roberta | F2 off": [
+        "roberta__mapa__de__test__coref-off.json",
+        "roberta__mapa__en__test__coref-off.json",
+        "roberta__mapa__fr__test__coref-off.json"
+      ],
+      "MAPA / roberta | F2 on": [
+        "roberta__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / roberta+presidio_structured | F2 change": [
+        "roberta+presidio_structured__mapa__de__test__coref-off.json",
+        "roberta+presidio_structured__mapa__en__test__coref-off.json",
+        "roberta+presidio_structured__mapa__fr__test__coref-off.json",
+        "roberta+presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / roberta+presidio_structured | F2 off": [
+        "roberta+presidio_structured__mapa__de__test__coref-off.json",
+        "roberta+presidio_structured__mapa__en__test__coref-off.json",
+        "roberta+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "MAPA / roberta+presidio_structured | F2 on": [
+        "roberta+presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / spacy_lg | F2 change": [
+        "spacy_lg__mapa__de__test__coref-off.json",
+        "spacy_lg__mapa__en__test__coref-off.json",
+        "spacy_lg__mapa__fr__test__coref-off.json",
+        "spacy_lg__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / spacy_lg | F2 off": [
+        "spacy_lg__mapa__de__test__coref-off.json",
+        "spacy_lg__mapa__en__test__coref-off.json",
+        "spacy_lg__mapa__fr__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | F2 on": [
+        "spacy_lg__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / spacy_lg+presidio_structured | F2 change": [
+        "spacy_lg+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__fr__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / spacy_lg+presidio_structured | F2 off": [
+        "spacy_lg+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg+presidio_structured | F2 on": [
+        "spacy_lg+presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / spacy_sm | F2 change": [
+        "spacy_sm__mapa__de__test__coref-off.json",
+        "spacy_sm__mapa__en__test__coref-off.json",
+        "spacy_sm__mapa__fr__test__coref-off.json",
+        "spacy_sm__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / spacy_sm | F2 off": [
+        "spacy_sm__mapa__de__test__coref-off.json",
+        "spacy_sm__mapa__en__test__coref-off.json",
+        "spacy_sm__mapa__fr__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm | F2 on": [
+        "spacy_sm__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / spacy_sm+presidio_structured | F2 change": [
+        "spacy_sm+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__fr__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / spacy_sm+presidio_structured | F2 off": [
+        "spacy_sm+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm+presidio_structured | F2 on": [
+        "spacy_sm+presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "TAB / gliner | ER_di change": [
+        "gliner__tab__en__test__coref-off.json",
+        "gliner__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner | ER_di off": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner | ER_di on": [
+        "gliner__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner | ER_qi change": [
+        "gliner__tab__en__test__coref-off.json",
+        "gliner__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner | ER_qi off": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner | ER_qi on": [
+        "gliner__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner | F2 change": [
+        "gliner__tab__en__test__coref-off.json",
+        "gliner__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner | F2 off": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner | F2 on": [
+        "gliner__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner+presidio_structured | ER_di change": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json",
+        "gliner+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner+presidio_structured | ER_di off": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner+presidio_structured | ER_di on": [
+        "gliner+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner+presidio_structured | ER_qi change": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json",
+        "gliner+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner+presidio_structured | ER_qi off": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner+presidio_structured | ER_qi on": [
+        "gliner+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner+presidio_structured | F2 change": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json",
+        "gliner+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner+presidio_structured | F2 off": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner+presidio_structured | F2 on": [
+        "gliner+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / presidio_structured | ER_di change": [
+        "presidio_structured__tab__en__test__coref-off.json",
+        "presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / presidio_structured | ER_di off": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | ER_di on": [
+        "presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / presidio_structured | ER_qi change": [
+        "presidio_structured__tab__en__test__coref-off.json",
+        "presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / presidio_structured | ER_qi off": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | ER_qi on": [
+        "presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / presidio_structured | F2 change": [
+        "presidio_structured__tab__en__test__coref-off.json",
+        "presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / presidio_structured | F2 off": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | F2 on": [
+        "presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta | ER_di change": [
+        "roberta__tab__en__test__coref-off.json",
+        "roberta__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta | ER_di off": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta | ER_di on": [
+        "roberta__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta | ER_qi change": [
+        "roberta__tab__en__test__coref-off.json",
+        "roberta__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta | ER_qi off": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta | ER_qi on": [
+        "roberta__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta | F2 change": [
+        "roberta__tab__en__test__coref-off.json",
+        "roberta__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta | F2 off": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta | F2 on": [
+        "roberta__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta+presidio_structured | ER_di change": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json",
+        "roberta+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta+presidio_structured | ER_di off": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta+presidio_structured | ER_di on": [
+        "roberta+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta+presidio_structured | ER_qi change": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json",
+        "roberta+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta+presidio_structured | ER_qi off": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta+presidio_structured | ER_qi on": [
+        "roberta+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta+presidio_structured | F2 change": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json",
+        "roberta+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta+presidio_structured | F2 off": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta+presidio_structured | F2 on": [
+        "roberta+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | ER_di change": [
+        "spacy_lg__tab__en__test__coref-off.json",
+        "spacy_lg__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | ER_di off": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | ER_di on": [
+        "spacy_lg__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | ER_qi change": [
+        "spacy_lg__tab__en__test__coref-off.json",
+        "spacy_lg__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | ER_qi off": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | ER_qi on": [
+        "spacy_lg__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | F2 change": [
+        "spacy_lg__tab__en__test__coref-off.json",
+        "spacy_lg__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | F2 off": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | F2 on": [
+        "spacy_lg__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | ER_di change": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json",
+        "spacy_lg+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | ER_di off": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | ER_di on": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | ER_qi change": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json",
+        "spacy_lg+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | ER_qi off": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | ER_qi on": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | F2 change": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json",
+        "spacy_lg+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | F2 off": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | F2 on": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm | ER_di change": [
+        "spacy_sm__tab__en__test__coref-off.json",
+        "spacy_sm__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm | ER_di off": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm | ER_di on": [
+        "spacy_sm__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm | ER_qi change": [
+        "spacy_sm__tab__en__test__coref-off.json",
+        "spacy_sm__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm | ER_qi off": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm | ER_qi on": [
+        "spacy_sm__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm | F2 change": [
+        "spacy_sm__tab__en__test__coref-off.json",
+        "spacy_sm__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm | F2 off": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm | F2 on": [
+        "spacy_sm__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | ER_di change": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json",
+        "spacy_sm+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | ER_di off": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | ER_di on": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | ER_qi change": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json",
+        "spacy_sm+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | ER_qi off": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | ER_qi on": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | F2 change": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json",
+        "spacy_sm+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | F2 off": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | F2 on": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-on.json"
+      ]
+    },
+    "table4_strict": {
+      "MAPA / gliner | F2 change": [
+        "gliner__mapa__de__test__coref-off.json",
+        "gliner__mapa__en__test__coref-off.json",
+        "gliner__mapa__fr__test__coref-off.json",
+        "gliner__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / gliner | F2 off": [
+        "gliner__mapa__de__test__coref-off.json",
+        "gliner__mapa__en__test__coref-off.json",
+        "gliner__mapa__fr__test__coref-off.json"
+      ],
+      "MAPA / gliner | F2 on": [
+        "gliner__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / gliner+presidio_structured | F2 change": [
+        "gliner+presidio_structured__mapa__de__test__coref-off.json",
+        "gliner+presidio_structured__mapa__en__test__coref-off.json",
+        "gliner+presidio_structured__mapa__fr__test__coref-off.json",
+        "gliner+presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / gliner+presidio_structured | F2 off": [
+        "gliner+presidio_structured__mapa__de__test__coref-off.json",
+        "gliner+presidio_structured__mapa__en__test__coref-off.json",
+        "gliner+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "MAPA / gliner+presidio_structured | F2 on": [
+        "gliner+presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / presidio_structured | F2 change": [
+        "presidio_structured__mapa__de__test__coref-off.json",
+        "presidio_structured__mapa__en__test__coref-off.json",
+        "presidio_structured__mapa__fr__test__coref-off.json",
+        "presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / presidio_structured | F2 off": [
+        "presidio_structured__mapa__de__test__coref-off.json",
+        "presidio_structured__mapa__en__test__coref-off.json",
+        "presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "MAPA / presidio_structured | F2 on": [
+        "presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / roberta | F2 change": [
+        "roberta__mapa__de__test__coref-off.json",
+        "roberta__mapa__en__test__coref-off.json",
+        "roberta__mapa__fr__test__coref-off.json",
+        "roberta__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / roberta | F2 off": [
+        "roberta__mapa__de__test__coref-off.json",
+        "roberta__mapa__en__test__coref-off.json",
+        "roberta__mapa__fr__test__coref-off.json"
+      ],
+      "MAPA / roberta | F2 on": [
+        "roberta__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / roberta+presidio_structured | F2 change": [
+        "roberta+presidio_structured__mapa__de__test__coref-off.json",
+        "roberta+presidio_structured__mapa__en__test__coref-off.json",
+        "roberta+presidio_structured__mapa__fr__test__coref-off.json",
+        "roberta+presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / roberta+presidio_structured | F2 off": [
+        "roberta+presidio_structured__mapa__de__test__coref-off.json",
+        "roberta+presidio_structured__mapa__en__test__coref-off.json",
+        "roberta+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "MAPA / roberta+presidio_structured | F2 on": [
+        "roberta+presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / spacy_lg | F2 change": [
+        "spacy_lg__mapa__de__test__coref-off.json",
+        "spacy_lg__mapa__en__test__coref-off.json",
+        "spacy_lg__mapa__fr__test__coref-off.json",
+        "spacy_lg__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / spacy_lg | F2 off": [
+        "spacy_lg__mapa__de__test__coref-off.json",
+        "spacy_lg__mapa__en__test__coref-off.json",
+        "spacy_lg__mapa__fr__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | F2 on": [
+        "spacy_lg__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / spacy_lg+presidio_structured | F2 change": [
+        "spacy_lg+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__fr__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / spacy_lg+presidio_structured | F2 off": [
+        "spacy_lg+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg+presidio_structured | F2 on": [
+        "spacy_lg+presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / spacy_sm | F2 change": [
+        "spacy_sm__mapa__de__test__coref-off.json",
+        "spacy_sm__mapa__en__test__coref-off.json",
+        "spacy_sm__mapa__fr__test__coref-off.json",
+        "spacy_sm__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / spacy_sm | F2 off": [
+        "spacy_sm__mapa__de__test__coref-off.json",
+        "spacy_sm__mapa__en__test__coref-off.json",
+        "spacy_sm__mapa__fr__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm | F2 on": [
+        "spacy_sm__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / spacy_sm+presidio_structured | F2 change": [
+        "spacy_sm+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__fr__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "MAPA / spacy_sm+presidio_structured | F2 off": [
+        "spacy_sm+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm+presidio_structured | F2 on": [
+        "spacy_sm+presidio_structured__mapa__en__test__coref-on.json"
+      ],
+      "TAB / gliner | ER_di change": [
+        "gliner__tab__en__test__coref-off.json",
+        "gliner__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner | ER_di off": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner | ER_di on": [
+        "gliner__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner | ER_qi change": [
+        "gliner__tab__en__test__coref-off.json",
+        "gliner__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner | ER_qi off": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner | ER_qi on": [
+        "gliner__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner | F2 change": [
+        "gliner__tab__en__test__coref-off.json",
+        "gliner__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner | F2 off": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner | F2 on": [
+        "gliner__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner+presidio_structured | ER_di change": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json",
+        "gliner+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner+presidio_structured | ER_di off": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner+presidio_structured | ER_di on": [
+        "gliner+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner+presidio_structured | ER_qi change": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json",
+        "gliner+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner+presidio_structured | ER_qi off": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner+presidio_structured | ER_qi on": [
+        "gliner+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner+presidio_structured | F2 change": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json",
+        "gliner+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / gliner+presidio_structured | F2 off": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner+presidio_structured | F2 on": [
+        "gliner+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / presidio_structured | ER_di change": [
+        "presidio_structured__tab__en__test__coref-off.json",
+        "presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / presidio_structured | ER_di off": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | ER_di on": [
+        "presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / presidio_structured | ER_qi change": [
+        "presidio_structured__tab__en__test__coref-off.json",
+        "presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / presidio_structured | ER_qi off": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | ER_qi on": [
+        "presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / presidio_structured | F2 change": [
+        "presidio_structured__tab__en__test__coref-off.json",
+        "presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / presidio_structured | F2 off": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | F2 on": [
+        "presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta | ER_di change": [
+        "roberta__tab__en__test__coref-off.json",
+        "roberta__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta | ER_di off": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta | ER_di on": [
+        "roberta__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta | ER_qi change": [
+        "roberta__tab__en__test__coref-off.json",
+        "roberta__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta | ER_qi off": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta | ER_qi on": [
+        "roberta__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta | F2 change": [
+        "roberta__tab__en__test__coref-off.json",
+        "roberta__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta | F2 off": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta | F2 on": [
+        "roberta__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta+presidio_structured | ER_di change": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json",
+        "roberta+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta+presidio_structured | ER_di off": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta+presidio_structured | ER_di on": [
+        "roberta+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta+presidio_structured | ER_qi change": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json",
+        "roberta+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta+presidio_structured | ER_qi off": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta+presidio_structured | ER_qi on": [
+        "roberta+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta+presidio_structured | F2 change": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json",
+        "roberta+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / roberta+presidio_structured | F2 off": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta+presidio_structured | F2 on": [
+        "roberta+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | ER_di change": [
+        "spacy_lg__tab__en__test__coref-off.json",
+        "spacy_lg__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | ER_di off": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | ER_di on": [
+        "spacy_lg__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | ER_qi change": [
+        "spacy_lg__tab__en__test__coref-off.json",
+        "spacy_lg__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | ER_qi off": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | ER_qi on": [
+        "spacy_lg__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | F2 change": [
+        "spacy_lg__tab__en__test__coref-off.json",
+        "spacy_lg__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg | F2 off": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | F2 on": [
+        "spacy_lg__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | ER_di change": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json",
+        "spacy_lg+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | ER_di off": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | ER_di on": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | ER_qi change": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json",
+        "spacy_lg+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | ER_qi off": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | ER_qi on": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | F2 change": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json",
+        "spacy_lg+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | F2 off": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | F2 on": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm | ER_di change": [
+        "spacy_sm__tab__en__test__coref-off.json",
+        "spacy_sm__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm | ER_di off": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm | ER_di on": [
+        "spacy_sm__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm | ER_qi change": [
+        "spacy_sm__tab__en__test__coref-off.json",
+        "spacy_sm__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm | ER_qi off": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm | ER_qi on": [
+        "spacy_sm__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm | F2 change": [
+        "spacy_sm__tab__en__test__coref-off.json",
+        "spacy_sm__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm | F2 off": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm | F2 on": [
+        "spacy_sm__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | ER_di change": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json",
+        "spacy_sm+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | ER_di off": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | ER_di on": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | ER_qi change": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json",
+        "spacy_sm+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | ER_qi off": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | ER_qi on": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | F2 change": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json",
+        "spacy_sm+presidio_structured__tab__en__test__coref-on.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | F2 off": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | F2 on": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-on.json"
+      ]
+    },
+    "table5_relaxed": {
+      "gliner | de": [
+        "gliner__mapa__de__test__coref-off.json",
+        "gliner__mapa__en__test__coref-off.json",
+        "gliner__mapa__fr__test__coref-off.json"
+      ],
+      "gliner | en": [
+        "gliner__mapa__de__test__coref-off.json",
+        "gliner__mapa__en__test__coref-off.json",
+        "gliner__mapa__fr__test__coref-off.json"
+      ],
+      "gliner | fr": [
+        "gliner__mapa__de__test__coref-off.json",
+        "gliner__mapa__en__test__coref-off.json",
+        "gliner__mapa__fr__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | de": [
+        "gliner+presidio_structured__mapa__de__test__coref-off.json",
+        "gliner+presidio_structured__mapa__en__test__coref-off.json",
+        "gliner+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | en": [
+        "gliner+presidio_structured__mapa__de__test__coref-off.json",
+        "gliner+presidio_structured__mapa__en__test__coref-off.json",
+        "gliner+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | fr": [
+        "gliner+presidio_structured__mapa__de__test__coref-off.json",
+        "gliner+presidio_structured__mapa__en__test__coref-off.json",
+        "gliner+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "presidio_structured | de": [
+        "presidio_structured__mapa__de__test__coref-off.json",
+        "presidio_structured__mapa__en__test__coref-off.json",
+        "presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "presidio_structured | en": [
+        "presidio_structured__mapa__de__test__coref-off.json",
+        "presidio_structured__mapa__en__test__coref-off.json",
+        "presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "presidio_structured | fr": [
+        "presidio_structured__mapa__de__test__coref-off.json",
+        "presidio_structured__mapa__en__test__coref-off.json",
+        "presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "roberta | de": [
+        "roberta__mapa__de__test__coref-off.json",
+        "roberta__mapa__en__test__coref-off.json",
+        "roberta__mapa__fr__test__coref-off.json"
+      ],
+      "roberta | en": [
+        "roberta__mapa__de__test__coref-off.json",
+        "roberta__mapa__en__test__coref-off.json",
+        "roberta__mapa__fr__test__coref-off.json"
+      ],
+      "roberta | fr": [
+        "roberta__mapa__de__test__coref-off.json",
+        "roberta__mapa__en__test__coref-off.json",
+        "roberta__mapa__fr__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | de": [
+        "roberta+presidio_structured__mapa__de__test__coref-off.json",
+        "roberta+presidio_structured__mapa__en__test__coref-off.json",
+        "roberta+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | en": [
+        "roberta+presidio_structured__mapa__de__test__coref-off.json",
+        "roberta+presidio_structured__mapa__en__test__coref-off.json",
+        "roberta+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | fr": [
+        "roberta+presidio_structured__mapa__de__test__coref-off.json",
+        "roberta+presidio_structured__mapa__en__test__coref-off.json",
+        "roberta+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_lg | de": [
+        "spacy_lg__mapa__de__test__coref-off.json",
+        "spacy_lg__mapa__en__test__coref-off.json",
+        "spacy_lg__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_lg | en": [
+        "spacy_lg__mapa__de__test__coref-off.json",
+        "spacy_lg__mapa__en__test__coref-off.json",
+        "spacy_lg__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_lg | fr": [
+        "spacy_lg__mapa__de__test__coref-off.json",
+        "spacy_lg__mapa__en__test__coref-off.json",
+        "spacy_lg__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | de": [
+        "spacy_lg+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | en": [
+        "spacy_lg+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | fr": [
+        "spacy_lg+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_sm | de": [
+        "spacy_sm__mapa__de__test__coref-off.json",
+        "spacy_sm__mapa__en__test__coref-off.json",
+        "spacy_sm__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_sm | en": [
+        "spacy_sm__mapa__de__test__coref-off.json",
+        "spacy_sm__mapa__en__test__coref-off.json",
+        "spacy_sm__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_sm | fr": [
+        "spacy_sm__mapa__de__test__coref-off.json",
+        "spacy_sm__mapa__en__test__coref-off.json",
+        "spacy_sm__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | de": [
+        "spacy_sm+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | en": [
+        "spacy_sm+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | fr": [
+        "spacy_sm+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__fr__test__coref-off.json"
+      ]
+    },
+    "table5_strict": {
+      "gliner | de": [
+        "gliner__mapa__de__test__coref-off.json",
+        "gliner__mapa__en__test__coref-off.json",
+        "gliner__mapa__fr__test__coref-off.json"
+      ],
+      "gliner | en": [
+        "gliner__mapa__de__test__coref-off.json",
+        "gliner__mapa__en__test__coref-off.json",
+        "gliner__mapa__fr__test__coref-off.json"
+      ],
+      "gliner | fr": [
+        "gliner__mapa__de__test__coref-off.json",
+        "gliner__mapa__en__test__coref-off.json",
+        "gliner__mapa__fr__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | de": [
+        "gliner+presidio_structured__mapa__de__test__coref-off.json",
+        "gliner+presidio_structured__mapa__en__test__coref-off.json",
+        "gliner+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | en": [
+        "gliner+presidio_structured__mapa__de__test__coref-off.json",
+        "gliner+presidio_structured__mapa__en__test__coref-off.json",
+        "gliner+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | fr": [
+        "gliner+presidio_structured__mapa__de__test__coref-off.json",
+        "gliner+presidio_structured__mapa__en__test__coref-off.json",
+        "gliner+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "presidio_structured | de": [
+        "presidio_structured__mapa__de__test__coref-off.json",
+        "presidio_structured__mapa__en__test__coref-off.json",
+        "presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "presidio_structured | en": [
+        "presidio_structured__mapa__de__test__coref-off.json",
+        "presidio_structured__mapa__en__test__coref-off.json",
+        "presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "presidio_structured | fr": [
+        "presidio_structured__mapa__de__test__coref-off.json",
+        "presidio_structured__mapa__en__test__coref-off.json",
+        "presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "roberta | de": [
+        "roberta__mapa__de__test__coref-off.json",
+        "roberta__mapa__en__test__coref-off.json",
+        "roberta__mapa__fr__test__coref-off.json"
+      ],
+      "roberta | en": [
+        "roberta__mapa__de__test__coref-off.json",
+        "roberta__mapa__en__test__coref-off.json",
+        "roberta__mapa__fr__test__coref-off.json"
+      ],
+      "roberta | fr": [
+        "roberta__mapa__de__test__coref-off.json",
+        "roberta__mapa__en__test__coref-off.json",
+        "roberta__mapa__fr__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | de": [
+        "roberta+presidio_structured__mapa__de__test__coref-off.json",
+        "roberta+presidio_structured__mapa__en__test__coref-off.json",
+        "roberta+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | en": [
+        "roberta+presidio_structured__mapa__de__test__coref-off.json",
+        "roberta+presidio_structured__mapa__en__test__coref-off.json",
+        "roberta+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | fr": [
+        "roberta+presidio_structured__mapa__de__test__coref-off.json",
+        "roberta+presidio_structured__mapa__en__test__coref-off.json",
+        "roberta+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_lg | de": [
+        "spacy_lg__mapa__de__test__coref-off.json",
+        "spacy_lg__mapa__en__test__coref-off.json",
+        "spacy_lg__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_lg | en": [
+        "spacy_lg__mapa__de__test__coref-off.json",
+        "spacy_lg__mapa__en__test__coref-off.json",
+        "spacy_lg__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_lg | fr": [
+        "spacy_lg__mapa__de__test__coref-off.json",
+        "spacy_lg__mapa__en__test__coref-off.json",
+        "spacy_lg__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | de": [
+        "spacy_lg+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | en": [
+        "spacy_lg+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | fr": [
+        "spacy_lg+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_lg+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_sm | de": [
+        "spacy_sm__mapa__de__test__coref-off.json",
+        "spacy_sm__mapa__en__test__coref-off.json",
+        "spacy_sm__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_sm | en": [
+        "spacy_sm__mapa__de__test__coref-off.json",
+        "spacy_sm__mapa__en__test__coref-off.json",
+        "spacy_sm__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_sm | fr": [
+        "spacy_sm__mapa__de__test__coref-off.json",
+        "spacy_sm__mapa__en__test__coref-off.json",
+        "spacy_sm__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | de": [
+        "spacy_sm+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | en": [
+        "spacy_sm+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | fr": [
+        "spacy_sm+presidio_structured__mapa__de__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json",
+        "spacy_sm+presidio_structured__mapa__fr__test__coref-off.json"
+      ]
+    },
+    "table6": {
+      "gliner | Latency per 1,000 chars (s)": [
+        "results/cost/gliner.json"
+      ],
+      "gliner | Load time (s)": [
+        "results/cost/gliner.json"
+      ],
+      "gliner | Peak memory (GiB)": [
+        "results/cost/gliner.json"
+      ],
+      "gliner | Throughput at 100k chars (chars/s)": [
+        "results/cost/gliner.json"
+      ],
+      "gliner | Throughput at 10k chars (chars/s)": [
+        "results/cost/gliner.json"
+      ],
+      "gliner | Throughput at 1k chars (chars/s)": [
+        "results/cost/gliner.json"
+      ],
+      "gliner | fits Lambda (10 GB)": [
+        "results/cost/gliner.json"
+      ],
+      "gliner+presidio_structured | Latency per 1,000 chars (s)": [
+        "results/cost/gliner__presidio_structured.json"
+      ],
+      "gliner+presidio_structured | Load time (s)": [
+        "results/cost/gliner__presidio_structured.json"
+      ],
+      "gliner+presidio_structured | Peak memory (GiB)": [
+        "results/cost/gliner__presidio_structured.json"
+      ],
+      "gliner+presidio_structured | Throughput at 100k chars (chars/s)": [
+        "results/cost/gliner__presidio_structured.json"
+      ],
+      "gliner+presidio_structured | Throughput at 10k chars (chars/s)": [
+        "results/cost/gliner__presidio_structured.json"
+      ],
+      "gliner+presidio_structured | Throughput at 1k chars (chars/s)": [
+        "results/cost/gliner__presidio_structured.json"
+      ],
+      "gliner+presidio_structured | fits Lambda (10 GB)": [
+        "results/cost/gliner__presidio_structured.json"
+      ],
+      "presidio_structured | Latency per 1,000 chars (s)": [
+        "results/cost/presidio_structured.json"
+      ],
+      "presidio_structured | Load time (s)": [
+        "results/cost/presidio_structured.json"
+      ],
+      "presidio_structured | Peak memory (GiB)": [
+        "results/cost/presidio_structured.json"
+      ],
+      "presidio_structured | Throughput at 100k chars (chars/s)": [
+        "results/cost/presidio_structured.json"
+      ],
+      "presidio_structured | Throughput at 10k chars (chars/s)": [
+        "results/cost/presidio_structured.json"
+      ],
+      "presidio_structured | Throughput at 1k chars (chars/s)": [
+        "results/cost/presidio_structured.json"
+      ],
+      "presidio_structured | fits Lambda (10 GB)": [
+        "results/cost/presidio_structured.json"
+      ],
+      "roberta | Latency per 1,000 chars (s)": [
+        "results/cost/roberta.json"
+      ],
+      "roberta | Load time (s)": [
+        "results/cost/roberta.json"
+      ],
+      "roberta | Peak memory (GiB)": [
+        "results/cost/roberta.json"
+      ],
+      "roberta | Throughput at 100k chars (chars/s)": [
+        "results/cost/roberta.json"
+      ],
+      "roberta | Throughput at 10k chars (chars/s)": [
+        "results/cost/roberta.json"
+      ],
+      "roberta | Throughput at 1k chars (chars/s)": [
+        "results/cost/roberta.json"
+      ],
+      "roberta | fits Lambda (10 GB)": [
+        "results/cost/roberta.json"
+      ],
+      "roberta+presidio_structured | Latency per 1,000 chars (s)": [
+        "results/cost/roberta__presidio_structured.json"
+      ],
+      "roberta+presidio_structured | Load time (s)": [
+        "results/cost/roberta__presidio_structured.json"
+      ],
+      "roberta+presidio_structured | Peak memory (GiB)": [
+        "results/cost/roberta__presidio_structured.json"
+      ],
+      "roberta+presidio_structured | Throughput at 100k chars (chars/s)": [
+        "results/cost/roberta__presidio_structured.json"
+      ],
+      "roberta+presidio_structured | Throughput at 10k chars (chars/s)": [
+        "results/cost/roberta__presidio_structured.json"
+      ],
+      "roberta+presidio_structured | Throughput at 1k chars (chars/s)": [
+        "results/cost/roberta__presidio_structured.json"
+      ],
+      "roberta+presidio_structured | fits Lambda (10 GB)": [
+        "results/cost/roberta__presidio_structured.json"
+      ],
+      "spacy_lg | Latency per 1,000 chars (s)": [
+        "results/cost/spacy_lg.json"
+      ],
+      "spacy_lg | Load time (s)": [
+        "results/cost/spacy_lg.json"
+      ],
+      "spacy_lg | Peak memory (GiB)": [
+        "results/cost/spacy_lg.json"
+      ],
+      "spacy_lg | Throughput at 100k chars (chars/s)": [
+        "results/cost/spacy_lg.json"
+      ],
+      "spacy_lg | Throughput at 10k chars (chars/s)": [
+        "results/cost/spacy_lg.json"
+      ],
+      "spacy_lg | Throughput at 1k chars (chars/s)": [
+        "results/cost/spacy_lg.json"
+      ],
+      "spacy_lg | fits Lambda (10 GB)": [
+        "results/cost/spacy_lg.json"
+      ],
+      "spacy_lg+presidio_structured | Latency per 1,000 chars (s)": [
+        "results/cost/spacy_lg__presidio_structured.json"
+      ],
+      "spacy_lg+presidio_structured | Load time (s)": [
+        "results/cost/spacy_lg__presidio_structured.json"
+      ],
+      "spacy_lg+presidio_structured | Peak memory (GiB)": [
+        "results/cost/spacy_lg__presidio_structured.json"
+      ],
+      "spacy_lg+presidio_structured | Throughput at 100k chars (chars/s)": [
+        "results/cost/spacy_lg__presidio_structured.json"
+      ],
+      "spacy_lg+presidio_structured | Throughput at 10k chars (chars/s)": [
+        "results/cost/spacy_lg__presidio_structured.json"
+      ],
+      "spacy_lg+presidio_structured | Throughput at 1k chars (chars/s)": [
+        "results/cost/spacy_lg__presidio_structured.json"
+      ],
+      "spacy_lg+presidio_structured | fits Lambda (10 GB)": [
+        "results/cost/spacy_lg__presidio_structured.json"
+      ],
+      "spacy_sm | Latency per 1,000 chars (s)": [
+        "results/cost/spacy_sm.json"
+      ],
+      "spacy_sm | Load time (s)": [
+        "results/cost/spacy_sm.json"
+      ],
+      "spacy_sm | Peak memory (GiB)": [
+        "results/cost/spacy_sm.json"
+      ],
+      "spacy_sm | Throughput at 100k chars (chars/s)": [
+        "results/cost/spacy_sm.json"
+      ],
+      "spacy_sm | Throughput at 10k chars (chars/s)": [
+        "results/cost/spacy_sm.json"
+      ],
+      "spacy_sm | Throughput at 1k chars (chars/s)": [
+        "results/cost/spacy_sm.json"
+      ],
+      "spacy_sm | fits Lambda (10 GB)": [
+        "results/cost/spacy_sm.json"
+      ],
+      "spacy_sm+presidio_structured | Latency per 1,000 chars (s)": [
+        "results/cost/spacy_sm__presidio_structured.json"
+      ],
+      "spacy_sm+presidio_structured | Load time (s)": [
+        "results/cost/spacy_sm__presidio_structured.json"
+      ],
+      "spacy_sm+presidio_structured | Peak memory (GiB)": [
+        "results/cost/spacy_sm__presidio_structured.json"
+      ],
+      "spacy_sm+presidio_structured | Throughput at 100k chars (chars/s)": [
+        "results/cost/spacy_sm__presidio_structured.json"
+      ],
+      "spacy_sm+presidio_structured | Throughput at 10k chars (chars/s)": [
+        "results/cost/spacy_sm__presidio_structured.json"
+      ],
+      "spacy_sm+presidio_structured | Throughput at 1k chars (chars/s)": [
+        "results/cost/spacy_sm__presidio_structured.json"
+      ],
+      "spacy_sm+presidio_structured | fits Lambda (10 GB)": [
+        "results/cost/spacy_sm__presidio_structured.json"
+      ]
+    }
+  }
+}

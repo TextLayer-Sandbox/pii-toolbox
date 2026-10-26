@@ -1,0 +1,235 @@
+{
+  "tool": "spacy_sm+presidio_structured",
+  "coreference": true,
+  "dataset": "mapa",
+  "split": "TEST",
+  "exact_boundaries": {
+    "rule": "EXACT_BOUNDARIES",
+    "overall_micro": {
+      "precision": 0.1316348195329087,
+      "recall": 0.5511111111111111,
+      "f2": 0.3365906623235614
+    },
+    "macro": {
+      "precision": 0.18196586284286942,
+      "recall": 0.3697005027307017,
+      "f2": 0.2845988922391188
+    },
+    "by_type": {
+      "PERSON": {
+        "precision": 0.3492063492063492,
+        "recall": 0.3384615384615385,
+        "f2": 0.34055727554179566
+      },
+      "ORGANIZATION": {
+        "precision": 0.019784172661870502,
+        "recall": 0.23404255319148937,
+        "f2": 0.07392473118279569
+      },
+      "LOCATION": {
+        "precision": 0.4594594594594595,
+        "recall": 0.85,
+        "f2": 0.7264957264957265
+      },
+      "DATE_TIME": {
+        "precision": 0.26334519572953735,
+        "recall": 0.7956989247311828,
+        "f2": 0.566615620214395
+      },
+      "QUANTITY": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f2": 0.0
+      },
+      "IDENTIFIER": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f2": 0.0
+      }
+    },
+    "by_language": {
+      "en": {
+        "precision": 0.1316348195329087,
+        "recall": 0.5511111111111111,
+        "f2": 0.3365906623235614
+      }
+    }
+  },
+  "any_overlap": {
+    "rule": "ANY_OVERLAP",
+    "overall_micro": {
+      "precision": 0.17728237791932058,
+      "recall": 0.7422222222222222,
+      "f2": 0.4533116178067318
+    },
+    "macro": {
+      "precision": 0.23542100517637524,
+      "recall": 0.4921742369580393,
+      "f2": 0.3610761930388127
+    },
+    "by_type": {
+      "PERSON": {
+        "precision": 0.5714285714285714,
+        "recall": 0.5538461538461539,
+        "f2": 0.5572755417956656
+      },
+      "ORGANIZATION": {
+        "precision": 0.048561151079136694,
+        "recall": 0.574468085106383,
+        "f2": 0.1814516129032258
+      },
+      "LOCATION": {
+        "precision": 0.4864864864864865,
+        "recall": 0.9,
+        "f2": 0.7692307692307693
+      },
+      "DATE_TIME": {
+        "precision": 0.30604982206405695,
+        "recall": 0.9247311827956989,
+        "f2": 0.6584992343032159
+      },
+      "QUANTITY": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f2": 0.0
+      },
+      "IDENTIFIER": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f2": 0.0
+      }
+    },
+    "by_language": {
+      "en": {
+        "precision": 0.17728237791932058,
+        "recall": 0.7422222222222222,
+        "f2": 0.4533116178067318
+      }
+    }
+  },
+  "tab_metrics": null,
+  "environment": {
+    "machine": "arm64, 10 cores, arm",
+    "os": "macOS-26.5.2-arm64-arm-64bit",
+    "runtime": "CPython 3.12.14",
+    "library_versions": {
+      "aiohappyeyeballs": "2.7.1",
+      "aiohttp": "3.14.5",
+      "aiosignal": "1.4.0",
+      "annotated-doc": "0.0.5",
+      "annotated-types": "0.8.0",
+      "anyio": "4.15.1",
+      "attrs": "26.1.0",
+      "blis": "1.3.3",
+      "catalogue": "2.0.10",
+      "certifi": "2026.10.23",
+      "charset-normalizer": "3.5.2",
+      "click": "8.5.0",
+      "cloudpathlib": "0.26.0",
+      "confection": "1.3.3",
+      "contourpy": "1.4.0",
+      "cycler": "0.12.1",
+      "cymem": "2.0.16",
+      "datasets": "5.1.0",
+      "dill": "0.4.1",
+      "diskcache": "5.6.3",
+      "filelock": "4.2.4",
+      "flatbuffers": "25.12.19",
+      "fonttools": "4.67.0",
+      "frozenlist": "1.8.0",
+      "fsspec": "2026.7.0",
+      "gliner": "0.2.24",
+      "h11": "0.16.0",
+      "hf-xet": "1.7.0",
+      "httpcore": "1.0.9",
+      "httpcore2": "2.16.0",
+      "httpx": "0.28.1",
+      "httpx2": "2.16.0",
+      "huggingface_hub": "2.3.0",
+      "idna": "3.20",
+      "iniconfig": "2.3.1",
+      "intervaltree": "3.2.1",
+      "Jinja2": "3.1.6",
+      "kiwisolver": "1.5.1",
+      "llama_cpp_python": "0.3.36",
+      "markdown-it-py": "4.2.0",
+      "MarkupSafe": "3.0.4",
+      "matplotlib": "3.11.2",
+      "mdurl": "0.1.2",
+      "mlx": "0.32.4",
+      "mlx-lm": "0.32.2",
+      "mlx-metal": "0.32.4",
+      "mpmath": "1.3.0",
+      "multidict": "7.2.1",
+      "multiprocess": "0.70.19",
+      "murmurhash": "1.0.16",
+      "networkx": "3.7",
+      "numpy": "2.4.6",
+      "onnxruntime": "1.31.0",
+      "packaging": "26.3",
+      "pandas": "3.1.0",
+      "phonenumbers": "9.0.41",
+      "pii-toolbox": "0.1.0",
+      "pillow": "13.0.0",
+      "pluggy": "1.7.0",
+      "preshed": "3.0.13",
+      "presidio_analyzer": "2.2.364",
+      "propcache": "0.5.4",
+      "protobuf": "7.36.2",
+      "psutil": "7.2.2",
+      "pyarrow": "26.0.0",
+      "pydantic": "2.14.1",
+      "pydantic_core": "2.50.1",
+      "Pygments": "2.21.0",
+      "pyparsing": "3.3.3",
+      "pytest": "9.1.1",
+      "python-dateutil": "3.0.0",
+      "PyYAML": "6.0.3",
+      "pyzmq": "27.2.0",
+      "regex": "2026.9.29",
+      "requests": "2.34.2",
+      "requests-file": "3.0.1",
+      "rich": "15.0.0",
+      "safetensors": "0.8.0",
+      "sentencepiece": "0.2.2",
+      "setuptools": "84.2.1",
+      "shellingham": "1.5.4",
+      "six": "1.17.0",
+      "smart_open": "8.0.4",
+      "sortedcontainers": "2.4.0",
+      "spacy": "3.8.16",
+      "spacy-legacy": "3.0.12",
+      "spacy-loggers": "1.0.5",
+      "srsly": "2.5.4",
+      "sympy": "1.14.0",
+      "thinc": "8.3.13",
+      "tldextract": "5.4.0",
+      "tokenizers": "0.23.3",
+      "torch": "2.14.1",
+      "tqdm": "4.70.1",
+      "transformers": "5.20.2",
+      "truststore": "0.10.5",
+      "typer": "0.27.3",
+      "typing-inspection": "0.4.4",
+      "typing_extensions": "4.16.0",
+      "tzdata": "2026.5",
+      "urllib3": "2.8.0",
+      "wasabi": "1.1.3",
+      "weasel": "1.0.0",
+      "wrapt": "2.5.1",
+      "xxhash": "4.0.2",
+      "yarl": "1.25.1"
+    }
+  },
+  "detector_languages": [
+    "en"
+  ],
+  "detector_detects": [
+    "DATE_TIME",
+    "IDENTIFIER",
+    "LOCATION",
+    "ORGANIZATION",
+    "PERSON",
+    "QUANTITY"
+  ]
+}

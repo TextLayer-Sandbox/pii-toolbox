@@ -19,9 +19,9 @@
       "gliner__tab__test__coref-off.json",
       "presidio_structured__tab__test__coref-off.json",
       "spacy_lg__tab__test__coref-off.json",
-      "cost/gliner.json",
-      "cost/presidio_structured.json",
-      "cost/spacy_lg.json"
+      "tests/evaluation/fixtures/build_all/results/cost/gliner.json",
+      "tests/evaluation/fixtures/build_all/results/cost/presidio_structured.json",
+      "tests/evaluation/fixtures/build_all/results/cost/spacy_lg.json"
     ],
     "chart_e.svg": [
       "gliner__mapa__test__coref-off.json",
@@ -571,67 +571,67 @@
     },
     "table6": {
       "gliner | Latency per 1,000 chars (s)": [
-        "cost/gliner.json"
+        "tests/evaluation/fixtures/build_all/results/cost/gliner.json"
       ],
       "gliner | Load time (s)": [
-        "cost/gliner.json"
+        "tests/evaluation/fixtures/build_all/results/cost/gliner.json"
       ],
       "gliner | Peak memory (GiB)": [
-        "cost/gliner.json"
+        "tests/evaluation/fixtures/build_all/results/cost/gliner.json"
       ],
       "gliner | Throughput at 100k chars (chars/s)": [
-        "cost/gliner.json"
+        "tests/evaluation/fixtures/build_all/results/cost/gliner.json"
       ],
       "gliner | Throughput at 10k chars (chars/s)": [
-        "cost/gliner.json"
+        "tests/evaluation/fixtures/build_all/results/cost/gliner.json"
       ],
       "gliner | Throughput at 1k chars (chars/s)": [
-        "cost/gliner.json"
+        "tests/evaluation/fixtures/build_all/results/cost/gliner.json"
       ],
       "gliner | fits Lambda (10 GB)": [
-        "cost/gliner.json"
+        "tests/evaluation/fixtures/build_all/results/cost/gliner.json"
       ],
       "presidio_structured | Latency per 1,000 chars (s)": [
-        "cost/presidio_structured.json"
+        "tests/evaluation/fixtures/build_all/results/cost/presidio_structured.json"
       ],
       "presidio_structured | Load time (s)": [
-        "cost/presidio_structured.json"
+        "tests/evaluation/fixtures/build_all/results/cost/presidio_structured.json"
       ],
       "presidio_structured | Peak memory (GiB)": [
-        "cost/presidio_structured.json"
+        "tests/evaluation/fixtures/build_all/results/cost/presidio_structured.json"
       ],
       "presidio_structured | Throughput at 100k chars (chars/s)": [
-        "cost/presidio_structured.json"
+        "tests/evaluation/fixtures/build_all/results/cost/presidio_structured.json"
       ],
       "presidio_structured | Throughput at 10k chars (chars/s)": [
-        "cost/presidio_structured.json"
+        "tests/evaluation/fixtures/build_all/results/cost/presidio_structured.json"
       ],
       "presidio_structured | Throughput at 1k chars (chars/s)": [
-        "cost/presidio_structured.json"
+        "tests/evaluation/fixtures/build_all/results/cost/presidio_structured.json"
       ],
       "presidio_structured | fits Lambda (10 GB)": [
-        "cost/presidio_structured.json"
+        "tests/evaluation/fixtures/build_all/results/cost/presidio_structured.json"
       ],
       "spacy_lg | Latency per 1,000 chars (s)": [
-        "cost/spacy_lg.json"
+        "tests/evaluation/fixtures/build_all/results/cost/spacy_lg.json"
       ],
       "spacy_lg | Load time (s)": [
-        "cost/spacy_lg.json"
+        "tests/evaluation/fixtures/build_all/results/cost/spacy_lg.json"
       ],
       "spacy_lg | Peak memory (GiB)": [
-        "cost/spacy_lg.json"
+        "tests/evaluation/fixtures/build_all/results/cost/spacy_lg.json"
       ],
       "spacy_lg | Throughput at 100k chars (chars/s)": [
-        "cost/spacy_lg.json"
+        "tests/evaluation/fixtures/build_all/results/cost/spacy_lg.json"
       ],
       "spacy_lg | Throughput at 10k chars (chars/s)": [
-        "cost/spacy_lg.json"
+        "tests/evaluation/fixtures/build_all/results/cost/spacy_lg.json"
       ],
       "spacy_lg | Throughput at 1k chars (chars/s)": [
-        "cost/spacy_lg.json"
+        "tests/evaluation/fixtures/build_all/results/cost/spacy_lg.json"
       ],
       "spacy_lg | fits Lambda (10 GB)": [
-        "cost/spacy_lg.json"
+        "tests/evaluation/fixtures/build_all/results/cost/spacy_lg.json"
       ]
     }
   }
