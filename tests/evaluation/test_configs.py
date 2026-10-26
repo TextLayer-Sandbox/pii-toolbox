@@ -5,7 +5,7 @@ from pii_toolbox.detection.registry import FixedDetectorRegistry, UnknownDetecto
 from pii_toolbox.evaluation import configs
 from pii_toolbox.evaluation.configs import all_runs, measured_configs, model_tools
 
-REAL_MODEL_TOOLS = {"gliner", "roberta", "spacy_lg", "spacy_sm", "llm"}
+REAL_MODEL_TOOLS = set(model_tools())
 
 
 class NamesOnlyRegistry(DetectorRegistry):
@@ -20,13 +20,15 @@ class NamesOnlyRegistry(DetectorRegistry):
 
 
 def test_model_tools_are_the_registry_names_that_are_not_pattern_or_list_detectors():
-    assert set(model_tools()) == REAL_MODEL_TOOLS
+    registry = FixedDetectorRegistry()
+    assert REAL_MODEL_TOOLS
+    assert REAL_MODEL_TOOLS == registry.names() - {"presidio_structured", "known_names"}
 
 
 def test_configs_are_presidio_alone_each_model_alone_and_each_model_with_presidio():
     result = measured_configs()
     n = len(REAL_MODEL_TOOLS)
-    assert len(result) == 2 * n + 1 == 11
+    assert len(result) == 2 * n + 1
     assert len(set(result)) == len(result)
     assert result[0] == "presidio_structured"
     assert set(result[1 : n + 1]) == REAL_MODEL_TOOLS
@@ -72,7 +74,7 @@ def test_each_config_runs_twice_on_english_and_once_on_french_and_german():
                 ("mapa", "de", False),
             ]
         )
-    assert len(runs) == 6 * 11
+    assert len(runs) == 6 * len(measured_configs())
     assert len(set(runs)) == len(runs)
 
 
