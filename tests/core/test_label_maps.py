@@ -7,6 +7,7 @@ from pii_toolbox.core.label_maps import (
     PRESIDIO_LABELS,
     ROBERTA_LABELS,
     TAB_LABELS,
+    WORLDWIDE_LABELS,
     to_pii_type,
 )
 
@@ -60,6 +61,29 @@ ROWS = [
 @pytest.mark.parametrize("label_map, label, expected", ROWS)
 def test_label_maps_to_common_type(label_map, label, expected):
     assert to_pii_type(label_map, label) is expected
+
+
+WORLDWIDE_ROWS = [
+    ("Person", P),
+    ("Organization", O),
+    ("Location", L),
+    ("Date", D),
+    ("Money", Q),
+    ("Facility", None),
+    ("NORP", None),
+    ("Misc", None),
+    ("Product", None),
+]
+
+
+@pytest.mark.parametrize("label, expected", WORLDWIDE_ROWS)
+def test_worldwide_label_maps_to_common_type(label, expected):
+    assert to_pii_type(WORLDWIDE_LABELS, label) is expected
+
+
+def test_worldwide_unknown_label_raises_key_error_naming_the_label():
+    with pytest.raises(KeyError, match="NOT_A_LABEL"):
+        to_pii_type(WORLDWIDE_LABELS, "NOT_A_LABEL")
 
 
 def test_unknown_label_raises_key_error_naming_the_label():
