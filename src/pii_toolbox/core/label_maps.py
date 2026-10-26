@@ -59,6 +59,19 @@ ROBERTA_LABELS: OptionalLabelMap = {
     "MISC": None,
 }
 
+# Facility, NORP, Misc and Product have no common type to fold into.
+WORLDWIDE_LABELS: OptionalLabelMap = {
+    "Person": PiiType.PERSON,
+    "Organization": PiiType.ORGANIZATION,
+    "Location": PiiType.LOCATION,
+    "Date": PiiType.DATE_TIME,
+    "Money": PiiType.QUANTITY,
+    "Facility": None,
+    "NORP": None,
+    "Misc": None,
+    "Product": None,
+}
+
 
 def to_pii_type(label_map: OptionalLabelMap, label: str) -> PiiType | None:
     """Returns the common type for a label, None when it has none; raises KeyError naming an unknown label."""
