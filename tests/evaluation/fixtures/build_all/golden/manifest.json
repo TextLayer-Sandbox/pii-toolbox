@@ -73,6 +73,24 @@
       "gliner | TAB R strict": [
         "gliner__tab__test__coref-off.json"
       ],
+      "gliner | Worldwide F2 relaxed": [
+        "gliner__worldwide__en__test__coref-off.json"
+      ],
+      "gliner | Worldwide F2 strict": [
+        "gliner__worldwide__en__test__coref-off.json"
+      ],
+      "gliner | Worldwide P relaxed": [
+        "gliner__worldwide__en__test__coref-off.json"
+      ],
+      "gliner | Worldwide P strict": [
+        "gliner__worldwide__en__test__coref-off.json"
+      ],
+      "gliner | Worldwide R relaxed": [
+        "gliner__worldwide__en__test__coref-off.json"
+      ],
+      "gliner | Worldwide R strict": [
+        "gliner__worldwide__en__test__coref-off.json"
+      ],
       "presidio_structured | TAB F2 relaxed": [
         "presidio_structured__tab__test__coref-off.json"
       ],
@@ -90,6 +108,24 @@
       ],
       "presidio_structured | TAB R strict": [
         "presidio_structured__tab__test__coref-off.json"
+      ],
+      "presidio_structured | Worldwide F2 relaxed": [
+        "presidio_structured__worldwide__en__test__coref-off.json"
+      ],
+      "presidio_structured | Worldwide F2 strict": [
+        "presidio_structured__worldwide__en__test__coref-off.json"
+      ],
+      "presidio_structured | Worldwide P relaxed": [
+        "presidio_structured__worldwide__en__test__coref-off.json"
+      ],
+      "presidio_structured | Worldwide P strict": [
+        "presidio_structured__worldwide__en__test__coref-off.json"
+      ],
+      "presidio_structured | Worldwide R relaxed": [
+        "presidio_structured__worldwide__en__test__coref-off.json"
+      ],
+      "presidio_structured | Worldwide R strict": [
+        "presidio_structured__worldwide__en__test__coref-off.json"
       ],
       "spacy_lg | MAPA (en) F2 relaxed": [
         "spacy_lg__mapa__test__coref-off.json"
@@ -126,6 +162,24 @@
       ],
       "spacy_lg | TAB R strict": [
         "spacy_lg__tab__test__coref-off.json"
+      ],
+      "spacy_lg | Worldwide F2 relaxed": [
+        "spacy_lg__worldwide__en__test__coref-off.json"
+      ],
+      "spacy_lg | Worldwide F2 strict": [
+        "spacy_lg__worldwide__en__test__coref-off.json"
+      ],
+      "spacy_lg | Worldwide P relaxed": [
+        "spacy_lg__worldwide__en__test__coref-off.json"
+      ],
+      "spacy_lg | Worldwide P strict": [
+        "spacy_lg__worldwide__en__test__coref-off.json"
+      ],
+      "spacy_lg | Worldwide R relaxed": [
+        "spacy_lg__worldwide__en__test__coref-off.json"
+      ],
+      "spacy_lg | Worldwide R strict": [
+        "spacy_lg__worldwide__en__test__coref-off.json"
       ]
     },
     "table2_relaxed": {
@@ -212,6 +266,51 @@
       ],
       "TAB / spacy_lg | QUANTITY": [
         "spacy_lg__tab__test__coref-off.json"
+      ],
+      "Worldwide / gliner | DATE_TIME": [
+        "gliner__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / gliner | LOCATION": [
+        "gliner__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / gliner | ORGANIZATION": [
+        "gliner__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / gliner | PERSON": [
+        "gliner__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / gliner | QUANTITY": [
+        "gliner__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / presidio_structured | DATE_TIME": [
+        "presidio_structured__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / presidio_structured | LOCATION": [
+        "presidio_structured__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / presidio_structured | ORGANIZATION": [
+        "presidio_structured__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / presidio_structured | PERSON": [
+        "presidio_structured__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / presidio_structured | QUANTITY": [
+        "presidio_structured__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / spacy_lg | DATE_TIME": [
+        "spacy_lg__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / spacy_lg | LOCATION": [
+        "spacy_lg__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / spacy_lg | ORGANIZATION": [
+        "spacy_lg__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / spacy_lg | PERSON": [
+        "spacy_lg__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / spacy_lg | QUANTITY": [
+        "spacy_lg__worldwide__en__test__coref-off.json"
       ]
     },
     "table2_strict": {
@@ -298,6 +397,51 @@
       ],
       "TAB / spacy_lg | QUANTITY": [
         "spacy_lg__tab__test__coref-off.json"
+      ],
+      "Worldwide / gliner | DATE_TIME": [
+        "gliner__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / gliner | LOCATION": [
+        "gliner__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / gliner | ORGANIZATION": [
+        "gliner__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / gliner | PERSON": [
+        "gliner__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / gliner | QUANTITY": [
+        "gliner__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / presidio_structured | DATE_TIME": [
+        "presidio_structured__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / presidio_structured | LOCATION": [
+        "presidio_structured__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / presidio_structured | ORGANIZATION": [
+        "presidio_structured__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / presidio_structured | PERSON": [
+        "presidio_structured__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / presidio_structured | QUANTITY": [
+        "presidio_structured__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / spacy_lg | DATE_TIME": [
+        "spacy_lg__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / spacy_lg | LOCATION": [
+        "spacy_lg__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / spacy_lg | ORGANIZATION": [
+        "spacy_lg__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / spacy_lg | PERSON": [
+        "spacy_lg__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / spacy_lg | QUANTITY": [
+        "spacy_lg__worldwide__en__test__coref-off.json"
       ]
     },
     "table3": {
@@ -427,6 +571,36 @@
       ],
       "TAB / spacy_lg | F2 on": [
         "spacy_lg__tab__test__coref-on.json"
+      ],
+      "Worldwide / gliner | F2 change": [
+        "gliner__worldwide__en__test__coref-off.json",
+        "gliner__worldwide__en__test__coref-on.json"
+      ],
+      "Worldwide / gliner | F2 off": [
+        "gliner__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / gliner | F2 on": [
+        "gliner__worldwide__en__test__coref-on.json"
+      ],
+      "Worldwide / presidio_structured | F2 change": [
+        "presidio_structured__worldwide__en__test__coref-off.json",
+        "presidio_structured__worldwide__en__test__coref-on.json"
+      ],
+      "Worldwide / presidio_structured | F2 off": [
+        "presidio_structured__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / presidio_structured | F2 on": [
+        "presidio_structured__worldwide__en__test__coref-on.json"
+      ],
+      "Worldwide / spacy_lg | F2 change": [
+        "spacy_lg__worldwide__en__test__coref-off.json",
+        "spacy_lg__worldwide__en__test__coref-on.json"
+      ],
+      "Worldwide / spacy_lg | F2 off": [
+        "spacy_lg__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / spacy_lg | F2 on": [
+        "spacy_lg__worldwide__en__test__coref-on.json"
       ]
     },
     "table4_strict": {
@@ -509,6 +683,36 @@
       ],
       "TAB / spacy_lg | F2 on": [
         "spacy_lg__tab__test__coref-on.json"
+      ],
+      "Worldwide / gliner | F2 change": [
+        "gliner__worldwide__en__test__coref-off.json",
+        "gliner__worldwide__en__test__coref-on.json"
+      ],
+      "Worldwide / gliner | F2 off": [
+        "gliner__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / gliner | F2 on": [
+        "gliner__worldwide__en__test__coref-on.json"
+      ],
+      "Worldwide / presidio_structured | F2 change": [
+        "presidio_structured__worldwide__en__test__coref-off.json",
+        "presidio_structured__worldwide__en__test__coref-on.json"
+      ],
+      "Worldwide / presidio_structured | F2 off": [
+        "presidio_structured__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / presidio_structured | F2 on": [
+        "presidio_structured__worldwide__en__test__coref-on.json"
+      ],
+      "Worldwide / spacy_lg | F2 change": [
+        "spacy_lg__worldwide__en__test__coref-off.json",
+        "spacy_lg__worldwide__en__test__coref-on.json"
+      ],
+      "Worldwide / spacy_lg | F2 off": [
+        "spacy_lg__worldwide__en__test__coref-off.json"
+      ],
+      "Worldwide / spacy_lg | F2 on": [
+        "spacy_lg__worldwide__en__test__coref-on.json"
       ]
     },
     "table5_relaxed": {

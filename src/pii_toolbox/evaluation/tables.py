@@ -16,8 +16,8 @@ from pathlib import Path
 from pii_toolbox.core import DatasetSplit, DetectionReport, DetectionScore, EvaluationRun, PiiType, SpanMatchRule
 from pii_toolbox.evaluation.results_io import ResultRecord, read_record
 
-DATASETS = ("tab", "mapa")
-DATASET_TITLES = {"tab": "TAB", "mapa": "MAPA"}
+DATASETS = ("tab", "mapa", "worldwide")
+DATASET_TITLES = {"tab": "TAB", "mapa": "MAPA", "worldwide": "Worldwide"}
 NOT_APPLICABLE = "n/a"
 ENGLISH = "en"
 RESULT_FILE_PATTERN = "*__*__*__coref-*.json"
