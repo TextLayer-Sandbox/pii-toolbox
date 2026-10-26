@@ -46,7 +46,7 @@ def test_every_table_and_chart_is_written(tmp_path):
 def test_span_score_tables_show_strict_and_relaxed(tmp_path):
     build_outputs(RESULTS, tmp_path)
     header1 = (tmp_path / "table1.csv").read_text().splitlines()[0]
-    assert "TAB F2 strict" in header1 and "MAPA F2 relaxed" in header1
+    assert "TAB F2 strict" in header1 and "MAPA (en) F2 relaxed" in header1
     header3 = (tmp_path / "table3.csv").read_text().splitlines()[0]
     assert "Any-annotator F2 strict" in header3 and "Any-annotator F2 relaxed" in header3
     for table in ("table2", "table4", "table5"):

@@ -93,18 +93,36 @@ def _reports(run: EvaluationRun) -> tuple[DetectionReport, DetectionReport]:
     return run.exact_boundaries, run.any_overlap
 
 
-def table1(runs: dict[tuple[str, str], EvaluationRun]) -> Table:
+def _english_record(
+    records: dict[tuple[str, str, str | None], ResultRecord], tool: str, dataset: str
+) -> ResultRecord | None:
+    """The run holding the English figures: the whole-dataset file, else the English-only file."""
+    return records.get((tool, dataset, None)) or records.get((tool, dataset, ENGLISH))
+
+
+def table1(records: dict[tuple[str, str, str | None], ResultRecord]) -> Table:
+    """Overall detection by tool; the MAPA columns are the English scores because MAPA is measured per language."""
+    def label(dataset: str) -> str:
+        return f"{DATASET_TITLES[dataset]} ({ENGLISH})" if dataset == "mapa" else DATASET_TITLES[dataset]
+
+    def scores(tool: str, dataset: str, report_of: Callable[[EvaluationRun], DetectionReport]) -> DetectionScore | None:
+        record = _english_record(records, tool, dataset)
+        if record is None:
+            return None
+        report = report_of(record.run)
+        return report.by_language.get(ENGLISH) if dataset == "mapa" else report.overall_micro
+
     header = ["Tool"]
     for dataset in DATASETS:
         for rule in ("strict", "relaxed"):
-            header += [f"{DATASET_TITLES[dataset]} P {rule}", f"{DATASET_TITLES[dataset]} R {rule}", f"{DATASET_TITLES[dataset]} F2 {rule}"]
+            header += [f"{label(dataset)} P {rule}", f"{label(dataset)} R {rule}", f"{label(dataset)} F2 {rule}"]
     rows = []
-    for tool in _tools(runs):
+    tools = sorted({tool for tool, dataset, _ in records if dataset in DATASETS}, key=tool_order)
+    for tool in tools:
         row = [tool]
         for dataset in DATASETS:
-            run = runs.get((tool, dataset))
-            for report in _reports(run) if run else (None, None):
-                score = report.overall_micro if report else None
+            for report_of in (lambda run: run.exact_boundaries, lambda run: run.any_overlap):
+                score = scores(tool, dataset, report_of)
                 row += [_number(score.precision), _number(score.recall), _number(score.f2)] if score else [""] * 3
         rows.append(tuple(row))
     return Table("table1", "Table 1: Detection by tool, overall (micro)", tuple(header), tuple(rows))
@@ -154,13 +172,6 @@ def table3(runs: dict[tuple[str, str], EvaluationRun]) -> Table:
 
 def _change(off: float, on: float) -> str:
     return f"{on - off:+.3f}"
-
-
-def _english_record(
-    records: dict[tuple[str, str, str | None], ResultRecord], tool: str, dataset: str
-) -> ResultRecord | None:
-    """The run holding the English figures: the whole-dataset file, else the English-only file."""
-    return records.get((tool, dataset, None)) or records.get((tool, dataset, ENGLISH))
 
 
 def table4(
@@ -308,7 +319,7 @@ def write_tables(tables: Sequence[Table], out_dir: Path) -> list[Path]:
 
 
 def build_table1(results_dir: Path, out_dir: Path, split: DatasetSplit = DatasetSplit.TEST) -> list[Path]:
-    return write_tables([table1(load_runs(results_dir, split))], out_dir)
+    return write_tables([table1(load_records(results_dir, split))], out_dir)
 
 
 def build_table2(results_dir: Path, out_dir: Path, split: DatasetSplit = DatasetSplit.TEST) -> list[Path]:
