@@ -13,7 +13,7 @@ from pathlib import Path
 
 from pii_toolbox.core import DatasetSplit, SpanMatchRule
 from pii_toolbox.evaluation import charts, tables
-from pii_toolbox.evaluation.results_io import ResultRecord, read_record
+from pii_toolbox.evaluation.results_io import ResultRecord, language_from_file_name, read_record
 from pii_toolbox.evaluation.tables import Table
 
 COST_FOLDER_NAME = "cost"
@@ -86,8 +86,9 @@ def _write_tables(
         return replace(table, name=name)
 
     def by_dataset_column(row: Sequence[str], column: str) -> list[str]:
-        dataset = "tab" if column.startswith("TAB") else "mapa"
-        return _file(index, row[0], dataset)
+        if column.startswith("TAB"):
+            return _file(index, row[0], "tab")
+        return [name for name in _file(index, row[0], "mapa") if language_from_file_name(name) in (None, "en")]
 
     def tab_row(row: Sequence[str], column: str) -> list[str]:
         return _file(index, row[0], "tab")
@@ -111,7 +112,7 @@ def _write_tables(
         return [f"{COST_FOLDER_NAME}/{row[0].replace('+', '__')}.json"]
 
     plan: list[tuple[Table, CellSources, int]] = [
-        (named(tables.table1(off_runs), "table1"), by_dataset_column, 1),
+        (named(tables.table1(off), "table1"), by_dataset_column, 1),
         (named(tables.table2(off_runs, strict), "table2_strict"), dataset_and_tool_row, 2),
         (named(tables.table2(off_runs, relaxed), "table2_relaxed"), dataset_and_tool_row, 2),
         (named(tables.table3(off_runs), "table3"), tab_row, 1),
