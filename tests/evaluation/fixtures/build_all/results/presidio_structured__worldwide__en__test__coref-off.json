@@ -1,0 +1,139 @@
+{
+  "tool": "presidio_structured",
+  "coreference": false,
+  "dataset": "worldwide",
+  "split": "TEST",
+  "exact_boundaries": {
+    "rule": "EXACT_BOUNDARIES",
+    "overall_micro": {
+      "precision": 0.5,
+      "recall": 0.6,
+      "f2": 0.5769
+    },
+    "macro": {
+      "precision": 0.45,
+      "recall": 0.5499999999999999,
+      "f2": 0.5266
+    },
+    "by_type": {
+      "PERSON": {
+        "precision": 0.8,
+        "recall": 0.7,
+        "f2": 0.7179
+      },
+      "ORGANIZATION": {
+        "precision": 0.6,
+        "recall": 0.5,
+        "f2": 0.5172
+      },
+      "LOCATION": {
+        "precision": 0.7,
+        "recall": 0.6,
+        "f2": 0.6176
+      },
+      "DATE_TIME": {
+        "precision": 0.9,
+        "recall": 0.8,
+        "f2": 0.8182
+      },
+      "QUANTITY": {
+        "precision": 0.5,
+        "recall": 0.4,
+        "f2": 0.4167
+      },
+      "IDENTIFIER": null
+    },
+    "by_language": {
+      "en": {
+        "precision": 0.65,
+        "recall": 0.75,
+        "f2": 0.7276
+      },
+      "fr": {
+        "precision": 0.55,
+        "recall": 0.7,
+        "f2": 0.6638
+      },
+      "de": {
+        "precision": 0.45,
+        "recall": 0.6,
+        "f2": 0.5625
+      }
+    }
+  },
+  "any_overlap": {
+    "rule": "ANY_OVERLAP",
+    "overall_micro": {
+      "precision": 0.6,
+      "recall": 0.7,
+      "f2": 0.6774
+    },
+    "macro": {
+      "precision": 0.5499999999999999,
+      "recall": 0.6499999999999999,
+      "f2": 0.6272
+    },
+    "by_type": {
+      "PERSON": {
+        "precision": 0.9,
+        "recall": 0.7999999999999999,
+        "f2": 0.8182
+      },
+      "ORGANIZATION": {
+        "precision": 0.7,
+        "recall": 0.6,
+        "f2": 0.6176
+      },
+      "LOCATION": {
+        "precision": 0.7999999999999999,
+        "recall": 0.7,
+        "f2": 0.7179
+      },
+      "DATE_TIME": {
+        "precision": 1.0,
+        "recall": 0.9,
+        "f2": 0.9184
+      },
+      "QUANTITY": {
+        "precision": 0.6,
+        "recall": 0.5,
+        "f2": 0.5172
+      },
+      "IDENTIFIER": null
+    },
+    "by_language": {
+      "en": {
+        "precision": 0.75,
+        "recall": 0.85,
+        "f2": 0.8279
+      },
+      "fr": {
+        "precision": 0.65,
+        "recall": 0.7999999999999999,
+        "f2": 0.7647
+      },
+      "de": {
+        "precision": 0.55,
+        "recall": 0.7,
+        "f2": 0.6638
+      }
+    }
+  },
+  "tab_metrics": null,
+  "environment": {
+    "machine": "arm64, 8 cores, synthetic",
+    "os": "SyntheticOS 1.0",
+    "runtime": "CPython 3.12.0",
+    "library_versions": {
+      "examplelib": "1.0"
+    }
+  },
+  "detector_languages": null,
+  "detector_detects": [
+    "DATE_TIME",
+    "LOCATION",
+    "ORGANIZATION",
+    "PERSON",
+    "QUANTITY"
+  ]
+}
