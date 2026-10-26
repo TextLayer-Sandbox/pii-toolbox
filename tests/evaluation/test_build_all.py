@@ -144,3 +144,19 @@ def test_a_missing_cost_folder_is_reported_when_named_with_the_cost_option(tmp_p
     code = load_script().main(["--results", str(RESULTS), "--cost", str(tmp_path / "absent"), "--out", str(tmp_path / "out")])
     assert code != 0
     assert "absent" in capsys.readouterr().err
+
+
+def test_every_filled_worldwide_cell_maps_to_a_worldwide_result_file(tmp_path):
+    build_outputs(RESULTS, tmp_path)
+    manifest = json.loads((tmp_path / MANIFEST_FILE_NAME).read_text())
+    worldwide_cells = {
+        (table, cell): sources
+        for table, cells in manifest["tables"].items()
+        for cell, sources in cells.items()
+        if "Worldwide" in cell
+    }
+    assert {table for table, _ in worldwide_cells} == {"table1", "table2_strict", "table2_relaxed", "table4_strict", "table4_relaxed"}
+    for sources in worldwide_cells.values():
+        assert all("__worldwide__en__test__" in source for source in sources)
+    assert manifest["tables"]["table1"]["gliner | Worldwide F2 strict"] == ["gliner__worldwide__en__test__coref-off.json"]
+    assert manifest["tables"]["table4_strict"]["Worldwide / gliner | F2 on"] == ["gliner__worldwide__en__test__coref-on.json"]

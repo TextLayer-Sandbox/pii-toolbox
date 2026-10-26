@@ -95,9 +95,10 @@ def _write_tables(
         return replace(table, name=name)
 
     def by_dataset_column(row: Sequence[str], column: str) -> list[str]:
-        if column.startswith("TAB"):
-            return _file(index, row[0], "tab")
-        return [name for name in _file(index, row[0], "mapa") if language_from_file_name(name) in (None, "en")]
+        dataset = column.split(" ")[0].lower()
+        if dataset == "tab":
+            return _file(index, row[0], dataset)
+        return [name for name in _file(index, row[0], dataset) if language_from_file_name(name) in (None, "en")]
 
     def tab_row(row: Sequence[str], column: str) -> list[str]:
         return _file(index, row[0], "tab")
