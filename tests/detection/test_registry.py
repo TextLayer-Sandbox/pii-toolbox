@@ -1,13 +1,9 @@
-import json
-import sys
-import types
 from types import SimpleNamespace
 
 import pytest
 
 from pii_toolbox.core import Document, PiiType
 from pii_toolbox.detection.gliner_detector import GlinerDetector
-from pii_toolbox.detection.llm_detector import LlmDetector
 from pii_toolbox.detection.known_names import KnownNamesDetector
 from pii_toolbox.detection.presidio_structured import PresidioStructuredDetector
 from pii_toolbox.detection.registry import (
@@ -26,7 +22,7 @@ MODEL_DIR = default_model_dir()
 TEXT = "Maria Gonzalez works at Acme Corp in Lisbon."
 DOCUMENT = Document(id="d", text=TEXT, language="en")
 NAME = "Maria Gonzalez"
-EXPECTED_NAMES = {"presidio_structured", "spacy_lg", "spacy_sm", "roberta", "gliner", "llm", "known_names"}
+EXPECTED_NAMES = {"presidio_structured", "spacy_lg", "spacy_sm", "roberta", "gliner", "known_names"}
 
 
 def stub_registry():
@@ -35,10 +31,6 @@ def stub_registry():
     def spacy_stub(name):
         entity = SimpleNamespace(start_char=start, end_char=start + len(NAME), label_="PERSON")
         return lambda: SpacyDetector(name, "stub", pipeline=lambda text: SimpleNamespace(ents=[entity]))
-
-    class LlmRuntimeStub:
-        def generate_structured(self, prompt, json_schema):
-            return json.dumps({"items": [{"text": NAME, "type": "PERSON"}]})
 
     return FixedDetectorRegistry(
         factory_overrides={
@@ -54,7 +46,6 @@ def stub_registry():
                     ]
                 )
             ),
-            "llm": lambda: LlmDetector(LlmRuntimeStub()),
         }
     )
 
@@ -71,7 +62,6 @@ def test_registry_names():
         ("spacy_sm", SpacyDetector),
         ("roberta", RobertaDetector),
         ("gliner", GlinerDetector),
-        ("llm", LlmDetector),
         ("known_names", KnownNamesDetector),
     ],
 )
@@ -123,21 +113,6 @@ def test_properties_of_each_detector():
         assert registry.build(name).languages == frozenset({"en"})
     assert registry.build("gliner").languages is None
     assert FixedDetectorRegistry().build("presidio_structured").detects == frozenset({PiiType.IDENTIFIER})
-
-
-def test_llm_builds_without_a_model_but_cannot_load(monkeypatch):
-    monkeypatch.delenv("PII_LLM_MODEL_PATH", raising=False)
-    detector = FixedDetectorRegistry().build("llm")
-    with pytest.raises(FileNotFoundError, match="PII_LLM_MODEL_PATH"):
-        detector.load_models()
-
-
-def test_llm_model_path_comes_from_the_environment(monkeypatch, tmp_path):
-    missing = tmp_path / "absent.gguf"
-    monkeypatch.setenv("PII_LLM_MODEL_PATH", str(missing))
-    monkeypatch.setitem(sys.modules, "llama_cpp", types.ModuleType("llama_cpp"))
-    with pytest.raises(FileNotFoundError, match="absent.gguf"):
-        FixedDetectorRegistry().build("llm").load_models()
 
 
 @pytest.mark.model
