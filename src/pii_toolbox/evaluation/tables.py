@@ -81,6 +81,18 @@ def load_runs(results_dir: Path, split: DatasetSplit) -> dict[tuple[str, str], E
     }
 
 
+def english_runs(
+    records: dict[tuple[str, str, str | None], ResultRecord],
+) -> dict[tuple[str, str], EvaluationRun]:
+    """The runs holding each tool's English figures per dataset: the whole-dataset file, else the English-only file."""
+    runs = {}
+    for tool, dataset in sorted({(tool, dataset) for tool, dataset, _ in records}):
+        record = _english_record(records, tool, dataset)
+        if record is not None:
+            runs[(tool, dataset)] = record.run
+    return runs
+
+
 def _tools(runs: dict[tuple[str, str], EvaluationRun], datasets: Sequence[str] = DATASETS) -> list[str]:
     return sorted({tool for tool, dataset in runs if dataset in datasets}, key=tool_order)
 
@@ -323,12 +335,12 @@ def build_table1(results_dir: Path, out_dir: Path, split: DatasetSplit = Dataset
 
 
 def build_table2(results_dir: Path, out_dir: Path, split: DatasetSplit = DatasetSplit.TEST) -> list[Path]:
-    runs = load_runs(results_dir, split)
+    runs = english_runs(load_records(results_dir, split))
     return write_tables([table2(runs, SpanMatchRule.EXACT_BOUNDARIES), table2(runs, SpanMatchRule.ANY_OVERLAP)], out_dir)
 
 
 def build_table3(results_dir: Path, out_dir: Path, split: DatasetSplit = DatasetSplit.TEST) -> list[Path]:
-    return write_tables([table3(load_runs(results_dir, split))], out_dir)
+    return write_tables([table3(english_runs(load_records(results_dir, split)))], out_dir)
 
 
 def build_table5(

@@ -89,7 +89,7 @@ def _write_tables(
     off, on = _records(index, False), _records(index, True)
     strict, relaxed = SpanMatchRule.EXACT_BOUNDARIES, SpanMatchRule.ANY_OVERLAP
     cost_results = tables.load_cost_results(cost_dir)
-    off_runs = {(tool, dataset): record.run for (tool, dataset, language), record in off.items() if language is None}
+    off_runs = tables.english_runs(off)
 
     def named(table: Table, name: str) -> Table:
         return replace(table, name=name)
@@ -103,7 +103,7 @@ def _write_tables(
         return _file(index, row[0], "tab")
 
     def dataset_and_tool_row(row: Sequence[str], column: str) -> list[str]:
-        return _file(index, row[1], row[0].lower())
+        return [name for name in _file(index, row[1], row[0].lower()) if language_from_file_name(name) in (None, "en")]
 
     def coreference_cell(row: Sequence[str], column: str) -> list[str]:
         dataset, tool = row[0].lower(), row[1]
