@@ -20,10 +20,10 @@ from matplotlib.figure import Figure  # noqa: E402
 from pii_toolbox.core import DatasetSplit, DetectionReport, EvaluationRun, PiiType, SpanMatchRule  # noqa: E402
 from pii_toolbox.evaluation.tables import (  # noqa: E402
     HEADLINE_LANGUAGES,
+    english_runs,
     tool_order,
     load_cost_results,
     load_records,
-    load_runs,
 )
 
 F2_CONTOUR_LEVELS = (0.5, 0.7, 0.9)
@@ -265,6 +265,6 @@ def build_chart_a(
     rule: SpanMatchRule = SpanMatchRule.EXACT_BOUNDARIES,
 ) -> Path:
     """Writes chart_a.svg for the co-reference-off runs of one dataset and split."""
-    runs = [run for (_, name), run in load_runs(results_dir, split).items() if name == dataset]
+    runs = [run for (_, name), run in english_runs(load_records(results_dir, split)).items() if name == dataset]
     figure = chart_a_figure(runs, rule)
     return _save(figure, out_dir, CHART_A_FILE_NAME)
