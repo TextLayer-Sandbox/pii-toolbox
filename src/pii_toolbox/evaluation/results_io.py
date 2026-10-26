@@ -29,16 +29,24 @@ class ResultRecord:
     """A saved run with the facts about its detector that the tables need.
 
     `languages` is the detector's supported ISO codes, None meaning any language;
-    `detects` is the set of types the detector can report.
+    `detects` is the set of types the detector can report; `language` is the single
+    language the run was measured on, None when the file covers every language of its dataset.
     """
 
     run: EvaluationRun
     languages: frozenset[str] | None
     detects: frozenset[PiiType]
+    language: str | None = None
 
 
 def run_file_name(tool: str, dataset: str, split: DatasetSplit, coreference: bool) -> str:
     return f"{tool}__{dataset}__{split.name.lower()}__coref-{'on' if coreference else 'off'}.json"
+
+
+def language_from_file_name(file_name: str) -> str | None:
+    """The language segment of `<tool>__<dataset>__<language>__<split>__coref-<state>.json`, None for a name without one."""
+    parts = file_name.split("__")
+    return parts[2] if len(parts) == 5 else None
 
 
 def _score_to_dict(score: DetectionScore) -> dict[str, float]:
@@ -135,6 +143,7 @@ def read_record(path: Path) -> ResultRecord:
         run=run_from_dict(raw),
         languages=None if languages is None else frozenset(languages),
         detects=frozenset(PiiType[name] for name in raw["detector_detects"]),
+        language=language_from_file_name(path.name),
     )
 
 

@@ -6,6 +6,7 @@ the file.
 """
 
 from collections.abc import Sequence
+from dataclasses import replace
 from pathlib import Path
 
 import matplotlib
@@ -75,9 +76,35 @@ def _rule_name(rule: SpanMatchRule) -> str:
     return "strict" if rule is SpanMatchRule.EXACT_BOUNDARIES else "relaxed"
 
 
+def _merge_language_runs(runs: Sequence[EvaluationRun]) -> EvaluationRun:
+    """The first run carrying the by-language scores of every run, for a tool measured once per language."""
+    def merged(report: DetectionReport, reports: Sequence[DetectionReport]) -> DetectionReport:
+        by_language = {language: score for other in reports for language, score in other.by_language.items()}
+        return replace(report, by_language=by_language)
+
+    first = runs[0]
+    return replace(
+        first,
+        exact_boundaries=merged(first.exact_boundaries, [run.exact_boundaries for run in runs]),
+        any_overlap=merged(first.any_overlap, [run.any_overlap for run in runs]),
+    )
+
+
 def _runs_of(results_dir: Path, dataset: str, split: DatasetSplit, coreference: bool = False) -> list[EvaluationRun]:
+    """One run per tool: the whole-dataset file, else the per-language files merged by language."""
     records = load_records(results_dir, split, coreference)
-    runs = [record.run for record in records.values() if record.run.dataset == dataset]
+    runs = []
+    for tool in {tool for tool, name, _ in records if name == dataset}:
+        whole = records.get((tool, dataset, None))
+        if whole is not None:
+            runs.append(whole.run)
+            continue
+        per_language = [
+            record.run
+            for (name_tool, name, language), record in sorted(records.items(), key=lambda item: str(item[0][2]))
+            if (name_tool, name) == (tool, dataset)
+        ]
+        runs.append(_merge_language_runs(per_language))
     return sorted(runs, key=lambda run: tool_order(run.tool))
 
 

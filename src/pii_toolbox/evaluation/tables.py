@@ -59,19 +59,26 @@ def tool_order(tool: str) -> tuple[int, str]:
 
 def load_records(
     results_dir: Path, split: DatasetSplit, coreference: bool = False
-) -> dict[tuple[str, str], ResultRecord]:
-    """The results of the split with co-reference off (or on), keyed by (tool, dataset)."""
+) -> dict[tuple[str, str, str | None], ResultRecord]:
+    """The results of the split with co-reference off (or on), keyed by (tool, dataset, language).
+
+    The language is None for a file that covers every language of its dataset.
+    """
     records = {}
     for path in sorted(results_dir.glob(RESULT_FILE_PATTERN)):
         record = read_record(path)
         if record.run.split is split and record.run.coreference is coreference:
-            records[(record.run.tool, record.run.dataset)] = record
+            records[(record.run.tool, record.run.dataset, record.language)] = record
     return records
 
 
 def load_runs(results_dir: Path, split: DatasetSplit) -> dict[tuple[str, str], EvaluationRun]:
-    """The co-reference-off runs of the split, keyed by (tool, dataset)."""
-    return {key: record.run for key, record in load_records(results_dir, split).items()}
+    """The co-reference-off runs of the split that cover a whole dataset, keyed by (tool, dataset)."""
+    return {
+        (tool, dataset): record.run
+        for (tool, dataset, language), record in load_records(results_dir, split).items()
+        if language is None
+    }
 
 
 def _tools(runs: dict[tuple[str, str], EvaluationRun], datasets: Sequence[str] = DATASETS) -> list[str]:
@@ -86,18 +93,36 @@ def _reports(run: EvaluationRun) -> tuple[DetectionReport, DetectionReport]:
     return run.exact_boundaries, run.any_overlap
 
 
-def table1(runs: dict[tuple[str, str], EvaluationRun]) -> Table:
+def _english_record(
+    records: dict[tuple[str, str, str | None], ResultRecord], tool: str, dataset: str
+) -> ResultRecord | None:
+    """The run holding the English figures: the whole-dataset file, else the English-only file."""
+    return records.get((tool, dataset, None)) or records.get((tool, dataset, ENGLISH))
+
+
+def table1(records: dict[tuple[str, str, str | None], ResultRecord]) -> Table:
+    """Overall detection by tool; the MAPA columns are the English scores because MAPA is measured per language."""
+    def label(dataset: str) -> str:
+        return f"{DATASET_TITLES[dataset]} ({ENGLISH})" if dataset == "mapa" else DATASET_TITLES[dataset]
+
+    def scores(tool: str, dataset: str, report_of: Callable[[EvaluationRun], DetectionReport]) -> DetectionScore | None:
+        record = _english_record(records, tool, dataset)
+        if record is None:
+            return None
+        report = report_of(record.run)
+        return report.by_language.get(ENGLISH) if dataset == "mapa" else report.overall_micro
+
     header = ["Tool"]
     for dataset in DATASETS:
         for rule in ("strict", "relaxed"):
-            header += [f"{DATASET_TITLES[dataset]} P {rule}", f"{DATASET_TITLES[dataset]} R {rule}", f"{DATASET_TITLES[dataset]} F2 {rule}"]
+            header += [f"{label(dataset)} P {rule}", f"{label(dataset)} R {rule}", f"{label(dataset)} F2 {rule}"]
     rows = []
-    for tool in _tools(runs):
+    tools = sorted({tool for tool, dataset, _ in records if dataset in DATASETS}, key=tool_order)
+    for tool in tools:
         row = [tool]
         for dataset in DATASETS:
-            run = runs.get((tool, dataset))
-            for report in _reports(run) if run else (None, None):
-                score = report.overall_micro if report else None
+            for report_of in (lambda run: run.exact_boundaries, lambda run: run.any_overlap):
+                score = scores(tool, dataset, report_of)
                 row += [_number(score.precision), _number(score.recall), _number(score.f2)] if score else [""] * 3
         rows.append(tuple(row))
     return Table("table1", "Table 1: Detection by tool, overall (micro)", tuple(header), tuple(rows))
@@ -150,8 +175,8 @@ def _change(off: float, on: float) -> str:
 
 
 def table4(
-    off: dict[tuple[str, str], ResultRecord],
-    on: dict[tuple[str, str], ResultRecord],
+    off: dict[tuple[str, str, str | None], ResultRecord],
+    on: dict[tuple[str, str, str | None], ResultRecord],
     rule: SpanMatchRule = SpanMatchRule.EXACT_BOUNDARIES,
 ) -> Table:
     """F2 and TAB entity-level recall with co-reference off, on and the change; English text only.
@@ -165,10 +190,11 @@ def table4(
     )
     rows = []
     for dataset in DATASETS:
-        for tool in sorted({tool for tool, name in off if name == dataset}, key=tool_order):
-            if (tool, dataset) not in on:
+        for tool in sorted({tool for tool, name, _ in off if name == dataset}, key=tool_order):
+            before_record, after_record = _english_record(off, tool, dataset), _english_record(on, tool, dataset)
+            if before_record is None or after_record is None:
                 continue
-            before, after = off[(tool, dataset)].run, on[(tool, dataset)].run
+            before, after = before_record.run, after_record.run
             if dataset == "mapa":
                 scores = [_rule_report(r, rule).by_language.get(ENGLISH) for r in (before, after)]
                 if None in scores:
@@ -241,24 +267,40 @@ def _language_cell(record: ResultRecord | None, language: str, f2: float | None)
     return "" if f2 is None else _number(f2)
 
 
-def table5(records: dict[tuple[str, str], ResultRecord], rule: SpanMatchRule = SpanMatchRule.EXACT_BOUNDARIES) -> Table:
-    """F2 per MAPA language, headline languages first, with TAB as the English reference column."""
+def table5(
+    records: dict[tuple[str, str, str | None], ResultRecord], rule: SpanMatchRule = SpanMatchRule.EXACT_BOUNDARIES
+) -> Table:
+    """F2 per MAPA language, headline languages first, with TAB as the English reference column.
+
+    A language comes from the file measured on it, or from the by-language scores of a file that covers
+    every language.
+    """
     def report(record: ResultRecord) -> DetectionReport:
         return record.run.exact_boundaries if rule is SpanMatchRule.EXACT_BOUNDARIES else record.run.any_overlap
 
-    mapa = {tool: record for (tool, dataset), record in records.items() if dataset == "mapa"}
-    seen = {language for record in mapa.values() for language in report(record).by_language}
-    seen |= {language for record in mapa.values() for language in (record.languages or ())}
+    mapa: dict[str, list[ResultRecord]] = {}
+    for (tool, dataset, _), record in records.items():
+        if dataset == "mapa":
+            mapa.setdefault(tool, []).append(record)
+    seen = set()
+    for tool_records in mapa.values():
+        for record in tool_records:
+            seen |= set(report(record).by_language) | set(record.languages or ())
+            if record.language is not None:
+                seen.add(record.language)
     languages = [*HEADLINE_LANGUAGES, *sorted(seen - set(HEADLINE_LANGUAGES))]
     header = ("Tool", *languages, TAB_REFERENCE_COLUMN)
     rows = []
-    for tool in sorted({tool for tool, _ in records}, key=tool_order):
+    for tool in sorted({tool for tool, _, _ in records}, key=tool_order):
         cells = []
         for language in languages:
-            record = mapa.get(tool)
-            score = report(record).by_language.get(language) if record else None
-            cells.append(_language_cell(record, language, score.f2 if score else None))
-        tab_record = records.get((tool, "tab"))
+            tool_records = mapa.get(tool, [])
+            measured = next((r for r in tool_records if r.language == language), None) or next(
+                (r for r in tool_records if r.language is None), None
+            )
+            score = report(measured).by_language.get(language) if measured else None
+            cells.append(_language_cell(measured or next(iter(tool_records), None), language, score.f2 if score else None))
+        tab_record = records.get((tool, "tab", None))
         tab_f2 = report(tab_record).overall_micro.f2 if tab_record else None
         rows.append((tool, *cells, _language_cell(tab_record, "en", tab_f2)))
     variant = "strict" if rule is SpanMatchRule.EXACT_BOUNDARIES else "relaxed"
@@ -277,7 +319,7 @@ def write_tables(tables: Sequence[Table], out_dir: Path) -> list[Path]:
 
 
 def build_table1(results_dir: Path, out_dir: Path, split: DatasetSplit = DatasetSplit.TEST) -> list[Path]:
-    return write_tables([table1(load_runs(results_dir, split))], out_dir)
+    return write_tables([table1(load_records(results_dir, split))], out_dir)
 
 
 def build_table2(results_dir: Path, out_dir: Path, split: DatasetSplit = DatasetSplit.TEST) -> list[Path]:

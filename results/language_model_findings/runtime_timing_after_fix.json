@@ -1,0 +1,20 @@
+[
+  {
+    "runtime": "llama.cpp",
+    "model": "Qwen3 8B",
+    "documents": 4,
+    "passage_characters": 11995,
+    "load_seconds": 0.5503482918720692,
+    "latency_per_1000_chars_seconds": 9.665332562063027,
+    "valid_structured_output_rate": 1.0
+  },
+  {
+    "runtime": "mlx",
+    "model": "Qwen3 8B",
+    "documents": 4,
+    "passage_characters": 11995,
+    "load_seconds": 3.0506608749274164,
+    "latency_per_1000_chars_seconds": 6.679469605511044,
+    "valid_structured_output_rate": 0.5
+  }
+]

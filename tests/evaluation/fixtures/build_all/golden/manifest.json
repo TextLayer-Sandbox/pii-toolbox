@@ -37,22 +37,22 @@
   },
   "tables": {
     "table1": {
-      "gliner | MAPA F2 relaxed": [
+      "gliner | MAPA (en) F2 relaxed": [
         "gliner__mapa__test__coref-off.json"
       ],
-      "gliner | MAPA F2 strict": [
+      "gliner | MAPA (en) F2 strict": [
         "gliner__mapa__test__coref-off.json"
       ],
-      "gliner | MAPA P relaxed": [
+      "gliner | MAPA (en) P relaxed": [
         "gliner__mapa__test__coref-off.json"
       ],
-      "gliner | MAPA P strict": [
+      "gliner | MAPA (en) P strict": [
         "gliner__mapa__test__coref-off.json"
       ],
-      "gliner | MAPA R relaxed": [
+      "gliner | MAPA (en) R relaxed": [
         "gliner__mapa__test__coref-off.json"
       ],
-      "gliner | MAPA R strict": [
+      "gliner | MAPA (en) R strict": [
         "gliner__mapa__test__coref-off.json"
       ],
       "gliner | TAB F2 relaxed": [
@@ -91,22 +91,22 @@
       "presidio_structured | TAB R strict": [
         "presidio_structured__tab__test__coref-off.json"
       ],
-      "spacy_lg | MAPA F2 relaxed": [
+      "spacy_lg | MAPA (en) F2 relaxed": [
         "spacy_lg__mapa__test__coref-off.json"
       ],
-      "spacy_lg | MAPA F2 strict": [
+      "spacy_lg | MAPA (en) F2 strict": [
         "spacy_lg__mapa__test__coref-off.json"
       ],
-      "spacy_lg | MAPA P relaxed": [
+      "spacy_lg | MAPA (en) P relaxed": [
         "spacy_lg__mapa__test__coref-off.json"
       ],
-      "spacy_lg | MAPA P strict": [
+      "spacy_lg | MAPA (en) P strict": [
         "spacy_lg__mapa__test__coref-off.json"
       ],
-      "spacy_lg | MAPA R relaxed": [
+      "spacy_lg | MAPA (en) R relaxed": [
         "spacy_lg__mapa__test__coref-off.json"
       ],
-      "spacy_lg | MAPA R strict": [
+      "spacy_lg | MAPA (en) R strict": [
         "spacy_lg__mapa__test__coref-off.json"
       ],
       "spacy_lg | TAB F2 relaxed": [

@@ -26,8 +26,8 @@ def test_tables_match_the_golden_files_byte_for_byte(tmp_path, builder, names):
 
 
 def test_table1_has_precision_recall_and_f2_strict_and_relaxed_for_both_datasets():
-    header = tables.table1(tables.load_runs(RESULTS, DatasetSplit.TEST)).header
-    for dataset in ("TAB", "MAPA"):
+    header = tables.table1(tables.load_records(RESULTS, DatasetSplit.TEST)).header
+    for dataset in ("TAB", "MAPA (en)"):
         for rule in ("strict", "relaxed"):
             assert [f"{dataset} {metric} {rule}" for metric in ("P", "R", "F2")] == [
                 column for column in header if column.startswith(f"{dataset} ") and column.endswith(rule)

@@ -22,6 +22,7 @@ MAVERICK_DIRECTORY = "sapienzanlp__maverick-mes-ontonotes"
 SPACY_MODEL_NAME = "en_core_web_sm"
 SPACY_MODEL_DIRECTORY = "en_core_web_sm"
 PUNKT_DIRECTORY = "nltk_punkt"
+LONG_DOCUMENT_SUBTOKEN_THRESHOLD = 2000  # also the window length of Maverick's long-document mode
 _NAME_RUN = re.compile(r"(?:(?:Mr|Mrs|Ms|Dr|Prof)\.\s+)?[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*")
 
 
@@ -68,7 +69,26 @@ def maverick_clusters_factory(model_dir: Path):
     from maverick import Maverick
 
     load_offline_text_resources(model_dir)
-    model = Maverick(hf_name_or_path=str(model_dir / MAVERICK_DIRECTORY), device="cpu")
+    return maverick_predict_function(Maverick(hf_name_or_path=str(model_dir / MAVERICK_DIRECTORY), device="cpu"))
+
+
+def maverick_predict_function(model):
+    """Wraps a Maverick model so long documents use its windowed mode and character offsets are exact."""
+    original_preprocess = model.preprocess
+    original_forward = model.model.forward
+
+    def preprocess(sample, speakers=None):
+        tokens, end_of_sentence_indices, speakers, _ = original_preprocess(sample, speakers)
+        # The model's own offsets assume one separator character between sentences, which drifts on blank lines.
+        return tokens, end_of_sentence_indices, speakers, token_character_offsets(sample, tokens)
+
+    def forward(*args, **kwargs):
+        if kwargs["input_ids"].shape[1] > LONG_DOCUMENT_SUBTOKEN_THRESHOLD:
+            kwargs["longdoc"] = "naive"
+        return original_forward(*args, **kwargs)
+
+    model.preprocess = preprocess
+    model.model.forward = forward
 
     def predict(text: str) -> list[list[tuple[int, int]]]:
         output = model.predict(text)
@@ -76,6 +96,17 @@ def maverick_clusters_factory(model_dir: Path):
         return [[(start, end + 1) for start, end in cluster] for cluster in output["clusters_char_offsets"]]
 
     return predict
+
+
+def token_character_offsets(text: str, tokens: list[str]) -> list[tuple[int, int]]:
+    """Locates each token in order within `text`, returning (first, last) character indices."""
+    offsets = []
+    position = 0
+    for token in tokens:
+        first = text.index(token, position)
+        position = first + len(token)
+        offsets.append((first, position - 1))
+    return offsets
 
 
 def overlaps_any(mention: tuple[int, int], names: list[list[int]]) -> bool:
