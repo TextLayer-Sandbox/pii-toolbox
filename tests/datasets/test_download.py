@@ -18,12 +18,16 @@ def recording_fetcher(calls):
     return fetch
 
 
-def test_requests_tab_and_mapa_and_writes_only_under_dest(tmp_path):
+def test_requests_tab_mapa_and_worldwide_and_writes_only_under_dest(tmp_path):
     dest = tmp_path / "data"
     calls = []
     download_datasets(dest, recording_fetcher(calls))
     assert any("NorskRegnesentral/text-anonymization-benchmark" in url for url in calls)
     assert any("huggingface.co/datasets/joelniklaus/mapa" in url for url in calls)
+    assert (
+        "https://codeload.github.com/stanfordnlp/en-worldwide-newswire/tar.gz/"
+        "53cee6af7a1eec472db398de2d2fdcd2a032dcc9"
+    ) in calls
     assert len(calls) == len(DATASET_FILES)
     assert list(tmp_path.iterdir()) == [dest]
     assert not list(dest.rglob("*.partial"))

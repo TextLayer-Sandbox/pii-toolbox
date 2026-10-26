@@ -1,13 +1,16 @@
-"""Downloads the TAB and MAPA corpora into a data directory outside the repository.
+"""Downloads the TAB, MAPA and Worldwide English NER corpora into a data directory outside the repository.
 
 The directory is PII_DATA_DIR, defaulting to a folder under the user cache. Layout under it:
 
     tab/echr_train.json  tab/echr_dev.json  tab/echr_test.json  tab/evaluation.py
     mapa/train.jsonl     mapa/validation.jsonl     mapa/test.jsonl
+    worldwide/en-worldwide-newswire.tar.gz
 
 TAB comes from github.com/NorskRegnesentral/text-anonymization-benchmark and MAPA from
 huggingface.co/datasets/joelniklaus/mapa, each pinned to a commit. Each MAPA file holds
 every language, one JSON record per line with a "language" field (en, fr, de among them).
+Worldwide comes from github.com/stanfordnlp/en-worldwide-newswire as one repository tarball
+at a pinned commit, kept compressed.
 A file is fetched to a temporary name and renamed on success, so an interrupted run
 leaves no partial file that later counts as present.
 """
@@ -24,6 +27,8 @@ TAB_REPOSITORY = "github.com/NorskRegnesentral/text-anonymization-benchmark"
 TAB_REVISION = "558e09e26d6b36f5f78440074e6a233946d98bd9"
 MAPA_REPOSITORY = "huggingface.co/datasets/joelniklaus/mapa"
 MAPA_REVISION = "bbb2a0157b760465002fd12a61af81b475cd387a"
+WORLDWIDE_REPOSITORY = "github.com/stanfordnlp/en-worldwide-newswire"
+WORLDWIDE_REVISION = "53cee6af7a1eec472db398de2d2fdcd2a032dcc9"
 
 
 @dataclass(frozen=True)
@@ -47,6 +52,11 @@ def _mapa_file(name: str) -> DatasetFile:
     return DatasetFile(url, f"mapa/{name}")
 
 
+def _worldwide_tarball() -> DatasetFile:
+    url = f"https://codeload.{WORLDWIDE_REPOSITORY}/tar.gz/{WORLDWIDE_REVISION}"
+    return DatasetFile(url, "worldwide/en-worldwide-newswire.tar.gz")
+
+
 DATASET_FILES: list[DatasetFile] = [
     _tab_file("echr_train.json"),
     _tab_file("echr_dev.json"),
@@ -55,6 +65,7 @@ DATASET_FILES: list[DatasetFile] = [
     _mapa_file("train.jsonl"),
     _mapa_file("validation.jsonl"),
     _mapa_file("test.jsonl"),
+    _worldwide_tarball(),
 ]
 
 
