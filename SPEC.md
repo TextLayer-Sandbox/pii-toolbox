@@ -32,15 +32,16 @@ Write each requirement as one row under its section, in this format. The fence k
 - D5 [approved, must] GLiNER multi_pii-v1, RoBERTa-large-ner-english, spaCy en_core_web_lg and en_core_web_sm each run as a Presidio recogniser. | gate: test: each model detector finds PERSON in a fixed synthetic sentence
 - D6 [approved, must] RoBERTa's MISC label is ignored. | gate: test: RoBERTa MISC spans are dropped
 - D7 [approved, must] Long text is cut into overlapping segments; spans are mapped back to full-text positions. | gate: test: 100,000-char text yields spans at correct positions across segment joins
-- D8 [approved, must] A local quantised language model, via llama.cpp or MLX, lists PII as structured output. | gate: test: LLM detector returns typed spans on a synthetic passage via local runtime
-- D9 [approved, must] LLM items are matched back to character positions, tolerating quote and whitespace differences. | gate: test: items with altered quotes or whitespace still map to correct positions; unmatched items reported
-- D10 [approved, must] When the language model returns invalid structured output, the call counts as a failure and the run continues. | gate: test: invalid model output is counted and yields no spans, not a crash
+- D8 [wont, must] A local quantised language model, via llama.cpp or MLX, lists PII as structured output. | gate: test: LLM detector returns typed spans on a synthetic passage via local runtime
+- D9 [wont, must] LLM items are matched back to character positions, tolerating quote and whitespace differences. | gate: test: items with altered quotes or whitespace still map to correct positions; unmatched items reported
+- D10 [wont, must] When the language model returns invalid structured output, the call counts as a failure and the run continues. | gate: test: invalid model output is counted and yields no spans, not a crash
 - D11 [approved, must] A union masks a span if any member found it; overlapping spans merge into the widest. | gate: test: overlapping spans from two detectors merge to the widest span
 - D12 [approved, must] A merged span takes the type and label of its longest contributor, ties broken by higher score. | gate: test: merged span takes type of the longest contributor, ties by higher score
 - D13 [approved, must] Measured setups: Presidio alone, each model tool alone, and each model tool with Presidio. | gate: review: config list has Presidio alone, each model alone, each model with Presidio, and no model-on-model unions
 - D14 [approved, must] An English-only detector is shown as not applicable for other languages, not scored as missing everything. | gate: test: a detector reports only languages it supports; others show n/a in Table 5
-- D15 [approved, must] Agents shortlist and score language models on dev splits; the person picks the model and quantisation. | gate: review: comparison table committed and person's pick recorded
+- D15 [wont, must] Agents shortlist and score language models on dev splits; the person picks the model and quantisation. | gate: review: comparison table committed and person's pick recorded
 - D16 [approved, must] A pluggable list of names to always recognise: every exact, whole-word occurrence of a listed name is detected as a person, even when no model finds it. Configuration chooses capitalised-only matching (the default; 'Rose' matches, 'rose' does not) or case-insensitive matching. No fuzzy or typo matching. | gate: test: a listed name no model finds is detected; capitalised-only skips 'rose' for listed 'Rose' and case-insensitive matches it; a one-letter typo is never matched
+- D17 [approved, must] Local language models of 8B to 12B parameters are not a redaction option: on the reference Mac they take about 1 s per PII item found. | gate: review: no language model in the config list, detector registry or results
 
 ## R · Co-reference (identity resolution)
 - R1 [approved, must] A Maverick-based co-reference step groups mentions of the same person, names only. | gate: test: "David Parker", "Dave", "Mr. Parker" in one passage share one group
