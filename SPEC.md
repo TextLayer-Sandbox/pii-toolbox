@@ -14,6 +14,9 @@ Write each requirement as one row under its section, in this format. The fence k
 ## G · Goals: what the client asked for
 - G1 [approved, must] Public repo of local PII detection, evaluation and session tools, with reproducible measured results. | gate: review: README states purpose and links the article
 - G2 [approved, must] Every number the article quotes comes from code in the repo; nothing is computed by hand. | gate: review: every Table 1-6 and Chart A-F cell traces to a saved result file
+- G3 [approved, must] Worldwide English NER (stanfordnlp/en-worldwide-newswire) test split is downloaded at run time and loaded with its source region; Person, Organization, Location, Date and Money map to PERSON, ORGANIZATION, LOCATION, DATE_TIME and QUANTITY; Facility, NORP, Misc and Product are left out. | gate: review
+- G4 [approved, must] Every measured setup is scored on the Worldwide English NER test split with co-reference off and on, strict and relaxed, from the test split only. | gate: review
+- G5 [approved, must] A table reports person-name precision, recall and F2 per tool on Worldwide English NER, overall and per source region. | gate: review
 
 ## K · Constraints
 - K1 [approved, must] No text is ever sent to a hosted model or any network service during detection. | gate: test: detection and evaluation pass with network blocked after install and download
