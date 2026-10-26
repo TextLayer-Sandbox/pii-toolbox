@@ -3,7 +3,6 @@
 Results go to results/cost/<setup>.json, where `+` in a setup name becomes `__`. Each file holds
 peak memory, load seconds, throughput at 1,000, 10,000 and 100,000 characters, median latency
 per 1,000 characters, whether the setup fits AWS Lambda's 10 GB, and the environment it ran in.
-The language model is not measured because no model has been selected.
 """
 
 import json
@@ -23,7 +22,7 @@ INPUT_SIZES = [1000, 10000, 100000]
 LAMBDA_MEMORY_BYTES = 10 * 1024**3
 PATTERN_DETECTOR = "presidio_structured"
 MODEL_DETECTORS = ["spacy_sm", "spacy_lg", "roberta", "gliner"]
-NOT_MEASURED = ["language model: no model has been selected yet"]
+NOT_MEASURED: list[str] = []
 LIBRARIES = [
     "presidio-analyzer",
     "spacy",

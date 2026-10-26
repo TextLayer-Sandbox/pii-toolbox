@@ -56,4 +56,3 @@ def test_result_file_has_every_figure_and_its_environment(setup):
     environment = result["environment"]
     assert {"machine", "os", "python", "library_versions"} <= set(environment)
     assert environment["library_versions"]
-    assert "language model" in " ".join(result["not_measured"])
