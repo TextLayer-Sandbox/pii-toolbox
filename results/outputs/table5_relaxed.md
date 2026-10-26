@@ -1,0 +1,13 @@
+**Table 5: F2 by language, relaxed matching (MAPA; TAB as the English reference)**
+
+| Tool | en | fr | de | TAB (English reference) |
+| --- | --- | --- | --- | --- |
+| gliner | 0.275 | 0.428 | 0.466 |  |
+| presidio_structured | 0.000 | 0.000 | 0.000 |  |
+| roberta | 0.336 | n/a | n/a |  |
+| spacy_lg | 0.478 | n/a | n/a |  |
+| spacy_sm | 0.449 | n/a | n/a |  |
+| gliner+presidio_structured | 0.275 | 0.427 | 0.467 |  |
+| roberta+presidio_structured | 0.335 | n/a | n/a |  |
+| spacy_lg+presidio_structured | 0.478 | n/a | n/a |  |
+| spacy_sm+presidio_structured | 0.449 | n/a | n/a |  |

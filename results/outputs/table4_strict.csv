@@ -1,0 +1,19 @@
+Dataset,Detector,F2 off,F2 on,F2 change,ER_di off,ER_di on,ER_di change,ER_qi off,ER_qi on,ER_qi change
+TAB,gliner,0.309,0.316,+0.006,0.466,0.490,+0.024,0.236,0.244,+0.008
+TAB,presidio_structured,0.000,0.000,+0.000,0.000,0.000,+0.000,0.000,0.000,+0.000
+TAB,roberta,0.195,0.195,-0.000,0.485,0.485,+0.000,0.251,0.251,+0.000
+TAB,spacy_lg,0.513,0.515,+0.003,0.489,0.490,+0.001,0.801,0.804,+0.003
+TAB,spacy_sm,0.487,0.490,+0.004,0.454,0.458,+0.004,0.780,0.783,+0.003
+TAB,gliner+presidio_structured,0.309,0.315,+0.006,0.466,0.490,+0.024,0.236,0.244,+0.008
+TAB,roberta+presidio_structured,0.195,0.195,-0.000,0.485,0.485,+0.000,0.251,0.251,+0.000
+TAB,spacy_lg+presidio_structured,0.513,0.515,+0.003,0.489,0.490,+0.001,0.801,0.804,+0.003
+TAB,spacy_sm+presidio_structured,0.487,0.490,+0.004,0.454,0.458,+0.004,0.780,0.783,+0.003
+MAPA,gliner,0.247,0.265,+0.017,,,,,,
+MAPA,presidio_structured,0.000,0.000,+0.000,,,,,,
+MAPA,roberta,0.237,0.237,-0.000,,,,,,
+MAPA,spacy_lg,0.378,0.377,-0.000,,,,,,
+MAPA,spacy_sm,0.332,0.337,+0.005,,,,,,
+MAPA,gliner+presidio_structured,0.248,0.265,+0.018,,,,,,
+MAPA,roberta+presidio_structured,0.236,0.235,-0.000,,,,,,
+MAPA,spacy_lg+presidio_structured,0.377,0.377,-0.000,,,,,,
+MAPA,spacy_sm+presidio_structured,0.332,0.337,+0.005,,,,,,

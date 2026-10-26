@@ -24,6 +24,13 @@ def load_script():
     return module
 
 
+def source_file(source):
+    """A cost source is a repo-root-relative or absolute path; a result source is a name in RESULTS."""
+    if "/" in source:
+        return REPO_ROOT / source
+    return RESULTS / source
+
+
 def contents(folder):
     return {path.name: path.read_bytes() for path in sorted(folder.iterdir())}
 
@@ -64,10 +71,10 @@ def test_manifest_maps_every_filled_cell_and_chart_to_existing_source_files(tmp_
         filled = sum(1 for row in rows[1:] for cell in row[key_columns:] if cell != "")
         assert len(manifest["tables"][table]) == filled
         for sources in manifest["tables"][table].values():
-            assert sources and all((RESULTS / source).is_file() for source in sources)
+            assert sources and all(source_file(source).is_file() for source in sources)
     assert set(manifest["charts"]) == {f"chart_{letter}.svg" for letter in "abcdef"}
     for sources in manifest["charts"].values():
-        assert sources and all((RESULTS / source).is_file() for source in sources)
+        assert sources and all(source_file(source).is_file() for source in sources)
 
 
 def test_a_cell_is_traced_to_the_file_it_came_from(tmp_path):
@@ -75,7 +82,7 @@ def test_a_cell_is_traced_to_the_file_it_came_from(tmp_path):
     manifest = json.loads((tmp_path / MANIFEST_FILE_NAME).read_text())
     assert manifest["tables"]["table3"]["spacy_lg | ER_di"] == ["spacy_lg__tab__test__coref-off.json"]
     assert manifest["tables"]["table4_strict"]["TAB / spacy_lg | ER_di on"] == ["spacy_lg__tab__test__coref-on.json"]
-    assert manifest["tables"]["table6"]["gliner | Peak memory (GiB)"] == ["cost/gliner.json"]
+    assert manifest["tables"]["table6"]["gliner | Peak memory (GiB)"] == [(RESULTS / "cost" / "gliner.json").relative_to(REPO_ROOT).as_posix()]
 
 
 def add_dev_result(results_copy):
@@ -115,3 +122,25 @@ def test_the_command_succeeds_with_no_data_or_model_directory_and_loads_no_model
     assert result.returncode == 0, result.stderr
     assert "HEAVY []" in result.stdout
     assert (tmp_path / "out" / "table1.md").is_file()
+
+
+def test_cost_folder_outside_the_results_folder_is_named_with_the_cost_option(tmp_path, capsys):
+    results = tmp_path / "results"
+    shutil.copytree(RESULTS, results)
+    outside_cost = tmp_path / "elsewhere" / "cost_files"
+    outside_cost.parent.mkdir()
+    (results / "cost").rename(outside_cost)
+    out = tmp_path / "out"
+    code = load_script().main(["--results", str(results), "--cost", str(outside_cost), "--out", str(out)])
+    assert code == 0, capsys.readouterr().err
+    assert (out / "table6.md").read_text() == (GOLDEN / "table6.md").read_text()
+    manifest = json.loads((out / MANIFEST_FILE_NAME).read_text())
+    expected = str((outside_cost / "gliner.json").resolve())
+    assert manifest["tables"]["table6"]["gliner | Peak memory (GiB)"] == [expected]
+    assert Path(expected).is_file()
+
+
+def test_a_missing_cost_folder_is_reported_when_named_with_the_cost_option(tmp_path, capsys):
+    code = load_script().main(["--results", str(RESULTS), "--cost", str(tmp_path / "absent"), "--out", str(tmp_path / "out")])
+    assert code != 0
+    assert "absent" in capsys.readouterr().err
