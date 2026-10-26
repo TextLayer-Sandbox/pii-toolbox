@@ -430,9 +430,741 @@
         "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
       ]
     },
-    "table2_relaxed": {},
-    "table2_strict": {},
-    "table3": {},
+    "table2_relaxed": {
+      "MAPA / gliner | DATE_TIME": [
+        "gliner__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / gliner | LOCATION": [
+        "gliner__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / gliner | ORGANIZATION": [
+        "gliner__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / gliner | PERSON": [
+        "gliner__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / gliner | QUANTITY": [
+        "gliner__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / gliner+presidio_structured | DATE_TIME": [
+        "gliner+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / gliner+presidio_structured | LOCATION": [
+        "gliner+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / gliner+presidio_structured | ORGANIZATION": [
+        "gliner+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / gliner+presidio_structured | PERSON": [
+        "gliner+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / gliner+presidio_structured | QUANTITY": [
+        "gliner+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / presidio_structured | DATE_TIME": [
+        "presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / presidio_structured | LOCATION": [
+        "presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / presidio_structured | ORGANIZATION": [
+        "presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / presidio_structured | PERSON": [
+        "presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / presidio_structured | QUANTITY": [
+        "presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta | DATE_TIME": [
+        "roberta__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta | LOCATION": [
+        "roberta__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta | ORGANIZATION": [
+        "roberta__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta | PERSON": [
+        "roberta__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta | QUANTITY": [
+        "roberta__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta+presidio_structured | DATE_TIME": [
+        "roberta+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta+presidio_structured | LOCATION": [
+        "roberta+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta+presidio_structured | ORGANIZATION": [
+        "roberta+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta+presidio_structured | PERSON": [
+        "roberta+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta+presidio_structured | QUANTITY": [
+        "roberta+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | DATE_TIME": [
+        "spacy_lg__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | LOCATION": [
+        "spacy_lg__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | ORGANIZATION": [
+        "spacy_lg__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | PERSON": [
+        "spacy_lg__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | QUANTITY": [
+        "spacy_lg__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg+presidio_structured | DATE_TIME": [
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg+presidio_structured | LOCATION": [
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg+presidio_structured | ORGANIZATION": [
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg+presidio_structured | PERSON": [
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg+presidio_structured | QUANTITY": [
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm | DATE_TIME": [
+        "spacy_sm__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm | LOCATION": [
+        "spacy_sm__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm | ORGANIZATION": [
+        "spacy_sm__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm | PERSON": [
+        "spacy_sm__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm | QUANTITY": [
+        "spacy_sm__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm+presidio_structured | DATE_TIME": [
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm+presidio_structured | LOCATION": [
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm+presidio_structured | ORGANIZATION": [
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm+presidio_structured | PERSON": [
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm+presidio_structured | QUANTITY": [
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "TAB / gliner | DATE_TIME": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner | IDENTIFIER": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner | LOCATION": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner | ORGANIZATION": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner | PERSON": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner | QUANTITY": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner+presidio_structured | DATE_TIME": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner+presidio_structured | IDENTIFIER": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner+presidio_structured | LOCATION": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner+presidio_structured | ORGANIZATION": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner+presidio_structured | PERSON": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner+presidio_structured | QUANTITY": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | DATE_TIME": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | IDENTIFIER": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | LOCATION": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | ORGANIZATION": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | PERSON": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | QUANTITY": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta | DATE_TIME": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta | IDENTIFIER": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta | LOCATION": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta | ORGANIZATION": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta | PERSON": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta | QUANTITY": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta+presidio_structured | DATE_TIME": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta+presidio_structured | IDENTIFIER": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta+presidio_structured | LOCATION": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta+presidio_structured | ORGANIZATION": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta+presidio_structured | PERSON": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta+presidio_structured | QUANTITY": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | DATE_TIME": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | IDENTIFIER": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | LOCATION": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | ORGANIZATION": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | PERSON": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | QUANTITY": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | DATE_TIME": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | IDENTIFIER": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | LOCATION": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | ORGANIZATION": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | PERSON": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | QUANTITY": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm | DATE_TIME": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm | IDENTIFIER": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm | LOCATION": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm | ORGANIZATION": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm | PERSON": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm | QUANTITY": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | DATE_TIME": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | IDENTIFIER": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | LOCATION": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | ORGANIZATION": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | PERSON": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | QUANTITY": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ]
+    },
+    "table2_strict": {
+      "MAPA / gliner | DATE_TIME": [
+        "gliner__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / gliner | LOCATION": [
+        "gliner__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / gliner | ORGANIZATION": [
+        "gliner__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / gliner | PERSON": [
+        "gliner__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / gliner | QUANTITY": [
+        "gliner__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / gliner+presidio_structured | DATE_TIME": [
+        "gliner+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / gliner+presidio_structured | LOCATION": [
+        "gliner+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / gliner+presidio_structured | ORGANIZATION": [
+        "gliner+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / gliner+presidio_structured | PERSON": [
+        "gliner+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / gliner+presidio_structured | QUANTITY": [
+        "gliner+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / presidio_structured | DATE_TIME": [
+        "presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / presidio_structured | LOCATION": [
+        "presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / presidio_structured | ORGANIZATION": [
+        "presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / presidio_structured | PERSON": [
+        "presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / presidio_structured | QUANTITY": [
+        "presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta | DATE_TIME": [
+        "roberta__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta | LOCATION": [
+        "roberta__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta | ORGANIZATION": [
+        "roberta__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta | PERSON": [
+        "roberta__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta | QUANTITY": [
+        "roberta__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta+presidio_structured | DATE_TIME": [
+        "roberta+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta+presidio_structured | LOCATION": [
+        "roberta+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta+presidio_structured | ORGANIZATION": [
+        "roberta+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta+presidio_structured | PERSON": [
+        "roberta+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / roberta+presidio_structured | QUANTITY": [
+        "roberta+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | DATE_TIME": [
+        "spacy_lg__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | LOCATION": [
+        "spacy_lg__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | ORGANIZATION": [
+        "spacy_lg__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | PERSON": [
+        "spacy_lg__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg | QUANTITY": [
+        "spacy_lg__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg+presidio_structured | DATE_TIME": [
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg+presidio_structured | LOCATION": [
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg+presidio_structured | ORGANIZATION": [
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg+presidio_structured | PERSON": [
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_lg+presidio_structured | QUANTITY": [
+        "spacy_lg+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm | DATE_TIME": [
+        "spacy_sm__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm | LOCATION": [
+        "spacy_sm__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm | ORGANIZATION": [
+        "spacy_sm__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm | PERSON": [
+        "spacy_sm__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm | QUANTITY": [
+        "spacy_sm__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm+presidio_structured | DATE_TIME": [
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm+presidio_structured | LOCATION": [
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm+presidio_structured | ORGANIZATION": [
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm+presidio_structured | PERSON": [
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "MAPA / spacy_sm+presidio_structured | QUANTITY": [
+        "spacy_sm+presidio_structured__mapa__en__test__coref-off.json"
+      ],
+      "TAB / gliner | DATE_TIME": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner | IDENTIFIER": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner | LOCATION": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner | ORGANIZATION": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner | PERSON": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner | QUANTITY": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner+presidio_structured | DATE_TIME": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner+presidio_structured | IDENTIFIER": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner+presidio_structured | LOCATION": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner+presidio_structured | ORGANIZATION": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner+presidio_structured | PERSON": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / gliner+presidio_structured | QUANTITY": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | DATE_TIME": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | IDENTIFIER": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | LOCATION": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | ORGANIZATION": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | PERSON": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / presidio_structured | QUANTITY": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta | DATE_TIME": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta | IDENTIFIER": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta | LOCATION": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta | ORGANIZATION": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta | PERSON": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta | QUANTITY": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta+presidio_structured | DATE_TIME": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta+presidio_structured | IDENTIFIER": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta+presidio_structured | LOCATION": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta+presidio_structured | ORGANIZATION": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta+presidio_structured | PERSON": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / roberta+presidio_structured | QUANTITY": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | DATE_TIME": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | IDENTIFIER": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | LOCATION": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | ORGANIZATION": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | PERSON": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg | QUANTITY": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | DATE_TIME": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | IDENTIFIER": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | LOCATION": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | ORGANIZATION": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | PERSON": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_lg+presidio_structured | QUANTITY": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm | DATE_TIME": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm | IDENTIFIER": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm | LOCATION": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm | ORGANIZATION": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm | PERSON": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm | QUANTITY": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | DATE_TIME": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | IDENTIFIER": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | LOCATION": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | ORGANIZATION": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | PERSON": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "TAB / spacy_sm+presidio_structured | QUANTITY": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ]
+    },
+    "table3": {
+      "gliner | Any-annotator F2 relaxed": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "gliner | Any-annotator F2 strict": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "gliner | ER_di": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "gliner | ER_qi": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "gliner | WP": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | Any-annotator F2 relaxed": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | Any-annotator F2 strict": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | ER_di": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | ER_qi": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | WP": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "presidio_structured | Any-annotator F2 relaxed": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "presidio_structured | Any-annotator F2 strict": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "presidio_structured | ER_di": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "presidio_structured | ER_qi": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "presidio_structured | WP": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "roberta | Any-annotator F2 relaxed": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "roberta | Any-annotator F2 strict": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "roberta | ER_di": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "roberta | ER_qi": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "roberta | WP": [
+        "roberta__tab__en__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | Any-annotator F2 relaxed": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | Any-annotator F2 strict": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | ER_di": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | ER_qi": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "roberta+presidio_structured | WP": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg | Any-annotator F2 relaxed": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg | Any-annotator F2 strict": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg | ER_di": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg | ER_qi": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg | WP": [
+        "spacy_lg__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | Any-annotator F2 relaxed": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | Any-annotator F2 strict": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | ER_di": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | ER_qi": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_lg+presidio_structured | WP": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm | Any-annotator F2 relaxed": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm | Any-annotator F2 strict": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm | ER_di": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm | ER_qi": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm | WP": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | Any-annotator F2 relaxed": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | Any-annotator F2 strict": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | ER_di": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | ER_qi": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | WP": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
+      ]
+    },
     "table4_relaxed": {
       "MAPA / gliner | F2 change": [
         "gliner__mapa__de__test__coref-off.json",
