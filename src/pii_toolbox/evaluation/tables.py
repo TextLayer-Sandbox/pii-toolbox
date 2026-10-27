@@ -312,7 +312,7 @@ def table5(
             )
             score = report(measured).by_language.get(language) if measured else None
             cells.append(_language_cell(measured or next(iter(tool_records), None), language, score.f2 if score else None))
-        tab_record = records.get((tool, "tab", None))
+        tab_record = _english_record(records, tool, "tab")
         tab_f2 = report(tab_record).overall_micro.f2 if tab_record else None
         rows.append((tool, *cells, _language_cell(tab_record, "en", tab_f2)))
     variant = "strict" if rule is SpanMatchRule.EXACT_BOUNDARIES else "relaxed"

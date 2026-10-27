@@ -2574,6 +2574,9 @@
       ]
     },
     "table5_relaxed": {
+      "gliner | TAB (English reference)": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
       "gliner | de": [
         "gliner__mapa__de__test__coref-off.json",
         "gliner__mapa__en__test__coref-off.json",
@@ -2588,6 +2591,9 @@
         "gliner__mapa__de__test__coref-off.json",
         "gliner__mapa__en__test__coref-off.json",
         "gliner__mapa__fr__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | TAB (English reference)": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
       ],
       "gliner+presidio_structured | de": [
         "gliner+presidio_structured__mapa__de__test__coref-off.json",
@@ -2604,6 +2610,9 @@
         "gliner+presidio_structured__mapa__en__test__coref-off.json",
         "gliner+presidio_structured__mapa__fr__test__coref-off.json"
       ],
+      "presidio_structured | TAB (English reference)": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
       "presidio_structured | de": [
         "presidio_structured__mapa__de__test__coref-off.json",
         "presidio_structured__mapa__en__test__coref-off.json",
@@ -2618,6 +2627,9 @@
         "presidio_structured__mapa__de__test__coref-off.json",
         "presidio_structured__mapa__en__test__coref-off.json",
         "presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "roberta | TAB (English reference)": [
+        "roberta__tab__en__test__coref-off.json"
       ],
       "roberta | de": [
         "roberta__mapa__de__test__coref-off.json",
@@ -2634,6 +2646,9 @@
         "roberta__mapa__en__test__coref-off.json",
         "roberta__mapa__fr__test__coref-off.json"
       ],
+      "roberta+presidio_structured | TAB (English reference)": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
       "roberta+presidio_structured | de": [
         "roberta+presidio_structured__mapa__de__test__coref-off.json",
         "roberta+presidio_structured__mapa__en__test__coref-off.json",
@@ -2648,6 +2663,9 @@
         "roberta+presidio_structured__mapa__de__test__coref-off.json",
         "roberta+presidio_structured__mapa__en__test__coref-off.json",
         "roberta+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_lg | TAB (English reference)": [
+        "spacy_lg__tab__en__test__coref-off.json"
       ],
       "spacy_lg | de": [
         "spacy_lg__mapa__de__test__coref-off.json",
@@ -2664,6 +2682,9 @@
         "spacy_lg__mapa__en__test__coref-off.json",
         "spacy_lg__mapa__fr__test__coref-off.json"
       ],
+      "spacy_lg+presidio_structured | TAB (English reference)": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
       "spacy_lg+presidio_structured | de": [
         "spacy_lg+presidio_structured__mapa__de__test__coref-off.json",
         "spacy_lg+presidio_structured__mapa__en__test__coref-off.json",
@@ -2679,6 +2700,9 @@
         "spacy_lg+presidio_structured__mapa__en__test__coref-off.json",
         "spacy_lg+presidio_structured__mapa__fr__test__coref-off.json"
       ],
+      "spacy_sm | TAB (English reference)": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
       "spacy_sm | de": [
         "spacy_sm__mapa__de__test__coref-off.json",
         "spacy_sm__mapa__en__test__coref-off.json",
@@ -2693,6 +2717,9 @@
         "spacy_sm__mapa__de__test__coref-off.json",
         "spacy_sm__mapa__en__test__coref-off.json",
         "spacy_sm__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | TAB (English reference)": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
       ],
       "spacy_sm+presidio_structured | de": [
         "spacy_sm+presidio_structured__mapa__de__test__coref-off.json",
@@ -2711,6 +2738,9 @@
       ]
     },
     "table5_strict": {
+      "gliner | TAB (English reference)": [
+        "gliner__tab__en__test__coref-off.json"
+      ],
       "gliner | de": [
         "gliner__mapa__de__test__coref-off.json",
         "gliner__mapa__en__test__coref-off.json",
@@ -2725,6 +2755,9 @@
         "gliner__mapa__de__test__coref-off.json",
         "gliner__mapa__en__test__coref-off.json",
         "gliner__mapa__fr__test__coref-off.json"
+      ],
+      "gliner+presidio_structured | TAB (English reference)": [
+        "gliner+presidio_structured__tab__en__test__coref-off.json"
       ],
       "gliner+presidio_structured | de": [
         "gliner+presidio_structured__mapa__de__test__coref-off.json",
@@ -2741,6 +2774,9 @@
         "gliner+presidio_structured__mapa__en__test__coref-off.json",
         "gliner+presidio_structured__mapa__fr__test__coref-off.json"
       ],
+      "presidio_structured | TAB (English reference)": [
+        "presidio_structured__tab__en__test__coref-off.json"
+      ],
       "presidio_structured | de": [
         "presidio_structured__mapa__de__test__coref-off.json",
         "presidio_structured__mapa__en__test__coref-off.json",
@@ -2755,6 +2791,9 @@
         "presidio_structured__mapa__de__test__coref-off.json",
         "presidio_structured__mapa__en__test__coref-off.json",
         "presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "roberta | TAB (English reference)": [
+        "roberta__tab__en__test__coref-off.json"
       ],
       "roberta | de": [
         "roberta__mapa__de__test__coref-off.json",
@@ -2771,6 +2810,9 @@
         "roberta__mapa__en__test__coref-off.json",
         "roberta__mapa__fr__test__coref-off.json"
       ],
+      "roberta+presidio_structured | TAB (English reference)": [
+        "roberta+presidio_structured__tab__en__test__coref-off.json"
+      ],
       "roberta+presidio_structured | de": [
         "roberta+presidio_structured__mapa__de__test__coref-off.json",
         "roberta+presidio_structured__mapa__en__test__coref-off.json",
@@ -2785,6 +2827,9 @@
         "roberta+presidio_structured__mapa__de__test__coref-off.json",
         "roberta+presidio_structured__mapa__en__test__coref-off.json",
         "roberta+presidio_structured__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_lg | TAB (English reference)": [
+        "spacy_lg__tab__en__test__coref-off.json"
       ],
       "spacy_lg | de": [
         "spacy_lg__mapa__de__test__coref-off.json",
@@ -2801,6 +2846,9 @@
         "spacy_lg__mapa__en__test__coref-off.json",
         "spacy_lg__mapa__fr__test__coref-off.json"
       ],
+      "spacy_lg+presidio_structured | TAB (English reference)": [
+        "spacy_lg+presidio_structured__tab__en__test__coref-off.json"
+      ],
       "spacy_lg+presidio_structured | de": [
         "spacy_lg+presidio_structured__mapa__de__test__coref-off.json",
         "spacy_lg+presidio_structured__mapa__en__test__coref-off.json",
@@ -2816,6 +2864,9 @@
         "spacy_lg+presidio_structured__mapa__en__test__coref-off.json",
         "spacy_lg+presidio_structured__mapa__fr__test__coref-off.json"
       ],
+      "spacy_sm | TAB (English reference)": [
+        "spacy_sm__tab__en__test__coref-off.json"
+      ],
       "spacy_sm | de": [
         "spacy_sm__mapa__de__test__coref-off.json",
         "spacy_sm__mapa__en__test__coref-off.json",
@@ -2830,6 +2881,9 @@
         "spacy_sm__mapa__de__test__coref-off.json",
         "spacy_sm__mapa__en__test__coref-off.json",
         "spacy_sm__mapa__fr__test__coref-off.json"
+      ],
+      "spacy_sm+presidio_structured | TAB (English reference)": [
+        "spacy_sm+presidio_structured__tab__en__test__coref-off.json"
       ],
       "spacy_sm+presidio_structured | de": [
         "spacy_sm+presidio_structured__mapa__de__test__coref-off.json",
