@@ -70,11 +70,13 @@ def test_each_config_runs_twice_on_english_and_once_on_french_and_german():
                 ("tab", "en", True),
                 ("mapa", "en", False),
                 ("mapa", "en", True),
+                ("worldwide", "en", False),
+                ("worldwide", "en", True),
                 ("mapa", "fr", False),
                 ("mapa", "de", False),
             ]
         )
-    assert len(runs) == 6 * len(measured_configs())
+    assert len(runs) == 8 * len(measured_configs())
     assert len(set(runs)) == len(runs)
 
 
