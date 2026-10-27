@@ -2,7 +2,7 @@
 
 A set of tools for finding personal information (PII) in text, swapping it for placeholders, and swapping it back in afterwards.
 
-We also provide tools for evaluating how well detectors find PII.
+We also provide tools for measuring how accurately detectors find PII, as well as their speed and memory use.
 
 
 ## What is in the repository
@@ -29,4 +29,3 @@ uv run python examples/round_trip.py
 - [Evaluation](docs/evaluation.md): the datasets, how detectors are scored, and how to rerun an evaluation.
 - [Results](docs/results.md): what each saved table and chart shows and how they are rebuilt.
 - [Development](docs/development.md): setup, tests and the layout of the repository's working files.
-- [Requirements](docs/requirements.md): what the toolbox was built to do, and what was decided against.
