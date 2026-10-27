@@ -2,6 +2,8 @@
 
 The `results/` folder holds the saved scores from the evaluation runs and everything built from them. For how the runs are scored see [Evaluation](evaluation.md).
 
+To see these results explained with charts, and to score your own detector on your own data, open the [results notebook](../notebooks/results.ipynb).
+
 ## What is saved
 
 ```

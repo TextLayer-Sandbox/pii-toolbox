@@ -19,6 +19,10 @@ venv/
 .coverage.*
 htmlcov/
 
+# Jupyter's autosave copies and editor scratch files
+.ipynb_checkpoints/
+.virtual_documents/
+
 # Editor and OS files
 .DS_Store
 .idea/

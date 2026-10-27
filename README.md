@@ -27,4 +27,5 @@ uv run python examples/round_trip.py
 - [Masking toolbox](docs/masking-toolbox.md): how text is masked and restored, with a walk-through of the example.
 - [Evaluation](docs/evaluation.md): the datasets, how detectors are scored, and how to rerun an evaluation.
 - [Results](docs/results.md): what each saved table and chart shows and how they are rebuilt.
+- [Results notebook](notebooks/results.ipynb): the results explained with charts, and a way to score your own detector on your own data.
 - [Development](docs/development.md): setup, tests and the layout of the repository's working files.

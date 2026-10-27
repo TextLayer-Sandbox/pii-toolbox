@@ -36,6 +36,10 @@ evaluation = [
     "pandas",  # TAB's evaluation script reads and joins annotation tables
     "intervaltree",  # TAB's evaluation script looks up character spans
 ]
+notebook = [
+    "jupyterlab",  # opens and edits the results notebook; brings nbconvert to execute it from the command line
+    "ipykernel",  # the Python kernel a notebook runs its cells in
+]
 coref = [
     "pyzmq",  # carries messages to the co-reference worker running in its own environment
 ]
