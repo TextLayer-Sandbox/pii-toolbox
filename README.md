@@ -12,7 +12,6 @@ We also provide tools for measuring how accurately detectors find PII, as well a
 - `scripts/`: command-line scripts to download data and models, run evaluations and rebuild the results.
 - `tests/`: the automated tests.
 - `results/`: saved scores, tables and charts from the evaluation runs.
-- `sketch/`: early design notes and type sketches written before the code.
 - `docs/`: the longer guides listed below.
 
 ## Quick start
