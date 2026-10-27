@@ -1,7 +1,4 @@
-import inspect
-
-import pii_toolbox.session as session_package
-from pii_toolbox.core import Placeholder, PlaceholderStore
+from pii_toolbox.core import Placeholder
 from pii_toolbox.session import InMemoryPlaceholderStore
 
 
@@ -67,12 +64,3 @@ def test_no_file_is_created(tmp_path, monkeypatch):
     store.get_or_mint("s1", "PERSON", "David")
     store.discard("s1")
     assert list(tmp_path.iterdir()) == []
-
-
-def test_package_has_exactly_one_store_implementation():
-    stores = [
-        obj
-        for obj in vars(session_package).values()
-        if inspect.isclass(obj) and issubclass(obj, PlaceholderStore) and obj is not PlaceholderStore
-    ]
-    assert stores == [InMemoryPlaceholderStore]

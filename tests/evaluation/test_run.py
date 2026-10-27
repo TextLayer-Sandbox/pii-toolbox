@@ -2,91 +2,15 @@ import json
 
 import pytest
 
-from pii_toolbox.core import (
-    AnnotatedDocument,
-    AnswerSpan,
-    Dataset,
-    DatasetSplit,
-    Detector,
-    Document,
-    EntityGroup,
-    IdentityResolver,
-    PiiType,
-    ReidentificationRisk,
-    Span,
-    TabMetricsScorer,
-    TabOfficialMetrics,
-)
-from pii_toolbox.detection.registry import FixedDetectorRegistry
-from pii_toolbox.evaluation.__main__ import DATASET_FACTORIES, main
+from pii_toolbox.core import DatasetSplit, PiiType, TabOfficialMetrics
+from pii_toolbox.evaluation.__main__ import main
 from pii_toolbox.evaluation.results_io import (
     ENVIRONMENT_FILE_NAME,
-    SelectionFromTestSplitError,
-    load_for_selection,
     read_record,
-    read_run,
     write_run,
 )
 from pii_toolbox.evaluation.run import RunRequest, run_evaluation
-
-CANARY = "ZXQCANARYTOKEN"
-TEXT = f"Anna Testwell met Anna there. {CANARY} stays secret."
-FULL_NAME = (0, 13)
-SHORT_NAME = (18, 22)
-
-
-class StubDetector(Detector):
-    """Finds the full name only, in English documents."""
-
-    name = "stub"
-    languages = frozenset({"en"})
-    detects = frozenset({PiiType.PERSON})
-
-    def load_models(self) -> None:
-        pass
-
-    def detect(self, document):
-        return [Span(*FULL_NAME, PiiType.PERSON, "PERSON", ("stub",), None)]
-
-
-class StubResolver(IdentityResolver):
-    name = "stub_resolver"
-
-    def resolve(self, document, spans):
-        added = Span(*SHORT_NAME, PiiType.PERSON, "PERSON", ("stub_resolver",), None)
-        return [EntityGroup((spans[0], added), spans[0])]
-
-
-class StubTabScorer(TabMetricsScorer):
-    def score(self, results):
-        return TabOfficialMetrics(0.5, 0.25, 0.75)
-
-
-class StubDataset(Dataset):
-    def __init__(self, name, data_dir=None):
-        self._name = name
-
-    @property
-    def name(self):
-        return self._name
-
-    @property
-    def languages(self):
-        return frozenset({"en", "fr"})
-
-    def load(self, split, language=None):
-        answers = (
-            AnswerSpan(*FULL_NAME, PiiType.PERSON, "PERSON", "A", ReidentificationRisk.DIRECT, "e1"),
-            AnswerSpan(*SHORT_NAME, PiiType.PERSON, "PERSON", "A", ReidentificationRisk.DIRECT, "e1"),
-        )
-        for doc_id, lang in (("d1", "en"), ("d2", "fr")):
-            if language in (None, lang):
-                yield AnnotatedDocument(Document(doc_id, TEXT, lang), answers)
-
-
-def stub_registry():
-    return FixedDetectorRegistry(factory_overrides={"stub": StubDetector})
-
+from stubs import CANARY, StubDataset, StubResolver, StubTabScorer, stub_registry
 
 def run_cli(tmp_path, *extra, dataset="tab", split="dev", coref="off"):
     argv = ["run", "--tool", "stub", "--dataset", dataset, "--split", split, "--coref", coref, "--out", str(tmp_path)]
@@ -109,10 +33,6 @@ def walk(node):
             yield from walk(value)
 
 
-def test_dataset_factories_include_worldwide():
-    assert "worldwide" in DATASET_FACTORIES
-
-
 def test_run_writes_the_named_result_file_and_environment_file(tmp_path):
     path = run_cli(tmp_path)
     assert path == tmp_path / "stub__tab__dev__coref-off.json"
@@ -123,7 +43,7 @@ def test_run_writes_the_named_result_file_and_environment_file(tmp_path):
 
 
 def test_result_holds_both_rules_per_type_per_language_and_tab_metrics(tmp_path):
-    run = read_run(run_cli(tmp_path))
+    run = read_record(run_cli(tmp_path)).run
     assert run.tab_metrics == TabOfficialMetrics(0.5, 0.25, 0.75)
     assert run.exact_boundaries.by_type[PiiType.PERSON].recall == pytest.approx(0.5)
     assert run.any_overlap.by_type[PiiType.PERSON].recall == pytest.approx(0.5)
@@ -133,7 +53,7 @@ def test_result_holds_both_rules_per_type_per_language_and_tab_metrics(tmp_path)
 def test_non_tab_runs_have_no_tab_metrics_and_keep_the_dataset_name(tmp_path):
     path = run_cli(tmp_path, dataset="mapa", split="validation")
     assert path.name == "stub__mapa__dev__coref-off.json"
-    assert read_run(path).tab_metrics is None
+    assert read_record(path).run.tab_metrics is None
 
 
 def test_result_files_hold_no_document_text_and_no_span_lists(tmp_path):
@@ -148,10 +68,10 @@ def test_result_files_hold_no_document_text_and_no_span_lists(tmp_path):
 
 
 def test_coreference_on_adds_the_resolved_name_form_and_scores_english_only(tmp_path):
-    off = read_run(run_cli(tmp_path / "off"))
+    off = read_record(run_cli(tmp_path / "off")).run
     on_path = run_cli(tmp_path / "on", coref="on")
     assert on_path.name == "stub__tab__dev__coref-on.json"
-    on = read_run(on_path)
+    on = read_record(on_path).run
     assert on.coreference and not off.coreference
     assert off.exact_boundaries.by_type[PiiType.PERSON].recall == pytest.approx(0.5)
     assert on.exact_boundaries.by_type[PiiType.PERSON].recall == pytest.approx(1.0)
@@ -161,18 +81,6 @@ def test_run_requires_a_resolver_when_coreference_is_on():
     request = RunRequest("stub", StubDataset("MAPA"), DatasetSplit.DEV, True)
     with pytest.raises(ValueError):
         run_evaluation(request, stub_registry())
-
-
-def test_selection_loader_reads_dev_results(tmp_path):
-    path = run_cli(tmp_path)
-    assert load_for_selection(path).split is DatasetSplit.DEV
-
-
-def test_selection_loader_refuses_test_split_results(tmp_path):
-    path = run_cli(tmp_path, split="test")
-    assert read_run(path).split is DatasetSplit.TEST
-    with pytest.raises(SelectionFromTestSplitError):
-        load_for_selection(path)
 
 
 def test_result_file_records_the_detectors_languages_and_reported_types(tmp_path):

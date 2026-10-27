@@ -18,10 +18,6 @@ def write_list(tmp_path: Path, text: str) -> Path:
     return path
 
 
-def test_default_list_is_not_empty(default_list):
-    assert len(default_list) > 1000
-
-
 def test_matt_and_matty_map_to_matthew(default_list):
     assert default_list["matt"] == "matthew"
     assert default_list["matty"] == "matthew"

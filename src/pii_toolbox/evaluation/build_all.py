@@ -169,11 +169,35 @@ def build_outputs(results_dir: Path, out_dir: Path, cost_dir: Path | None = None
     _, table_manifest = _write_tables(cost_dir, out_dir, index)
     chart_paths = [
         charts.build_chart_a(results_dir, out_dir),
-        charts.build_chart_b(results_dir, out_dir),
-        charts.build_chart_c(results_dir, out_dir),
-        charts.build_chart_d(results_dir, cost_dir, out_dir),
-        charts.build_chart_e(results_dir, out_dir),
-        charts.build_chart_f(results_dir, out_dir),
+        charts.save_chart(
+            charts.chart_b_figure(charts.runs_of(results_dir, "tab", PUBLISHED_SPLIT), SpanMatchRule.EXACT_BOUNDARIES),
+            out_dir,
+            "chart_b.svg",
+        ),
+        charts.save_chart(charts.chart_c_figure(charts.runs_of(results_dir, "tab", PUBLISHED_SPLIT)), out_dir, "chart_c.svg"),
+        charts.save_chart(
+            charts.chart_d_figure(
+                charts.runs_of(results_dir, "tab", PUBLISHED_SPLIT),
+                tables.load_cost_results(cost_dir),
+                SpanMatchRule.EXACT_BOUNDARIES,
+            ),
+            out_dir,
+            "chart_d.svg",
+        ),
+        charts.save_chart(
+            charts.chart_e_figure(charts.runs_of(results_dir, "mapa", PUBLISHED_SPLIT), SpanMatchRule.EXACT_BOUNDARIES),
+            out_dir,
+            "chart_e.svg",
+        ),
+        charts.save_chart(
+            charts.chart_f_figure(
+                charts.runs_of(results_dir, "tab", PUBLISHED_SPLIT),
+                charts.runs_of(results_dir, "tab", PUBLISHED_SPLIT, True),
+                SpanMatchRule.EXACT_BOUNDARIES,
+            ),
+            out_dir,
+            "chart_f.svg",
+        ),
     ]
     manifest = {"tables": table_manifest, "charts": _chart_sources(index, cost_dir)}
     manifest_path = out_dir / MANIFEST_FILE_NAME

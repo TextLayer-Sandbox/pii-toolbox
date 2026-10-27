@@ -11,10 +11,9 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
+from pii_toolbox.coref.groups import TITLES
 from pii_toolbox.coref.nicknames import DEFAULT_NICKNAME_LIST_PATH, load_nickname_list
 from pii_toolbox.core import Document, EntityGroup, PiiType, Span
-
-_TITLES = frozenset({"mr", "mrs", "ms", "miss", "mx", "dr", "prof", "sir", "madam", "lord", "lady"})
 
 
 @dataclass(frozen=True)
@@ -37,14 +36,13 @@ def apply_nickname_step(
     document: Document,
     detected_spans: Sequence[Span],
     groups: Sequence[EntityGroup],
-    config: NicknameConfig,
+    nicknames: Mapping[str, str] | None,
 ) -> list[EntityGroup]:
     """Returns the groups with each unlinked detected name added to the group it matches.
 
     A name already in a group stays there. A name that matches more than one group, or none,
-    stays unlinked. With the list turned off the groups are returned unchanged.
+    stays unlinked. With `nicknames` None (the list turned off) the groups are returned unchanged.
     """
-    nicknames = config.load()
     if nicknames is None:
         return list(groups)
     grouped_positions = {(span.start, span.end) for group in groups for span in group.spans}
@@ -80,7 +78,7 @@ def _name_form(text: str, nicknames: Mapping[str, str]) -> tuple[str, str | None
     """Returns (standard given name, lower-case surname or None); None when no given name is present."""
     words = [word.strip(".,;:").lower() for word in text.split()]
     words = [word for word in words if word]
-    if words and words[0] in _TITLES:
+    if words and words[0] in TITLES:
         if len(words) < 3:
             return None
         words = words[1:]

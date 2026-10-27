@@ -15,7 +15,7 @@ from pii_toolbox.core import Document, EntityGroup, PiiType, Span
 
 RESOLVER_NAME = "maverick"
 
-_TITLES = frozenset({"mr", "mrs", "ms", "miss", "mx", "dr", "prof", "sir", "madam", "lord", "lady"})
+TITLES = frozenset({"mr", "mrs", "ms", "miss", "mx", "dr", "prof", "sir", "madam", "lord", "lady"})
 _CAPITALISED_WORD = re.compile(r"[A-Z][\w'’-]*\.?")
 # Capitalised only because they open a sentence.
 _CAPITALISED_NON_NAMES = frozenset(
@@ -75,7 +75,7 @@ def _is_name_form(text: str) -> bool:
     words = text.split()
     if not words:
         return False
-    if words[0].rstrip(".").lower() in _TITLES:
+    if words[0].rstrip(".").lower() in TITLES:
         return len(words) > 1 and all(_CAPITALISED_WORD.fullmatch(word) for word in words[1:])
     return all(
         _CAPITALISED_WORD.fullmatch(word) and word.rstrip(".").lower() not in _CAPITALISED_NON_NAMES

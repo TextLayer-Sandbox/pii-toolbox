@@ -329,32 +329,3 @@ def write_tables(tables: Sequence[Table], out_dir: Path) -> list[Path]:
             written.append(path)
     return written
 
-
-def build_table1(results_dir: Path, out_dir: Path, split: DatasetSplit = DatasetSplit.TEST) -> list[Path]:
-    return write_tables([table1(load_records(results_dir, split))], out_dir)
-
-
-def build_table2(results_dir: Path, out_dir: Path, split: DatasetSplit = DatasetSplit.TEST) -> list[Path]:
-    runs = english_runs(load_records(results_dir, split))
-    return write_tables([table2(runs, SpanMatchRule.EXACT_BOUNDARIES), table2(runs, SpanMatchRule.ANY_OVERLAP)], out_dir)
-
-
-def build_table3(results_dir: Path, out_dir: Path, split: DatasetSplit = DatasetSplit.TEST) -> list[Path]:
-    return write_tables([table3(english_runs(load_records(results_dir, split)))], out_dir)
-
-
-def build_table5(
-    results_dir: Path,
-    out_dir: Path,
-    split: DatasetSplit = DatasetSplit.TEST,
-    rule: SpanMatchRule = SpanMatchRule.EXACT_BOUNDARIES,
-) -> list[Path]:
-    return write_tables([table5(load_records(results_dir, split), rule)], out_dir)
-
-
-def build_table4(results_dir: Path, out_dir: Path, split: DatasetSplit = DatasetSplit.TEST) -> list[Path]:
-    return write_tables([table4(load_records(results_dir, split), load_records(results_dir, split, coreference=True))], out_dir)
-
-
-def build_table6(cost_dir: Path, out_dir: Path) -> list[Path]:
-    return write_tables([table6(load_cost_results(cost_dir))], out_dir)

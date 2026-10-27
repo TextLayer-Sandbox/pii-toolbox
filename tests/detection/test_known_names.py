@@ -59,13 +59,6 @@ def test_empty_list_finds_nothing():
     assert detect(KnownNamesDetector([]), "Rose") == []
 
 
-def test_names_file_has_one_name_per_line(tmp_path):
-    names_file = tmp_path / "names.txt"
-    names_file.write_text("Rose\n\n  Zephyrine Quill  \n", encoding="utf-8")
-    detector = KnownNamesDetector.from_file(names_file)
-    assert detect(detector, "Rose and Zephyrine Quill") == ["Rose", "Zephyrine Quill"]
-
-
 def test_registered_under_known_names_and_configured_through_the_registry():
     registry = FixedDetectorRegistry(known_names=["Rose"], known_names_case_insensitive=True)
     detector = registry.build("known_names")

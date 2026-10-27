@@ -1,6 +1,6 @@
 """Builds the default star-shaped nickname list (nicknames.csv) from carltonnorthern/nicknames.
 
-Usage: python build_nickname_list.py <path to the source names.csv> [output path]
+Usage: python scripts/build_nickname_list.py <path to the source names.csv> [output path]
 
 The source lists "name1,has_nickname,name2" rows in both directions and with many standard
 names per nickname. The build keeps one standard name per nickname:
@@ -115,7 +115,7 @@ def build_star_list(source_rows: list[tuple[str, str]]) -> dict[str, str]:
 
 def main() -> None:
     source_path = Path(sys.argv[1])
-    output_path = Path(sys.argv[2]) if len(sys.argv) > 2 else Path(__file__).with_name("nicknames.csv")
+    output_path = Path(sys.argv[2]) if len(sys.argv) > 2 else Path(__file__).parent.parent / "src" / "pii_toolbox" / "coref" / "nicknames.csv"
     mapping = build_star_list(read_source_rows(source_path))
     with output_path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.writer(handle, lineterminator="\n")

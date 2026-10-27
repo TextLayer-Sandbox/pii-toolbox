@@ -7,7 +7,6 @@ from pii_toolbox.core.label_maps import (
     ROBERTA_LABELS,
     TAB_LABELS,
     OptionalLabelMap,
-    to_pii_type,
 )
 from pii_toolbox.core.types import (
     AnnotatedDocument,
@@ -55,7 +54,6 @@ __all__ = [
     "PRESIDIO_LABELS",
     "ROBERTA_LABELS",
     "TAB_LABELS",
-    "to_pii_type",
     "AnnotatedDocument",
     "AnswerKeyBuilder",
     "AnswerSpan",

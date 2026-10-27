@@ -3,7 +3,7 @@
     uv run python scripts/run_all_evaluations.py --split test --out results/test
 
 Each (configuration, dataset, language, co-reference off or on) from all_runs() is scored through
-the evaluation command and saved as `<tool>__<dataset>__<language>__<split>__coref-<off|on>.json`,
+the evaluation function and saved as `<tool>__<dataset>__<language>__<split>__coref-<off|on>.json`,
 next to one environment.json. A run that fails is reported at the end and makes the exit code 1;
 the remaining runs still execute. `--skip-existing` leaves runs whose file is already in the output
 folder alone and `--exclude dataset:language:on|off` leaves a kind of run out. Only aggregate scores are written.
@@ -11,18 +11,16 @@ folder alone and `--exclude dataset:language:on|off` leaves a kind of run out. O
 
 import argparse
 import itertools
-import shutil
 import sys
-import tempfile
 from collections.abc import Callable, Iterator, Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
 from pii_toolbox.core import Dataset, DatasetSplit, DetectorRegistry, IdentityResolver, TabMetricsScorer
 from pii_toolbox.datasets.download import default_data_dir
-from pii_toolbox.evaluation.__main__ import DATASET_FACTORIES, DatasetFactory, SPLIT_NAMES, _default_tab_scorer, main as run_one
+from pii_toolbox.evaluation.__main__ import DATASET_FACTORIES, DatasetFactory, SPLIT_NAMES, _default_tab_scorer, evaluate_one
 from pii_toolbox.evaluation.configs import RunSpec, all_runs
-from pii_toolbox.evaluation.results_io import ENVIRONMENT_FILE_NAME, run_file_name
+from pii_toolbox.evaluation.results_io import run_file_name, write_run
 
 
 @dataclass(frozen=True)
@@ -85,16 +83,20 @@ def run_all(
         label = f"{spec.config} {spec.dataset} {spec.language} coref-{'on' if spec.coreference else 'off'}"
         report(f"[{index}/{len(specs)}] {label}")
         try:
-            with tempfile.TemporaryDirectory(prefix="pii-run-") as scratch:
-                written = run_one(
-                    _arguments(spec, split, Path(scratch), data_dir),
-                    registry=registry,
-                    dataset_factories=factories,
-                    tab_scorer=tab_scorer,
-                    resolver=resolver,
-                )
-                shutil.move(written, out_dir / result_file_name(spec, split))
-                shutil.move(Path(scratch) / ENVIRONMENT_FILE_NAME, out_dir / ENVIRONMENT_FILE_NAME)
+            record = evaluate_one(
+                spec.config,
+                spec.dataset,
+                split,
+                spec.coreference,
+                spec.language,
+                data_dir,
+                registry=registry,
+                dataset_factories=factories,
+                tab_scorer=tab_scorer,
+                resolver=resolver,
+            )
+            # result files carry the language in their name
+            write_run(record, out_dir).replace(out_dir / result_file_name(spec, split))
         except Exception as error:
             report(f"  failed: {type(error).__name__}: {error}")
             failures.append(RunFailure(spec, f"{type(error).__name__}: {error}"))
@@ -103,22 +105,6 @@ def run_all(
 
 def _limited(factory: DatasetFactory, limit: int) -> DatasetFactory:
     return lambda data_dir: LimitedDataset(factory(data_dir), limit)
-
-
-def _arguments(spec: RunSpec, split: DatasetSplit, scratch: Path, data_dir: Path | None) -> list[str]:
-    split_name = next(name for name, value in SPLIT_NAMES.items() if value is split)
-    arguments = [
-        "run",
-        "--tool", spec.config,
-        "--dataset", spec.dataset,
-        "--split", split_name,
-        "--language", spec.language,
-        "--coref", "on" if spec.coreference else "off",
-        "--out", str(scratch),
-    ]
-    if data_dir is not None:
-        arguments += ["--data-dir", str(data_dir)]
-    return arguments
 
 
 def main(argv: Sequence[str] | None = None) -> int:

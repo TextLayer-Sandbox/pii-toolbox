@@ -11,7 +11,7 @@ from pii_toolbox.datasets.mapa import MapaDataset
 from pii_toolbox.datasets.tab import TabDataset
 from pii_toolbox.datasets.worldwide import WorldwideDataset
 from pii_toolbox.detection.registry import FixedDetectorRegistry
-from pii_toolbox.evaluation.results_io import write_run
+from pii_toolbox.evaluation.results_io import ResultRecord, write_run
 from pii_toolbox.evaluation.run import RunRequest, run_evaluation
 
 DatasetFactory = Callable[[Path], Dataset]
@@ -55,6 +55,34 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def evaluate_one(
+    tool: str,
+    dataset_name: str,
+    split: DatasetSplit,
+    coreference: bool,
+    language: str | None,
+    data_dir: Path | None,
+    *,
+    registry: DetectorRegistry | None = None,
+    dataset_factories: Mapping[str, DatasetFactory] = DATASET_FACTORIES,
+    tab_scorer: TabMetricsScorer | None = None,
+    resolver: IdentityResolver | None = None,
+    environment: RunEnvironment | None = None,
+) -> ResultRecord:
+    """Scores one detector configuration on one dataset split and returns the record, writing nothing.
+
+    Collaborators default to the real ones; the default TAB scorer and co-reference resolver are built on demand.
+    """
+    dataset = dataset_factories[dataset_name](data_dir or default_data_dir())
+    if dataset_name == "tab" and tab_scorer is None:
+        tab_scorer = _default_tab_scorer()
+    if coreference and resolver is None:
+        resolver = _default_resolver()
+    request = RunRequest(tool, dataset, split, coreference, language)
+    with resolver if hasattr(resolver, "__enter__") else nullcontext():
+        return run_evaluation(request, registry or FixedDetectorRegistry(), tab_scorer, resolver, environment)
+
+
 def main(
     argv: Sequence[str] | None = None,
     *,
@@ -66,15 +94,19 @@ def main(
 ) -> Path:
     """Runs the command and returns the written result file. Collaborators default to the real ones."""
     args = build_parser().parse_args(argv)
-    dataset = dataset_factories[args.dataset](args.data_dir or default_data_dir())
-    coreference = args.coref == "on"
-    if args.dataset == "tab" and tab_scorer is None:
-        tab_scorer = _default_tab_scorer()
-    if coreference and resolver is None:
-        resolver = _default_resolver()
-    request = RunRequest(args.tool, dataset, SPLIT_NAMES[args.split], coreference, args.language)
-    with resolver if hasattr(resolver, "__enter__") else nullcontext():
-        record = run_evaluation(request, registry or FixedDetectorRegistry(), tab_scorer, resolver, environment)
+    record = evaluate_one(
+        args.tool,
+        args.dataset,
+        SPLIT_NAMES[args.split],
+        args.coref == "on",
+        args.language,
+        args.data_dir,
+        registry=registry,
+        dataset_factories=dataset_factories,
+        tab_scorer=tab_scorer,
+        resolver=resolver,
+        environment=environment,
+    )
     return write_run(record, args.out)
 
 

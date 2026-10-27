@@ -11,10 +11,10 @@ import tarfile
 from collections.abc import Iterator
 from pathlib import Path
 
-from pii_toolbox.core import AnnotatedDocument, AnswerSpan, Dataset, DatasetSplit, Document
+from pii_toolbox.core import AnnotatedDocument, Dataset, DatasetSplit
 from pii_toolbox.core.label_maps import WORLDWIDE_LABELS
 from pii_toolbox.datasets.download import default_data_dir
-from pii_toolbox.datasets.mapa import spans_from_bio
+from pii_toolbox.datasets.mapa import document_from_sentences
 
 _TARBALL = Path("worldwide") / "en-worldwide-newswire.tar.gz"
 _ARTICLE_FOLDER = "processed_annotated/"
@@ -73,14 +73,4 @@ def _sentences(content: str) -> list[tuple[list[str], list[str]]]:
 
 
 def _document(article_id: str, content: str) -> AnnotatedDocument:
-    lines = []
-    answers = []
-    offset = 0
-    for tokens, tags in _sentences(content):
-        for start, end, label in spans_from_bio(tokens, tags, offset):
-            answers.append(AnswerSpan(start, end, WORLDWIDE_LABELS[label], label, None, None, None))
-        line = " ".join(tokens)
-        lines.append(line)
-        offset += len(line) + 1
-    document = Document(id=article_id, text="\n".join(lines), language="en")
-    return AnnotatedDocument(document=document, answers=tuple(answers))
+    return document_from_sentences(article_id, "en", _sentences(content), WORLDWIDE_LABELS)

@@ -79,7 +79,7 @@ class MaverickResolver(IdentityResolver):
         self._reply_timeout_seconds = reply_timeout_seconds
         self._max_retries = max_retries
         self._runtime_dir = runtime_dir
-        self._nickname_config = nickname_config
+        self._nicknames = nickname_config.load()
         self._own_runtime_dir: tempfile.TemporaryDirectory | None = None
         self._context: zmq.Context | None = None
         self._socket: zmq.Socket | None = None
@@ -131,7 +131,7 @@ class MaverickResolver(IdentityResolver):
             return []
         clusters = self._request_clusters(document.text, [(span.start, span.end) for span in person_spans])
         groups = build_groups(document, spans, clusters)
-        return apply_nickname_step(document, spans, groups, self._nickname_config)
+        return apply_nickname_step(document, spans, groups, self._nicknames)
 
     def _launch(self) -> None:
         if self._socket is not None:

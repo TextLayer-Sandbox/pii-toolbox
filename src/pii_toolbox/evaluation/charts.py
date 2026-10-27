@@ -90,7 +90,7 @@ def _merge_language_runs(runs: Sequence[EvaluationRun]) -> EvaluationRun:
     )
 
 
-def _runs_of(results_dir: Path, dataset: str, split: DatasetSplit, coreference: bool = False) -> list[EvaluationRun]:
+def runs_of(results_dir: Path, dataset: str, split: DatasetSplit, coreference: bool = False) -> list[EvaluationRun]:
     """One run per tool: the whole-dataset file, else the per-language files merged by language."""
     records = load_records(results_dir, split, coreference)
     runs = []
@@ -108,7 +108,7 @@ def _runs_of(results_dir: Path, dataset: str, split: DatasetSplit, coreference: 
     return sorted(runs, key=lambda run: tool_order(run.tool))
 
 
-def _save(figure: Figure, out_dir: Path, file_name: str) -> Path:
+def save_chart(figure: Figure, out_dir: Path, file_name: str) -> Path:
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / file_name
     with plt.rc_context(_svg_settings()):
@@ -235,28 +235,6 @@ def chart_f_figure(
     return figure
 
 
-def build_chart_b(results_dir: Path, out_dir: Path, dataset: str = "tab", split: DatasetSplit = DatasetSplit.TEST, rule: SpanMatchRule = SpanMatchRule.EXACT_BOUNDARIES) -> Path:
-    return _save(chart_b_figure(_runs_of(results_dir, dataset, split), rule), out_dir, "chart_b.svg")
-
-
-def build_chart_c(results_dir: Path, out_dir: Path, dataset: str = "tab", split: DatasetSplit = DatasetSplit.TEST) -> Path:
-    return _save(chart_c_figure(_runs_of(results_dir, dataset, split)), out_dir, "chart_c.svg")
-
-
-def build_chart_d(results_dir: Path, cost_dir: Path, out_dir: Path, dataset: str = "tab", split: DatasetSplit = DatasetSplit.TEST, rule: SpanMatchRule = SpanMatchRule.EXACT_BOUNDARIES) -> Path:
-    figure = chart_d_figure(_runs_of(results_dir, dataset, split), load_cost_results(cost_dir), rule)
-    return _save(figure, out_dir, "chart_d.svg")
-
-
-def build_chart_e(results_dir: Path, out_dir: Path, dataset: str = "mapa", split: DatasetSplit = DatasetSplit.TEST, rule: SpanMatchRule = SpanMatchRule.EXACT_BOUNDARIES) -> Path:
-    return _save(chart_e_figure(_runs_of(results_dir, dataset, split), rule), out_dir, "chart_e.svg")
-
-
-def build_chart_f(results_dir: Path, out_dir: Path, dataset: str = "tab", split: DatasetSplit = DatasetSplit.TEST, rule: SpanMatchRule = SpanMatchRule.EXACT_BOUNDARIES) -> Path:
-    figure = chart_f_figure(_runs_of(results_dir, dataset, split), _runs_of(results_dir, dataset, split, True), rule)
-    return _save(figure, out_dir, "chart_f.svg")
-
-
 def build_chart_a(
     results_dir: Path,
     out_dir: Path,
@@ -267,4 +245,4 @@ def build_chart_a(
     """Writes chart_a.svg for the co-reference-off runs of one dataset and split."""
     runs = [run for (_, name), run in english_runs(load_records(results_dir, split)).items() if name == dataset]
     figure = chart_a_figure(runs, rule)
-    return _save(figure, out_dir, CHART_A_FILE_NAME)
+    return save_chart(figure, out_dir, CHART_A_FILE_NAME)

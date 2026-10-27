@@ -8,7 +8,6 @@
     "100000": 8914.18225430024
   },
   "latency_per_1000_chars_median_seconds": 0.1120282637514174,
-  "fits_lambda": true,
   "environment": {
     "machine": "Apple M5",
     "memory_bytes": 34359738368,
@@ -25,8 +24,5 @@
       "numpy": "2.4.6",
       "psutil": "7.2.2"
     }
-  },
-  "not_measured": [
-    "language model: no model has been selected yet"
-  ]
+  }
 }

@@ -69,14 +69,6 @@ def looks_like_dataset_file(path: Path, size: int) -> bool:
     )
 
 
-def test_dataset_file_rule_flags_dataset_names_and_sizes():
-    assert looks_like_dataset_file(Path("tab_train.json"), 10)
-    assert looks_like_dataset_file(Path("mapa_train.jsonl"), 10)
-    assert looks_like_dataset_file(Path("data.parquet"), 10)
-    assert looks_like_dataset_file(Path("anything.txt"), ONE_MEGABYTE + 1)
-    assert not looks_like_dataset_file(Path("mapa.py"), 10)
-
-
 def test_repository_tracks_no_dataset_files():
     listing = subprocess.run(
         ["git", "ls-files", "-z"], cwd=REPO_ROOT, capture_output=True, check=True

@@ -55,12 +55,8 @@ class FixedDetectorRegistry(DetectorRegistry):
         return self._factories[name]()
 
 
-def build_from_config(entries: Sequence[str], registry: DetectorRegistry | None = None) -> list[Detector]:
-    """Builds one detector per entry; an entry `a+b` builds a union of `a` and `b`.
-
-    Every name is checked before anything is built, so a typo fails at startup.
-    """
-    registry = registry or FixedDetectorRegistry()
+def validate_config_names(entries: Sequence[str], registry: DetectorRegistry) -> None:
+    """Raises UnknownDetectorError when any member of any entry is not in the registry."""
     known = registry.names()
     for entry in entries:
         for name in entry.split(UNION_SEPARATOR):
@@ -68,6 +64,15 @@ def build_from_config(entries: Sequence[str], registry: DetectorRegistry | None 
                 raise UnknownDetectorError(
                     f"unknown detector {name!r}; known detectors: {', '.join(sorted(known))}"
                 )
+
+
+def build_from_config(entries: Sequence[str], registry: DetectorRegistry | None = None) -> list[Detector]:
+    """Builds one detector per entry; an entry `a+b` builds a union of `a` and `b`.
+
+    Every name is checked before anything is built, so a typo fails at startup.
+    """
+    registry = registry or FixedDetectorRegistry()
+    validate_config_names(entries, registry)
     detectors: list[Detector] = []
     for entry in entries:
         members = tuple(registry.build(name) for name in entry.split(UNION_SEPARATOR))

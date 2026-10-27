@@ -8,7 +8,5 @@
     "100000": 1.0
   },
   "latency_per_1000_chars_median_seconds": 0.07,
-  "fits_lambda": true,
-  "environment": {},
-  "not_measured": []
+  "environment": {}
 }

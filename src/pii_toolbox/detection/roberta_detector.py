@@ -7,7 +7,7 @@ Its MISC label has no common counterpart and is dropped.
 from pathlib import Path
 from typing import Any
 
-from pii_toolbox.core import ROBERTA_LABELS, Detector, Document, PiiType, Span, to_pii_type
+from pii_toolbox.core import ROBERTA_LABELS, Detector, Document, PiiType, Span
 from pii_toolbox.detection.segmenter import OverlappingTextSegmenter, detect_segmented
 from pii_toolbox.evaluation.model_manifest import default_model_dir
 
@@ -56,7 +56,7 @@ class RobertaDetector(Detector):
     def _detect_segment(self, text: str) -> list[Span]:
         spans = []
         for entity in self._pipeline(text):
-            pii_type = to_pii_type(ROBERTA_LABELS, entity["entity_group"])
+            pii_type = ROBERTA_LABELS[entity["entity_group"]]
             if pii_type is None or not any(c.isalnum() for c in text[entity["start"] : entity["end"]]):
                 continue
             spans.append(

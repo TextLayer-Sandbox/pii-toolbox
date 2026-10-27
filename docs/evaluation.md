@@ -66,7 +66,7 @@ A report holds these scores in several cuts:
 - **By type**: one score per common type. A type the detector cannot report, or one with no answers and no predictions in the data, is shown as `n/a`.
 - **By language**: pooled score for each document language.
 
-For TAB, `IDENTIFIER` counts in the overall score; outside TAB it is left out of the per-type table. TAB's `DEM` and `MISC` labels are scored on their own. These extra scores are in `evaluation/report_extras.py`.
+`IDENTIFIER` counts in the overall score; outside TAB it is left out of the per-type table.
 
 ### TAB's own metrics
 

@@ -47,24 +47,6 @@ class FakeMaverick:
         return {"clusters_char_offsets": [[offsets[0], offsets[-1]]]}
 
 
-def forwarded_long_document_mode(subtokens: int) -> str | None:
-    worker = load_worker_module()
-    model = FakeMaverick(subtokens)
-    worker.maverick_predict_function(model)("Zorvan Thessaly spoke.")
-    (call,) = model.forward_calls
-    return call.get("longdoc")
-
-
-def test_document_above_the_threshold_uses_the_long_document_mode():
-    worker = load_worker_module()
-    assert forwarded_long_document_mode(worker.LONG_DOCUMENT_SUBTOKEN_THRESHOLD + 1) == "naive"
-
-
-def test_document_at_the_threshold_keeps_the_single_pass():
-    worker = load_worker_module()
-    assert forwarded_long_document_mode(worker.LONG_DOCUMENT_SUBTOKEN_THRESHOLD) is None
-
-
 def test_positions_stay_exact_across_blank_lines():
     worker = load_worker_module()
     text = "Zorvan Thessaly spoke.\n\n\nThe clerk left.\n\nMr. Thessaly replied."

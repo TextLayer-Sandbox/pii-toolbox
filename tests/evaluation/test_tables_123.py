@@ -2,24 +2,34 @@ from pathlib import Path
 
 import pytest
 
-from pii_toolbox.core import DatasetSplit
+from pii_toolbox.core import DatasetSplit, SpanMatchRule
 from pii_toolbox.evaluation import tables
-from pii_toolbox.evaluation.tables import build_table1, build_table2, build_table3
 
 FIXTURES = Path(__file__).parent / "fixtures"
 RESULTS = FIXTURES / "results"
 GOLDEN = FIXTURES / "golden"
 
 CASES = [
-    (build_table1, ["table1.md", "table1.csv"]),
-    (build_table2, ["table2_strict.md", "table2_strict.csv", "table2_relaxed.md", "table2_relaxed.csv"]),
-    (build_table3, ["table3.md", "table3.csv"]),
+    ("table1", ["table1.md", "table1.csv"]),
+    ("table2", ["table2_strict.md", "table2_strict.csv", "table2_relaxed.md", "table2_relaxed.csv"]),
+    ("table3", ["table3.md", "table3.csv"]),
 ]
 
 
-@pytest.mark.parametrize(("builder", "names"), CASES)
-def test_tables_match_the_golden_files_byte_for_byte(tmp_path, builder, names):
-    written = builder(RESULTS, tmp_path)
+def write_built_tables(case, results_dir, out_dir):
+    records = tables.load_records(results_dir, DatasetSplit.TEST)
+    runs = tables.english_runs(records)
+    built = {
+        "table1": [tables.table1(records)],
+        "table2": [tables.table2(runs, SpanMatchRule.EXACT_BOUNDARIES), tables.table2(runs, SpanMatchRule.ANY_OVERLAP)],
+        "table3": [tables.table3(runs)],
+    }
+    return tables.write_tables(built[case], out_dir)
+
+
+@pytest.mark.parametrize(("case", "names"), CASES)
+def test_tables_match_the_golden_files_byte_for_byte(tmp_path, case, names):
+    written = write_built_tables(case, RESULTS, tmp_path)
     assert [path.name for path in written] == names
     for name in names:
         assert (tmp_path / name).read_bytes() == (GOLDEN / name).read_bytes()
@@ -35,8 +45,6 @@ def test_table1_has_precision_recall_and_f2_strict_and_relaxed_for_both_datasets
 
 
 def test_table2_leaves_identifier_blank_for_mapa_and_marks_unreported_types_not_applicable():
-    from pii_toolbox.core import SpanMatchRule
-
     table = tables.table2(tables.load_runs(RESULTS, DatasetSplit.TEST), SpanMatchRule.EXACT_BOUNDARIES)
     identifier = table.header.index("IDENTIFIER")
     mapa_rows = [row for row in table.rows if row[0] == "MAPA"]
@@ -52,7 +60,7 @@ def test_table3_has_the_tab_official_columns_and_any_annotator_f2():
 
 
 def test_coreference_on_runs_and_other_splits_are_left_out(tmp_path):
-    build_table3(RESULTS, tmp_path)
+    write_built_tables("table3", RESULTS, tmp_path)
     content = (tmp_path / "table3.md").read_text()
     assert "0.990" not in content
     assert "0.110" not in content
@@ -72,5 +80,5 @@ def test_removing_a_column_makes_the_golden_comparison_fail(tmp_path, monkeypatc
         )
 
     monkeypatch.setattr(tables, "table3", without_wp)
-    build_table3(RESULTS, tmp_path)
+    write_built_tables("table3", RESULTS, tmp_path)
     assert (tmp_path / "table3.md").read_bytes() != (GOLDEN / "table3.md").read_bytes()

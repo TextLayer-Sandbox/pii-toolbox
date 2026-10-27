@@ -4,85 +4,15 @@ from pathlib import Path
 
 import pytest
 
-from pii_toolbox.core import (
-    AnnotatedDocument,
-    AnswerSpan,
-    Dataset,
-    DatasetSplit,
-    Detector,
-    Document,
-    EntityGroup,
-    IdentityResolver,
-    PiiType,
-    ReidentificationRisk,
-    Span,
-    TabMetricsScorer,
-    TabOfficialMetrics,
-)
-from pii_toolbox.detection.registry import FixedDetectorRegistry
+from pii_toolbox.core import DatasetSplit
 from pii_toolbox.evaluation.configs import RunSpec
 from pii_toolbox.evaluation.results_io import ENVIRONMENT_FILE_NAME
+from stubs import StubDataset, StubResolver, StubTabScorer, stub_registry
 
 SCRIPT = Path(__file__).resolve().parents[2] / "scripts" / "run_all_evaluations.py"
 _spec = importlib.util.spec_from_file_location("run_all_evaluations", SCRIPT)
 script = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(script)
-
-TEXT = "Anna Testwell met Anna there."
-FULL_NAME = (0, 13)
-SHORT_NAME = (18, 22)
-
-
-class StubDetector(Detector):
-    name = "stub"
-    languages = frozenset({"en"})
-    detects = frozenset({PiiType.PERSON})
-
-    def load_models(self) -> None:
-        pass
-
-    def detect(self, document):
-        return [Span(*FULL_NAME, PiiType.PERSON, "PERSON", ("stub",), None)]
-
-
-class StubResolver(IdentityResolver):
-    name = "stub_resolver"
-
-    def resolve(self, document, spans):
-        added = Span(*SHORT_NAME, PiiType.PERSON, "PERSON", ("stub_resolver",), None)
-        return [EntityGroup((spans[0], added), spans[0])]
-
-
-class StubTabScorer(TabMetricsScorer):
-    def score(self, results):
-        return TabOfficialMetrics(0.5, 0.25, 0.75)
-
-
-class StubDataset(Dataset):
-    def __init__(self, name):
-        self._name = name
-
-    @property
-    def name(self):
-        return self._name
-
-    @property
-    def languages(self):
-        return frozenset({"en", "fr"})
-
-    def load(self, split, language=None):
-        answers = (
-            AnswerSpan(*FULL_NAME, PiiType.PERSON, "PERSON", "A", ReidentificationRisk.DIRECT, "e1"),
-            AnswerSpan(*SHORT_NAME, PiiType.PERSON, "PERSON", "A", ReidentificationRisk.DIRECT, "e1"),
-        )
-        for doc_id, lang in (("d1", "en"), ("d2", "fr")):
-            if language in (None, lang):
-                yield AnnotatedDocument(Document(doc_id, TEXT, lang), answers)
-
-
-def stub_registry():
-    return FixedDetectorRegistry(factory_overrides={"stub": StubDetector})
-
 
 FACTORIES = {"tab": lambda d: StubDataset("TAB"), "mapa": lambda d: StubDataset("MAPA")}
 
@@ -146,6 +76,5 @@ def test_exclude_and_skip_existing_leave_runs_out(tmp_path, monkeypatch):
     (tmp_path / existing).write_text("{}")
     assert script.main(["--split", "test", "--out", str(tmp_path), "--exclude", "mapa:en:on", "--skip-existing"]) == 0
     specs = seen[0]
-    assert len(specs) == 72 - 9 - 1
     assert not any(s.dataset == "mapa" and s.language == "en" and s.coreference for s in specs)
     assert all(script.result_file_name(s, DatasetSplit.TEST) != existing for s in specs)

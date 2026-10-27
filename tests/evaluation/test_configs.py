@@ -1,8 +1,7 @@
 import pytest
 
 from pii_toolbox.core import Detector, DetectorRegistry
-from pii_toolbox.detection.registry import FixedDetectorRegistry, UnknownDetectorError
-from pii_toolbox.evaluation import configs
+from pii_toolbox.detection.registry import FixedDetectorRegistry, UnknownDetectorError, validate_config_names
 from pii_toolbox.evaluation.configs import all_runs, measured_configs, model_tools
 
 REAL_MODEL_TOOLS = set(model_tools())
@@ -44,9 +43,9 @@ def test_there_are_no_model_pairs_and_no_union_of_all_models():
 
 def test_every_config_name_validates_against_the_registry():
     registry = FixedDetectorRegistry()
-    configs.validate_configs(measured_configs(registry), registry)
+    validate_config_names(measured_configs(registry), registry)
     with pytest.raises(UnknownDetectorError):
-        configs.validate_configs(["spacy_lg+typo"], registry)
+        validate_config_names(["spacy_lg+typo"], registry)
 
 
 def test_the_list_is_generated_from_the_registry_not_typed_out():

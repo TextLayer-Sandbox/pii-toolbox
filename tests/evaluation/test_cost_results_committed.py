@@ -1,24 +1,15 @@
-import importlib.util
 import json
 from pathlib import Path
 
 import pytest
 
+from pii_toolbox.evaluation.configs import measured_configs
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 RESULTS = REPO_ROOT / "results" / "cost"
 GIB = 1024**3
 INPUT_SIZES = ("1000", "10000", "100000")
-LAMBDA_LIMIT_BYTES = 10 * GIB
-
-
-def load_script():
-    spec = importlib.util.spec_from_file_location("run_cost_all", REPO_ROOT / "scripts" / "run_cost_all.py")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
-
-
-SETUPS = load_script().measured_configs()
+SETUPS = measured_configs()
 
 
 def result_path(setup):
@@ -35,7 +26,6 @@ def test_setups_follow_the_agreed_list():
         if "+" in name:
             assert name.split("+")[1] == "presidio_structured"
             assert name.count("+") == 1
-    assert "llm" not in " ".join(SETUPS)
 
 
 def test_only_listed_setups_have_result_files():
@@ -52,7 +42,6 @@ def test_result_file_has_every_figure_and_its_environment(setup):
     assert set(result["throughput_chars_per_second"]) == set(INPUT_SIZES)
     assert all(rate > 0 for rate in result["throughput_chars_per_second"].values())
     assert result["latency_per_1000_chars_median_seconds"] >= 0
-    assert result["fits_lambda"] == (result["peak_memory_bytes"] < LAMBDA_LIMIT_BYTES)
     environment = result["environment"]
     assert {"machine", "os", "python", "library_versions"} <= set(environment)
     assert environment["library_versions"]

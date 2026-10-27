@@ -20,10 +20,6 @@ from pii_toolbox.core import (
 ENVIRONMENT_FILE_NAME = "environment.json"
 
 
-class SelectionFromTestSplitError(ValueError):
-    """Raised when a choice would be made from a result measured on the test split."""
-
-
 @dataclass(frozen=True)
 class ResultRecord:
     """A saved run with the facts about its detector that the tables need.
@@ -146,14 +142,3 @@ def read_record(path: Path) -> ResultRecord:
         language=language_from_file_name(path.name),
     )
 
-
-def read_run(path: Path) -> EvaluationRun:
-    return read_record(path).run
-
-
-def load_for_selection(path: Path) -> EvaluationRun:
-    """Reads a result file to base a choice on; refuses a file measured on the test split."""
-    run = read_run(path)
-    if run.split is DatasetSplit.TEST:
-        raise SelectionFromTestSplitError(f"{path.name} was measured on the test split; choices use dev or validation only")
-    return run

@@ -11,9 +11,8 @@ from collections.abc import Iterator
 from dataclasses import dataclass
 
 from pii_toolbox.core import DetectorRegistry
-from pii_toolbox.detection.registry import FixedDetectorRegistry, UnknownDetectorError
+from pii_toolbox.detection.registry import UNION_SEPARATOR, FixedDetectorRegistry, validate_config_names
 
-UNION_SEPARATOR = "+"
 PATTERN_TOOL = "presidio_structured"
 NON_MODEL_TOOLS = frozenset({PATTERN_TOOL, "known_names"})
 ENGLISH = "en"
@@ -48,17 +47,8 @@ def measured_configs(registry: DetectorRegistry | None = None) -> list[str]:
     registry = registry or FixedDetectorRegistry()
     models = model_tools(registry)
     configs = [PATTERN_TOOL, *models, *(f"{model}{UNION_SEPARATOR}{PATTERN_TOOL}" for model in models)]
-    validate_configs(configs, registry)
+    validate_config_names(configs, registry)
     return configs
-
-
-def validate_configs(configs: list[str], registry: DetectorRegistry) -> None:
-    """Raises UnknownDetectorError when any member of a configuration is not in the registry."""
-    known = registry.names()
-    for config in configs:
-        for name in config.split(UNION_SEPARATOR):
-            if name not in known:
-                raise UnknownDetectorError(f"unknown detector {name!r} in configuration {config!r}")
 
 
 def all_runs(registry: DetectorRegistry | None = None) -> Iterator[RunSpec]:

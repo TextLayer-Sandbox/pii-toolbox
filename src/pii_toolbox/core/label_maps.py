@@ -71,10 +71,3 @@ WORLDWIDE_LABELS: OptionalLabelMap = {
     "Misc": None,
     "Product": None,
 }
-
-
-def to_pii_type(label_map: OptionalLabelMap, label: str) -> PiiType | None:
-    """Returns the common type for a label, None when it has none; raises KeyError naming an unknown label."""
-    if label not in label_map:
-        raise KeyError(label)
-    return label_map[label]

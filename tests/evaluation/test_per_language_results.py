@@ -60,7 +60,7 @@ def test_table5_keeps_not_applicable_for_an_english_only_tool(tmp_path):
 
 
 def test_chart_e_draws_every_language_of_a_tool_measured_per_language(tmp_path):
-    runs = charts._runs_of(_results(tmp_path), "mapa", DatasetSplit.TEST)
+    runs = charts.runs_of(_results(tmp_path), "mapa", DatasetSplit.TEST)
     multi = next(run for run in runs if run.tool == "multi")
     assert sorted(multi.exact_boundaries.by_language) == ["de", "en", "fr"]
     assert multi.any_overlap.by_language["fr"].f2 == 0.25

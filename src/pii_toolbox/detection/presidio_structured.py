@@ -5,7 +5,7 @@ configuration; Presidio's name-finding recognisers and its spaCy engine are neve
 so no model files are read and nothing touches the network.
 """
 
-from pii_toolbox.core import PRESIDIO_LABELS, Detector, Document, PiiType, Span, to_pii_type
+from pii_toolbox.core import PRESIDIO_LABELS, Detector, Document, PiiType, Span
 
 ENTITY_TYPES = (
     "CREDIT_CARD",
@@ -77,7 +77,7 @@ class PresidioStructuredDetector(Detector):
             Span(
                 start=result.start,
                 end=result.end,
-                pii_type=to_pii_type(PRESIDIO_LABELS, result.entity_type),
+                pii_type=PRESIDIO_LABELS[result.entity_type],
                 detector_label=result.entity_type,
                 source=(self.name,),
                 score=result.score,

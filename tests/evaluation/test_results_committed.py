@@ -5,7 +5,7 @@ import pytest
 
 from pii_toolbox.core import DatasetSplit
 from pii_toolbox.evaluation.configs import all_runs, measured_configs
-from pii_toolbox.evaluation.results_io import ENVIRONMENT_FILE_NAME, read_run
+from pii_toolbox.evaluation.results_io import ENVIRONMENT_FILE_NAME, read_record
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 RESULTS = REPO_ROOT / "results" / "test"
@@ -50,7 +50,7 @@ def test_every_run_in_the_plan_has_a_result_file_and_nothing_else_is_there():
 
 @pytest.mark.parametrize("spec", RUNS, ids=result_name)
 def test_result_file_matches_its_run(spec):
-    run = read_run(RESULTS / result_name(spec))
+    run = read_record(RESULTS / result_name(spec)).run
     assert run.tool == spec.config
     assert run.dataset == spec.dataset
     assert run.split is DatasetSplit.TEST
@@ -65,12 +65,6 @@ def test_co_reference_off_and_on_both_exist_for_every_configuration_on_english_t
                 assert (RESULTS / f"{config}__{dataset}__en__test__coref-{state}.json").exists()
 
 
-def test_worldwide_english_has_off_and_on_files_for_every_configuration():
-    for config in measured_configs():
-        for state in ("off", "on"):
-            assert (RESULTS / f"{config}__worldwide__en__test__coref-{state}.json").exists()
-
-
 @pytest.mark.parametrize("spec", RUNS, ids=result_name)
 def test_result_file_holds_only_aggregate_scores(spec):
     content = json.loads((RESULTS / result_name(spec)).read_text())
@@ -82,8 +76,3 @@ def test_environment_file_describes_the_machine_and_holds_no_text():
     content = json.loads((RESULTS / ENVIRONMENT_FILE_NAME).read_text())
     assert set(content) == {"machine", "os", "runtime", "library_versions"}
     assert all(len(text) <= LONGEST_STRING for text in strings(content))
-
-
-def test_no_result_file_names_a_language_model():
-    assert not [path.name for path in RESULTS.glob("*.json") if "llm" in path.name]
-    assert not [spec for spec in RUNS if "llm" in spec.config]

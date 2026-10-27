@@ -7,7 +7,7 @@ import pytest
 from pii_toolbox.coref.nickname_step import NicknameConfig, apply_nickname_step
 from pii_toolbox.core import Document, EntityGroup, PiiType, Span
 
-DEFAULT = NicknameConfig()
+DEFAULT = NicknameConfig().load()
 
 
 def locate(text: str, needle: str, occurrence: int = 0) -> Span:
@@ -85,7 +85,7 @@ def test_a_configured_list_replaces_the_default(tmp_path: Path):
     david, dave, davo = locate(text, "David Parker"), locate(text, "Dave"), locate(text, "Davo")
     replacement = tmp_path / "custom.csv"
     replacement.write_text("davo,david\n", encoding="utf-8")
-    result = apply_nickname_step(document, [david, dave, davo], [group_of(david)], NicknameConfig(replacement))
+    result = apply_nickname_step(document, [david, dave, davo], [group_of(david)], NicknameConfig(replacement).load())
     assert positions(result[0]) == [(david.start, david.end), (davo.start, davo.end)]
 
 
@@ -94,12 +94,12 @@ def test_a_configured_list_that_breaks_the_shape_is_rejected(tmp_path: Path):
     broken.write_text("davo,david\ndavo,dave\n", encoding="utf-8")
     document = Document(id="d8", text="David met Davo.", language="en")
     with pytest.raises(ValueError):
-        apply_nickname_step(document, [], [], NicknameConfig(broken))
+        NicknameConfig(broken).load()
 
 
 def test_with_the_list_off_dave_stays_unlinked():
     text = "David Parker met Dave."
     document = Document(id="d9", text=text, language="en")
     david, dave = locate(text, "David Parker"), locate(text, "Dave")
-    result = apply_nickname_step(document, [david, dave], [group_of(david)], NicknameConfig(None))
+    result = apply_nickname_step(document, [david, dave], [group_of(david)], NicknameConfig(None).load())
     assert positions(result[0]) == [(david.start, david.end)]

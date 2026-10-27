@@ -8,11 +8,11 @@ spans are rebuilt from the BIO tags as character offsets in that text.
 """
 
 import json
-from collections.abc import Iterator, Sequence
+from collections.abc import Iterable, Iterator, Sequence
 from pathlib import Path
 
 from pii_toolbox.core import AnnotatedDocument, AnswerSpan, Dataset, DatasetSplit, Document
-from pii_toolbox.core.label_maps import MAPA_LABELS
+from pii_toolbox.core.label_maps import MAPA_LABELS, OptionalLabelMap
 from pii_toolbox.datasets.download import default_data_dir
 
 MAPA_LANGUAGES = frozenset(
@@ -57,6 +57,29 @@ def spans_from_bio(tokens: Sequence[str], tags: Sequence[str], offset: int = 0) 
     return spans
 
 
+def document_from_sentences(
+    document_id: str,
+    language: str,
+    sentences: Iterable[tuple[Sequence[str], Sequence[str]]],
+    labels: OptionalLabelMap,
+) -> AnnotatedDocument:
+    """Builds one document from (tokens, BIO tags) sentences, joining tokens by a space and sentences by a newline.
+
+    Answer spans are the BIO spans as character offsets in that text, typed through `labels`.
+    """
+    lines = []
+    answers = []
+    offset = 0
+    for tokens, tags in sentences:
+        for start, end, label in spans_from_bio(tokens, tags, offset):
+            answers.append(AnswerSpan(start, end, labels[label], label, None, None, None))
+        line = " ".join(tokens)
+        lines.append(line)
+        offset += len(line) + 1
+    document = Document(id=document_id, text="\n".join(lines), language=language)
+    return AnnotatedDocument(document=document, answers=tuple(answers))
+
+
 class MapaDataset(Dataset):
     def __init__(self, data_dir: Path | None = None) -> None:
         self._data_dir = data_dir if data_dir is not None else default_data_dir()
@@ -83,15 +106,9 @@ class MapaDataset(Dataset):
 
 
 def _document(language: str, file_name: str, sentences: list[dict]) -> AnnotatedDocument:
-    lines = []
-    answers = []
-    offset = 0
-    for sentence in sentences:
-        tokens = sentence["tokens"]
-        for start, end, label in spans_from_bio(tokens, sentence["coarse_grained"], offset):
-            answers.append(AnswerSpan(start, end, MAPA_LABELS[label], label, None, None, None))
-        line = " ".join(tokens)
-        lines.append(line)
-        offset += len(line) + 1
-    document = Document(id=file_name, text="\n".join(lines), language=language)
-    return AnnotatedDocument(document=document, answers=tuple(answers))
+    return document_from_sentences(
+        file_name,
+        language,
+        ((sentence["tokens"], sentence["coarse_grained"]) for sentence in sentences),
+        MAPA_LABELS,
+    )

@@ -6,14 +6,8 @@ word is ignored. No model is involved, so nothing is loaded and nothing touches 
 
 import re
 from collections.abc import Iterable
-from pathlib import Path
 
 from pii_toolbox.core import Detector, Document, PiiType, Span
-
-
-def read_names_file(path: Path) -> list[str]:
-    """Reads one name per line, skipping blank lines."""
-    return [line.strip() for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
 class KnownNamesDetector(Detector):
@@ -35,10 +29,6 @@ class KnownNamesDetector(Detector):
             if unique_names
             else None
         )
-
-    @classmethod
-    def from_file(cls, path: Path, case_insensitive: bool = False) -> "KnownNamesDetector":
-        return cls(read_names_file(path), case_insensitive)
 
     @property
     def name(self) -> str:

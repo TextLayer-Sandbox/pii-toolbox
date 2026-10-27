@@ -9,7 +9,7 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
-from pii_toolbox.core import GLINER_LABELS, Detector, Document, PiiType, Span, to_pii_type
+from pii_toolbox.core import GLINER_LABELS, Detector, Document, PiiType, Span
 from pii_toolbox.detection.segmenter import OverlappingTextSegmenter, detect_segmented
 from pii_toolbox.evaluation.model_manifest import default_model_dir
 
@@ -91,7 +91,7 @@ class GlinerDetector(Detector):
                 Span(
                     start=entity["start"],
                     end=entity["end"],
-                    pii_type=to_pii_type(GLINER_LABELS, entity["label"]),
+                    pii_type=GLINER_LABELS[entity["label"]],
                     detector_label=entity["label"],
                     source=(self.name,),
                     score=float(entity["score"]),
