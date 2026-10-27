@@ -1,0 +1,32 @@
+# PII Toolbox
+
+A set of tools for finding personal information (PII) in text, swapping it for placeholders, and swapping it back in afterwards.
+
+We also provide tools for evaluating how well detectors find PII.
+
+
+## What is in the repository
+
+- `src/pii_toolbox/`: the Python package (shared types, detectors, name linking, masking sessions, datasets and the evaluation code).
+- `examples/`: a small runnable example that masks a text and restores it.
+- `scripts/`: command-line scripts to download data and models, run evaluations and rebuild the results.
+- `tests/`: the automated tests.
+- `results/`: saved scores, tables and charts from the evaluation runs.
+- `sketch/`: early design notes and type sketches written before the code.
+- `docs/`: the longer guides listed below.
+
+## Quick start
+
+```
+uv sync
+uv run pytest -q
+uv run python examples/round_trip.py
+```
+
+## Further reading
+
+- [Masking toolbox](docs/masking-toolbox.md): how text is masked and restored, with a walk-through of the example.
+- [Evaluation](docs/evaluation.md): the datasets, how detectors are scored, and how to rerun an evaluation.
+- [Results](docs/results.md): what each saved table and chart shows and how they are rebuilt.
+- [Development](docs/development.md): setup, tests and the layout of the repository's working files.
+- [Requirements](docs/requirements.md): what the toolbox was built to do, and what was decided against.
