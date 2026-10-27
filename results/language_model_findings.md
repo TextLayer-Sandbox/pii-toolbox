@@ -7,7 +7,7 @@ Decision D17 rules out local language models of 8B to 12B parameters as a redact
 - Apple M5 with 32 GB of memory.
 - Qwen3 8B at 4-bit: a Q4_K_M GGUF file run through llama.cpp, and an MLX conversion run through MLX.
 - The same 4 TAB dev passages in every run, 11,995 characters in total.
-- The raw timings are in `results/language_model_findings/runtime_timing_before_fix.json` and `results/language_model_findings/runtime_timing_after_fix.json`, unchanged from the commits that produced them.
+- The raw timings are in `results/language_model_findings/runtime_timing_after_fix.json`, unchanged from the commits that produced them.
 
 ## Round 1: adapters as first built
 
