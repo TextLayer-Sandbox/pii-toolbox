@@ -21,6 +21,7 @@ ENGLISH = "en"
 RUN_PLAN: tuple[tuple[str, str, tuple[bool, ...]], ...] = (
     ("tab", ENGLISH, (False, True)),
     ("mapa", ENGLISH, (False, True)),
+    ("worldwide", ENGLISH, (False, True)),
     ("mapa", "fr", (False,)),
     ("mapa", "de", (False,)),
 )
@@ -61,7 +62,7 @@ def validate_configs(configs: list[str], registry: DetectorRegistry) -> None:
 
 
 def all_runs(registry: DetectorRegistry | None = None) -> Iterator[RunSpec]:
-    """Every run of every configuration: TAB and MAPA English with co-reference off and on, MAPA French and German off."""
+    """Every run of every configuration: TAB, MAPA and Worldwide English with co-reference off and on, MAPA French and German off."""
     for config in measured_configs(registry):
         for dataset, language, states in RUN_PLAN:
             for coreference in states:

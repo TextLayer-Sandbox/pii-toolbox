@@ -146,6 +146,6 @@ def test_exclude_and_skip_existing_leave_runs_out(tmp_path, monkeypatch):
     (tmp_path / existing).write_text("{}")
     assert script.main(["--split", "test", "--out", str(tmp_path), "--exclude", "mapa:en:on", "--skip-existing"]) == 0
     specs = seen[0]
-    assert len(specs) == 54 - 9 - 1
+    assert len(specs) == 72 - 9 - 1
     assert not any(s.dataset == "mapa" and s.language == "en" and s.coreference for s in specs)
     assert all(script.result_file_name(s, DatasetSplit.TEST) != existing for s in specs)

@@ -58,11 +58,17 @@ def test_result_file_matches_its_run(spec):
     assert (run.tab_metrics is not None) == (spec.dataset == "tab")
 
 
-def test_co_reference_off_and_on_both_exist_for_every_configuration_on_english_tab_and_mapa():
+def test_co_reference_off_and_on_both_exist_for_every_configuration_on_english_tab_mapa_and_worldwide():
     for config in measured_configs():
-        for dataset in ("tab", "mapa"):
+        for dataset in ("tab", "mapa", "worldwide"):
             for state in ("off", "on"):
                 assert (RESULTS / f"{config}__{dataset}__en__test__coref-{state}.json").exists()
+
+
+def test_worldwide_english_has_off_and_on_files_for_every_configuration():
+    for config in measured_configs():
+        for state in ("off", "on"):
+            assert (RESULTS / f"{config}__worldwide__en__test__coref-{state}.json").exists()
 
 
 @pytest.mark.parametrize("spec", RUNS, ids=result_name)
