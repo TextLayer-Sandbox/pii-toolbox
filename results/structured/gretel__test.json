@@ -1,0 +1,3477 @@
+{
+  "dataset": "gretel",
+  "split": "test",
+  "revision": "7b844d16738527a04264f50214cb426a4cea0897",
+  "recognisers": [
+    "AbaRoutingRecognizer",
+    "AuAbnRecognizer",
+    "AuAcnRecognizer",
+    "AuMedicareRecognizer",
+    "AuTfnRecognizer",
+    "CaSinRecognizer",
+    "CreditCardRecognizer",
+    "CryptoRecognizer",
+    "DateRecognizer",
+    "DeBsnrRecognizer",
+    "DeFuehrerscheinRecognizer",
+    "DeHandelsregisterRecognizer",
+    "DeHealthInsuranceRecognizer",
+    "DeIdCardRecognizer",
+    "DeKfzRecognizer",
+    "DeLanrRecognizer",
+    "DePassportRecognizer",
+    "DePlzRecognizer",
+    "DeSocialSecurityRecognizer",
+    "DeTaxIdRecognizer",
+    "DeTaxNumberRecognizer",
+    "DeVatIdRecognizer",
+    "EsNieRecognizer",
+    "EsNifRecognizer",
+    "EsPassportRecognizer",
+    "FiPersonalIdentityCodeRecognizer",
+    "IbanRecognizer",
+    "InAadhaarRecognizer",
+    "InGstinRecognizer",
+    "InPanRecognizer",
+    "InPassportRecognizer",
+    "InVehicleRegistrationRecognizer",
+    "InVoterRecognizer",
+    "IpRecognizer",
+    "ItDriverLicenseRecognizer",
+    "ItFiscalCodeRecognizer",
+    "ItIdentityCardRecognizer",
+    "ItPassportRecognizer",
+    "ItVatCodeRecognizer",
+    "KrBrnRecognizer",
+    "KrDriverLicenseRecognizer",
+    "KrFrnRecognizer",
+    "KrPassportRecognizer",
+    "KrRrnRecognizer",
+    "MacAddressRecognizer",
+    "MedicalLicenseRecognizer",
+    "NgNinRecognizer",
+    "NgVehicleRegistrationRecognizer",
+    "NhsRecognizer",
+    "OfflineEmailRecognizer",
+    "PhTinRecognizer",
+    "PhUmidRecognizer",
+    "PhoneRecognizer",
+    "PlPeselRecognizer",
+    "SeOrganisationsnummerRecognizer",
+    "SePersonnummerRecognizer",
+    "SgFinRecognizer",
+    "SgUenRecognizer",
+    "ThTninRecognizer",
+    "TrLicensePlateRecognizer",
+    "TrNationalIdRecognizer",
+    "UkDrivingLicenceRecognizer",
+    "UkNinoRecognizer",
+    "UkPassportRecognizer",
+    "UkPostcodeRecognizer",
+    "UkVehicleRegistrationRecognizer",
+    "UrlRecognizer",
+    "UsBankRecognizer",
+    "UsItinRecognizer",
+    "UsLicenseRecognizer",
+    "UsMbiRecognizer",
+    "UsNpiRecognizer",
+    "UsPassportRecognizer",
+    "UsSsnRecognizer",
+    "ZaIdNumberRecognizer"
+  ],
+  "overall": {
+    "kinds": {
+      "ssn": {
+        "group": "Government IDs",
+        "has_checksum": true,
+        "presidio_entities": [
+          "CA_SIN",
+          "DE_SOCIAL_SECURITY",
+          "FI_PERSONAL_IDENTITY_CODE",
+          "KR_RRN",
+          "PL_PESEL",
+          "SE_PERSONNUMMER",
+          "UK_NINO",
+          "US_SSN"
+        ],
+        "items": 153,
+        "any_all": 151,
+        "correct_all": 94,
+        "valid_items": 76,
+        "any_valid": 76,
+        "correct_valid": 76,
+        "any_rate_all": 0.9869281045751634,
+        "correct_rate_all": 0.6143790849673203,
+        "any_rate_valid": 1.0,
+        "correct_rate_valid": 1.0
+      },
+      "tax_id": {
+        "group": "Government IDs",
+        "has_checksum": false,
+        "presidio_entities": [
+          "AU_ABN",
+          "AU_TFN",
+          "DE_TAX_ID",
+          "DE_TAX_NUMBER",
+          "DE_VAT_ID",
+          "IN_GSTIN",
+          "IN_PAN",
+          "IT_VAT_CODE",
+          "PH_TIN",
+          "US_ITIN"
+        ],
+        "items": 0,
+        "any_all": 0,
+        "correct_all": 0,
+        "valid_items": 0,
+        "any_valid": 0,
+        "correct_valid": 0,
+        "any_rate_all": null,
+        "correct_rate_all": null,
+        "any_rate_valid": null,
+        "correct_rate_valid": null
+      },
+      "national_id": {
+        "group": "Government IDs",
+        "has_checksum": false,
+        "presidio_entities": [
+          "CA_SIN",
+          "DE_ID_CARD",
+          "DE_SOCIAL_SECURITY",
+          "ES_NIE",
+          "ES_NIF",
+          "FI_PERSONAL_IDENTITY_CODE",
+          "IN_AADHAAR",
+          "IT_FISCAL_CODE",
+          "IT_IDENTITY_CARD",
+          "KR_FRN",
+          "KR_RRN",
+          "NG_NIN",
+          "PH_UMID",
+          "PL_PESEL",
+          "SE_PERSONNUMMER",
+          "SG_NRIC_FIN",
+          "TH_TNIN",
+          "TR_NATIONAL_ID",
+          "UK_NINO",
+          "US_SSN",
+          "ZA_ID_NUMBER"
+        ],
+        "items": 0,
+        "any_all": 0,
+        "correct_all": 0,
+        "valid_items": 0,
+        "any_valid": 0,
+        "correct_valid": 0,
+        "any_rate_all": null,
+        "correct_rate_all": null,
+        "any_rate_valid": null,
+        "correct_rate_valid": null
+      },
+      "credit_debit_card": {
+        "group": "Financial",
+        "has_checksum": true,
+        "presidio_entities": [
+          "CREDIT_CARD"
+        ],
+        "items": 120,
+        "any_all": 117,
+        "correct_all": 45,
+        "valid_items": 56,
+        "any_valid": 56,
+        "correct_valid": 45,
+        "any_rate_all": 0.975,
+        "correct_rate_all": 0.375,
+        "any_rate_valid": 1.0,
+        "correct_rate_valid": 0.8035714285714286
+      },
+      "account_number": {
+        "group": "Financial",
+        "has_checksum": false,
+        "presidio_entities": [
+          "US_BANK_NUMBER"
+        ],
+        "items": 0,
+        "any_all": 0,
+        "correct_all": 0,
+        "valid_items": 0,
+        "any_valid": 0,
+        "correct_valid": 0,
+        "any_rate_all": null,
+        "correct_rate_all": null,
+        "any_rate_valid": null,
+        "correct_rate_valid": null
+      },
+      "bank_routing_number": {
+        "group": "Financial",
+        "has_checksum": true,
+        "presidio_entities": [
+          "ABA_ROUTING_NUMBER"
+        ],
+        "items": 158,
+        "any_all": 148,
+        "correct_all": 6,
+        "valid_items": 14,
+        "any_valid": 14,
+        "correct_valid": 6,
+        "any_rate_all": 0.9367088607594937,
+        "correct_rate_all": 0.0379746835443038,
+        "any_rate_valid": 1.0,
+        "correct_rate_valid": 0.42857142857142855
+      },
+      "iban": {
+        "group": "Financial",
+        "has_checksum": true,
+        "presidio_entities": [
+          "IBAN_CODE"
+        ],
+        "items": 203,
+        "any_all": 187,
+        "correct_all": 157,
+        "valid_items": 159,
+        "any_valid": 154,
+        "correct_valid": 152,
+        "any_rate_all": 0.9211822660098522,
+        "correct_rate_all": 0.7733990147783252,
+        "any_rate_valid": 0.9685534591194969,
+        "correct_rate_valid": 0.9559748427672956
+      },
+      "bban": {
+        "group": "Financial",
+        "has_checksum": false,
+        "presidio_entities": [],
+        "items": 166,
+        "any_all": 19,
+        "correct_all": 0,
+        "valid_items": 166,
+        "any_valid": 19,
+        "correct_valid": 0,
+        "any_rate_all": 0.1144578313253012,
+        "correct_rate_all": 0.0,
+        "any_rate_valid": 0.1144578313253012,
+        "correct_rate_valid": 0.0
+      },
+      "swift_bic": {
+        "group": "Financial",
+        "has_checksum": false,
+        "presidio_entities": [],
+        "items": 227,
+        "any_all": 0,
+        "correct_all": 0,
+        "valid_items": 227,
+        "any_valid": 0,
+        "correct_valid": 0,
+        "any_rate_all": 0.0,
+        "correct_rate_all": 0.0,
+        "any_rate_valid": 0.0,
+        "correct_rate_valid": 0.0
+      },
+      "passport": {
+        "group": "Travel and licences",
+        "has_checksum": false,
+        "presidio_entities": [
+          "DE_PASSPORT",
+          "ES_PASSPORT",
+          "IN_PASSPORT",
+          "IT_PASSPORT",
+          "KR_PASSPORT",
+          "UK_PASSPORT",
+          "US_PASSPORT"
+        ],
+        "items": 136,
+        "any_all": 133,
+        "correct_all": 133,
+        "valid_items": 136,
+        "any_valid": 133,
+        "correct_valid": 133,
+        "any_rate_all": 0.9779411764705882,
+        "correct_rate_all": 0.9779411764705882,
+        "any_rate_valid": 0.9779411764705882,
+        "correct_rate_valid": 0.9779411764705882
+      },
+      "driver_licence": {
+        "group": "Travel and licences",
+        "has_checksum": false,
+        "presidio_entities": [
+          "DE_FUEHRERSCHEIN",
+          "IT_DRIVER_LICENSE",
+          "KR_DRIVER_LICENSE",
+          "UK_DRIVING_LICENCE",
+          "US_DRIVER_LICENSE"
+        ],
+        "items": 140,
+        "any_all": 139,
+        "correct_all": 107,
+        "valid_items": 140,
+        "any_valid": 139,
+        "correct_valid": 107,
+        "any_rate_all": 0.9928571428571429,
+        "correct_rate_all": 0.7642857142857142,
+        "any_rate_valid": 0.9928571428571429,
+        "correct_rate_valid": 0.7642857142857142
+      },
+      "certificate_licence_number": {
+        "group": "Travel and licences",
+        "has_checksum": false,
+        "presidio_entities": [
+          "DE_FUEHRERSCHEIN",
+          "IT_DRIVER_LICENSE",
+          "KR_DRIVER_LICENSE",
+          "MEDICAL_LICENSE",
+          "UK_DRIVING_LICENCE",
+          "US_DRIVER_LICENSE"
+        ],
+        "items": 0,
+        "any_all": 0,
+        "correct_all": 0,
+        "valid_items": 0,
+        "any_valid": 0,
+        "correct_valid": 0,
+        "any_rate_all": null,
+        "correct_rate_all": null,
+        "any_rate_valid": null,
+        "correct_rate_valid": null
+      },
+      "email": {
+        "group": "Contact and network",
+        "has_checksum": false,
+        "presidio_entities": [
+          "EMAIL_ADDRESS"
+        ],
+        "items": 1422,
+        "any_all": 1382,
+        "correct_all": 1367,
+        "valid_items": 1422,
+        "any_valid": 1382,
+        "correct_valid": 1367,
+        "any_rate_all": 0.9718706047819972,
+        "correct_rate_all": 0.9613220815752461,
+        "any_rate_valid": 0.9718706047819972,
+        "correct_rate_valid": 0.9613220815752461
+      },
+      "phone": {
+        "group": "Contact and network",
+        "has_checksum": false,
+        "presidio_entities": [
+          "PHONE_NUMBER"
+        ],
+        "items": 946,
+        "any_all": 905,
+        "correct_all": 811,
+        "valid_items": 946,
+        "any_valid": 905,
+        "correct_valid": 811,
+        "any_rate_all": 0.9566596194503171,
+        "correct_rate_all": 0.857293868921776,
+        "any_rate_valid": 0.9566596194503171,
+        "correct_rate_valid": 0.857293868921776
+      },
+      "fax": {
+        "group": "Contact and network",
+        "has_checksum": false,
+        "presidio_entities": [
+          "PHONE_NUMBER"
+        ],
+        "items": 0,
+        "any_all": 0,
+        "correct_all": 0,
+        "valid_items": 0,
+        "any_valid": 0,
+        "correct_valid": 0,
+        "any_rate_all": null,
+        "correct_rate_all": null,
+        "any_rate_valid": null,
+        "correct_rate_valid": null
+      },
+      "url": {
+        "group": "Contact and network",
+        "has_checksum": false,
+        "presidio_entities": [
+          "URL"
+        ],
+        "items": 0,
+        "any_all": 0,
+        "correct_all": 0,
+        "valid_items": 0,
+        "any_valid": 0,
+        "correct_valid": 0,
+        "any_rate_all": null,
+        "correct_rate_all": null,
+        "any_rate_valid": null,
+        "correct_rate_valid": null
+      },
+      "ipv4": {
+        "group": "Contact and network",
+        "has_checksum": false,
+        "presidio_entities": [
+          "IP_ADDRESS"
+        ],
+        "items": 164,
+        "any_all": 161,
+        "correct_all": 159,
+        "valid_items": 164,
+        "any_valid": 161,
+        "correct_valid": 159,
+        "any_rate_all": 0.9817073170731707,
+        "correct_rate_all": 0.9695121951219512,
+        "any_rate_valid": 0.9817073170731707,
+        "correct_rate_valid": 0.9695121951219512
+      },
+      "ipv6": {
+        "group": "Contact and network",
+        "has_checksum": false,
+        "presidio_entities": [
+          "IP_ADDRESS"
+        ],
+        "items": 134,
+        "any_all": 113,
+        "correct_all": 109,
+        "valid_items": 134,
+        "any_valid": 113,
+        "correct_valid": 109,
+        "any_rate_all": 0.8432835820895522,
+        "correct_rate_all": 0.8134328358208955,
+        "any_rate_valid": 0.8432835820895522,
+        "correct_rate_valid": 0.8134328358208955
+      },
+      "mac_address": {
+        "group": "Contact and network",
+        "has_checksum": false,
+        "presidio_entities": [
+          "MAC_ADDRESS"
+        ],
+        "items": 0,
+        "any_all": 0,
+        "correct_all": 0,
+        "valid_items": 0,
+        "any_valid": 0,
+        "correct_valid": 0,
+        "any_rate_all": null,
+        "correct_rate_all": null,
+        "any_rate_valid": null,
+        "correct_rate_valid": null
+      }
+    },
+    "groups": {
+      "Government IDs": {
+        "items": 153,
+        "any_all": 151,
+        "correct_all": 94,
+        "valid_items": 76,
+        "any_valid": 76,
+        "correct_valid": 76,
+        "any_rate_all": 0.9869281045751634,
+        "correct_rate_all": 0.6143790849673203,
+        "any_rate_valid": 1.0,
+        "correct_rate_valid": 1.0
+      },
+      "Financial": {
+        "items": 874,
+        "any_all": 471,
+        "correct_all": 208,
+        "valid_items": 622,
+        "any_valid": 243,
+        "correct_valid": 203,
+        "any_rate_all": 0.5389016018306636,
+        "correct_rate_all": 0.2379862700228833,
+        "any_rate_valid": 0.39067524115755625,
+        "correct_rate_valid": 0.32636655948553056
+      },
+      "Travel and licences": {
+        "items": 276,
+        "any_all": 272,
+        "correct_all": 240,
+        "valid_items": 276,
+        "any_valid": 272,
+        "correct_valid": 240,
+        "any_rate_all": 0.9855072463768116,
+        "correct_rate_all": 0.8695652173913043,
+        "any_rate_valid": 0.9855072463768116,
+        "correct_rate_valid": 0.8695652173913043
+      },
+      "Contact and network": {
+        "items": 2666,
+        "any_all": 2561,
+        "correct_all": 2446,
+        "valid_items": 2666,
+        "any_valid": 2561,
+        "correct_valid": 2446,
+        "any_rate_all": 0.9606151537884471,
+        "correct_rate_all": 0.9174793698424606,
+        "any_rate_valid": 0.9606151537884471,
+        "correct_rate_valid": 0.9174793698424606
+      }
+    }
+  },
+  "by_language": {
+    "Dutch": {
+      "kinds": {
+        "ssn": {
+          "group": "Government IDs",
+          "has_checksum": true,
+          "presidio_entities": [
+            "CA_SIN",
+            "DE_SOCIAL_SECURITY",
+            "FI_PERSONAL_IDENTITY_CODE",
+            "KR_RRN",
+            "PL_PESEL",
+            "SE_PERSONNUMMER",
+            "UK_NINO",
+            "US_SSN"
+          ],
+          "items": 11,
+          "any_all": 11,
+          "correct_all": 8,
+          "valid_items": 6,
+          "any_valid": 6,
+          "correct_valid": 6,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.7272727272727273,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "tax_id": {
+          "group": "Government IDs",
+          "has_checksum": false,
+          "presidio_entities": [
+            "AU_ABN",
+            "AU_TFN",
+            "DE_TAX_ID",
+            "DE_TAX_NUMBER",
+            "DE_VAT_ID",
+            "IN_GSTIN",
+            "IN_PAN",
+            "IT_VAT_CODE",
+            "PH_TIN",
+            "US_ITIN"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "national_id": {
+          "group": "Government IDs",
+          "has_checksum": false,
+          "presidio_entities": [
+            "CA_SIN",
+            "DE_ID_CARD",
+            "DE_SOCIAL_SECURITY",
+            "ES_NIE",
+            "ES_NIF",
+            "FI_PERSONAL_IDENTITY_CODE",
+            "IN_AADHAAR",
+            "IT_FISCAL_CODE",
+            "IT_IDENTITY_CARD",
+            "KR_FRN",
+            "KR_RRN",
+            "NG_NIN",
+            "PH_UMID",
+            "PL_PESEL",
+            "SE_PERSONNUMMER",
+            "SG_NRIC_FIN",
+            "TH_TNIN",
+            "TR_NATIONAL_ID",
+            "UK_NINO",
+            "US_SSN",
+            "ZA_ID_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "credit_debit_card": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "CREDIT_CARD"
+          ],
+          "items": 6,
+          "any_all": 5,
+          "correct_all": 1,
+          "valid_items": 1,
+          "any_valid": 1,
+          "correct_valid": 1,
+          "any_rate_all": 0.8333333333333334,
+          "correct_rate_all": 0.16666666666666666,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "account_number": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [
+            "US_BANK_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "bank_routing_number": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "ABA_ROUTING_NUMBER"
+          ],
+          "items": 4,
+          "any_all": 4,
+          "correct_all": 0,
+          "valid_items": 1,
+          "any_valid": 1,
+          "correct_valid": 0,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.0
+        },
+        "iban": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "IBAN_CODE"
+          ],
+          "items": 20,
+          "any_all": 18,
+          "correct_all": 16,
+          "valid_items": 15,
+          "any_valid": 15,
+          "correct_valid": 14,
+          "any_rate_all": 0.9,
+          "correct_rate_all": 0.8,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.9333333333333333
+        },
+        "bban": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [],
+          "items": 16,
+          "any_all": 2,
+          "correct_all": 0,
+          "valid_items": 16,
+          "any_valid": 2,
+          "correct_valid": 0,
+          "any_rate_all": 0.125,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": 0.125,
+          "correct_rate_valid": 0.0
+        },
+        "swift_bic": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [],
+          "items": 14,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 14,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": 0.0,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": 0.0,
+          "correct_rate_valid": 0.0
+        },
+        "passport": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_PASSPORT",
+            "ES_PASSPORT",
+            "IN_PASSPORT",
+            "IT_PASSPORT",
+            "KR_PASSPORT",
+            "UK_PASSPORT",
+            "US_PASSPORT"
+          ],
+          "items": 5,
+          "any_all": 5,
+          "correct_all": 5,
+          "valid_items": 5,
+          "any_valid": 5,
+          "correct_valid": 5,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 1.0,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "driver_licence": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_FUEHRERSCHEIN",
+            "IT_DRIVER_LICENSE",
+            "KR_DRIVER_LICENSE",
+            "UK_DRIVING_LICENCE",
+            "US_DRIVER_LICENSE"
+          ],
+          "items": 7,
+          "any_all": 7,
+          "correct_all": 5,
+          "valid_items": 7,
+          "any_valid": 7,
+          "correct_valid": 5,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.7142857142857143,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.7142857142857143
+        },
+        "certificate_licence_number": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_FUEHRERSCHEIN",
+            "IT_DRIVER_LICENSE",
+            "KR_DRIVER_LICENSE",
+            "MEDICAL_LICENSE",
+            "UK_DRIVING_LICENCE",
+            "US_DRIVER_LICENSE"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "email": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "EMAIL_ADDRESS"
+          ],
+          "items": 87,
+          "any_all": 84,
+          "correct_all": 84,
+          "valid_items": 87,
+          "any_valid": 84,
+          "correct_valid": 84,
+          "any_rate_all": 0.9655172413793104,
+          "correct_rate_all": 0.9655172413793104,
+          "any_rate_valid": 0.9655172413793104,
+          "correct_rate_valid": 0.9655172413793104
+        },
+        "phone": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "PHONE_NUMBER"
+          ],
+          "items": 69,
+          "any_all": 65,
+          "correct_all": 64,
+          "valid_items": 69,
+          "any_valid": 65,
+          "correct_valid": 64,
+          "any_rate_all": 0.9420289855072463,
+          "correct_rate_all": 0.927536231884058,
+          "any_rate_valid": 0.9420289855072463,
+          "correct_rate_valid": 0.927536231884058
+        },
+        "fax": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "PHONE_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "url": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "URL"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "ipv4": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "IP_ADDRESS"
+          ],
+          "items": 21,
+          "any_all": 20,
+          "correct_all": 20,
+          "valid_items": 21,
+          "any_valid": 20,
+          "correct_valid": 20,
+          "any_rate_all": 0.9523809523809523,
+          "correct_rate_all": 0.9523809523809523,
+          "any_rate_valid": 0.9523809523809523,
+          "correct_rate_valid": 0.9523809523809523
+        },
+        "ipv6": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "IP_ADDRESS"
+          ],
+          "items": 13,
+          "any_all": 13,
+          "correct_all": 12,
+          "valid_items": 13,
+          "any_valid": 13,
+          "correct_valid": 12,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.9230769230769231,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.9230769230769231
+        },
+        "mac_address": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "MAC_ADDRESS"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        }
+      },
+      "groups": {
+        "Government IDs": {
+          "items": 11,
+          "any_all": 11,
+          "correct_all": 8,
+          "valid_items": 6,
+          "any_valid": 6,
+          "correct_valid": 6,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.7272727272727273,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "Financial": {
+          "items": 60,
+          "any_all": 29,
+          "correct_all": 17,
+          "valid_items": 47,
+          "any_valid": 19,
+          "correct_valid": 15,
+          "any_rate_all": 0.48333333333333334,
+          "correct_rate_all": 0.2833333333333333,
+          "any_rate_valid": 0.40425531914893614,
+          "correct_rate_valid": 0.3191489361702128
+        },
+        "Travel and licences": {
+          "items": 12,
+          "any_all": 12,
+          "correct_all": 10,
+          "valid_items": 12,
+          "any_valid": 12,
+          "correct_valid": 10,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.8333333333333334,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.8333333333333334
+        },
+        "Contact and network": {
+          "items": 190,
+          "any_all": 182,
+          "correct_all": 180,
+          "valid_items": 190,
+          "any_valid": 182,
+          "correct_valid": 180,
+          "any_rate_all": 0.9578947368421052,
+          "correct_rate_all": 0.9473684210526315,
+          "any_rate_valid": 0.9578947368421052,
+          "correct_rate_valid": 0.9473684210526315
+        }
+      }
+    },
+    "English": {
+      "kinds": {
+        "ssn": {
+          "group": "Government IDs",
+          "has_checksum": true,
+          "presidio_entities": [
+            "CA_SIN",
+            "DE_SOCIAL_SECURITY",
+            "FI_PERSONAL_IDENTITY_CODE",
+            "KR_RRN",
+            "PL_PESEL",
+            "SE_PERSONNUMMER",
+            "UK_NINO",
+            "US_SSN"
+          ],
+          "items": 76,
+          "any_all": 74,
+          "correct_all": 54,
+          "valid_items": 51,
+          "any_valid": 51,
+          "correct_valid": 51,
+          "any_rate_all": 0.9736842105263158,
+          "correct_rate_all": 0.7105263157894737,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "tax_id": {
+          "group": "Government IDs",
+          "has_checksum": false,
+          "presidio_entities": [
+            "AU_ABN",
+            "AU_TFN",
+            "DE_TAX_ID",
+            "DE_TAX_NUMBER",
+            "DE_VAT_ID",
+            "IN_GSTIN",
+            "IN_PAN",
+            "IT_VAT_CODE",
+            "PH_TIN",
+            "US_ITIN"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "national_id": {
+          "group": "Government IDs",
+          "has_checksum": false,
+          "presidio_entities": [
+            "CA_SIN",
+            "DE_ID_CARD",
+            "DE_SOCIAL_SECURITY",
+            "ES_NIE",
+            "ES_NIF",
+            "FI_PERSONAL_IDENTITY_CODE",
+            "IN_AADHAAR",
+            "IT_FISCAL_CODE",
+            "IT_IDENTITY_CARD",
+            "KR_FRN",
+            "KR_RRN",
+            "NG_NIN",
+            "PH_UMID",
+            "PL_PESEL",
+            "SE_PERSONNUMMER",
+            "SG_NRIC_FIN",
+            "TH_TNIN",
+            "TR_NATIONAL_ID",
+            "UK_NINO",
+            "US_SSN",
+            "ZA_ID_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "credit_debit_card": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "CREDIT_CARD"
+          ],
+          "items": 76,
+          "any_all": 74,
+          "correct_all": 28,
+          "valid_items": 38,
+          "any_valid": 38,
+          "correct_valid": 28,
+          "any_rate_all": 0.9736842105263158,
+          "correct_rate_all": 0.3684210526315789,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.7368421052631579
+        },
+        "account_number": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [
+            "US_BANK_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "bank_routing_number": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "ABA_ROUTING_NUMBER"
+          ],
+          "items": 90,
+          "any_all": 90,
+          "correct_all": 5,
+          "valid_items": 10,
+          "any_valid": 10,
+          "correct_valid": 5,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.05555555555555555,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.5
+        },
+        "iban": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "IBAN_CODE"
+          ],
+          "items": 98,
+          "any_all": 97,
+          "correct_all": 95,
+          "valid_items": 92,
+          "any_valid": 92,
+          "correct_valid": 92,
+          "any_rate_all": 0.9897959183673469,
+          "correct_rate_all": 0.9693877551020408,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "bban": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [],
+          "items": 96,
+          "any_all": 8,
+          "correct_all": 0,
+          "valid_items": 96,
+          "any_valid": 8,
+          "correct_valid": 0,
+          "any_rate_all": 0.08333333333333333,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": 0.08333333333333333,
+          "correct_rate_valid": 0.0
+        },
+        "swift_bic": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [],
+          "items": 142,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 142,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": 0.0,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": 0.0,
+          "correct_rate_valid": 0.0
+        },
+        "passport": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_PASSPORT",
+            "ES_PASSPORT",
+            "IN_PASSPORT",
+            "IT_PASSPORT",
+            "KR_PASSPORT",
+            "UK_PASSPORT",
+            "US_PASSPORT"
+          ],
+          "items": 77,
+          "any_all": 77,
+          "correct_all": 77,
+          "valid_items": 77,
+          "any_valid": 77,
+          "correct_valid": 77,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 1.0,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "driver_licence": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_FUEHRERSCHEIN",
+            "IT_DRIVER_LICENSE",
+            "KR_DRIVER_LICENSE",
+            "UK_DRIVING_LICENCE",
+            "US_DRIVER_LICENSE"
+          ],
+          "items": 72,
+          "any_all": 71,
+          "correct_all": 56,
+          "valid_items": 72,
+          "any_valid": 71,
+          "correct_valid": 56,
+          "any_rate_all": 0.9861111111111112,
+          "correct_rate_all": 0.7777777777777778,
+          "any_rate_valid": 0.9861111111111112,
+          "correct_rate_valid": 0.7777777777777778
+        },
+        "certificate_licence_number": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_FUEHRERSCHEIN",
+            "IT_DRIVER_LICENSE",
+            "KR_DRIVER_LICENSE",
+            "MEDICAL_LICENSE",
+            "UK_DRIVING_LICENCE",
+            "US_DRIVER_LICENSE"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "email": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "EMAIL_ADDRESS"
+          ],
+          "items": 842,
+          "any_all": 823,
+          "correct_all": 813,
+          "valid_items": 842,
+          "any_valid": 823,
+          "correct_valid": 813,
+          "any_rate_all": 0.9774346793349169,
+          "correct_rate_all": 0.9655581947743468,
+          "any_rate_valid": 0.9774346793349169,
+          "correct_rate_valid": 0.9655581947743468
+        },
+        "phone": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "PHONE_NUMBER"
+          ],
+          "items": 532,
+          "any_all": 513,
+          "correct_all": 430,
+          "valid_items": 532,
+          "any_valid": 513,
+          "correct_valid": 430,
+          "any_rate_all": 0.9642857142857143,
+          "correct_rate_all": 0.8082706766917294,
+          "any_rate_valid": 0.9642857142857143,
+          "correct_rate_valid": 0.8082706766917294
+        },
+        "fax": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "PHONE_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "url": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "URL"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "ipv4": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "IP_ADDRESS"
+          ],
+          "items": 78,
+          "any_all": 76,
+          "correct_all": 75,
+          "valid_items": 78,
+          "any_valid": 76,
+          "correct_valid": 75,
+          "any_rate_all": 0.9743589743589743,
+          "correct_rate_all": 0.9615384615384616,
+          "any_rate_valid": 0.9743589743589743,
+          "correct_rate_valid": 0.9615384615384616
+        },
+        "ipv6": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "IP_ADDRESS"
+          ],
+          "items": 79,
+          "any_all": 58,
+          "correct_all": 58,
+          "valid_items": 79,
+          "any_valid": 58,
+          "correct_valid": 58,
+          "any_rate_all": 0.7341772151898734,
+          "correct_rate_all": 0.7341772151898734,
+          "any_rate_valid": 0.7341772151898734,
+          "correct_rate_valid": 0.7341772151898734
+        },
+        "mac_address": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "MAC_ADDRESS"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        }
+      },
+      "groups": {
+        "Government IDs": {
+          "items": 76,
+          "any_all": 74,
+          "correct_all": 54,
+          "valid_items": 51,
+          "any_valid": 51,
+          "correct_valid": 51,
+          "any_rate_all": 0.9736842105263158,
+          "correct_rate_all": 0.7105263157894737,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "Financial": {
+          "items": 502,
+          "any_all": 269,
+          "correct_all": 128,
+          "valid_items": 378,
+          "any_valid": 148,
+          "correct_valid": 125,
+          "any_rate_all": 0.5358565737051793,
+          "correct_rate_all": 0.2549800796812749,
+          "any_rate_valid": 0.3915343915343915,
+          "correct_rate_valid": 0.3306878306878307
+        },
+        "Travel and licences": {
+          "items": 149,
+          "any_all": 148,
+          "correct_all": 133,
+          "valid_items": 149,
+          "any_valid": 148,
+          "correct_valid": 133,
+          "any_rate_all": 0.9932885906040269,
+          "correct_rate_all": 0.8926174496644296,
+          "any_rate_valid": 0.9932885906040269,
+          "correct_rate_valid": 0.8926174496644296
+        },
+        "Contact and network": {
+          "items": 1531,
+          "any_all": 1470,
+          "correct_all": 1376,
+          "valid_items": 1531,
+          "any_valid": 1470,
+          "correct_valid": 1376,
+          "any_rate_all": 0.9601567602873938,
+          "correct_rate_all": 0.8987589810581319,
+          "any_rate_valid": 0.9601567602873938,
+          "correct_rate_valid": 0.8987589810581319
+        }
+      }
+    },
+    "France": {
+      "kinds": {
+        "ssn": {
+          "group": "Government IDs",
+          "has_checksum": true,
+          "presidio_entities": [
+            "CA_SIN",
+            "DE_SOCIAL_SECURITY",
+            "FI_PERSONAL_IDENTITY_CODE",
+            "KR_RRN",
+            "PL_PESEL",
+            "SE_PERSONNUMMER",
+            "UK_NINO",
+            "US_SSN"
+          ],
+          "items": 12,
+          "any_all": 12,
+          "correct_all": 7,
+          "valid_items": 4,
+          "any_valid": 4,
+          "correct_valid": 4,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.5833333333333334,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "tax_id": {
+          "group": "Government IDs",
+          "has_checksum": false,
+          "presidio_entities": [
+            "AU_ABN",
+            "AU_TFN",
+            "DE_TAX_ID",
+            "DE_TAX_NUMBER",
+            "DE_VAT_ID",
+            "IN_GSTIN",
+            "IN_PAN",
+            "IT_VAT_CODE",
+            "PH_TIN",
+            "US_ITIN"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "national_id": {
+          "group": "Government IDs",
+          "has_checksum": false,
+          "presidio_entities": [
+            "CA_SIN",
+            "DE_ID_CARD",
+            "DE_SOCIAL_SECURITY",
+            "ES_NIE",
+            "ES_NIF",
+            "FI_PERSONAL_IDENTITY_CODE",
+            "IN_AADHAAR",
+            "IT_FISCAL_CODE",
+            "IT_IDENTITY_CARD",
+            "KR_FRN",
+            "KR_RRN",
+            "NG_NIN",
+            "PH_UMID",
+            "PL_PESEL",
+            "SE_PERSONNUMMER",
+            "SG_NRIC_FIN",
+            "TH_TNIN",
+            "TR_NATIONAL_ID",
+            "UK_NINO",
+            "US_SSN",
+            "ZA_ID_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "credit_debit_card": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "CREDIT_CARD"
+          ],
+          "items": 4,
+          "any_all": 4,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "account_number": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [
+            "US_BANK_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "bank_routing_number": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "ABA_ROUTING_NUMBER"
+          ],
+          "items": 11,
+          "any_all": 11,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "iban": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "IBAN_CODE"
+          ],
+          "items": 11,
+          "any_all": 11,
+          "correct_all": 7,
+          "valid_items": 8,
+          "any_valid": 8,
+          "correct_valid": 7,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.6363636363636364,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.875
+        },
+        "bban": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [],
+          "items": 6,
+          "any_all": 1,
+          "correct_all": 0,
+          "valid_items": 6,
+          "any_valid": 1,
+          "correct_valid": 0,
+          "any_rate_all": 0.16666666666666666,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": 0.16666666666666666,
+          "correct_rate_valid": 0.0
+        },
+        "swift_bic": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [],
+          "items": 10,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 10,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": 0.0,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": 0.0,
+          "correct_rate_valid": 0.0
+        },
+        "passport": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_PASSPORT",
+            "ES_PASSPORT",
+            "IN_PASSPORT",
+            "IT_PASSPORT",
+            "KR_PASSPORT",
+            "UK_PASSPORT",
+            "US_PASSPORT"
+          ],
+          "items": 10,
+          "any_all": 10,
+          "correct_all": 10,
+          "valid_items": 10,
+          "any_valid": 10,
+          "correct_valid": 10,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 1.0,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "driver_licence": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_FUEHRERSCHEIN",
+            "IT_DRIVER_LICENSE",
+            "KR_DRIVER_LICENSE",
+            "UK_DRIVING_LICENCE",
+            "US_DRIVER_LICENSE"
+          ],
+          "items": 6,
+          "any_all": 6,
+          "correct_all": 2,
+          "valid_items": 6,
+          "any_valid": 6,
+          "correct_valid": 2,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.3333333333333333,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.3333333333333333
+        },
+        "certificate_licence_number": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_FUEHRERSCHEIN",
+            "IT_DRIVER_LICENSE",
+            "KR_DRIVER_LICENSE",
+            "MEDICAL_LICENSE",
+            "UK_DRIVING_LICENCE",
+            "US_DRIVER_LICENSE"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "email": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "EMAIL_ADDRESS"
+          ],
+          "items": 115,
+          "any_all": 111,
+          "correct_all": 111,
+          "valid_items": 115,
+          "any_valid": 111,
+          "correct_valid": 111,
+          "any_rate_all": 0.9652173913043478,
+          "correct_rate_all": 0.9652173913043478,
+          "any_rate_valid": 0.9652173913043478,
+          "correct_rate_valid": 0.9652173913043478
+        },
+        "phone": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "PHONE_NUMBER"
+          ],
+          "items": 87,
+          "any_all": 84,
+          "correct_all": 84,
+          "valid_items": 87,
+          "any_valid": 84,
+          "correct_valid": 84,
+          "any_rate_all": 0.9655172413793104,
+          "correct_rate_all": 0.9655172413793104,
+          "any_rate_valid": 0.9655172413793104,
+          "correct_rate_valid": 0.9655172413793104
+        },
+        "fax": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "PHONE_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "url": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "URL"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "ipv4": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "IP_ADDRESS"
+          ],
+          "items": 11,
+          "any_all": 11,
+          "correct_all": 11,
+          "valid_items": 11,
+          "any_valid": 11,
+          "correct_valid": 11,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 1.0,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "ipv6": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "IP_ADDRESS"
+          ],
+          "items": 12,
+          "any_all": 12,
+          "correct_all": 12,
+          "valid_items": 12,
+          "any_valid": 12,
+          "correct_valid": 12,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 1.0,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "mac_address": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "MAC_ADDRESS"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        }
+      },
+      "groups": {
+        "Government IDs": {
+          "items": 12,
+          "any_all": 12,
+          "correct_all": 7,
+          "valid_items": 4,
+          "any_valid": 4,
+          "correct_valid": 4,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.5833333333333334,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "Financial": {
+          "items": 42,
+          "any_all": 27,
+          "correct_all": 7,
+          "valid_items": 24,
+          "any_valid": 9,
+          "correct_valid": 7,
+          "any_rate_all": 0.6428571428571429,
+          "correct_rate_all": 0.16666666666666666,
+          "any_rate_valid": 0.375,
+          "correct_rate_valid": 0.2916666666666667
+        },
+        "Travel and licences": {
+          "items": 16,
+          "any_all": 16,
+          "correct_all": 12,
+          "valid_items": 16,
+          "any_valid": 16,
+          "correct_valid": 12,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.75,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.75
+        },
+        "Contact and network": {
+          "items": 225,
+          "any_all": 218,
+          "correct_all": 218,
+          "valid_items": 225,
+          "any_valid": 218,
+          "correct_valid": 218,
+          "any_rate_all": 0.9688888888888889,
+          "correct_rate_all": 0.9688888888888889,
+          "any_rate_valid": 0.9688888888888889,
+          "correct_rate_valid": 0.9688888888888889
+        }
+      }
+    },
+    "German": {
+      "kinds": {
+        "ssn": {
+          "group": "Government IDs",
+          "has_checksum": true,
+          "presidio_entities": [
+            "CA_SIN",
+            "DE_SOCIAL_SECURITY",
+            "FI_PERSONAL_IDENTITY_CODE",
+            "KR_RRN",
+            "PL_PESEL",
+            "SE_PERSONNUMMER",
+            "UK_NINO",
+            "US_SSN"
+          ],
+          "items": 16,
+          "any_all": 16,
+          "correct_all": 9,
+          "valid_items": 8,
+          "any_valid": 8,
+          "correct_valid": 8,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.5625,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "tax_id": {
+          "group": "Government IDs",
+          "has_checksum": false,
+          "presidio_entities": [
+            "AU_ABN",
+            "AU_TFN",
+            "DE_TAX_ID",
+            "DE_TAX_NUMBER",
+            "DE_VAT_ID",
+            "IN_GSTIN",
+            "IN_PAN",
+            "IT_VAT_CODE",
+            "PH_TIN",
+            "US_ITIN"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "national_id": {
+          "group": "Government IDs",
+          "has_checksum": false,
+          "presidio_entities": [
+            "CA_SIN",
+            "DE_ID_CARD",
+            "DE_SOCIAL_SECURITY",
+            "ES_NIE",
+            "ES_NIF",
+            "FI_PERSONAL_IDENTITY_CODE",
+            "IN_AADHAAR",
+            "IT_FISCAL_CODE",
+            "IT_IDENTITY_CARD",
+            "KR_FRN",
+            "KR_RRN",
+            "NG_NIN",
+            "PH_UMID",
+            "PL_PESEL",
+            "SE_PERSONNUMMER",
+            "SG_NRIC_FIN",
+            "TH_TNIN",
+            "TR_NATIONAL_ID",
+            "UK_NINO",
+            "US_SSN",
+            "ZA_ID_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "credit_debit_card": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "CREDIT_CARD"
+          ],
+          "items": 4,
+          "any_all": 4,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "account_number": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [
+            "US_BANK_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "bank_routing_number": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "ABA_ROUTING_NUMBER"
+          ],
+          "items": 10,
+          "any_all": 10,
+          "correct_all": 0,
+          "valid_items": 1,
+          "any_valid": 1,
+          "correct_valid": 0,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.0
+        },
+        "iban": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "IBAN_CODE"
+          ],
+          "items": 26,
+          "any_all": 25,
+          "correct_all": 9,
+          "valid_items": 9,
+          "any_valid": 9,
+          "correct_valid": 9,
+          "any_rate_all": 0.9615384615384616,
+          "correct_rate_all": 0.34615384615384615,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "bban": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [],
+          "items": 13,
+          "any_all": 1,
+          "correct_all": 0,
+          "valid_items": 13,
+          "any_valid": 1,
+          "correct_valid": 0,
+          "any_rate_all": 0.07692307692307693,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": 0.07692307692307693,
+          "correct_rate_valid": 0.0
+        },
+        "swift_bic": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [],
+          "items": 17,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 17,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": 0.0,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": 0.0,
+          "correct_rate_valid": 0.0
+        },
+        "passport": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_PASSPORT",
+            "ES_PASSPORT",
+            "IN_PASSPORT",
+            "IT_PASSPORT",
+            "KR_PASSPORT",
+            "UK_PASSPORT",
+            "US_PASSPORT"
+          ],
+          "items": 13,
+          "any_all": 13,
+          "correct_all": 13,
+          "valid_items": 13,
+          "any_valid": 13,
+          "correct_valid": 13,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 1.0,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "driver_licence": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_FUEHRERSCHEIN",
+            "IT_DRIVER_LICENSE",
+            "KR_DRIVER_LICENSE",
+            "UK_DRIVING_LICENCE",
+            "US_DRIVER_LICENSE"
+          ],
+          "items": 16,
+          "any_all": 16,
+          "correct_all": 14,
+          "valid_items": 16,
+          "any_valid": 16,
+          "correct_valid": 14,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.875,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.875
+        },
+        "certificate_licence_number": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_FUEHRERSCHEIN",
+            "IT_DRIVER_LICENSE",
+            "KR_DRIVER_LICENSE",
+            "MEDICAL_LICENSE",
+            "UK_DRIVING_LICENCE",
+            "US_DRIVER_LICENSE"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "email": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "EMAIL_ADDRESS"
+          ],
+          "items": 86,
+          "any_all": 84,
+          "correct_all": 82,
+          "valid_items": 86,
+          "any_valid": 84,
+          "correct_valid": 82,
+          "any_rate_all": 0.9767441860465116,
+          "correct_rate_all": 0.9534883720930233,
+          "any_rate_valid": 0.9767441860465116,
+          "correct_rate_valid": 0.9534883720930233
+        },
+        "phone": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "PHONE_NUMBER"
+          ],
+          "items": 49,
+          "any_all": 47,
+          "correct_all": 40,
+          "valid_items": 49,
+          "any_valid": 47,
+          "correct_valid": 40,
+          "any_rate_all": 0.9591836734693877,
+          "correct_rate_all": 0.8163265306122449,
+          "any_rate_valid": 0.9591836734693877,
+          "correct_rate_valid": 0.8163265306122449
+        },
+        "fax": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "PHONE_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "url": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "URL"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "ipv4": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "IP_ADDRESS"
+          ],
+          "items": 13,
+          "any_all": 13,
+          "correct_all": 13,
+          "valid_items": 13,
+          "any_valid": 13,
+          "correct_valid": 13,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 1.0,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "ipv6": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "IP_ADDRESS"
+          ],
+          "items": 7,
+          "any_all": 7,
+          "correct_all": 7,
+          "valid_items": 7,
+          "any_valid": 7,
+          "correct_valid": 7,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 1.0,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "mac_address": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "MAC_ADDRESS"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        }
+      },
+      "groups": {
+        "Government IDs": {
+          "items": 16,
+          "any_all": 16,
+          "correct_all": 9,
+          "valid_items": 8,
+          "any_valid": 8,
+          "correct_valid": 8,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.5625,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "Financial": {
+          "items": 70,
+          "any_all": 40,
+          "correct_all": 9,
+          "valid_items": 40,
+          "any_valid": 11,
+          "correct_valid": 9,
+          "any_rate_all": 0.5714285714285714,
+          "correct_rate_all": 0.12857142857142856,
+          "any_rate_valid": 0.275,
+          "correct_rate_valid": 0.225
+        },
+        "Travel and licences": {
+          "items": 29,
+          "any_all": 29,
+          "correct_all": 27,
+          "valid_items": 29,
+          "any_valid": 29,
+          "correct_valid": 27,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.9310344827586207,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.9310344827586207
+        },
+        "Contact and network": {
+          "items": 155,
+          "any_all": 151,
+          "correct_all": 142,
+          "valid_items": 155,
+          "any_valid": 151,
+          "correct_valid": 142,
+          "any_rate_all": 0.9741935483870968,
+          "correct_rate_all": 0.9161290322580645,
+          "any_rate_valid": 0.9741935483870968,
+          "correct_rate_valid": 0.9161290322580645
+        }
+      }
+    },
+    "Italian": {
+      "kinds": {
+        "ssn": {
+          "group": "Government IDs",
+          "has_checksum": true,
+          "presidio_entities": [
+            "CA_SIN",
+            "DE_SOCIAL_SECURITY",
+            "FI_PERSONAL_IDENTITY_CODE",
+            "KR_RRN",
+            "PL_PESEL",
+            "SE_PERSONNUMMER",
+            "UK_NINO",
+            "US_SSN"
+          ],
+          "items": 20,
+          "any_all": 20,
+          "correct_all": 5,
+          "valid_items": 1,
+          "any_valid": 1,
+          "correct_valid": 1,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.25,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "tax_id": {
+          "group": "Government IDs",
+          "has_checksum": false,
+          "presidio_entities": [
+            "AU_ABN",
+            "AU_TFN",
+            "DE_TAX_ID",
+            "DE_TAX_NUMBER",
+            "DE_VAT_ID",
+            "IN_GSTIN",
+            "IN_PAN",
+            "IT_VAT_CODE",
+            "PH_TIN",
+            "US_ITIN"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "national_id": {
+          "group": "Government IDs",
+          "has_checksum": false,
+          "presidio_entities": [
+            "CA_SIN",
+            "DE_ID_CARD",
+            "DE_SOCIAL_SECURITY",
+            "ES_NIE",
+            "ES_NIF",
+            "FI_PERSONAL_IDENTITY_CODE",
+            "IN_AADHAAR",
+            "IT_FISCAL_CODE",
+            "IT_IDENTITY_CARD",
+            "KR_FRN",
+            "KR_RRN",
+            "NG_NIN",
+            "PH_UMID",
+            "PL_PESEL",
+            "SE_PERSONNUMMER",
+            "SG_NRIC_FIN",
+            "TH_TNIN",
+            "TR_NATIONAL_ID",
+            "UK_NINO",
+            "US_SSN",
+            "ZA_ID_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "credit_debit_card": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "CREDIT_CARD"
+          ],
+          "items": 14,
+          "any_all": 14,
+          "correct_all": 8,
+          "valid_items": 8,
+          "any_valid": 8,
+          "correct_valid": 8,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.5714285714285714,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "account_number": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [
+            "US_BANK_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "bank_routing_number": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "ABA_ROUTING_NUMBER"
+          ],
+          "items": 22,
+          "any_all": 12,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": 0.5454545454545454,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "iban": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "IBAN_CODE"
+          ],
+          "items": 25,
+          "any_all": 18,
+          "correct_all": 14,
+          "valid_items": 14,
+          "any_valid": 14,
+          "correct_valid": 14,
+          "any_rate_all": 0.72,
+          "correct_rate_all": 0.56,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "bban": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [],
+          "items": 6,
+          "any_all": 1,
+          "correct_all": 0,
+          "valid_items": 6,
+          "any_valid": 1,
+          "correct_valid": 0,
+          "any_rate_all": 0.16666666666666666,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": 0.16666666666666666,
+          "correct_rate_valid": 0.0
+        },
+        "swift_bic": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [],
+          "items": 10,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 10,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": 0.0,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": 0.0,
+          "correct_rate_valid": 0.0
+        },
+        "passport": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_PASSPORT",
+            "ES_PASSPORT",
+            "IN_PASSPORT",
+            "IT_PASSPORT",
+            "KR_PASSPORT",
+            "UK_PASSPORT",
+            "US_PASSPORT"
+          ],
+          "items": 10,
+          "any_all": 10,
+          "correct_all": 10,
+          "valid_items": 10,
+          "any_valid": 10,
+          "correct_valid": 10,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 1.0,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "driver_licence": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_FUEHRERSCHEIN",
+            "IT_DRIVER_LICENSE",
+            "KR_DRIVER_LICENSE",
+            "UK_DRIVING_LICENCE",
+            "US_DRIVER_LICENSE"
+          ],
+          "items": 11,
+          "any_all": 11,
+          "correct_all": 11,
+          "valid_items": 11,
+          "any_valid": 11,
+          "correct_valid": 11,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 1.0,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "certificate_licence_number": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_FUEHRERSCHEIN",
+            "IT_DRIVER_LICENSE",
+            "KR_DRIVER_LICENSE",
+            "MEDICAL_LICENSE",
+            "UK_DRIVING_LICENCE",
+            "US_DRIVER_LICENSE"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "email": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "EMAIL_ADDRESS"
+          ],
+          "items": 79,
+          "any_all": 76,
+          "correct_all": 76,
+          "valid_items": 79,
+          "any_valid": 76,
+          "correct_valid": 76,
+          "any_rate_all": 0.9620253164556962,
+          "correct_rate_all": 0.9620253164556962,
+          "any_rate_valid": 0.9620253164556962,
+          "correct_rate_valid": 0.9620253164556962
+        },
+        "phone": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "PHONE_NUMBER"
+          ],
+          "items": 63,
+          "any_all": 60,
+          "correct_all": 60,
+          "valid_items": 63,
+          "any_valid": 60,
+          "correct_valid": 60,
+          "any_rate_all": 0.9523809523809523,
+          "correct_rate_all": 0.9523809523809523,
+          "any_rate_valid": 0.9523809523809523,
+          "correct_rate_valid": 0.9523809523809523
+        },
+        "fax": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "PHONE_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "url": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "URL"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "ipv4": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "IP_ADDRESS"
+          ],
+          "items": 17,
+          "any_all": 17,
+          "correct_all": 16,
+          "valid_items": 17,
+          "any_valid": 17,
+          "correct_valid": 16,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.9411764705882353,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.9411764705882353
+        },
+        "ipv6": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "IP_ADDRESS"
+          ],
+          "items": 3,
+          "any_all": 3,
+          "correct_all": 3,
+          "valid_items": 3,
+          "any_valid": 3,
+          "correct_valid": 3,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 1.0,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "mac_address": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "MAC_ADDRESS"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        }
+      },
+      "groups": {
+        "Government IDs": {
+          "items": 20,
+          "any_all": 20,
+          "correct_all": 5,
+          "valid_items": 1,
+          "any_valid": 1,
+          "correct_valid": 1,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.25,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "Financial": {
+          "items": 77,
+          "any_all": 45,
+          "correct_all": 22,
+          "valid_items": 38,
+          "any_valid": 23,
+          "correct_valid": 22,
+          "any_rate_all": 0.5844155844155844,
+          "correct_rate_all": 0.2857142857142857,
+          "any_rate_valid": 0.6052631578947368,
+          "correct_rate_valid": 0.5789473684210527
+        },
+        "Travel and licences": {
+          "items": 21,
+          "any_all": 21,
+          "correct_all": 21,
+          "valid_items": 21,
+          "any_valid": 21,
+          "correct_valid": 21,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 1.0,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "Contact and network": {
+          "items": 162,
+          "any_all": 156,
+          "correct_all": 155,
+          "valid_items": 162,
+          "any_valid": 156,
+          "correct_valid": 155,
+          "any_rate_all": 0.9629629629629629,
+          "correct_rate_all": 0.9567901234567902,
+          "any_rate_valid": 0.9629629629629629,
+          "correct_rate_valid": 0.9567901234567902
+        }
+      }
+    },
+    "Spanish": {
+      "kinds": {
+        "ssn": {
+          "group": "Government IDs",
+          "has_checksum": true,
+          "presidio_entities": [
+            "CA_SIN",
+            "DE_SOCIAL_SECURITY",
+            "FI_PERSONAL_IDENTITY_CODE",
+            "KR_RRN",
+            "PL_PESEL",
+            "SE_PERSONNUMMER",
+            "UK_NINO",
+            "US_SSN"
+          ],
+          "items": 9,
+          "any_all": 9,
+          "correct_all": 5,
+          "valid_items": 3,
+          "any_valid": 3,
+          "correct_valid": 3,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.5555555555555556,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "tax_id": {
+          "group": "Government IDs",
+          "has_checksum": false,
+          "presidio_entities": [
+            "AU_ABN",
+            "AU_TFN",
+            "DE_TAX_ID",
+            "DE_TAX_NUMBER",
+            "DE_VAT_ID",
+            "IN_GSTIN",
+            "IN_PAN",
+            "IT_VAT_CODE",
+            "PH_TIN",
+            "US_ITIN"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "national_id": {
+          "group": "Government IDs",
+          "has_checksum": false,
+          "presidio_entities": [
+            "CA_SIN",
+            "DE_ID_CARD",
+            "DE_SOCIAL_SECURITY",
+            "ES_NIE",
+            "ES_NIF",
+            "FI_PERSONAL_IDENTITY_CODE",
+            "IN_AADHAAR",
+            "IT_FISCAL_CODE",
+            "IT_IDENTITY_CARD",
+            "KR_FRN",
+            "KR_RRN",
+            "NG_NIN",
+            "PH_UMID",
+            "PL_PESEL",
+            "SE_PERSONNUMMER",
+            "SG_NRIC_FIN",
+            "TH_TNIN",
+            "TR_NATIONAL_ID",
+            "UK_NINO",
+            "US_SSN",
+            "ZA_ID_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "credit_debit_card": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "CREDIT_CARD"
+          ],
+          "items": 13,
+          "any_all": 13,
+          "correct_all": 6,
+          "valid_items": 7,
+          "any_valid": 7,
+          "correct_valid": 6,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.46153846153846156,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.8571428571428571
+        },
+        "account_number": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [
+            "US_BANK_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "bank_routing_number": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "ABA_ROUTING_NUMBER"
+          ],
+          "items": 7,
+          "any_all": 7,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "iban": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "IBAN_CODE"
+          ],
+          "items": 11,
+          "any_all": 6,
+          "correct_all": 5,
+          "valid_items": 10,
+          "any_valid": 5,
+          "correct_valid": 5,
+          "any_rate_all": 0.5454545454545454,
+          "correct_rate_all": 0.45454545454545453,
+          "any_rate_valid": 0.5,
+          "correct_rate_valid": 0.5
+        },
+        "bban": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [],
+          "items": 16,
+          "any_all": 2,
+          "correct_all": 0,
+          "valid_items": 16,
+          "any_valid": 2,
+          "correct_valid": 0,
+          "any_rate_all": 0.125,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": 0.125,
+          "correct_rate_valid": 0.0
+        },
+        "swift_bic": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [],
+          "items": 22,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 22,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": 0.0,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": 0.0,
+          "correct_rate_valid": 0.0
+        },
+        "passport": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_PASSPORT",
+            "ES_PASSPORT",
+            "IN_PASSPORT",
+            "IT_PASSPORT",
+            "KR_PASSPORT",
+            "UK_PASSPORT",
+            "US_PASSPORT"
+          ],
+          "items": 9,
+          "any_all": 7,
+          "correct_all": 7,
+          "valid_items": 9,
+          "any_valid": 7,
+          "correct_valid": 7,
+          "any_rate_all": 0.7777777777777778,
+          "correct_rate_all": 0.7777777777777778,
+          "any_rate_valid": 0.7777777777777778,
+          "correct_rate_valid": 0.7777777777777778
+        },
+        "driver_licence": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_FUEHRERSCHEIN",
+            "IT_DRIVER_LICENSE",
+            "KR_DRIVER_LICENSE",
+            "UK_DRIVING_LICENCE",
+            "US_DRIVER_LICENSE"
+          ],
+          "items": 13,
+          "any_all": 13,
+          "correct_all": 10,
+          "valid_items": 13,
+          "any_valid": 13,
+          "correct_valid": 10,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.7692307692307693,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.7692307692307693
+        },
+        "certificate_licence_number": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_FUEHRERSCHEIN",
+            "IT_DRIVER_LICENSE",
+            "KR_DRIVER_LICENSE",
+            "MEDICAL_LICENSE",
+            "UK_DRIVING_LICENCE",
+            "US_DRIVER_LICENSE"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "email": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "EMAIL_ADDRESS"
+          ],
+          "items": 91,
+          "any_all": 85,
+          "correct_all": 84,
+          "valid_items": 91,
+          "any_valid": 85,
+          "correct_valid": 84,
+          "any_rate_all": 0.9340659340659341,
+          "correct_rate_all": 0.9230769230769231,
+          "any_rate_valid": 0.9340659340659341,
+          "correct_rate_valid": 0.9230769230769231
+        },
+        "phone": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "PHONE_NUMBER"
+          ],
+          "items": 71,
+          "any_all": 63,
+          "correct_all": 60,
+          "valid_items": 71,
+          "any_valid": 63,
+          "correct_valid": 60,
+          "any_rate_all": 0.8873239436619719,
+          "correct_rate_all": 0.8450704225352113,
+          "any_rate_valid": 0.8873239436619719,
+          "correct_rate_valid": 0.8450704225352113
+        },
+        "fax": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "PHONE_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "url": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "URL"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "ipv4": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "IP_ADDRESS"
+          ],
+          "items": 9,
+          "any_all": 9,
+          "correct_all": 9,
+          "valid_items": 9,
+          "any_valid": 9,
+          "correct_valid": 9,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 1.0,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "ipv6": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "IP_ADDRESS"
+          ],
+          "items": 10,
+          "any_all": 10,
+          "correct_all": 9,
+          "valid_items": 10,
+          "any_valid": 10,
+          "correct_valid": 9,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.9,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.9
+        },
+        "mac_address": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "MAC_ADDRESS"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        }
+      },
+      "groups": {
+        "Government IDs": {
+          "items": 9,
+          "any_all": 9,
+          "correct_all": 5,
+          "valid_items": 3,
+          "any_valid": 3,
+          "correct_valid": 3,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.5555555555555556,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "Financial": {
+          "items": 69,
+          "any_all": 28,
+          "correct_all": 11,
+          "valid_items": 55,
+          "any_valid": 14,
+          "correct_valid": 11,
+          "any_rate_all": 0.4057971014492754,
+          "correct_rate_all": 0.15942028985507245,
+          "any_rate_valid": 0.2545454545454545,
+          "correct_rate_valid": 0.2
+        },
+        "Travel and licences": {
+          "items": 22,
+          "any_all": 20,
+          "correct_all": 17,
+          "valid_items": 22,
+          "any_valid": 20,
+          "correct_valid": 17,
+          "any_rate_all": 0.9090909090909091,
+          "correct_rate_all": 0.7727272727272727,
+          "any_rate_valid": 0.9090909090909091,
+          "correct_rate_valid": 0.7727272727272727
+        },
+        "Contact and network": {
+          "items": 181,
+          "any_all": 167,
+          "correct_all": 162,
+          "valid_items": 181,
+          "any_valid": 167,
+          "correct_valid": 162,
+          "any_rate_all": 0.9226519337016574,
+          "correct_rate_all": 0.8950276243093923,
+          "any_rate_valid": 0.9226519337016574,
+          "correct_rate_valid": 0.8950276243093923
+        }
+      }
+    },
+    "Swedish": {
+      "kinds": {
+        "ssn": {
+          "group": "Government IDs",
+          "has_checksum": true,
+          "presidio_entities": [
+            "CA_SIN",
+            "DE_SOCIAL_SECURITY",
+            "FI_PERSONAL_IDENTITY_CODE",
+            "KR_RRN",
+            "PL_PESEL",
+            "SE_PERSONNUMMER",
+            "UK_NINO",
+            "US_SSN"
+          ],
+          "items": 9,
+          "any_all": 9,
+          "correct_all": 6,
+          "valid_items": 3,
+          "any_valid": 3,
+          "correct_valid": 3,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.6666666666666666,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "tax_id": {
+          "group": "Government IDs",
+          "has_checksum": false,
+          "presidio_entities": [
+            "AU_ABN",
+            "AU_TFN",
+            "DE_TAX_ID",
+            "DE_TAX_NUMBER",
+            "DE_VAT_ID",
+            "IN_GSTIN",
+            "IN_PAN",
+            "IT_VAT_CODE",
+            "PH_TIN",
+            "US_ITIN"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "national_id": {
+          "group": "Government IDs",
+          "has_checksum": false,
+          "presidio_entities": [
+            "CA_SIN",
+            "DE_ID_CARD",
+            "DE_SOCIAL_SECURITY",
+            "ES_NIE",
+            "ES_NIF",
+            "FI_PERSONAL_IDENTITY_CODE",
+            "IN_AADHAAR",
+            "IT_FISCAL_CODE",
+            "IT_IDENTITY_CARD",
+            "KR_FRN",
+            "KR_RRN",
+            "NG_NIN",
+            "PH_UMID",
+            "PL_PESEL",
+            "SE_PERSONNUMMER",
+            "SG_NRIC_FIN",
+            "TH_TNIN",
+            "TR_NATIONAL_ID",
+            "UK_NINO",
+            "US_SSN",
+            "ZA_ID_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "credit_debit_card": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "CREDIT_CARD"
+          ],
+          "items": 3,
+          "any_all": 3,
+          "correct_all": 2,
+          "valid_items": 2,
+          "any_valid": 2,
+          "correct_valid": 2,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.6666666666666666,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "account_number": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [
+            "US_BANK_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "bank_routing_number": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "ABA_ROUTING_NUMBER"
+          ],
+          "items": 14,
+          "any_all": 14,
+          "correct_all": 1,
+          "valid_items": 2,
+          "any_valid": 2,
+          "correct_valid": 1,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.07142857142857142,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.5
+        },
+        "iban": {
+          "group": "Financial",
+          "has_checksum": true,
+          "presidio_entities": [
+            "IBAN_CODE"
+          ],
+          "items": 12,
+          "any_all": 12,
+          "correct_all": 11,
+          "valid_items": 11,
+          "any_valid": 11,
+          "correct_valid": 11,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.9166666666666666,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "bban": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [],
+          "items": 13,
+          "any_all": 4,
+          "correct_all": 0,
+          "valid_items": 13,
+          "any_valid": 4,
+          "correct_valid": 0,
+          "any_rate_all": 0.3076923076923077,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": 0.3076923076923077,
+          "correct_rate_valid": 0.0
+        },
+        "swift_bic": {
+          "group": "Financial",
+          "has_checksum": false,
+          "presidio_entities": [],
+          "items": 12,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 12,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": 0.0,
+          "correct_rate_all": 0.0,
+          "any_rate_valid": 0.0,
+          "correct_rate_valid": 0.0
+        },
+        "passport": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_PASSPORT",
+            "ES_PASSPORT",
+            "IN_PASSPORT",
+            "IT_PASSPORT",
+            "KR_PASSPORT",
+            "UK_PASSPORT",
+            "US_PASSPORT"
+          ],
+          "items": 12,
+          "any_all": 11,
+          "correct_all": 11,
+          "valid_items": 12,
+          "any_valid": 11,
+          "correct_valid": 11,
+          "any_rate_all": 0.9166666666666666,
+          "correct_rate_all": 0.9166666666666666,
+          "any_rate_valid": 0.9166666666666666,
+          "correct_rate_valid": 0.9166666666666666
+        },
+        "driver_licence": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_FUEHRERSCHEIN",
+            "IT_DRIVER_LICENSE",
+            "KR_DRIVER_LICENSE",
+            "UK_DRIVING_LICENCE",
+            "US_DRIVER_LICENSE"
+          ],
+          "items": 15,
+          "any_all": 15,
+          "correct_all": 9,
+          "valid_items": 15,
+          "any_valid": 15,
+          "correct_valid": 9,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.6,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.6
+        },
+        "certificate_licence_number": {
+          "group": "Travel and licences",
+          "has_checksum": false,
+          "presidio_entities": [
+            "DE_FUEHRERSCHEIN",
+            "IT_DRIVER_LICENSE",
+            "KR_DRIVER_LICENSE",
+            "MEDICAL_LICENSE",
+            "UK_DRIVING_LICENCE",
+            "US_DRIVER_LICENSE"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "email": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "EMAIL_ADDRESS"
+          ],
+          "items": 122,
+          "any_all": 119,
+          "correct_all": 117,
+          "valid_items": 122,
+          "any_valid": 119,
+          "correct_valid": 117,
+          "any_rate_all": 0.9754098360655737,
+          "correct_rate_all": 0.9590163934426229,
+          "any_rate_valid": 0.9754098360655737,
+          "correct_rate_valid": 0.9590163934426229
+        },
+        "phone": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "PHONE_NUMBER"
+          ],
+          "items": 75,
+          "any_all": 73,
+          "correct_all": 73,
+          "valid_items": 75,
+          "any_valid": 73,
+          "correct_valid": 73,
+          "any_rate_all": 0.9733333333333334,
+          "correct_rate_all": 0.9733333333333334,
+          "any_rate_valid": 0.9733333333333334,
+          "correct_rate_valid": 0.9733333333333334
+        },
+        "fax": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "PHONE_NUMBER"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "url": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "URL"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        },
+        "ipv4": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "IP_ADDRESS"
+          ],
+          "items": 15,
+          "any_all": 15,
+          "correct_all": 15,
+          "valid_items": 15,
+          "any_valid": 15,
+          "correct_valid": 15,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 1.0,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "ipv6": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "IP_ADDRESS"
+          ],
+          "items": 10,
+          "any_all": 10,
+          "correct_all": 8,
+          "valid_items": 10,
+          "any_valid": 10,
+          "correct_valid": 8,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.8,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 0.8
+        },
+        "mac_address": {
+          "group": "Contact and network",
+          "has_checksum": false,
+          "presidio_entities": [
+            "MAC_ADDRESS"
+          ],
+          "items": 0,
+          "any_all": 0,
+          "correct_all": 0,
+          "valid_items": 0,
+          "any_valid": 0,
+          "correct_valid": 0,
+          "any_rate_all": null,
+          "correct_rate_all": null,
+          "any_rate_valid": null,
+          "correct_rate_valid": null
+        }
+      },
+      "groups": {
+        "Government IDs": {
+          "items": 9,
+          "any_all": 9,
+          "correct_all": 6,
+          "valid_items": 3,
+          "any_valid": 3,
+          "correct_valid": 3,
+          "any_rate_all": 1.0,
+          "correct_rate_all": 0.6666666666666666,
+          "any_rate_valid": 1.0,
+          "correct_rate_valid": 1.0
+        },
+        "Financial": {
+          "items": 54,
+          "any_all": 33,
+          "correct_all": 14,
+          "valid_items": 40,
+          "any_valid": 19,
+          "correct_valid": 14,
+          "any_rate_all": 0.6111111111111112,
+          "correct_rate_all": 0.25925925925925924,
+          "any_rate_valid": 0.475,
+          "correct_rate_valid": 0.35
+        },
+        "Travel and licences": {
+          "items": 27,
+          "any_all": 26,
+          "correct_all": 20,
+          "valid_items": 27,
+          "any_valid": 26,
+          "correct_valid": 20,
+          "any_rate_all": 0.9629629629629629,
+          "correct_rate_all": 0.7407407407407407,
+          "any_rate_valid": 0.9629629629629629,
+          "correct_rate_valid": 0.7407407407407407
+        },
+        "Contact and network": {
+          "items": 222,
+          "any_all": 217,
+          "correct_all": 213,
+          "valid_items": 222,
+          "any_valid": 217,
+          "correct_valid": 213,
+          "any_rate_all": 0.9774774774774775,
+          "correct_rate_all": 0.9594594594594594,
+          "any_rate_valid": 0.9774774774774775,
+          "correct_rate_valid": 0.9594594594594594
+        }
+      }
+    }
+  },
+  "presidio_analyzer_version": "2.2.364"
+}

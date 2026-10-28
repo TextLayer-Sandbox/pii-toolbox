@@ -18,6 +18,10 @@ A multilingual corpus covering 21 languages. Each file is split into sentences w
 
 English newswire articles from around the world, from the Stanford `en-worldwide-newswire` repository. Its types are person, organisation, location, date and money (mapped to quantity); facility, NORP, miscellaneous and product have no common type and are left out of the counts. Every article is used whatever split is asked for, because nothing is tuned on them. The loader is `datasets/worldwide.py`.
 
+### Structured PII datasets
+
+Two public synthetic datasets from Hugging Face, used only for the per-kind measurement of Presidio's recognisers on IDs, bank numbers and contact details (`scripts/run_structured_evaluation.py`): `nvidia/Nemotron-PII` and `gretelai/synthetic_pii_finance_multilingual`, each pinned to a commit and read from its test split, downloaded into `structured/` under the data folder on first use. The loader is `datasets/structured_pii.py`.
+
 ### Common types and the answer key
 
 Every tool and dataset is translated onto six common types (`PERSON`, `ORGANIZATION`, `LOCATION`, `DATE_TIME`, `QUANTITY`, `IDENTIFIER`) using the tables in `core/label_maps.py`.

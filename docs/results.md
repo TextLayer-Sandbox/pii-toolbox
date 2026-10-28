@@ -10,6 +10,7 @@ To see these results explained with charts, and to score your own detector on yo
 results/
   test/                  one JSON file per evaluation run, plus environment.json
   cost/                  one JSON file per detector setup with cost measurements
+  structured/            Presidio's detection rates per kind of structured PII, one JSON file per dataset
   outputs/               tables (Markdown and CSV), charts (SVG) and manifest.json
   language_model_findings.md
   language_model_findings/
@@ -17,6 +18,7 @@ results/
 
 - `results/test/` holds the scores on each dataset's test split, one file per setup, dataset, language and co-reference state, named `<setup>__<dataset>__<language>__test__coref-<off|on>.json`. Each file holds only totals (precision, recall and F2 for strict and relaxed matching, overall and by type and language, plus TAB's own metrics for TAB runs) and the machine and library versions. `environment.json` describes the machine and software the runs used.
 - `results/cost/` holds the cost measurements: peak memory, load time, throughput at three input sizes, median time per 1,000 characters, and whether the setup fits in 10 GB.
+- `results/structured/` holds `nemotron__test.json` and `gretel__test.json`: counts and detection rates per kind and per group of structured PII (IDs, bank numbers, contact details), on all items and on validly-formed items only, from running every predefined Presidio recogniser on two public synthetic datasets. It is written by `scripts/run_structured_evaluation.py` and shown in the results notebook; it holds no document text or labelled values.
 - `results/outputs/` holds everything below, built from the two folders above.
 
 The setups are `presidio_structured`, `gliner`, `roberta`, `spacy_lg` and `spacy_sm`, plus each model with `presidio_structured` (written `gliner+presidio_structured`, and so on).
