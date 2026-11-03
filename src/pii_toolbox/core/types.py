@@ -5,7 +5,7 @@ Character positions are offsets into the original text: start inclusive, end exc
 
 from abc import ABC, abstractmethod
 from collections.abc import Iterable, Iterator, Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
 from typing import Self
 
@@ -231,6 +231,7 @@ class PlaceholderFormat(ABC):
 class MaskResult:
     masked_text: str
     minted: tuple[Placeholder, ...]  # placeholders created by this call only
+    placeholder_by_span: Mapping[Span, Placeholder] = field(default_factory=dict)  # every replaced span, including spans a resolver added
 
 
 @dataclass(frozen=True, slots=True)

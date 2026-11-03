@@ -103,7 +103,7 @@ class Session(RedactionSession):
             len(placeholder_for),
             [self._format.render(placeholder) for placeholder in minted],
         )
-        return MaskResult(masked, tuple(minted))
+        return MaskResult(masked, tuple(minted), placeholder_for)
 
     def restore(self, text: str) -> RestoreResult:
         minted_labels = self._store.labels(self._id)

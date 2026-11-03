@@ -141,3 +141,11 @@ def test_exception_inside_with_block_discards_the_mapping():
             raise RuntimeError("boom")
     assert session.store.original("case-1", placeholder) is None
     assert session.store.labels("case-1") == frozenset()
+
+
+def test_result_reports_the_placeholder_each_span_received():
+    result = make_session(FakeResolver()).mask("David Parker joined. Dave was glad.")
+    assert {(span.start, span.end): placeholder for span, placeholder in result.placeholder_by_span.items()} == {
+        (0, 12): Placeholder("PERSON", 1),
+        (21, 25): Placeholder("PERSON", 1),
+    }
