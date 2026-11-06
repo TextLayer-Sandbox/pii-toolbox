@@ -22,7 +22,7 @@ Datasets and models are not part of the repository. See [Evaluation](evaluation.
 uv run pytest -q
 ```
 
-This runs the fast tests, which need no downloaded data or models and no network. At the time of writing that is 607 tests passing in a few seconds, with 16 not selected.
+This runs the fast tests, which need no downloaded data or models and no network. At the time of writing that is 522 tests passing in a few seconds, with 17 not selected.
 
 ### Tests that are not selected by default
 
@@ -40,7 +40,7 @@ uv run pytest -m data
 uv run pytest -m "model or data or network"
 ```
 
-An `-m` on the command line replaces the default filter. The 16 deselected tests are the ones marked `model` or `data`. Before running them, download the files (`scripts/download_datasets.py` and `scripts/download_models.py`) and set `PII_DATA_DIR` and `PII_MODEL_DIR` to the folders that hold them, since tests marked `data` or `model` use the folders you set and every other test is pointed at an empty temporary folder.
+An `-m` on the command line replaces the default filter. The 17 deselected tests are the ones marked `model` or `data`. Before running them, download the files (`scripts/download_datasets.py` and `scripts/download_models.py`) and set `PII_DATA_DIR` and `PII_MODEL_DIR` to the folders that hold them, since tests marked `data` or `model` use the folders you set and every other test is pointed at an empty temporary folder.
 
 ### Test safety net
 

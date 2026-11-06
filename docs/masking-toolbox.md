@@ -34,7 +34,7 @@ Detectors, all behind the one `Detector` interface. The registry (`detection/reg
 | `presidio_structured` | Pattern and checksum recognisers from Presidio for card numbers, emails, IBANs, IP addresses, URLs, phone numbers and US social security numbers. Reports `IDENTIFIER` only. |
 | `spacy_lg`, `spacy_sm` | The large and small English spaCy pipelines. Report person, organisation, location, date and time, and quantity entities. English only. |
 | `roberta` | An English RoBERTa entity tagger. Reports person, organisation and location. English only. |
-| `gliner` | The multilingual GLiNER PII model, asked for person, organisation, location and address. Reports person, organisation and location. |
+| `gliner` | The multilingual GLiNER PII model, asked for person, organisation, location, address, date, money, case number and identification number (address maps to location, money to quantity, and the two number labels to identifier). Reports person, organisation, location, date and time, quantity and identifier. The money label finds amounts of money, not plain counts. |
 | `known_names` | A fixed list of names that are always treated as people. Matches whole words only, and needs no model. |
 
 Two helpers sit alongside them:

@@ -25,12 +25,12 @@ The setups are `presidio_structured`, `gliner`, `roberta`, `spacy_lg` and `spacy
 
 ## Tables
 
-Each table comes as a Markdown file (`.md`) for reading and a CSV file (`.csv`) for other tools. Numbers have three decimals. Rows list single detectors first and then combinations. "Strict" and "relaxed" are the two matching rules explained in [Evaluation](evaluation.md).
+Each table comes as a Markdown file (`.md`) for reading and a CSV file (`.csv`) for other tools. Numbers have three decimals. Rows list single detectors first and then combinations. "Strict" and "relaxed" are the two matching rules explained in [Evaluation](evaluation.md). Overall scores count a setup's misses only on the types it can report, so setups are graded on different sets of types: read the numbers as how good a setup is at what it attempts, not as which one covers more.
 
 | File | What it shows |
 | --- | --- |
 | `table1` | Overall precision, recall and F2 for every setup on TAB, MAPA (English) and Worldwide, each with strict and relaxed matching. |
-| `table2_strict`, `table2_relaxed` | F2 for each setup split by PII type, per dataset. `n/a` means the setup cannot report that type or the data has none; a blank means the type is not scored for that dataset (identifiers are scored on TAB only). |
+| `table2_strict`, `table2_relaxed` | F2 for each setup split by PII type, per dataset. `n/a` means the setup cannot report that type or the data has none; a blank means the type is not scored for that dataset (MAPA and Worldwide do not annotate identifiers). |
 | `table3` | TAB's own measures (ER_di, ER_qi and WP) next to the overall F2 on TAB. TAB only. |
 | `table4_strict`, `table4_relaxed` | English text with co-reference off and on: F2 before, after and the change, and for TAB also entity-level recall on direct and quasi identifiers before, after and the change. MAPA and Worldwide rows have no recall columns, because their data has no entity ids. |
 | `table5_strict`, `table5_relaxed` | F2 for MAPA English, French and German (and any other language present), with TAB as an English reference column. `n/a` means the setup does not support that language. |

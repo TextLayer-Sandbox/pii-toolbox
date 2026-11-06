@@ -26,6 +26,8 @@ Two public synthetic datasets from Hugging Face, used only for the per-kind meas
 
 Every tool and dataset is translated onto six common types (`PERSON`, `ORGANIZATION`, `LOCATION`, `DATE_TIME`, `QUANTITY`, `IDENTIFIER`) using the tables in `core/label_maps.py`.
 
+Each dataset lists the common types it annotates: TAB annotates all six; MAPA and Worldwide annotate all except `IDENTIFIER`. A type outside that list can never be correct for that dataset, so predictions of it are not counted as false alarms (see "Which types are counted" below).
+
 For TAB, several annotators marked each document. The answer key (`datasets/answer_key.py`) counts a span as PII if any annotator marked it as direct or quasi. Identical spans from several annotators count once; spans with different boundaries stay separate. Datasets without risk grading keep every span.
 
 ## How a run is scored
@@ -51,11 +53,20 @@ A detector that does not support a document's language skips that document. This
 Every run is scored two ways:
 
 - **Strict** (`EXACT_BOUNDARIES`): a prediction matches an answer only if it has the same start and end and the same common type.
-- **Relaxed** (`ANY_OVERLAP`): a prediction matches an answer of the same type if the two overlap at all.
+- **Relaxed** (`ANY_OVERLAP`): a prediction matches an answer of the same type if the overlap covers at least half of the longer of the two spans. A fragment that clips a small part of an answer, or a very long prediction around a short answer, does not match.
 
-In both cases, matching is one to one: each answer is credited to at most one prediction, and the pairs with the longest overlap are taken first. Prediction and answer must have the same common type. Answers with no common type (such as TAB's `DEM` and `MISC`) take no part in the normal counts, so a prediction that only overlaps one of those counts as a false positive.
+In both cases, matching is one to one: each prediction is used at most once, and the pairs with the longest overlap are taken first. Prediction and answer must have the same common type. Answers with no common type (such as TAB's `DEM` and `MISC`) take no part in the normal counts, so a prediction that only overlaps one of those counts as a false positive.
+
+Answers of the same type that overlap each other, directly or through a chain of overlaps, form a group that counts as one entity. A prediction gets credit if it matches any span in the group under the rule in use, and a group is credited at most once. The spans are not merged into one wider span, so strict matching still needs the exact boundaries of one member of the group.
 
 The gap between the two scores shows how often a detector finds the right thing but cuts it short or runs it long.
+
+### Which types are counted
+
+- Predictions of a type the dataset does not annotate are dropped before matching, so they are neither true nor false positives. For MAPA and Worldwide this applies to `IDENTIFIER`.
+- Answers of a type the setup cannot report are left out of the overall and by-language scores, so a setup is charged for misses only on the types it looks for. For example, `roberta` reports three types, so on TAB it is scored on those three alone.
+
+Setups are therefore graded on different sets of types. The numbers show how good each setup is at what it attempts, not which one covers more: a setup that looks for fewer types is not penalised for the types it leaves out.
 
 ### Precision, recall and F2
 
@@ -65,12 +76,12 @@ The gap between the two scores shows how often a detector finds the right thing 
 
 A report holds these scores in several cuts:
 
-- **Overall (micro)**: counts pooled across all types, so the larger types weigh more.
+- **Overall (micro)**: counts pooled across the types the setup can report, so the larger types weigh more.
 - **Macro**: a plain average of the per-type scores, over the types that the detector can report and that appear in the data.
 - **By type**: one score per common type. A type the detector cannot report, or one with no answers and no predictions in the data, is shown as `n/a`.
-- **By language**: pooled score for each document language.
+- **By language**: pooled score for each document language, over the same types as the overall score.
 
-`IDENTIFIER` counts in the overall score; outside TAB it is left out of the per-type table.
+`IDENTIFIER` is scored on TAB only: MAPA and Worldwide do not annotate it, so it is left out of their per-type tables.
 
 ### TAB's own metrics
 
