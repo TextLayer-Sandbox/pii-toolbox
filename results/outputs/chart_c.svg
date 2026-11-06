@@ -39,8 +39,8 @@ z
    <g id="bar-gliner-strict">
     <path d="M 92.290909 320.4 
 L 110.73719 320.4 
-L 110.73719 234.655698 
-L 92.290909 234.655698 
+L 110.73719 141.787965 
+L 92.290909 141.787965 
 z
 " clip-path="url(#p47ff64e9ef)" style="fill: #1f77b4"/>
    </g>
@@ -55,128 +55,128 @@ z
    <g id="bar-roberta-strict">
     <path d="M 184.522314 320.4 
 L 202.968595 320.4 
-L 202.968595 266.262651 
-L 184.522314 266.262651 
+L 202.968595 216.88321 
+L 184.522314 216.88321 
 z
 " clip-path="url(#p47ff64e9ef)" style="fill: #1f77b4"/>
    </g>
    <g id="bar-spacy_lg-strict">
     <path d="M 230.638017 320.4 
 L 249.084298 320.4 
-L 249.084298 178.285572 
-L 230.638017 178.285572 
+L 249.084298 163.926104 
+L 230.638017 163.926104 
 z
 " clip-path="url(#p47ff64e9ef)" style="fill: #1f77b4"/>
    </g>
    <g id="bar-spacy_sm-strict">
     <path d="M 276.753719 320.4 
 L 295.2 320.4 
-L 295.2 185.503785 
-L 276.753719 185.503785 
+L 295.2 171.759274 
+L 276.753719 171.759274 
 z
 " clip-path="url(#p47ff64e9ef)" style="fill: #1f77b4"/>
    </g>
    <g id="bar-gliner+presidio_structured-strict">
     <path d="M 322.869421 320.4 
 L 341.315702 320.4 
-L 341.315702 234.732756 
-L 322.869421 234.732756 
+L 341.315702 141.596931 
+L 322.869421 141.596931 
 z
 " clip-path="url(#p47ff64e9ef)" style="fill: #1f77b4"/>
    </g>
    <g id="bar-roberta+presidio_structured-strict">
     <path d="M 368.985124 320.4 
 L 387.431405 320.4 
-L 387.431405 266.211159 
-L 368.985124 266.211159 
+L 387.431405 224.993032 
+L 368.985124 224.993032 
 z
 " clip-path="url(#p47ff64e9ef)" style="fill: #1f77b4"/>
    </g>
    <g id="bar-spacy_lg+presidio_structured-strict">
     <path d="M 415.100826 320.4 
 L 433.547107 320.4 
-L 433.547107 178.311838 
-L 415.100826 178.311838 
+L 433.547107 170.934313 
+L 415.100826 170.934313 
 z
 " clip-path="url(#p47ff64e9ef)" style="fill: #1f77b4"/>
    </g>
    <g id="bar-spacy_sm+presidio_structured-strict">
     <path d="M 461.216529 320.4 
 L 479.66281 320.4 
-L 479.66281 185.524523 
-L 461.216529 185.524523 
+L 479.66281 178.398495 
+L 461.216529 178.398495 
 z
 " clip-path="url(#p47ff64e9ef)" style="fill: #1f77b4"/>
    </g>
    <g id="bar-gliner-relaxed">
     <path d="M 110.73719 320.4 
 L 129.183471 320.4 
-L 129.183471 229.175799 
-L 110.73719 229.175799 
+L 129.183471 137.8382 
+L 110.73719 137.8382 
 z
 " clip-path="url(#p47ff64e9ef)" style="fill: #ff7f0e"/>
    </g>
    <g id="bar-presidio_structured-relaxed">
     <path d="M 156.852893 320.4 
 L 175.299174 320.4 
-L 175.299174 320.231605 
-L 156.852893 320.231605 
+L 175.299174 317.360526 
+L 156.852893 317.360526 
 z
 " clip-path="url(#p47ff64e9ef)" style="fill: #ff7f0e"/>
    </g>
    <g id="bar-roberta-relaxed">
     <path d="M 202.968595 320.4 
 L 221.414876 320.4 
-L 221.414876 215.153639 
-L 202.968595 215.153639 
+L 221.414876 132.509315 
+L 202.968595 132.509315 
 z
 " clip-path="url(#p47ff64e9ef)" style="fill: #ff7f0e"/>
    </g>
    <g id="bar-spacy_lg-relaxed">
     <path d="M 249.084298 320.4 
 L 267.530579 320.4 
-L 267.530579 121.10672 
-L 249.084298 121.10672 
+L 267.530579 107.45468 
+L 249.084298 107.45468 
 z
 " clip-path="url(#p47ff64e9ef)" style="fill: #ff7f0e"/>
    </g>
    <g id="bar-spacy_sm-relaxed">
     <path d="M 295.2 320.4 
 L 313.646281 320.4 
-L 313.646281 129.243753 
-L 295.2 129.243753 
+L 313.646281 117.354204 
+L 295.2 117.354204 
 z
 " clip-path="url(#p47ff64e9ef)" style="fill: #ff7f0e"/>
    </g>
    <g id="bar-gliner+presidio_structured-relaxed">
     <path d="M 341.315702 320.4 
 L 359.761983 320.4 
-L 359.761983 229.147769 
-L 341.315702 229.147769 
+L 359.761983 137.591816 
+L 341.315702 137.591816 
 z
 " clip-path="url(#p47ff64e9ef)" style="fill: #ff7f0e"/>
    </g>
    <g id="bar-roberta+presidio_structured-relaxed">
     <path d="M 387.431405 320.4 
 L 405.877686 320.4 
-L 405.877686 214.921117 
-L 387.431405 214.921117 
+L 405.877686 146.688894 
+L 387.431405 146.688894 
 z
 " clip-path="url(#p47ff64e9ef)" style="fill: #ff7f0e"/>
    </g>
    <g id="bar-spacy_lg+presidio_structured-relaxed">
     <path d="M 433.547107 320.4 
 L 451.993388 320.4 
-L 451.993388 121.01547 
-L 433.547107 121.01547 
+L 451.993388 116.855818 
+L 433.547107 116.855818 
 z
 " clip-path="url(#p47ff64e9ef)" style="fill: #ff7f0e"/>
    </g>
    <g id="bar-spacy_sm+presidio_structured-relaxed">
     <path d="M 479.66281 320.4 
 L 498.109091 320.4 
-L 498.109091 129.145296 
-L 479.66281 129.145296 
+L 498.109091 126.287435 
+L 479.66281 126.287435 
 z
 " clip-path="url(#p47ff64e9ef)" style="fill: #ff7f0e"/>
    </g>

@@ -7,9 +7,9 @@ Pooled over annotators (counts summed, rate = numerator/denominator). Detected P
 | Measure | Resolver off | Resolver on |
 | --- | --- | --- |
 | Entities with 2+ detected mentions and 2+ surface forms: all mentions under one placeholder | 0.034 (6/179) | 0.799 (143/179) |
-| Entities with 2+ detected mentions: all mentions under one placeholder | 0.497 (181/364) | 0.874 (318/364) |
-| Placeholders holding mentions of 2+ different people | 0.003 (8/3053) | 0.062 (163/2619) |
-| Detected PERSON spans matched / unmatched | 3781 / 8228 (summed over annotators) | 3781 / 8228 (summed over annotators) |
+| Entities with 2+ detected mentions: all mentions under one placeholder | 0.484 (176/364) | 0.874 (318/364) |
+| Placeholders holding mentions of 2+ different people | 0.003 (8/3048) | 0.061 (160/2618) |
+| Detected PERSON spans matched / unmatched | 3779 / 8337 (summed over annotators) | 3779 / 8337 (summed over annotators) |
 
 ## spacy_lg+presidio_structured
 

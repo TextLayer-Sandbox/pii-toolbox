@@ -2,12 +2,12 @@
 
 | Tool | en | fr | de | TAB (English reference) |
 | --- | --- | --- | --- | --- |
-| gliner | 0.275 | 0.428 | 0.466 | 0.329 |
-| presidio_structured | 0.000 | 0.000 | 0.000 | 0.001 |
-| roberta | 0.336 | n/a | n/a | 0.380 |
-| spacy_lg | 0.478 | n/a | n/a | 0.719 |
-| spacy_sm | 0.449 | n/a | n/a | 0.690 |
-| gliner+presidio_structured | 0.275 | 0.427 | 0.467 | 0.329 |
-| roberta+presidio_structured | 0.335 | n/a | n/a | 0.381 |
-| spacy_lg+presidio_structured | 0.478 | n/a | n/a | 0.719 |
-| spacy_sm+presidio_structured | 0.449 | n/a | n/a | 0.690 |
+| gliner | 0.495 | 0.545 | 0.557 | 0.659 |
+| presidio_structured | 0.000 | 0.000 | 0.000 | 0.011 |
+| roberta | 0.405 | n/a | n/a | 0.678 |
+| spacy_lg | 0.453 | n/a | n/a | 0.768 |
+| spacy_sm | 0.430 | n/a | n/a | 0.732 |
+| gliner+presidio_structured | 0.497 | 0.545 | 0.555 | 0.659 |
+| roberta+presidio_structured | 0.407 | n/a | n/a | 0.627 |
+| spacy_lg+presidio_structured | 0.453 | n/a | n/a | 0.734 |
+| spacy_sm+presidio_structured | 0.430 | n/a | n/a | 0.700 |

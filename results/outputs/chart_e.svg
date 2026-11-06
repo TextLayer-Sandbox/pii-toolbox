@@ -147,9 +147,9 @@ L -3.5 0
     </g>
    </g>
    <g id="line-gliner">
-    <path d="M 92.290909 251.796752 
-L 295.2 232.588356 
-L 498.109091 201.404324 
+    <path d="M 92.290909 184.072131 
+L 295.2 196.381562 
+L 498.109091 169.273469 
 " clip-path="url(#p47ff64e9ef)" style="fill: none; stroke: #1f77b4; stroke-width: 1.5; stroke-linecap: square"/>
     <defs>
      <path id="mb26fc85d6d" d="M 0 3 
@@ -165,9 +165,9 @@ z
 " style="stroke: #1f77b4"/>
     </defs>
     <g clip-path="url(#p47ff64e9ef)">
-     <use xlink:href="#mb26fc85d6d" x="92.290909" y="251.796752" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#mb26fc85d6d" x="295.2" y="232.588356" style="fill: #1f77b4; stroke: #1f77b4"/>
-     <use xlink:href="#mb26fc85d6d" x="498.109091" y="201.404324" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mb26fc85d6d" x="92.290909" y="184.072131" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mb26fc85d6d" x="295.2" y="196.381562" style="fill: #1f77b4; stroke: #1f77b4"/>
+     <use xlink:href="#mb26fc85d6d" x="498.109091" y="169.273469" style="fill: #1f77b4; stroke: #1f77b4"/>
     </g>
    </g>
    <g id="line-presidio_structured">
@@ -195,7 +195,7 @@ z
     </g>
    </g>
    <g id="line-roberta">
-    <path d="M 92.290909 254.704147 
+    <path d="M 92.290909 233.397384 
 " clip-path="url(#p47ff64e9ef)" style="fill: none; stroke: #2ca02c; stroke-width: 1.5; stroke-linecap: square"/>
     <defs>
      <path id="m8e5a2354e4" d="M 0 3 
@@ -211,7 +211,7 @@ z
 " style="stroke: #2ca02c"/>
     </defs>
     <g clip-path="url(#p47ff64e9ef)">
-     <use xlink:href="#m8e5a2354e4" x="92.290909" y="254.704147" style="fill: #2ca02c; stroke: #2ca02c"/>
+     <use xlink:href="#m8e5a2354e4" x="92.290909" y="233.397384" style="fill: #2ca02c; stroke: #2ca02c"/>
     </g>
    </g>
    <g id="line-spacy_lg">
@@ -255,9 +255,9 @@ z
     </g>
    </g>
    <g id="line-gliner+presidio_structured">
-    <path d="M 92.290909 251.743653 
-L 295.2 235.413181 
-L 498.109091 202.114286 
+    <path d="M 92.290909 183.584549 
+L 295.2 198.860784 
+L 498.109091 169.818224 
 " clip-path="url(#p47ff64e9ef)" style="fill: none; stroke: #8c564b; stroke-width: 1.5; stroke-linecap: square"/>
     <defs>
      <path id="m36ce82bff5" d="M 0 3 
@@ -273,13 +273,13 @@ z
 " style="stroke: #8c564b"/>
     </defs>
     <g clip-path="url(#p47ff64e9ef)">
-     <use xlink:href="#m36ce82bff5" x="92.290909" y="251.743653" style="fill: #8c564b; stroke: #8c564b"/>
-     <use xlink:href="#m36ce82bff5" x="295.2" y="235.413181" style="fill: #8c564b; stroke: #8c564b"/>
-     <use xlink:href="#m36ce82bff5" x="498.109091" y="202.114286" style="fill: #8c564b; stroke: #8c564b"/>
+     <use xlink:href="#m36ce82bff5" x="92.290909" y="183.584549" style="fill: #8c564b; stroke: #8c564b"/>
+     <use xlink:href="#m36ce82bff5" x="295.2" y="198.860784" style="fill: #8c564b; stroke: #8c564b"/>
+     <use xlink:href="#m36ce82bff5" x="498.109091" y="169.818224" style="fill: #8c564b; stroke: #8c564b"/>
     </g>
    </g>
    <g id="line-roberta+presidio_structured">
-    <path d="M 92.290909 255.057371 
+    <path d="M 92.290909 233.392042 
 " clip-path="url(#p47ff64e9ef)" style="fill: none; stroke: #e377c2; stroke-width: 1.5; stroke-linecap: square"/>
     <defs>
      <path id="m956f1d45d6" d="M 0 3 
@@ -295,11 +295,11 @@ z
 " style="stroke: #e377c2"/>
     </defs>
     <g clip-path="url(#p47ff64e9ef)">
-     <use xlink:href="#m956f1d45d6" x="92.290909" y="255.057371" style="fill: #e377c2; stroke: #e377c2"/>
+     <use xlink:href="#m956f1d45d6" x="92.290909" y="233.392042" style="fill: #e377c2; stroke: #e377c2"/>
     </g>
    </g>
    <g id="line-spacy_lg+presidio_structured">
-    <path d="M 92.290909 215.869274 
+    <path d="M 92.290909 215.693788 
 " clip-path="url(#p47ff64e9ef)" style="fill: none; stroke: #7f7f7f; stroke-width: 1.5; stroke-linecap: square"/>
     <defs>
      <path id="m3341f6c427" d="M 0 3 
@@ -315,11 +315,11 @@ z
 " style="stroke: #7f7f7f"/>
     </defs>
     <g clip-path="url(#p47ff64e9ef)">
-     <use xlink:href="#m3341f6c427" x="92.290909" y="215.869274" style="fill: #7f7f7f; stroke: #7f7f7f"/>
+     <use xlink:href="#m3341f6c427" x="92.290909" y="215.693788" style="fill: #7f7f7f; stroke: #7f7f7f"/>
     </g>
    </g>
    <g id="line-spacy_sm+presidio_structured">
-    <path d="M 92.290909 228.452202 
+    <path d="M 92.290909 228.301961 
 " clip-path="url(#p47ff64e9ef)" style="fill: none; stroke: #bcbd22; stroke-width: 1.5; stroke-linecap: square"/>
     <defs>
      <path id="m42ca405a77" d="M 0 3 
@@ -335,7 +335,7 @@ z
 " style="stroke: #bcbd22"/>
     </defs>
     <g clip-path="url(#p47ff64e9ef)">
-     <use xlink:href="#m42ca405a77" x="92.290909" y="228.452202" style="fill: #bcbd22; stroke: #bcbd22"/>
+     <use xlink:href="#m42ca405a77" x="92.290909" y="228.301961" style="fill: #bcbd22; stroke: #bcbd22"/>
     </g>
    </g>
    <g id="patch_3">

@@ -51,7 +51,7 @@ z
 " style="stroke: #1f77b4; stroke-opacity: 0.6"/>
     </defs>
     <g clip-path="url(#pac6fc3ac9e)">
-     <use xlink:href="#mf70aedfcb0" x="434.403605" y="281.586838" style="fill: #1f77b4; fill-opacity: 0.6; stroke: #1f77b4; stroke-opacity: 0.6"/>
+     <use xlink:href="#mf70aedfcb0" x="434.403605" y="170.145558" style="fill: #1f77b4; fill-opacity: 0.6; stroke: #1f77b4; stroke-opacity: 0.6"/>
     </g>
    </g>
    <g id="point-presidio_structured">
@@ -87,7 +87,7 @@ z
 " style="stroke: #2ca02c; stroke-opacity: 0.6"/>
     </defs>
     <g clip-path="url(#pac6fc3ac9e)">
-     <use xlink:href="#m326e65c1c3" x="368.12278" y="319.515181" style="fill: #2ca02c; fill-opacity: 0.6; stroke: #2ca02c; stroke-opacity: 0.6"/>
+     <use xlink:href="#m326e65c1c3" x="368.12278" y="260.259852" style="fill: #2ca02c; fill-opacity: 0.6; stroke: #2ca02c; stroke-opacity: 0.6"/>
     </g>
    </g>
    <g id="point-spacy_lg">
@@ -105,7 +105,7 @@ z
 " style="stroke: #d62728; stroke-opacity: 0.6"/>
     </defs>
     <g clip-path="url(#pac6fc3ac9e)">
-     <use xlink:href="#mb04d177e28" x="255.727563" y="213.942686" style="fill: #d62728; fill-opacity: 0.6; stroke: #d62728; stroke-opacity: 0.6"/>
+     <use xlink:href="#mb04d177e28" x="255.727563" y="196.711325" style="fill: #d62728; fill-opacity: 0.6; stroke: #d62728; stroke-opacity: 0.6"/>
     </g>
    </g>
    <g id="point-spacy_sm">
@@ -123,7 +123,7 @@ z
 " style="stroke: #9467bd; stroke-opacity: 0.6"/>
     </defs>
     <g clip-path="url(#pac6fc3ac9e)">
-     <use xlink:href="#mf48b8119c9" x="248.919177" y="222.604543" style="fill: #9467bd; fill-opacity: 0.6; stroke: #9467bd; stroke-opacity: 0.6"/>
+     <use xlink:href="#mf48b8119c9" x="248.919177" y="206.111129" style="fill: #9467bd; fill-opacity: 0.6; stroke: #9467bd; stroke-opacity: 0.6"/>
     </g>
    </g>
    <g id="point-gliner+presidio_structured">
@@ -141,7 +141,7 @@ z
 " style="stroke: #8c564b; stroke-opacity: 0.6"/>
     </defs>
     <g clip-path="url(#pac6fc3ac9e)">
-     <use xlink:href="#m40a6e9c727" x="435.845455" y="281.679307" style="fill: #8c564b; fill-opacity: 0.6; stroke: #8c564b; stroke-opacity: 0.6"/>
+     <use xlink:href="#m40a6e9c727" x="435.845455" y="169.916317" style="fill: #8c564b; fill-opacity: 0.6; stroke: #8c564b; stroke-opacity: 0.6"/>
     </g>
    </g>
    <g id="point-roberta+presidio_structured">
@@ -159,7 +159,7 @@ z
 " style="stroke: #e377c2; stroke-opacity: 0.6"/>
     </defs>
     <g clip-path="url(#pac6fc3ac9e)">
-     <use xlink:href="#m5df755c6ef" x="372.640288" y="319.453391" style="fill: #e377c2; fill-opacity: 0.6; stroke: #e377c2; stroke-opacity: 0.6"/>
+     <use xlink:href="#m5df755c6ef" x="372.640288" y="269.991638" style="fill: #e377c2; fill-opacity: 0.6; stroke: #e377c2; stroke-opacity: 0.6"/>
     </g>
    </g>
    <g id="point-spacy_lg+presidio_structured">
@@ -177,7 +177,7 @@ z
 " style="stroke: #7f7f7f; stroke-opacity: 0.6"/>
     </defs>
     <g clip-path="url(#pac6fc3ac9e)">
-     <use xlink:href="#m18cd8fc8dc" x="269.473649" y="213.974206" style="fill: #7f7f7f; fill-opacity: 0.6; stroke: #7f7f7f; stroke-opacity: 0.6"/>
+     <use xlink:href="#m18cd8fc8dc" x="269.473649" y="205.121175" style="fill: #7f7f7f; fill-opacity: 0.6; stroke: #7f7f7f; stroke-opacity: 0.6"/>
     </g>
    </g>
    <g id="point-spacy_sm+presidio_structured">
@@ -195,7 +195,7 @@ z
 " style="stroke: #bcbd22; stroke-opacity: 0.6"/>
     </defs>
     <g clip-path="url(#pac6fc3ac9e)">
-     <use xlink:href="#m91ee217bbc" x="263.184557" y="222.629428" style="fill: #bcbd22; fill-opacity: 0.6; stroke: #bcbd22; stroke-opacity: 0.6"/>
+     <use xlink:href="#m91ee217bbc" x="263.184557" y="214.078194" style="fill: #bcbd22; fill-opacity: 0.6; stroke: #bcbd22; stroke-opacity: 0.6"/>
     </g>
    </g>
    <g id="matplotlib.axis_1">
@@ -445,31 +445,31 @@ L 453.6 51.84
 " style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="text_11">
-    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start" x="440.403605" y="275.586838" transform="rotate(-0 440.403605 275.586838)">gliner</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start" x="440.403605" y="164.145558" transform="rotate(-0 440.403605 164.145558)">gliner</text>
    </g>
    <g id="text_12">
     <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start" x="86.754545" y="378.48" transform="rotate(-0 86.754545 378.48)">presidio_structured</text>
    </g>
    <g id="text_13">
-    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start" x="374.12278" y="313.515181" transform="rotate(-0 374.12278 313.515181)">roberta</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start" x="374.12278" y="254.259852" transform="rotate(-0 374.12278 254.259852)">roberta</text>
    </g>
    <g id="text_14">
-    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start" x="261.727563" y="207.942686" transform="rotate(-0 261.727563 207.942686)">spacy_lg</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start" x="261.727563" y="190.711325" transform="rotate(-0 261.727563 190.711325)">spacy_lg</text>
    </g>
    <g id="text_15">
-    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start" x="254.919177" y="216.604543" transform="rotate(-0 254.919177 216.604543)">spacy_sm</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start" x="254.919177" y="200.111129" transform="rotate(-0 254.919177 200.111129)">spacy_sm</text>
    </g>
    <g id="text_16">
-    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start" x="441.845455" y="275.679307" transform="rotate(-0 441.845455 275.679307)">gliner+presidio_structured</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start" x="441.845455" y="163.916317" transform="rotate(-0 441.845455 163.916317)">gliner+presidio_structured</text>
    </g>
    <g id="text_17">
-    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start" x="378.640288" y="313.453391" transform="rotate(-0 378.640288 313.453391)">roberta+presidio_structured</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start" x="378.640288" y="263.991638" transform="rotate(-0 378.640288 263.991638)">roberta+presidio_structured</text>
    </g>
    <g id="text_18">
-    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start" x="275.473649" y="207.974206" transform="rotate(-0 275.473649 207.974206)">spacy_lg+presidio_structured</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start" x="275.473649" y="199.121175" transform="rotate(-0 275.473649 199.121175)">spacy_lg+presidio_structured</text>
    </g>
    <g id="text_19">
-    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start" x="269.184557" y="216.629428" transform="rotate(-0 269.184557 216.629428)">spacy_sm+presidio_structured</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start" x="269.184557" y="208.078194" transform="rotate(-0 269.184557 208.078194)">spacy_sm+presidio_structured</text>
    </g>
    <g id="text_20">
     <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle" x="258.3" y="45.84" transform="rotate(-0 258.3 45.84)">Chart D: accuracy against cost (strict; marker area = peak memory)</text>

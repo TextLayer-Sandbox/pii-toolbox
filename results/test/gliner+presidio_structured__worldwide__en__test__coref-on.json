@@ -6,88 +6,96 @@
   "exact_boundaries": {
     "rule": "EXACT_BOUNDARIES",
     "overall_micro": {
-      "precision": 0.633035204567079,
-      "recall": 0.4388538560987837,
-      "f2": 0.4675369211655113
+      "precision": 0.6712945462043369,
+      "recall": 0.5153953721537691,
+      "f2": 0.5405001577173595
     },
     "macro": {
-      "precision": 0.4965387522962943,
-      "recall": 0.39212948770925105,
-      "f2": 0.4012581131807057
+      "precision": 0.7108581699025965,
+      "recall": 0.5725058164371957,
+      "f2": 0.5830197118164947
     },
     "by_type": {
       "PERSON": {
-        "precision": 0.7098059598059598,
-        "recall": 0.7467420030985146,
-        "f2": 0.7390504365394329
+        "precision": 0.6984775027643106,
+        "recall": 0.7483823931468149,
+        "f2": 0.7378389548778954
       },
       "ORGANIZATION": {
-        "precision": 0.5661662817551963,
-        "recall": 0.537668604013598,
-        "f2": 0.5431362991846863
+        "precision": 0.5556171061378241,
+        "recall": 0.549950652483825,
+        "f2": 0.5510746780361303
       },
       "LOCATION": {
-        "precision": 0.7101827676240209,
-        "recall": 0.28410734372489155,
-        "f2": 0.3228457169987035
+        "precision": 0.7196472518457753,
+        "recall": 0.2819379720392094,
+        "f2": 0.32098426637394806
       },
-      "DATE_TIME": null,
-      "QUANTITY": null,
-      "IDENTIFIER": {
-        "precision": 0.0,
-        "recall": 0.0,
-        "f2": 0.0
-      }
+      "DATE_TIME": {
+        "precision": 0.8590078328981723,
+        "recall": 0.45161290322580644,
+        "f2": 0.49893842887473455
+      },
+      "QUANTITY": {
+        "precision": 0.7215411558669002,
+        "recall": 0.8306451612903226,
+        "f2": 0.8062622309197652
+      },
+      "IDENTIFIER": null
     },
     "by_language": {
       "en": {
-        "precision": 0.633035204567079,
-        "recall": 0.4388538560987837,
-        "f2": 0.4675369211655113
+        "precision": 0.6712945462043369,
+        "recall": 0.5153953721537691,
+        "f2": 0.5405001577173595
       }
     }
   },
   "any_overlap": {
     "rule": "ANY_OVERLAP",
     "overall_micro": {
-      "precision": 0.7601522359657469,
-      "recall": 0.5269781799952508,
-      "f2": 0.5614209659375193
+      "precision": 0.7516065844187085,
+      "recall": 0.5770560143531833,
+      "f2": 0.6051642750812106
     },
     "macro": {
-      "precision": 0.5948440509102506,
-      "recall": 0.4711495773005985,
-      "f2": 0.481958714452537
+      "precision": 0.7675001030613406,
+      "recall": 0.6230056244077873,
+      "f2": 0.633885310723861
     },
     "by_type": {
       "PERSON": {
-        "precision": 0.8548163548163548,
-        "recall": 0.8992982775904493,
-        "f2": 0.8900353560862977
+        "precision": 0.8003742451305605,
+        "recall": 0.8575594641392509,
+        "f2": 0.8454779061618357
       },
       "ORGANIZATION": {
-        "precision": 0.6830254041570438,
-        "recall": 0.6486456848338633,
-        "f2": 0.6552419354838708
+        "precision": 0.6473520939508087,
+        "recall": 0.6407500822458603,
+        "f2": 0.6420596896839699
       },
       "LOCATION": {
-        "precision": 0.841534444667604,
-        "recall": 0.3366543467780813,
-        "f2": 0.38255756623997955
+        "precision": 0.7690730106644791,
+        "recall": 0.3013016230114093,
+        "f2": 0.34302963776070255
       },
-      "DATE_TIME": null,
-      "QUANTITY": null,
-      "IDENTIFIER": {
-        "precision": 0.0,
-        "recall": 0.0,
-        "f2": 0.0
-      }
+      "DATE_TIME": {
+        "precision": 0.8798955613577023,
+        "recall": 0.4625943719972546,
+        "f2": 0.5110706703063391
+      },
+      "QUANTITY": {
+        "precision": 0.7408056042031523,
+        "recall": 0.8528225806451613,
+        "f2": 0.8277886497064579
+      },
+      "IDENTIFIER": null
     },
     "by_language": {
       "en": {
-        "precision": 0.7601522359657469,
-        "recall": 0.5269781799952508,
-        "f2": 0.5614209659375193
+        "precision": 0.7516065844187085,
+        "recall": 0.5770560143531833,
+        "f2": 0.6051642750812106
       }
     }
   },
@@ -103,22 +111,38 @@
       "annotated-doc": "0.0.5",
       "annotated-types": "0.8.0",
       "anyio": "4.15.1",
+      "appnope": "1.0.0",
+      "argon2-cffi": "25.1.0",
+      "argon2-cffi-bindings": "26.1.0",
+      "arrow": "1.4.0",
+      "asttokens": "3.0.2",
+      "async-lru": "2.4.0",
       "attrs": "26.1.0",
+      "babel": "2.18.0",
+      "beautifulsoup4": "4.15.0",
+      "bleach": "6.4.0",
       "blis": "1.3.3",
       "catalogue": "2.0.10",
       "certifi": "2026.10.23",
+      "cffi": "2.1.1",
       "charset-normalizer": "3.5.2",
       "click": "8.5.0",
       "cloudpathlib": "0.26.0",
+      "comm": "0.2.3",
       "confection": "1.3.3",
       "contourpy": "1.4.0",
       "cycler": "0.12.1",
       "cymem": "2.0.16",
       "datasets": "5.1.0",
+      "debugpy": "1.8.22",
+      "defusedxml": "0.7.1",
       "dill": "0.4.1",
+      "executing": "2.3.0",
+      "fastjsonschema": "2.22.2",
       "filelock": "4.2.4",
       "flatbuffers": "25.12.19",
       "fonttools": "4.67.0",
+      "fqdn": "1.6.0",
       "frozenlist": "1.8.0",
       "fsspec": "2026.7.0",
       "gliner": "0.2.24",
@@ -132,69 +156,123 @@
       "idna": "3.20",
       "iniconfig": "2.3.1",
       "intervaltree": "3.2.1",
+      "ipykernel": "7.4.0",
+      "ipython": "9.17.1",
+      "ipython_pygments_lexers": "1.1.1",
+      "isoduration": "20.11.0",
+      "jedi": "0.20.1",
       "Jinja2": "3.1.6",
+      "json5": "0.17.3",
+      "jsonpointer": "3.6",
+      "jsonschema": "4.26.0",
+      "jsonschema-specifications": "2025.9.1",
+      "jupyter-events": "0.12.1",
+      "jupyter-lsp": "2.3.1",
+      "jupyter_builder": "1.2.4",
+      "jupyter_client": "8.10.0",
+      "jupyter_core": "5.9.1",
+      "jupyter_server": "2.21.1",
+      "jupyter_server_terminals": "0.5.4",
+      "jupyterlab": "4.6.4",
+      "jupyterlab_pygments": "0.3.0",
+      "jupyterlab_server": "2.28.1",
       "kiwisolver": "1.5.1",
+      "lark": "1.3.1",
       "markdown-it-py": "4.2.0",
       "MarkupSafe": "3.0.4",
       "matplotlib": "3.11.2",
+      "matplotlib-inline": "0.2.2",
       "mdurl": "0.1.2",
+      "mistune": "3.4.0",
       "mpmath": "1.3.0",
       "multidict": "7.2.1",
       "multiprocess": "0.70.19",
       "murmurhash": "1.0.16",
+      "nbclient": "0.11.0",
+      "nbconvert": "7.17.2",
+      "nbformat": "5.11.1",
+      "nest-asyncio2": "1.7.4",
       "networkx": "3.7",
+      "notebook_shim": "0.2.4",
       "numpy": "2.4.6",
       "onnxruntime": "1.31.0",
       "packaging": "26.3",
       "pandas": "3.1.0",
+      "pandocfilters": "1.5.1",
+      "parso": "0.8.7",
+      "pexpect": "4.9.0",
       "phonenumbers": "9.0.41",
       "pii-toolbox": "0.1.0",
       "pillow": "13.0.0",
+      "platformdirs": "4.13.6",
       "pluggy": "1.7.0",
       "preshed": "3.0.13",
       "presidio_analyzer": "2.2.364",
+      "prometheus_client": "0.26.0",
+      "prompt_toolkit": "3.0.53",
       "propcache": "0.5.4",
       "protobuf": "7.36.2",
       "psutil": "7.2.2",
+      "ptyprocess": "0.7.0",
+      "pure_eval": "0.2.4",
       "pyarrow": "26.0.0",
+      "pycparser": "3.12",
       "pydantic": "2.14.1",
       "pydantic_core": "2.50.1",
       "Pygments": "2.21.0",
       "pyparsing": "3.3.3",
       "pytest": "9.1.1",
       "python-dateutil": "3.0.0",
+      "python-json-logger": "4.2.0",
       "PyYAML": "6.0.3",
       "pyzmq": "27.2.0",
+      "referencing": "0.37.0",
       "regex": "2026.9.29",
       "requests": "2.34.2",
       "requests-file": "3.0.1",
+      "rfc3339-validator": "0.1.4",
+      "rfc3986-validator": "0.1.1",
+      "rfc3987-syntax": "1.1.0",
       "rich": "15.0.0",
+      "rpds-py": "2026.9.1",
       "safetensors": "0.8.0",
+      "Send2Trash": "2.1.0",
       "sentencepiece": "0.2.2",
       "setuptools": "84.2.1",
       "shellingham": "1.5.4",
       "six": "1.17.0",
       "smart_open": "8.0.4",
       "sortedcontainers": "2.4.0",
+      "soupsieve": "3.0.4",
       "spacy": "3.8.16",
       "spacy-legacy": "3.0.12",
       "spacy-loggers": "1.0.5",
       "srsly": "2.5.4",
+      "stack-data": "0.6.3",
       "sympy": "1.14.0",
+      "terminado": "0.18.1",
       "thinc": "8.3.13",
+      "tinycss2": "1.5.1",
       "tldextract": "5.4.0",
       "tokenizers": "0.23.3",
       "torch": "2.14.1",
+      "tornado": "6.6",
       "tqdm": "4.70.1",
+      "traitlets": "5.16.1",
       "transformers": "5.20.2",
       "truststore": "0.10.5",
       "typer": "0.27.3",
       "typing-inspection": "0.4.4",
       "typing_extensions": "4.16.0",
       "tzdata": "2026.5",
+      "uri-template": "1.3.0",
       "urllib3": "2.8.0",
       "wasabi": "1.1.3",
+      "wcwidth": "0.9.4",
       "weasel": "1.0.0",
+      "webcolors": "25.10.0",
+      "webencodings": "0.6.1",
+      "websocket-client": "1.9.2",
       "wrapt": "2.5.1",
       "xxhash": "4.0.2",
       "yarl": "1.25.1"
@@ -202,9 +280,11 @@
   },
   "detector_languages": null,
   "detector_detects": [
+    "DATE_TIME",
     "IDENTIFIER",
     "LOCATION",
     "ORGANIZATION",
-    "PERSON"
+    "PERSON",
+    "QUANTITY"
   ]
 }

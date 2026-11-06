@@ -2,30 +2,30 @@
 
 | Dataset | Tool | PERSON | ORGANIZATION | LOCATION | DATE_TIME | QUANTITY | IDENTIFIER |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| TAB | gliner | 0.628 | 0.551 | 0.639 | n/a | n/a | n/a |
-| TAB | presidio_structured | n/a | n/a | n/a | n/a | n/a | 0.010 |
-| TAB | roberta | 0.888 | 0.530 | 0.739 | n/a | n/a | n/a |
-| TAB | spacy_lg | 0.829 | 0.498 | 0.641 | 0.928 | 0.173 | n/a |
-| TAB | spacy_sm | 0.728 | 0.478 | 0.626 | 0.921 | 0.095 | n/a |
-| TAB | gliner+presidio_structured | 0.630 | 0.550 | 0.643 | n/a | n/a | 0.010 |
-| TAB | roberta+presidio_structured | 0.892 | 0.531 | 0.744 | n/a | n/a | 0.010 |
-| TAB | spacy_lg+presidio_structured | 0.829 | 0.498 | 0.641 | 0.928 | 0.173 | 0.010 |
-| TAB | spacy_sm+presidio_structured | 0.728 | 0.478 | 0.626 | 0.921 | 0.095 | 0.010 |
-| MAPA | gliner | 0.601 | 0.285 | 0.056 | n/a | n/a |  |
+| TAB | gliner | 0.647 | 0.566 | 0.578 | 0.769 | 0.375 | 0.511 |
+| TAB | presidio_structured | n/a | n/a | n/a | n/a | n/a | 0.011 |
+| TAB | roberta | 0.853 | 0.511 | 0.734 | n/a | n/a | n/a |
+| TAB | spacy_lg | 0.853 | 0.479 | 0.651 | 0.952 | 0.201 | n/a |
+| TAB | spacy_sm | 0.740 | 0.455 | 0.641 | 0.940 | 0.114 | n/a |
+| TAB | gliner+presidio_structured | 0.650 | 0.564 | 0.578 | 0.769 | 0.376 | 0.516 |
+| TAB | roberta+presidio_structured | 0.857 | 0.514 | 0.740 | n/a | n/a | 0.011 |
+| TAB | spacy_lg+presidio_structured | 0.853 | 0.479 | 0.651 | 0.952 | 0.201 | 0.011 |
+| TAB | spacy_sm+presidio_structured | 0.740 | 0.455 | 0.641 | 0.940 | 0.114 | 0.011 |
+| MAPA | gliner | 0.543 | 0.255 | 0.000 | 0.828 | 0.000 |  |
 | MAPA | presidio_structured | n/a | n/a | n/a | n/a | n/a |  |
-| MAPA | roberta | 0.736 | 0.253 | 0.826 | n/a | n/a |  |
-| MAPA | spacy_lg | 0.521 | 0.216 | 0.744 | 0.724 | n/a |  |
-| MAPA | spacy_sm | 0.531 | 0.181 | 0.769 | 0.657 | 0.000 |  |
-| MAPA | gliner+presidio_structured | 0.606 | 0.285 | 0.056 | n/a | n/a |  |
-| MAPA | roberta+presidio_structured | 0.734 | 0.256 | 0.826 | n/a | n/a |  |
-| MAPA | spacy_lg+presidio_structured | 0.521 | 0.216 | 0.744 | 0.725 | n/a |  |
-| MAPA | spacy_sm+presidio_structured | 0.531 | 0.181 | 0.769 | 0.658 | 0.000 |  |
-| Worldwide | gliner | 0.763 | 0.655 | 0.384 | n/a | n/a |  |
+| MAPA | roberta | 0.660 | 0.225 | 0.826 | n/a | n/a |  |
+| MAPA | spacy_lg | 0.521 | 0.162 | 0.744 | 0.715 | n/a |  |
+| MAPA | spacy_sm | 0.516 | 0.155 | 0.769 | 0.642 | 0.000 |  |
+| MAPA | gliner+presidio_structured | 0.548 | 0.256 | 0.000 | 0.828 | 0.000 |  |
+| MAPA | roberta+presidio_structured | 0.656 | 0.228 | 0.826 | n/a | n/a |  |
+| MAPA | spacy_lg+presidio_structured | 0.521 | 0.162 | 0.744 | 0.717 | n/a |  |
+| MAPA | spacy_sm+presidio_structured | 0.516 | 0.155 | 0.769 | 0.643 | 0.000 |  |
+| Worldwide | gliner | 0.728 | 0.642 | 0.344 | 0.510 | 0.828 |  |
 | Worldwide | presidio_structured | n/a | n/a | n/a | n/a | n/a |  |
-| Worldwide | roberta | 0.969 | 0.877 | 0.924 | n/a | n/a |  |
-| Worldwide | spacy_lg | 0.820 | 0.698 | 0.824 | 0.775 | 0.621 |  |
-| Worldwide | spacy_sm | 0.723 | 0.657 | 0.752 | 0.789 | 0.611 |  |
-| Worldwide | gliner+presidio_structured | 0.763 | 0.655 | 0.383 | n/a | n/a |  |
-| Worldwide | roberta+presidio_structured | 0.976 | 0.906 | 0.937 | n/a | n/a |  |
-| Worldwide | spacy_lg+presidio_structured | 0.821 | 0.698 | 0.824 | 0.775 | 0.621 |  |
-| Worldwide | spacy_sm+presidio_structured | 0.724 | 0.657 | 0.752 | 0.788 | 0.611 |  |
+| Worldwide | roberta | 0.961 | 0.854 | 0.889 | n/a | n/a |  |
+| Worldwide | spacy_lg | 0.811 | 0.676 | 0.799 | 0.691 | 0.560 |  |
+| Worldwide | spacy_sm | 0.709 | 0.632 | 0.729 | 0.707 | 0.534 |  |
+| Worldwide | gliner+presidio_structured | 0.727 | 0.642 | 0.343 | 0.511 | 0.828 |  |
+| Worldwide | roberta+presidio_structured | 0.968 | 0.882 | 0.902 | n/a | n/a |  |
+| Worldwide | spacy_lg+presidio_structured | 0.812 | 0.676 | 0.799 | 0.690 | 0.560 |  |
+| Worldwide | spacy_sm+presidio_structured | 0.710 | 0.632 | 0.730 | 0.706 | 0.534 |  |

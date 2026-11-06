@@ -39,48 +39,48 @@ z
    <g id="bar-PERSON-gliner">
     <path d="M 103.827273 320.4 
 L 110.824138 320.4 
-L 110.824138 150.008013 
-L 103.827273 150.008013 
+L 110.824138 144.068432 
+L 103.827273 144.068432 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #1f77b4"/>
    </g>
    <g id="bar-ORGANIZATION-gliner">
     <path d="M 182.542006 320.4 
 L 189.538871 320.4 
-L 189.538871 186.242308 
-L 182.542006 186.242308 
+L 189.538871 176.493136 
+L 182.542006 176.493136 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #1f77b4"/>
    </g>
    <g id="bar-LOCATION-gliner">
     <path d="M 261.25674 320.4 
 L 268.253605 320.4 
-L 268.253605 151.129709 
-L 261.25674 151.129709 
+L 268.253605 164.467503 
+L 261.25674 164.467503 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #1f77b4"/>
    </g>
    <g id="bar-DATE_TIME-gliner">
     <path d="M 339.971473 320.4 
 L 346.968339 320.4 
-L 346.968339 320.4 
-L 339.971473 320.4 
+L 346.968339 107.670971 
+L 339.971473 107.670971 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #1f77b4"/>
    </g>
    <g id="bar-QUANTITY-gliner">
     <path d="M 418.686207 320.4 
 L 425.683072 320.4 
-L 425.683072 320.4 
-L 418.686207 320.4 
+L 425.683072 218.985366 
+L 418.686207 218.985366 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #1f77b4"/>
    </g>
    <g id="bar-IDENTIFIER-gliner">
     <path d="M 497.40094 320.4 
 L 504.397806 320.4 
-L 504.397806 320.4 
-L 497.40094 320.4 
+L 504.397806 181.436697 
+L 497.40094 181.436697 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #1f77b4"/>
    </g>
@@ -135,24 +135,24 @@ z
    <g id="bar-PERSON-roberta">
     <path d="M 117.821003 320.4 
 L 124.817868 320.4 
-L 124.817868 286.036364 
-L 117.821003 286.036364 
+L 124.817868 284.77147 
+L 117.821003 284.77147 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #2ca02c"/>
    </g>
    <g id="bar-ORGANIZATION-roberta">
     <path d="M 196.535737 320.4 
 L 203.532602 320.4 
-L 203.532602 204.481405 
-L 196.535737 204.481405 
+L 203.532602 200.846771 
+L 196.535737 200.846771 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #2ca02c"/>
    </g>
    <g id="bar-LOCATION-roberta">
     <path d="M 275.25047 320.4 
 L 282.247335 320.4 
-L 282.247335 137.003989 
-L 275.25047 137.003989 
+L 282.247335 127.265029 
+L 275.25047 127.265029 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #2ca02c"/>
    </g>
@@ -183,40 +183,40 @@ z
    <g id="bar-PERSON-spacy_lg">
     <path d="M 124.817868 320.4 
 L 131.814734 320.4 
-L 131.814734 231.321034 
-L 124.817868 231.321034 
+L 131.814734 227.121477 
+L 124.817868 227.121477 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #d62728"/>
    </g>
    <g id="bar-ORGANIZATION-spacy_lg">
     <path d="M 203.532602 320.4 
 L 210.529467 320.4 
-L 210.529467 282.987209 
-L 203.532602 282.987209 
+L 210.529467 281.246311 
+L 203.532602 281.246311 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #d62728"/>
    </g>
    <g id="bar-LOCATION-spacy_lg">
     <path d="M 282.247335 320.4 
 L 289.244201 320.4 
-L 289.244201 173.329483 
-L 282.247335 173.329483 
+L 289.244201 164.909677 
+L 282.247335 164.909677 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #d62728"/>
    </g>
    <g id="bar-DATE_TIME-spacy_lg">
     <path d="M 360.962069 320.4 
 L 367.958934 320.4 
-L 367.958934 78.638461 
-L 360.962069 78.638461 
+L 367.958934 67.671842 
+L 360.962069 67.671842 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #d62728"/>
    </g>
    <g id="bar-QUANTITY-spacy_lg">
     <path d="M 439.676803 320.4 
 L 446.673668 320.4 
-L 446.673668 293.66045 
-L 439.676803 293.66045 
+L 446.673668 287.00241 
+L 439.676803 287.00241 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #d62728"/>
    </g>
@@ -231,40 +231,40 @@ z
    <g id="bar-PERSON-spacy_sm">
     <path d="M 131.814734 320.4 
 L 138.811599 320.4 
-L 138.811599 245.822596 
-L 131.814734 245.822596 
+L 138.811599 242.355932 
+L 131.814734 242.355932 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #9467bd"/>
    </g>
    <g id="bar-ORGANIZATION-spacy_sm">
     <path d="M 210.529467 320.4 
 L 217.526332 320.4 
-L 217.526332 289.738796 
-L 210.529467 289.738796 
+L 217.526332 288.204646 
+L 210.529467 288.204646 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #9467bd"/>
    </g>
    <g id="bar-LOCATION-spacy_sm">
     <path d="M 289.244201 320.4 
 L 296.241066 320.4 
-L 296.241066 173.942435 
-L 289.244201 173.942435 
+L 296.241066 165.572932 
+L 289.244201 165.572932 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #9467bd"/>
    </g>
    <g id="bar-DATE_TIME-spacy_sm">
     <path d="M 367.958934 320.4 
 L 374.955799 320.4 
-L 374.955799 84.91986 
-L 367.958934 84.91986 
+L 374.955799 73.939301 
+L 367.958934 73.939301 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #9467bd"/>
    </g>
    <g id="bar-QUANTITY-spacy_sm">
     <path d="M 446.673668 320.4 
 L 453.670533 320.4 
-L 453.670533 305.582566 
-L 446.673668 305.582566 
+L 453.670533 301.786364 
+L 446.673668 301.786364 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #9467bd"/>
    </g>
@@ -279,72 +279,72 @@ z
    <g id="bar-PERSON-gliner+presidio_structured">
     <path d="M 138.811599 320.4 
 L 145.808464 320.4 
-L 145.808464 149.545792 
-L 138.811599 149.545792 
+L 145.808464 143.363115 
+L 138.811599 143.363115 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #8c564b"/>
    </g>
    <g id="bar-ORGANIZATION-gliner+presidio_structured">
     <path d="M 217.526332 320.4 
 L 224.523197 320.4 
-L 224.523197 186.256592 
-L 217.526332 186.256592 
+L 224.523197 176.474766 
+L 217.526332 176.474766 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #8c564b"/>
    </g>
    <g id="bar-LOCATION-gliner+presidio_structured">
     <path d="M 296.241066 320.4 
 L 303.237931 320.4 
-L 303.237931 150.816314 
-L 296.241066 150.816314 
+L 303.237931 164.459948 
+L 296.241066 164.459948 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #8c564b"/>
    </g>
    <g id="bar-DATE_TIME-gliner+presidio_structured">
     <path d="M 374.955799 320.4 
 L 381.952665 320.4 
-L 381.952665 320.4 
-L 374.955799 320.4 
+L 381.952665 107.653406 
+L 374.955799 107.653406 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #8c564b"/>
    </g>
    <g id="bar-QUANTITY-gliner+presidio_structured">
     <path d="M 453.670533 320.4 
 L 460.667398 320.4 
-L 460.667398 320.4 
-L 453.670533 320.4 
+L 460.667398 218.794737 
+L 453.670533 218.794737 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #8c564b"/>
    </g>
    <g id="bar-IDENTIFIER-gliner+presidio_structured">
     <path d="M 532.385266 320.4 
 L 539.382132 320.4 
-L 539.382132 320.4 
-L 532.385266 320.4 
+L 539.382132 181.98094 
+L 532.385266 181.98094 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #8c564b"/>
    </g>
    <g id="bar-PERSON-roberta+presidio_structured">
     <path d="M 145.808464 320.4 
 L 152.805329 320.4 
-L 152.805329 286.056212 
-L 145.808464 286.056212 
+L 152.805329 284.783816 
+L 145.808464 284.783816 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #e377c2"/>
    </g>
    <g id="bar-ORGANIZATION-roberta+presidio_structured">
     <path d="M 224.523197 320.4 
 L 231.520063 320.4 
-L 231.520063 203.684211 
-L 224.523197 203.684211 
+L 231.520063 199.976712 
+L 224.523197 199.976712 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #e377c2"/>
    </g>
    <g id="bar-LOCATION-roberta+presidio_structured">
     <path d="M 303.237931 320.4 
 L 310.234796 320.4 
-L 310.234796 136.308046 
-L 303.237931 136.308046 
+L 310.234796 126.435326 
+L 303.237931 126.435326 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #e377c2"/>
    </g>
@@ -375,40 +375,40 @@ z
    <g id="bar-PERSON-spacy_lg+presidio_structured">
     <path d="M 152.805329 320.4 
 L 159.802194 320.4 
-L 159.802194 231.321034 
-L 152.805329 231.321034 
+L 159.802194 227.121477 
+L 152.805329 227.121477 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #7f7f7f"/>
    </g>
    <g id="bar-ORGANIZATION-spacy_lg+presidio_structured">
     <path d="M 231.520063 320.4 
 L 238.516928 320.4 
-L 238.516928 282.987209 
-L 231.520063 282.987209 
+L 238.516928 281.246311 
+L 231.520063 281.246311 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #7f7f7f"/>
    </g>
    <g id="bar-LOCATION-spacy_lg+presidio_structured">
     <path d="M 310.234796 320.4 
 L 317.231661 320.4 
-L 317.231661 173.329483 
-L 310.234796 173.329483 
+L 317.231661 164.909677 
+L 310.234796 164.909677 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #7f7f7f"/>
    </g>
    <g id="bar-DATE_TIME-spacy_lg+presidio_structured">
     <path d="M 388.94953 320.4 
 L 395.946395 320.4 
-L 395.946395 78.621106 
-L 388.94953 78.621106 
+L 395.946395 67.652624 
+L 388.94953 67.652624 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #7f7f7f"/>
    </g>
    <g id="bar-QUANTITY-spacy_lg+presidio_structured">
     <path d="M 467.664263 320.4 
 L 474.661129 320.4 
-L 474.661129 293.66045 
-L 467.664263 293.66045 
+L 474.661129 287.00241 
+L 467.664263 287.00241 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #7f7f7f"/>
    </g>
@@ -423,40 +423,40 @@ z
    <g id="bar-PERSON-spacy_sm+presidio_structured">
     <path d="M 159.802194 320.4 
 L 166.79906 320.4 
-L 166.79906 245.822596 
-L 159.802194 245.822596 
+L 166.79906 242.355932 
+L 159.802194 242.355932 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #bcbd22"/>
    </g>
    <g id="bar-ORGANIZATION-spacy_sm+presidio_structured">
     <path d="M 238.516928 320.4 
 L 245.513793 320.4 
-L 245.513793 289.738796 
-L 238.516928 289.738796 
+L 245.513793 288.204646 
+L 238.516928 288.204646 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #bcbd22"/>
    </g>
    <g id="bar-LOCATION-spacy_sm+presidio_structured">
     <path d="M 317.231661 320.4 
 L 324.228527 320.4 
-L 324.228527 173.942435 
-L 317.231661 173.942435 
+L 324.228527 165.572932 
+L 317.231661 165.572932 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #bcbd22"/>
    </g>
    <g id="bar-DATE_TIME-spacy_sm+presidio_structured">
     <path d="M 395.946395 320.4 
 L 402.94326 320.4 
-L 402.94326 84.88615 
-L 395.946395 84.88615 
+L 402.94326 73.901933 
+L 395.946395 73.901933 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #bcbd22"/>
    </g>
    <g id="bar-QUANTITY-spacy_sm+presidio_structured">
     <path d="M 474.661129 320.4 
 L 481.657994 320.4 
-L 481.657994 305.582566 
-L 474.661129 305.582566 
+L 481.657994 301.786364 
+L 474.661129 301.786364 
 z
 " clip-path="url(#pc5be060dd4)" style="fill: #bcbd22"/>
    </g>
