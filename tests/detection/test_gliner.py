@@ -13,7 +13,10 @@ from pii_toolbox.evaluation.model_manifest import default_model_dir
 # Resolved at import so the per-test sandbox home does not hide the downloaded models.
 MODEL_DIR = default_model_dir()
 
-TEXT = "Maria Gonzalez works at Acme Corp in Lisbon, mail maria@example.com."
+TEXT = (
+    "Maria Gonzalez works at Acme Corp in Lisbon, mail maria@example.com. "
+    "On 3 May 2001 she paid EUR 2,500 in case 36110/97 under ID 1234567890."
+)
 NAME = "Maria Gonzalez"
 
 
@@ -40,6 +43,10 @@ def test_labels_map_to_common_types_and_unlisted_labels_are_dropped():
             entity(text, "location", "Lisbon"),
             entity(text, "address", "Lisbon"),
             entity(text, "email", "maria@example.com"),
+            entity(text, "date", "3 May 2001"),
+            entity(text, "money", "EUR 2,500"),
+            entity(text, "case number", "36110/97"),
+            entity(text, "identification number", "1234567890"),
         ]
 
     model = StubModel(entities_for)
@@ -48,17 +55,39 @@ def test_labels_map_to_common_types_and_unlisted_labels_are_dropped():
         (NAME, PiiType.PERSON),
         ("Acme Corp", PiiType.ORGANIZATION),
         ("Lisbon", PiiType.LOCATION),
+        ("3 May 2001", PiiType.DATE_TIME),
+        ("EUR 2,500", PiiType.QUANTITY),
+        ("36110/97", PiiType.IDENTIFIER),
+        ("1234567890", PiiType.IDENTIFIER),
     ]
     assert not any(s.detector_label == "email" for s in spans)
-    assert model.asked[0] == ["person", "organization", "location", "address"]
+    assert model.asked[0] == list(REQUESTED_LABELS)
 
 
 def test_requested_labels_and_interface_properties():
-    assert REQUESTED_LABELS == ("person", "organization", "location", "address")
+    assert REQUESTED_LABELS == (
+        "person",
+        "organization",
+        "location",
+        "address",
+        "date",
+        "money",
+        "case number",
+        "identification number",
+    )
     detector = GlinerDetector(model=StubModel(lambda text: []))
     assert detector.name == "gliner"
     assert detector.languages is None
-    assert detector.detects == frozenset({PiiType.PERSON, PiiType.ORGANIZATION, PiiType.LOCATION})
+    assert detector.detects == frozenset(
+        {
+            PiiType.PERSON,
+            PiiType.ORGANIZATION,
+            PiiType.LOCATION,
+            PiiType.DATE_TIME,
+            PiiType.QUANTITY,
+            PiiType.IDENTIFIER,
+        }
+    )
 
 
 def test_long_text_gives_spans_at_correct_positions_across_segment_joins():

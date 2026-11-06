@@ -62,7 +62,7 @@ def test_unreported_type_is_none_and_excluded_from_macro():
     report = score(unbalanced_fixture(), reported_types=frozenset({PiiType.PERSON}))
     assert report.by_type[PiiType.LOCATION] is None
     assert report.macro.f2 == pytest.approx(0.8)
-    assert report.overall_micro.recall == pytest.approx(9 / 14)
+    assert report.overall_micro.recall == pytest.approx(8 / 10)
 
 
 def test_empty_input_gives_zeros_not_an_error():
@@ -113,3 +113,50 @@ def test_type_with_answers_but_no_predictions_still_scores_zero():
     report = score(results)
     assert report.by_type[PiiType.IDENTIFIER].recall == 0.0
     assert report.by_type[PiiType.PERSON] is None
+
+
+def identifier_and_person_false_positive_results():
+    answers = [answer(0, 5, PiiType.PERSON)]
+    spans = [predicted(0, 5, PiiType.PERSON), predicted(100, 105, PiiType.IDENTIFIER)]
+    return [(Document("d", "x" * 200, "en"), spans, answers)]
+
+
+def test_prediction_of_unannotated_type_does_not_lower_micro_precision():
+    annotated = frozenset(PiiType) - {PiiType.IDENTIFIER}
+    report = score(identifier_and_person_false_positive_results(), annotated_types=annotated)
+    assert report.overall_micro.precision == 1.0
+    assert report.by_type[PiiType.IDENTIFIER] is None
+
+
+def test_prediction_of_unannotated_type_counts_without_a_declaration():
+    report = score(identifier_and_person_false_positive_results())
+    assert report.overall_micro.precision == pytest.approx(0.5)
+
+
+def test_false_positive_of_annotated_type_still_lowers_micro_precision():
+    annotated = frozenset(PiiType) - {PiiType.IDENTIFIER}
+    spans = [predicted(0, 5, PiiType.PERSON), predicted(100, 105, PiiType.PERSON), predicted(150, 155, PiiType.IDENTIFIER)]
+    results = [(Document("d", "x" * 200, "en"), spans, [answer(0, 5, PiiType.PERSON)])]
+    report = score(results, annotated_types=annotated)
+    assert report.overall_micro.precision == pytest.approx(0.5)
+    assert report.by_type[PiiType.PERSON].precision == pytest.approx(0.5)
+
+
+def person_and_date_answer_results():
+    answers = [answer(0, 5, PiiType.PERSON), answer(10, 15, PiiType.PERSON), answer(20, 25, PiiType.DATE_TIME)]
+    spans = [predicted(0, 5, PiiType.PERSON)]
+    return [(Document("d", "x" * 100, "en"), spans, answers)]
+
+
+def test_micro_recall_ignores_answers_of_types_the_detector_does_not_report():
+    report = score(person_and_date_answer_results(), reported_types=frozenset({PiiType.PERSON}))
+    assert report.overall_micro.recall == pytest.approx(1 / 2)
+    assert report.by_language["en"].recall == pytest.approx(1 / 2)
+    assert report.by_type[PiiType.DATE_TIME] is None
+
+
+def test_micro_recall_counts_misses_of_every_type_the_detector_reports():
+    reported = frozenset({PiiType.PERSON, PiiType.DATE_TIME})
+    report = score(person_and_date_answer_results(), reported_types=reported)
+    assert report.overall_micro.recall == pytest.approx(1 / 3)
+    assert report.by_language["en"].recall == pytest.approx(1 / 3)

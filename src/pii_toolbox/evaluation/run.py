@@ -97,8 +97,18 @@ def run_evaluation(
         coreference=request.coreference,
         dataset=request.dataset.name.lower(),
         split=request.split,
-        exact_boundaries=scorer.score(results, SpanMatchRule.EXACT_BOUNDARIES, reported_types=detector.detects),
-        any_overlap=scorer.score(results, SpanMatchRule.ANY_OVERLAP, reported_types=detector.detects),
+        exact_boundaries=scorer.score(
+            results,
+            SpanMatchRule.EXACT_BOUNDARIES,
+            reported_types=detector.detects,
+            annotated_types=request.dataset.annotated_types,
+        ),
+        any_overlap=scorer.score(
+            results,
+            SpanMatchRule.ANY_OVERLAP,
+            reported_types=detector.detects,
+            annotated_types=request.dataset.annotated_types,
+        ),
         tab_metrics=tab_scorer.score(scored) if is_tab else None,
         environment=environment or collect_environment(),
     )

@@ -96,3 +96,7 @@ def test_real_corpus_has_each_headline_language_per_split():
     for split in DatasetSplit:
         for language in ("en", "fr", "de"):
             assert next(dataset.load(split, language), None) is not None
+
+
+def test_annotates_every_common_type_except_identifier():
+    assert MapaDataset(REAL_DATA_DIR).annotated_types == frozenset(PiiType) - {PiiType.IDENTIFIER}

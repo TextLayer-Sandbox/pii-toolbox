@@ -11,7 +11,7 @@ import json
 from collections.abc import Iterable, Iterator, Sequence
 from pathlib import Path
 
-from pii_toolbox.core import AnnotatedDocument, AnswerSpan, Dataset, DatasetSplit, Document
+from pii_toolbox.core import AnnotatedDocument, AnswerSpan, Dataset, DatasetSplit, Document, PiiType
 from pii_toolbox.core.label_maps import MAPA_LABELS, OptionalLabelMap
 from pii_toolbox.datasets.download import default_data_dir
 
@@ -91,6 +91,10 @@ class MapaDataset(Dataset):
     @property
     def languages(self) -> frozenset[str]:
         return MAPA_LANGUAGES
+
+    @property
+    def annotated_types(self) -> frozenset[PiiType]:
+        return frozenset(PiiType) - {PiiType.IDENTIFIER}
 
     def load(self, split: DatasetSplit, language: str | None = None) -> Iterator[AnnotatedDocument]:
         sentences_by_file: dict[tuple[str, str], list[dict]] = {}

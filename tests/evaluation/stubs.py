@@ -61,6 +61,10 @@ class StubDataset(Dataset):
     def languages(self):
         return frozenset({"en", "fr"})
 
+    @property
+    def annotated_types(self):
+        return frozenset(PiiType)
+
     def load(self, split, language=None):
         answers = (
             AnswerSpan(*FULL_NAME, PiiType.PERSON, "PERSON", "A", ReidentificationRisk.DIRECT, "e1"),

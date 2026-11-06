@@ -50,6 +50,10 @@ GLINER_LABELS: OptionalLabelMap = {
     "organization": PiiType.ORGANIZATION,
     "location": PiiType.LOCATION,
     "address": PiiType.LOCATION,
+    "date": PiiType.DATE_TIME,
+    "money": PiiType.QUANTITY,
+    "case number": PiiType.IDENTIFIER,
+    "identification number": PiiType.IDENTIFIER,
 }
 
 ROBERTA_LABELS: OptionalLabelMap = {

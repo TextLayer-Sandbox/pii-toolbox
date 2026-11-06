@@ -55,3 +55,7 @@ def test_real_corpus_split_sizes():
     dataset = TabDataset(REAL_DATA_DIR)
     sizes = [sum(1 for _ in dataset.load(split)) for split in DatasetSplit]
     assert sizes == [1014, 127, 127]
+
+
+def test_annotates_every_common_type():
+    assert TabDataset(FIXTURES).annotated_types == frozenset(PiiType)

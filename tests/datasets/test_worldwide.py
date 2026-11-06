@@ -107,3 +107,7 @@ def test_name_and_languages():
 @pytest.mark.data
 def test_real_download_has_every_article():
     assert len(load_all(REAL_DATA_DIR)) == 1069
+
+
+def test_annotates_every_common_type_except_identifier():
+    assert WorldwideDataset(REAL_DATA_DIR).annotated_types == frozenset(PiiType) - {PiiType.IDENTIFIER}

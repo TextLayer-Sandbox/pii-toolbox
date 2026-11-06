@@ -15,8 +15,30 @@ def match(predictions, answers, rule=SpanMatchRule.ANY_OVERLAP):
 
 
 def test_one_prediction_over_two_answers_is_credited_once():
-    counts = match([predicted(0, 30)], [answer(0, 10), answer(20, 30)])
+    counts = match([predicted(0, 20)], [answer(0, 10), answer(10, 20)])
     assert counts[PiiType.PERSON] == MatchCounts(1, 0, 1)
+
+
+def test_overlap_of_exactly_half_the_longer_span_is_hit_under_any_overlap():
+    counts = match([predicted(0, 10)], [answer(5, 15)])
+    assert counts[PiiType.PERSON] == MatchCounts(1, 0, 0)
+
+
+def test_overlap_just_under_half_the_longer_span_is_miss_under_any_overlap():
+    counts = match([predicted(0, 10)], [answer(6, 16)])
+    assert counts[PiiType.PERSON] == MatchCounts(0, 1, 1)
+
+
+def test_missing_title_is_hit_under_any_overlap():
+    text = "Mr Galip Yalman"
+    start = text.index("Galip")
+    counts = match([predicted(start, len(text))], [answer(0, len(text))])
+    assert counts[PiiType.PERSON] == MatchCounts(1, 0, 0)
+
+
+def test_one_character_overlap_is_miss_under_any_overlap():
+    counts = match([predicted(0, 10)], [answer(9, 19)])
+    assert counts[PiiType.PERSON] == MatchCounts(0, 1, 1)
 
 
 def test_off_by_one_is_hit_under_any_overlap():
@@ -57,3 +79,43 @@ def test_longest_overlap_wins_the_answer():
 
 def test_counts_are_keyed_by_every_type():
     assert set(match([], [])) == set(PiiType)
+
+
+def test_overlapping_same_type_answers_are_one_hit_when_a_prediction_matches_either():
+    for prediction in (predicted(0, 10), predicted(5, 15)):
+        counts = match([prediction], [answer(0, 10), answer(5, 15)])
+        assert counts[PiiType.PERSON] == MatchCounts(1, 0, 0)
+
+
+def test_overlapping_same_type_answers_are_one_miss_without_a_prediction():
+    counts = match([], [answer(0, 10), answer(5, 15)])
+    assert counts[PiiType.PERSON] == MatchCounts(0, 0, 1)
+
+
+def test_chained_overlapping_answers_are_one_group():
+    counts = match([predicted(0, 10)], [answer(0, 10), answer(8, 18), answer(16, 26)])
+    assert counts[PiiType.PERSON] == MatchCounts(1, 0, 0)
+    assert match([], [answer(0, 10), answer(8, 18), answer(16, 26)])[PiiType.PERSON] == MatchCounts(0, 0, 1)
+
+
+def test_touching_answers_are_not_grouped():
+    counts = match([], [answer(0, 10), answer(10, 20)])
+    assert counts[PiiType.PERSON] == MatchCounts(0, 0, 2)
+
+
+def test_overlapping_answers_of_different_types_stay_separate():
+    answers = [answer(0, 10), answer(5, 15, PiiType.ORGANIZATION)]
+    counts = match([predicted(0, 10)], answers)
+    assert counts[PiiType.PERSON] == MatchCounts(1, 0, 0)
+    assert counts[PiiType.ORGANIZATION] == MatchCounts(0, 0, 1)
+
+
+def test_strict_hit_on_either_group_member_exact_offsets():
+    for prediction in (predicted(0, 10), predicted(5, 15)):
+        counts = match([prediction], [answer(0, 10), answer(5, 15)], SpanMatchRule.EXACT_BOUNDARIES)
+        assert counts[PiiType.PERSON] == MatchCounts(1, 0, 0)
+
+
+def test_strict_prediction_matching_no_member_exactly_is_miss_and_false_positive():
+    counts = match([predicted(0, 12)], [answer(0, 10), answer(5, 15)], SpanMatchRule.EXACT_BOUNDARIES)
+    assert counts[PiiType.PERSON] == MatchCounts(0, 1, 1)

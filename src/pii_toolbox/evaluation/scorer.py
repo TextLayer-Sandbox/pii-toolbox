@@ -99,9 +99,13 @@ class MatchingDetectionScorer(DetectionScorer):
 
     Beyond the abstract signature, `score` takes an optional keyword `reported_types`
     (default: all six types): the types the detector can report. An unreported type is
-    None in the per-type breakdown and is left out of the macro average; its answers still
-    count as misses in the pooled overall score. A type with no answers and no predictions
-    in the scored data is likewise None and left out of the macro average.
+    None in the per-type breakdown and is left out of the macro average; its answers are
+    also left out of the pooled overall and per-language scores. A type with no answers and
+    no predictions in the scored data is likewise None and left out of the macro average.
+
+    The optional keyword `annotated_types` (default None, no filtering) names the types the
+    dataset annotates. Predictions of any other type are dropped before matching, so they are
+    neither true nor false positives in the per-type counts or the pooled score.
     """
 
     def score(
@@ -110,7 +114,21 @@ class MatchingDetectionScorer(DetectionScorer):
         rule: SpanMatchRule,
         *,
         reported_types: frozenset[PiiType] = frozenset(PiiType),
+        annotated_types: frozenset[PiiType] | None = None,
     ) -> DetectionReport:
+        if annotated_types is not None:
+            results = [
+                (document, [span for span in predicted if span.pii_type in annotated_types], answers)
+                for document, predicted, answers in results
+            ]
+        results = [
+            (
+                document,
+                predicted,
+                [answer for answer in answers if answer.pii_type is None or answer.pii_type in reported_types],
+            )
+            for document, predicted, answers in results
+        ]
         per_type, per_language = count_matches(results, rule)
         by_type, micro, macro = overall_scores(per_type, frozenset(PiiType), reported_types)
         return DetectionReport(

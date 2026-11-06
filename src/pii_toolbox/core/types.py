@@ -349,6 +349,12 @@ class Dataset(ABC):
     @abstractmethod
     def languages(self) -> frozenset[str]: ...
 
+    @property
+    @abstractmethod
+    def annotated_types(self) -> frozenset[PiiType]:
+        """The common types the dataset annotates; a prediction of any other type can never be correct."""
+        ...
+
     @abstractmethod
     def load(
         self, split: DatasetSplit, language: str | None = None

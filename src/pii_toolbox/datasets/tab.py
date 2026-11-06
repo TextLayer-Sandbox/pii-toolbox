@@ -18,6 +18,7 @@ from pii_toolbox.core import (
     Dataset,
     DatasetSplit,
     Document,
+    PiiType,
     ReidentificationRisk,
 )
 from pii_toolbox.core.label_maps import TAB_LABELS
@@ -50,6 +51,10 @@ class TabDataset(Dataset):
     @property
     def languages(self) -> frozenset[str]:
         return frozenset({LANGUAGE})
+
+    @property
+    def annotated_types(self) -> frozenset[PiiType]:
+        return frozenset(PiiType)
 
     def load(self, split: DatasetSplit, language: str | None = None) -> Iterator[AnnotatedDocument]:
         if language not in (None, LANGUAGE):

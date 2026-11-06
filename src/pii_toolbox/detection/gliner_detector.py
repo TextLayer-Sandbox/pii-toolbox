@@ -14,7 +14,16 @@ from pii_toolbox.detection.segmenter import OverlappingTextSegmenter, detect_seg
 from pii_toolbox.evaluation.model_manifest import default_model_dir
 
 MODEL_FOLDER = "urchade__gliner_multi_pii-v1"
-REQUESTED_LABELS = ("person", "organization", "location", "address")
+REQUESTED_LABELS = (
+    "person",
+    "organization",
+    "location",
+    "address",
+    "date",
+    "money",
+    "case number",
+    "identification number",
+)
 SEGMENT_CHARACTERS = 1200
 SEGMENT_OVERLAP_CHARACTERS = 150
 SCORE_THRESHOLD = 0.5
@@ -65,7 +74,16 @@ class GlinerDetector(Detector):
 
     @property
     def detects(self) -> frozenset[PiiType]:
-        return frozenset({PiiType.PERSON, PiiType.ORGANIZATION, PiiType.LOCATION})
+        return frozenset(
+            {
+                PiiType.PERSON,
+                PiiType.ORGANIZATION,
+                PiiType.LOCATION,
+                PiiType.DATE_TIME,
+                PiiType.QUANTITY,
+                PiiType.IDENTIFIER,
+            }
+        )
 
     def load_models(self) -> None:
         from gliner import GLiNER

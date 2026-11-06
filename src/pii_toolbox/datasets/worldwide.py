@@ -11,7 +11,7 @@ import tarfile
 from collections.abc import Iterator
 from pathlib import Path
 
-from pii_toolbox.core import AnnotatedDocument, Dataset, DatasetSplit
+from pii_toolbox.core import AnnotatedDocument, Dataset, DatasetSplit, PiiType
 from pii_toolbox.core.label_maps import WORLDWIDE_LABELS
 from pii_toolbox.datasets.download import default_data_dir
 from pii_toolbox.datasets.mapa import document_from_sentences
@@ -32,6 +32,10 @@ class WorldwideDataset(Dataset):
     @property
     def languages(self) -> frozenset[str]:
         return frozenset({"en"})
+
+    @property
+    def annotated_types(self) -> frozenset[PiiType]:
+        return frozenset(PiiType) - {PiiType.IDENTIFIER}
 
     def load(self, split: DatasetSplit, language: str | None = None) -> Iterator[AnnotatedDocument]:
         if language is not None and language != "en":

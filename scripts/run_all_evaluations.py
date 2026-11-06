@@ -16,7 +16,7 @@ from collections.abc import Callable, Iterator, Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
-from pii_toolbox.core import Dataset, DatasetSplit, DetectorRegistry, IdentityResolver, TabMetricsScorer
+from pii_toolbox.core import Dataset, DatasetSplit, DetectorRegistry, IdentityResolver, PiiType, TabMetricsScorer
 from pii_toolbox.datasets.download import default_data_dir
 from pii_toolbox.evaluation.__main__ import DATASET_FACTORIES, DatasetFactory, SPLIT_NAMES, _default_tab_scorer, evaluate_one
 from pii_toolbox.evaluation.configs import RunSpec, all_runs
@@ -45,6 +45,10 @@ class LimitedDataset(Dataset):
     @property
     def languages(self) -> frozenset[str]:
         return self._inner.languages
+
+    @property
+    def annotated_types(self) -> frozenset[PiiType]:
+        return self._inner.annotated_types
 
     def load(self, split: DatasetSplit, language: str | None = None) -> Iterator:
         return itertools.islice(self._inner.load(split, language), self._limit)
