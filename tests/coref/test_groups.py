@@ -83,3 +83,22 @@ def test_title_without_surname_is_not_a_name_form():
 def test_mention_outside_document_raises():
     with pytest.raises(ValueError):
         build_groups(DOC, [person(*DAVID)], [[DAVID, (0, len(TEXT) + 1)]])
+
+
+def test_mention_overlapping_two_detected_names_links_neither():
+    text = "John Smith's wife Mary Jones said she left."
+    doc = Document(id="d2", text=text, language="en")
+    john = pos(text, "John Smith")
+    mary = pos(text, "Mary Jones")
+    both = pos(text, "John Smith's wife Mary Jones")
+    groups = build_groups(doc, [person(*john), person(*mary)], [[both, pos(text, "she")], [john], [mary]])
+    assert [[(s.start, s.end) for s in g.spans] for g in groups] == [[john], [mary]]
+
+
+def test_mention_inside_detected_name_still_links():
+    text = "John Smith arrived. Smith sat down."
+    doc = Document(id="d3", text=text, language="en")
+    john = pos(text, "John Smith")
+    smith = pos(text, "Smith", 1)
+    (group,) = build_groups(doc, [person(*john)], [[john, smith]])
+    assert [(s.start, s.end) for s in group.spans] == [john, smith]

@@ -4,7 +4,8 @@ A cluster becomes a group only when it holds a detected PERSON span. Name-form m
 the detector missed are added to the group; pronouns and descriptions are dropped. Each
 group holds spans by position only, and its canonical span is the longest of them.
 
-A mention is a name form when it overlaps a detected PERSON span, or when it is a title
+A mention that overlaps more than one distinct detected PERSON span links none of them and is ignored.
+A mention is a name form when it overlaps exactly one detected PERSON span, or when it is a title
 followed by capitalised words, or when every word in it is capitalised and none is a pronoun.
 """
 
@@ -52,9 +53,10 @@ def _group_from_cluster(
     for start, end in cluster:
         if not 0 <= start < end <= len(document.text):
             raise ValueError(f"mention ({start}, {end}) is outside document {document.id!r}")
-        overlapping = [span for span in person_spans if span.start < end and start < span.end]
-        for span in overlapping:
-            detected_in_cluster[(span.start, span.end)] = span
+        overlapping = {(span.start, span.end): span for span in person_spans if span.start < end and start < span.end}
+        if len(overlapping) > 1:
+            continue
+        detected_in_cluster.update(overlapping)
         if not overlapping and _is_name_form(document.text[start:end]):
             added[(start, end)] = Span(
                 start=start,

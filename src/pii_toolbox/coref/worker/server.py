@@ -112,14 +112,15 @@ def token_character_offsets(text: str, tokens: list[str]) -> list[tuple[int, int
     return offsets
 
 
-def overlaps_any(mention: tuple[int, int], names: list[list[int]]) -> bool:
-    return any(mention[0] < end and start < mention[1] for start, end in names)
+def overlaps_exactly_one(mention: tuple[int, int], names: list[list[int]]) -> bool:
+    """Whether the mention overlaps exactly one distinct name span."""
+    return len({(start, end) for start, end in names if mention[0] < end and start < mention[1]}) == 1
 
 
 def handle(raw: bytes, predict) -> bytes:
     request = json.loads(raw)
     clusters = predict(request["text"])
-    kept = [cluster for cluster in clusters if any(overlaps_any(m, request["names"]) for m in cluster)]
+    kept = [cluster for cluster in clusters if any(overlaps_exactly_one(m, request["names"]) for m in cluster)]
     return json.dumps({"id": request["id"], "clusters": kept}).encode()
 
 
