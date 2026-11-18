@@ -1,13 +1,4 @@
-"""TAB's own anonymisation metrics: entity recall on direct and quasi identifiers, and weighted precision.
-
-The definitions follow the TAB benchmark. An entity is one annotator's set of mentions that
-share an entity id. It needs masking when any of its mentions is marked DIRECT or QUASI, and
-it is direct when its first mention is DIRECT. An entity counts as found only when every
-mention that needs masking is covered by the predicted spans, ignoring punctuation, spaces,
-function words and titles. Recall pools entities over annotators. Precision is taken over the
-word tokens inside predicted spans: each token earns the share of annotators whose masking
-mention fully covers it, weighted by how much information the token carries.
-"""
+"""TAB's own anonymisation metrics: entity recall on direct and quasi identifiers, and weighted precision."""
 
 import math
 import re
@@ -28,7 +19,7 @@ from pii_toolbox.core import (
     TabOfficialMetrics,
 )
 from pii_toolbox.detection.spacy_detectors import unpack_model
-from pii_toolbox.evaluation.model_manifest import default_model_dir
+from pii_toolbox.core.model_dir import default_model_dir
 
 IGNORED_PARTS_OF_SPEECH = frozenset({"ADP", "PART", "CCONJ", "DET"})
 IGNORED_WORDS = frozenset({"mr", "mrs", "ms", "no", "nr", "about"})
@@ -190,12 +181,7 @@ def spacy_token_annotator(model_dir: Path | None = None) -> TokenAnnotator:
 
 
 class BertInformationWeigher:
-    """Weighs each span by how surprising it is to BERT: the negative log probability of its tokens when masked.
-
-    A span covering several BERT tokens takes the lowest token probability; a span covering
-    none weighs zero. Long texts are cut into fixed-size segments so each fits the model.
-    The model loads from the local Hugging Face cache only.
-    """
+    """Weighs each span by the negative log of the lowest probability BERT gives its masked tokens, zero for a span covering none."""
 
     def __init__(self, model_dir: Path | None = None, segment_size: int = BERT_SEGMENT_SIZE) -> None:
         import torch

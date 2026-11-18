@@ -1,11 +1,4 @@
-"""Identity resolver backed by a co-reference worker process.
-
-The worker runs in its own uv environment and is reached over a ZeroMQ DEALER socket on a
-local ipc:// endpoint. start() waits for a {"ready": true} message before returning. Requests
-carry an id and replies are matched by it. A reply that does not arrive in time restarts the
-worker and resends the request (Lazy Pirate), up to a capped number of retries. Replies hold character positions only; the resolver turns them into
-entity groups.
-"""
+"""Identity resolver that talks to a co-reference worker process over a ZeroMQ socket."""
 
 import itertools
 import json
@@ -24,7 +17,7 @@ import zmq
 from pii_toolbox.coref.groups import RESOLVER_NAME, build_groups
 from pii_toolbox.coref.nickname_step import NicknameConfig, apply_nickname_step
 from pii_toolbox.core import Document, PersonMentions, IdentityResolver, PiiType, Span
-from pii_toolbox.evaluation.model_manifest import default_model_dir
+from pii_toolbox.core.model_dir import default_model_dir
 
 WORKER_DIR = Path(__file__).parent / "worker"
 ENCODER_CACHE_DIRECTORY = "huggingface_cache"
@@ -43,7 +36,7 @@ class CorefWorkerError(RuntimeError):
 
 
 def maverick_worker_command(model_dir: Path) -> WorkerCommand:
-    """Builds the command that launches the real worker in its own uv environment, reading models from `model_dir`."""
+    """Builds the command that launches the model-backed worker in its own uv environment, reading models from `model_dir`."""
 
     def command(endpoint: str) -> list[str]:
         return ["uv", "run", "--project", str(WORKER_DIR), "python", str(WORKER_DIR / "server.py"), "--endpoint", endpoint, "--model-dir", str(model_dir)]
@@ -57,13 +50,7 @@ def stub_worker_command(endpoint: str) -> list[str]:
 
 
 class MaverickResolver(IdentityResolver):
-    """Groups mentions of one person by asking a co-reference worker process.
-
-    Detected names the model left unlinked then join a group through the nickname list chosen by
-    `nickname_config`. The real worker reads its models from `model_dir` (the default model
-    directory when omitted); a custom `worker_command` replaces the real worker.
-    Starting the worker is explicit: call start() or use the resolver as a context manager.
-    """
+    """Groups mentions of one person by asking a co-reference worker process."""
 
     languages = frozenset({"en"})
 

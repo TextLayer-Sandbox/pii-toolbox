@@ -101,7 +101,7 @@ Cost is measured separately from accuracy, with one fresh process per setup so m
 
 ## Rerunning an evaluation
 
-Everything below is run from the repository root. Install first with `uv sync`.
+Everything below is run from the repository root. Install first with `uv sync --group models`: the downloads and the table and chart rebuild need only the default groups, but running the model-based detectors, co-reference and TAB's weighted precision needs the `models` group (GLiNER, transformers and torch).
 
 ### 1. Download datasets and models
 

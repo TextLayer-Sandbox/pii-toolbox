@@ -1,4 +1,4 @@
-"""Answer key that merges annotators: a span is PII if any annotator marked it DIRECT or QUASI."""
+"""Answer key that merges annotators: a span is kept if any annotator did not mark it NONE."""
 
 from collections.abc import Sequence
 from dataclasses import replace
@@ -9,12 +9,7 @@ _RISK_STRENGTH = {ReidentificationRisk.QUASI: 1, ReidentificationRisk.DIRECT: 2}
 
 
 class AnyAnnotatorAnswerKeyBuilder(AnswerKeyBuilder):
-    """Keeps every span some annotator marked DIRECT or QUASI, once per distinct boundary and label.
-
-    Spans with different boundaries stay separate. Identical spans from several annotators
-    merge into one that takes the stronger risk and no single annotator. Answers whose risk
-    is None come from datasets without risk grading and are all kept.
-    """
+    """Keeps every answer not marked NONE, merging identical spans of several annotators into one with the stronger risk and no annotator."""
 
     def build(self, answers: Sequence[AnswerSpan]) -> tuple[AnswerSpan, ...]:
         merged: dict[tuple[int, int, str], AnswerSpan] = {}

@@ -9,7 +9,7 @@ from pii_toolbox.detection.known_names import KnownNamesDetector
 from pii_toolbox.detection.presidio_structured import PresidioStructuredDetector
 from pii_toolbox.detection.roberta_detector import RobertaDetector
 from pii_toolbox.detection.spacy_detectors import spacy_lg_detector, spacy_sm_detector
-from pii_toolbox.detection.union import DetectorUnion
+from pii_toolbox.detection.union import MergingDetectorUnion
 
 UNION_SEPARATOR = "+"
 
@@ -17,15 +17,11 @@ DetectorFactory = Callable[[], Detector]
 
 
 class UnknownDetectorError(ValueError):
-    """Raised when a configuration names a detector that is not in the registry."""
+    """Raised when a configuration names an unknown detector."""
 
 
 class FixedDetectorRegistry(DetectorRegistry):
-    """Every detector the toolbox offers, built by name.
-
-    Presidio's structured recognisers are in the table but only run when a configuration
-    names `presidio_structured`. `factory_overrides` replaces entries with other builders.
-    """
+    """Every detector the toolbox offers, built by name; `factory_overrides` replaces entries with other builders."""
 
     def __init__(
         self,
@@ -55,7 +51,7 @@ class FixedDetectorRegistry(DetectorRegistry):
 
 
 def validate_config_names(entries: Sequence[str], registry: DetectorRegistry) -> None:
-    """Raises UnknownDetectorError when any member of any entry is not in the registry."""
+    """Raises when any member of any entry is not in `registry`."""
     known = registry.names()
     for entry in entries:
         for name in entry.split(UNION_SEPARATOR):
@@ -66,14 +62,11 @@ def validate_config_names(entries: Sequence[str], registry: DetectorRegistry) ->
 
 
 def build_from_config(entries: Sequence[str], registry: DetectorRegistry | None = None) -> list[Detector]:
-    """Builds one detector per entry; an entry `a+b` builds a union of `a` and `b`.
-
-    Every name is checked before anything is built, so a typo fails at startup.
-    """
+    """Builds one detector per entry, where an entry `a+b` builds a union of `a` and `b`; checks every name before building anything."""
     registry = registry or FixedDetectorRegistry()
     validate_config_names(entries, registry)
     detectors: list[Detector] = []
     for entry in entries:
         members = tuple(registry.build(name) for name in entry.split(UNION_SEPARATOR))
-        detectors.append(members[0] if len(members) == 1 else DetectorUnion(members))
+        detectors.append(members[0] if len(members) == 1 else MergingDetectorUnion(members))
     return detectors

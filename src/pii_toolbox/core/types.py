@@ -1,7 +1,4 @@
-"""Foundational types and interfaces for local PII detection, masking and evaluation.
-
-Character positions are offsets into the original text: start inclusive, end exclusive.
-"""
+"""Foundational types and interfaces for local PII detection, masking and evaluation."""
 
 from abc import ABC, abstractmethod
 from collections.abc import Iterable, Iterator, Mapping, Sequence
@@ -22,8 +19,7 @@ class PiiType(Enum):
     LOCATION = "LOCATION"
     DATE_TIME = "DATE_TIME"
     QUANTITY = "QUANTITY"
-    # Structured codes (email, phone, card, IBAN, national and tax IDs, IP, URL) kept as
-    # one type because the answer keys do not distinguish them.
+    # structured codes (email, phone, card, IBAN, national and tax IDs, IP, URL) as one type
     IDENTIFIER = "IDENTIFIER"
 
 
@@ -33,7 +29,7 @@ LabelMap = Mapping[str, PiiType]
 
 @dataclass(frozen=True, slots=True)
 class Span:
-    """A detected region of text. Invariant: 0 <= start < end <= len(text)."""
+    """A detected region of text as character offsets, start inclusive and end exclusive, with 0 <= start < end."""
 
     start: int
     end: int
@@ -56,10 +52,7 @@ class Document:
 
 
 class ReidentificationRisk(Enum):
-    """How much a mention gives away about who a person is, as marked by dataset annotators.
-
-    Needed because recall on direct and on quasi identifiers is reported separately.
-    """
+    """How much a mention gives away about who a person is, as marked by dataset annotators."""
 
     DIRECT = "DIRECT"  # identifies a person on its own (e.g. a full name)
     QUASI = "QUASI"  # identifies a person in combination with other details (e.g. age plus occupation plus town)
@@ -87,11 +80,7 @@ class AnnotatedDocument:
 
 @dataclass(frozen=True, slots=True)
 class PersonMentions:
-    """Spans that refer to the same person. Holds positions only, never text.
-
-    A group may hold a span the detector did not find; such a span's `source` names the
-    resolver. A group always holds at least one detected name.
-    """
+    """Spans that refer to the same person, held as positions with the fullest form of the name as canonical."""
 
     spans: tuple[Span, ...]
     canonical: Span  # the fullest form of the name; one of `spans`
@@ -118,20 +107,12 @@ class Detector(ABC):
     @property
     @abstractmethod
     def detects(self) -> frozenset[PiiType]:
-        """The common types this configured detector can report.
-
-        Types outside it count as misses in the overall score and are marked not applicable
-        in the per-type breakdown.
-        """
+        """The common types this configured detector can report; it never reports any other type."""
         ...
 
     @abstractmethod
     def load_models(self) -> None:
-        """Reads model files into memory and starts any runtime or worker process needed.
-
-        Separate from detection so load time is measured apart from per-call time;
-        does nothing for detectors without models.
-        """
+        """Reads model files into memory and starts any runtime or worker process needed; does nothing for detectors without models."""
         ...
 
     @abstractmethod
@@ -139,12 +120,7 @@ class Detector(ABC):
 
 
 class DetectorUnion(Detector):
-    """Runs several detectors and returns the union of their spans.
-
-    Overlapping spans merge into the widest; the merged span takes the type and detector
-    label of the longest contributing span, ties broken by the higher score, and its score
-    is the highest among contributors.
-    """
+    """Runs several detectors and returns the union of their spans, with overlapping spans merged into the widest."""
 
     @property
     @abstractmethod
@@ -152,10 +128,7 @@ class DetectorUnion(Detector):
 
 
 class DetectorRegistry(ABC):
-    """The fixed list of detector names known to the program, each with how to build it.
-
-    A configuration can be checked against it before anything is built.
-    """
+    """The fixed set of detector names, each with how to build it."""
 
     @abstractmethod
     def names(self) -> frozenset[str]: ...
@@ -199,7 +172,7 @@ class IdentityResolver(ABC):
 
 @dataclass(frozen=True, slots=True)
 class Placeholder:
-    label: str  # detailed type label, e.g. EMAIL_ADDRESS
+    label: str  # broad type name, e.g. PERSON
     number: int  # count of this label within the session, starting at 1
 
 
@@ -222,7 +195,7 @@ class PlaceholderFormat(ABC):
 
     @abstractmethod
     def parse(self, text: str) -> list[PlaceholderToken]:
-        """Finds whole tokens that read as placeholders, tolerating dropped brackets and changed case."""
+        """Finds every occurrence of the exact rendered form of a placeholder in the text."""
         ...
 
 
@@ -230,27 +203,21 @@ class PlaceholderFormat(ABC):
 class MaskResult:
     masked_text: str
     minted: tuple[Placeholder, ...]  # placeholders created by this call only
-    placeholder_by_span: Mapping[Span, Placeholder] = field(default_factory=dict)  # every replaced span, including spans a resolver added
+    placeholder_by_span: Mapping[Span, Placeholder] = field(default_factory=dict)  # every replaced span
 
 
 @dataclass(frozen=True, slots=True)
 class RestoreResult:
     restored_text: str
-    leftovers: tuple[str, ...]  # tokens that read as a placeholder with a label this session has minted but did not resolve; look-alikes with unknown labels are not reported
+    leftovers: tuple[str, ...]  # placeholder-like tokens with a minted label that were not restored
 
 
 class PlaceholderStore(ABC):
-    """Holds, per session, the original value each placeholder stands for.
-
-    Originals are never written anywhere other than the store itself.
-    """
+    """Holds, per session, the original value each placeholder stands for."""
 
     @abstractmethod
     def get_or_mint(self, session_id: str, label: str, original: str) -> tuple[Placeholder, bool]:
-        """Returns the existing placeholder for the original, or mints the next-numbered one for the label.
-
-        The bool is True when the placeholder was minted by this call.
-        """
+        """Returns the placeholder for the original, minting the next number for the label if none exists, and whether this call minted it."""
         ...
 
     @abstractmethod
@@ -280,10 +247,7 @@ class PlaceholderStore(ABC):
 
 
 class RedactionSession(ABC):
-    """One case's masking context. The same original always gets the same placeholder.
-
-    A session is built from a detector, an optional resolver, a placeholder store, a placeholder format and a language.
-    """
+    """One case's masking context, in which the same original always gets the same placeholder."""
 
     @property
     @abstractmethod
@@ -390,8 +354,8 @@ class DetectionScore:
 class DetectionReport:
     rule: SpanMatchRule
     overall_micro: DetectionScore  # counts pooled over all types
-    macro: DetectionScore  # plain average of the per-type scores; averages only the reported types
-    by_type: Mapping[PiiType, DetectionScore | None]  # None marks a type the detector does not report
+    macro: DetectionScore  # plain average of the per-type scores; averages only the types that have a score
+    by_type: Mapping[PiiType, DetectionScore | None]  # None marks a type not reported by the detector or absent from the data
     by_language: Mapping[str, DetectionScore]
 
 
@@ -403,7 +367,7 @@ class SpanMatcher(ABC):
         answers: Sequence[AnswerSpan],
         rule: SpanMatchRule,
     ) -> Mapping[PiiType, MatchCounts]:
-        """Greedy and one-to-one: each answer is credited to at most one prediction."""
+        """Greedy and one-to-one: each prediction credits at most one answer group, where overlapping answers of one type form a group."""
         ...
 
 
@@ -421,7 +385,7 @@ class DetectionScorer(ABC):
 class AnswerKeyBuilder(ABC):
     @abstractmethod
     def build(self, answers: Sequence[AnswerSpan]) -> tuple[AnswerSpan, ...]:
-        """Collapses several annotators into one answer key: a span is PII if any annotator marked it DIRECT or QUASI; distinct boundaries stay distinct spans."""
+        """Collapses several annotators into one answer key: a span is kept if any annotator did not mark it NONE; distinct boundaries stay distinct spans."""
         ...
 
 

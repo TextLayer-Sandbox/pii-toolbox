@@ -1,11 +1,4 @@
-"""The detector configurations the evaluation measures and the runs each one gets.
-
-The configuration list is generated from the detector registry's names: Presidio's structured
-recognisers alone, each model tool alone, and each model tool joined with Presidio's. There
-are no unions of two models. Every configuration is run with co-reference off and on for
-English text and with it off only for other languages, because the co-reference model is
-English-only.
-"""
+"""The detector configurations the evaluation measures and the runs each one gets."""
 
 from collections.abc import Iterator
 from dataclasses import dataclass

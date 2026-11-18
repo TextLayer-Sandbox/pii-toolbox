@@ -1,4 +1,5 @@
-from pii_toolbox.evaluation.model_manifest import MODEL_MANIFEST, default_model_dir, download_models
+from pii_toolbox.core.model_dir import default_model_dir
+from pii_toolbox.evaluation.model_manifest import MODEL_MANIFEST, download_models
 
 
 def recording_fetcher(calls):

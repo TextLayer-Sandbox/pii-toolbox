@@ -1,4 +1,4 @@
-"""The only placeholder store: per-session mappings held in process memory and nowhere else."""
+"""Placeholder store that keeps per-session mappings in process memory and nowhere else."""
 
 from dataclasses import dataclass, field
 

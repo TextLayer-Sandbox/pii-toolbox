@@ -3,8 +3,8 @@
 import argparse
 from pathlib import Path
 
+from pii_toolbox.core.model_dir import default_model_dir
 from pii_toolbox.evaluation.model_manifest import (
-    default_model_dir,
     download_models,
     network_fetch,
 )

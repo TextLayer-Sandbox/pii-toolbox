@@ -11,11 +11,7 @@ from pii_toolbox.core import CostMeasurement, CostRunner
 
 
 class SubprocessCostRunner(CostRunner):
-    """Spawns the cost child for each measurement so peak memory belongs to one detector.
-
-    `registry` is a `module:attr` path to a detector registry (or a callable returning
-    one); `python_path` lists extra directories the child can import it from.
-    """
+    """Measures each detector in a fresh child process; `registry` is a `module:attr` path to a registry or a callable returning one, and `python_path` lists extra import directories."""
 
     def __init__(self, registry: str, python_path: Sequence[Path] = ()) -> None:
         self._registry = registry

@@ -1,15 +1,9 @@
-"""Manifest of every model the toolbox loads, and the download logic that fills a model directory.
+"""Manifest of every model the toolbox loads, and the download logic that fills a model directory."""
 
-The manifest is a plain list so a model is added or removed with one line. Models live
-under PII_MODEL_DIR (default: the user cache), never inside the repository.
-"""
-
-import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
-MODEL_DIR_ENV_VAR = "PII_MODEL_DIR"
 COMPLETE_MARKER_PREFIX = ".complete-"
 
 
@@ -50,13 +44,6 @@ MODEL_MANIFEST: list[ModelEntry] = [
 ]
 
 
-def default_model_dir() -> Path:
-    configured = os.environ.get(MODEL_DIR_ENV_VAR)
-    if configured:
-        return Path(configured)
-    return Path.home() / ".cache" / "pii-toolbox" / "models"
-
-
 def is_present(dest: Path, entry: ModelEntry) -> bool:
     return (dest / entry.directory_name / entry.marker_name).exists()
 
@@ -70,11 +57,7 @@ def write_hub_ref(cache_dir: Path, entry: ModelEntry) -> None:
 
 
 def download_models(dest: Path, fetch: Fetcher, manifest: list[ModelEntry] | None = None) -> list[ModelEntry]:
-    """Fetch every manifest entry not yet present under dest; return the entries fetched.
-
-    The completion marker is written only after the fetcher returns, so an interrupted
-    download is retried on the next run.
-    """
+    """Fetches every manifest entry not yet present under dest, writing each completion marker only after its fetch returns, and returns the entries fetched."""
     fetched = []
     for entry in MODEL_MANIFEST if manifest is None else manifest:
         if is_present(dest, entry):

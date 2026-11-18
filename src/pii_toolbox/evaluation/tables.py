@@ -1,10 +1,4 @@
-"""The evaluation tables 1 to 6, built from saved result files only.
-
-Each builder reads the result JSON files of one split with co-reference off and writes a
-Markdown and a CSV file per table. Rows are tools, single detectors first and then
-combinations, each in name order; numbers print with three decimals, so the output is
-the same on every run.
-"""
+"""The evaluation tables 1 to 6, built from saved result files only."""
 
 import csv
 import io
@@ -63,10 +57,7 @@ def tool_order(tool: str) -> tuple[int, str]:
 def load_records(
     results_dir: Path, split: DatasetSplit, coreference: bool = False
 ) -> dict[tuple[str, str, str | None], ResultRecord]:
-    """The results of the split with co-reference off (or on), keyed by (tool, dataset, language).
-
-    The language is None for a file that covers every language of its dataset.
-    """
+    """The results of the split with co-reference off (or on), keyed by (tool, dataset, language), where language is None for a file covering every language."""
     records = {}
     for path in sorted(results_dir.glob(RESULT_FILE_PATTERN)):
         record = read_record(path)
@@ -204,11 +195,7 @@ def table4(
     on: dict[tuple[str, str, str | None], ResultRecord],
     rule: SpanMatchRule = SpanMatchRule.EXACT_BOUNDARIES,
 ) -> Table:
-    """F2 and TAB entity-level recall with co-reference off, on and the change; English text only.
-
-    MAPA rows use the English figures of the run. MAPA has no entity ids, so its recall cells are blank.
-    The F2 columns follow `rule`; the entity-level recall columns are TAB's own metric.
-    """
+    """F2 and TAB entity-level recall with co-reference off, on and the change, on English text only and with blank recall cells for datasets without TAB metrics."""
     header = (
         "Dataset", "Detector", "F2 off", "F2 on", "F2 change",
         "ER_di off", "ER_di on", "ER_di change", "ER_qi off", "ER_qi on", "ER_qi change",
@@ -295,11 +282,7 @@ def _language_cell(record: ResultRecord | None, language: str, f2: float | None)
 def table5(
     records: dict[tuple[str, str, str | None], ResultRecord], rule: SpanMatchRule = SpanMatchRule.EXACT_BOUNDARIES
 ) -> Table:
-    """F2 per MAPA language, headline languages first, with TAB as the English reference column.
-
-    A language comes from the file measured on it, or from the by-language scores of a file that covers
-    every language.
-    """
+    """F2 per MAPA language, headline languages first, with TAB as the English reference column."""
     def report(record: ResultRecord) -> DetectionReport:
         return record.run.exact_boundaries if rule is SpanMatchRule.EXACT_BOUNDARIES else record.run.any_overlap
 

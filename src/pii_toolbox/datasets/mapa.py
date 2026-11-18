@@ -1,11 +1,4 @@
-"""Loader for the MAPA corpus, read from the data directory filled by the download script.
-
-Expects `mapa/train.jsonl`, `mapa/validation.jsonl` and `mapa/test.jsonl` under the data
-directory, one sentence per line with `language`, `file_name`, `sentence_number`, `tokens`
-and `coarse_grained` BIO tags. DEV is MAPA's validation file. Sentences of one source file
-form one document: tokens are joined by a space and sentences by a newline, and answer
-spans are rebuilt from the BIO tags as character offsets in that text.
-"""
+"""Loader for the MAPA corpus, read from the data directory."""
 
 import json
 from collections.abc import Iterable, Iterator, Sequence
@@ -27,11 +20,7 @@ _SPLIT_FILES = {
 
 
 def spans_from_bio(tokens: Sequence[str], tags: Sequence[str], offset: int = 0) -> list[tuple[int, int, str]]:
-    """Returns (start, end, label) character spans of tokens joined by single spaces.
-
-    An I- tag continues the open span of the same label and otherwise starts a new one,
-    so a dangling I- tag opens a span.
-    """
+    """Returns (start, end, label) character spans of tokens joined by single spaces, where an I- tag continues an open span of the same label and otherwise starts a new one."""
     positions = []
     position = offset
     for token in tokens:
@@ -63,10 +52,7 @@ def document_from_sentences(
     sentences: Iterable[tuple[Sequence[str], Sequence[str]]],
     labels: OptionalLabelMap,
 ) -> AnnotatedDocument:
-    """Builds one document from (tokens, BIO tags) sentences, joining tokens by a space and sentences by a newline.
-
-    Answer spans are the BIO spans as character offsets in that text, typed through `labels`.
-    """
+    """Builds one document from (tokens, BIO tags) sentences, joining tokens by a space and sentences by a newline, with answer spans typed through `labels`."""
     lines = []
     answers = []
     offset = 0

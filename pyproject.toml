@@ -20,6 +20,7 @@ dev = [
 detection = [
     "presidio-analyzer",  # pattern and checksum recognisers and the recogniser framework
     "spacy",  # NER pipelines run as recognisers
+    "tldextract>=5.4.0",  # splits email domains when validating addresses
 ]
 models = [
     "gliner",  # GLiNER PII model
@@ -55,4 +56,4 @@ markers = [
 ]
 
 [tool.uv]
-default-groups = "all"
+default-groups = ["dev", "detection", "evaluation", "coref"]

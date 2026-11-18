@@ -10,7 +10,15 @@ The project needs Python 3.12 or newer and [uv](https://docs.astral.sh/uv/).
 uv sync
 ```
 
-The package has no required dependencies of its own. The optional groups in `pyproject.toml` are `dev` (pytest), `detection` (Presidio and spaCy), `models` (GLiNER, transformers and torch), `evaluation` (dataset loading, plotting, memory measurement and what TAB's scoring needs) and `coref` (ZeroMQ). The project is set to install all groups, so `uv sync` gives you everything. Commands are run with `uv run ...` from the repository root.
+The package has no required dependencies of its own. The optional groups in `pyproject.toml` are `dev` (pytest), `detection` (Presidio and spaCy), `models` (GLiNER, transformers and torch), `evaluation` (dataset loading, plotting, memory measurement and what TAB's scoring needs) and `coref` (ZeroMQ). A plain `uv sync` installs `dev`, `detection`, `evaluation` and `coref`, which is enough to run the tests, the table and chart rebuild, the structured-identifier detectors and the examples that use no model. The `models` and `notebook` groups are left out because they are large. Add them when you need them:
+
+```
+uv sync --group models      # GLiNER, RoBERTa, co-reference and TAB's weighted precision
+uv sync --group notebook    # opens and runs notebooks/results.ipynb
+uv sync --all-groups        # everything
+```
+
+`--group` adds to the default groups. Commands are run with `uv run ...` from the repository root.
 
 The co-reference worker (`src/pii_toolbox/coref/worker`) has its own `pyproject.toml` and lock file, because the Maverick model needs older library versions than the rest of the toolbox. `MaverickResolver` starts it with `uv run --project`, so uv builds that environment the first time it is used.
 

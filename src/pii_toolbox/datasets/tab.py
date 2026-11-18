@@ -1,12 +1,4 @@
-"""Loader for the TAB corpus, read from the data directory filled by the download script.
-
-Expects `tab/echr_train.json`, `tab/echr_dev.json` and `tab/echr_test.json` under the data
-directory. Each file is a list of documents; each document holds an `annotations` object
-keyed by annotator, and each annotator lists entity mentions with character offsets, a
-TAB label, an identifier type (DIRECT, QUASI or NO_MASK) and an entity id. Every mention
-of every annotator becomes its own answer span, so annotators with different boundaries
-stay separate. All TAB documents are English.
-"""
+"""Loader for the TAB corpus, read from the data directory."""
 
 import json
 from collections.abc import Iterator

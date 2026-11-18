@@ -1,7 +1,4 @@
-"""Detector running the multilingual GLiNER PII model with a fixed list of requested labels.
-
-GLiNER reads a limited number of tokens, so long text is cut into overlapping segments.
-"""
+"""Detector running the multilingual GLiNER PII model with a fixed list of requested labels."""
 
 import os
 from collections.abc import Iterator
@@ -11,7 +8,7 @@ from typing import Any
 
 from pii_toolbox.core import GLINER_LABELS, Detector, Document, PiiType, Span
 from pii_toolbox.detection.segmenter import OverlappingTextSegmenter, detect_segmented
-from pii_toolbox.evaluation.model_manifest import default_model_dir
+from pii_toolbox.core.model_dir import default_model_dir
 
 MODEL_FOLDER = "urchade__gliner_multi_pii-v1"
 REQUESTED_LABELS = (
@@ -32,7 +29,7 @@ HUGGINGFACE_CACHE_FOLDER = "huggingface_cache"
 
 @contextmanager
 def _offline_huggingface(cache_dir: Path) -> Iterator[None]:
-    """Makes Hugging Face loaders read only `cache_dir`, because the GLiNER config names a backbone model it fetches by hub name."""
+    """Makes Hugging Face loaders work offline from `cache_dir` and restores the previous settings on exit."""
     from huggingface_hub import constants
 
     previous_env = {name: os.environ.get(name) for name in ("HF_HUB_OFFLINE", "HF_HUB_CACHE")}
@@ -53,11 +50,7 @@ def _offline_huggingface(cache_dir: Path) -> Iterator[None]:
 
 
 class GlinerDetector(Detector):
-    """Reports the entities GLiNER finds for the requested labels.
-
-    `model` may be given to supply an already loaded model offering
-    `predict_entities(text, labels, threshold)` that returns dicts with start, end, label and score.
-    """
+    """Reports the entities GLiNER finds for the requested labels; an already loaded `model` may be supplied."""
 
     def __init__(self, model_dir: Path | None = None, model: Any = None) -> None:
         self._model_dir = model_dir

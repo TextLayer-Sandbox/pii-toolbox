@@ -69,11 +69,7 @@ def evaluate_one(
     resolver: IdentityResolver | None = None,
     environment: RunEnvironment | None = None,
 ) -> ResultRecord:
-    """Scores one detector configuration on one dataset split and returns the record, writing nothing.
-
-    The registry, dataset factories, TAB scorer, resolver and environment default to the real ones when omitted;
-    the TAB scorer and the resolver are built only when the dataset or `coreference` needs them.
-    """
+    """Scores one detector configuration on one dataset split and returns the record, writing nothing; omitted arguments default to the real ones, the TAB scorer only for TAB and the resolver only with co-reference."""
     dataset = dataset_factories[dataset_name](data_dir or default_data_dir())
     if dataset_name == "tab" and tab_scorer is None:
         tab_scorer = _default_tab_scorer()
@@ -93,7 +89,7 @@ def main(
     resolver: IdentityResolver | None = None,
     environment: RunEnvironment | None = None,
 ) -> Path:
-    """Runs the command and returns the written result file. Omitted registry, dataset factories, scorer, resolver and environment default to the real ones."""
+    """Runs the command and returns the written result file; omitted keyword arguments default to the real ones."""
     args = build_parser().parse_args(argv)
     record = evaluate_one(
         args.tool,

@@ -261,3 +261,72 @@ def test_text_not_in_the_rendered_placeholder_form_round_trips_unchanged():
     result = session.mask(text)
     assert result.masked_text == text
     assert session.restore(result.masked_text).restored_text == text
+
+
+class SurnameDetector(FakeDetector):
+    """Finds full names and the bare surname without letting the surname match inside a full name."""
+
+    def __init__(self) -> None:
+        super().__init__({"John Smith": (PiiType.PERSON, "PERSON")})
+
+    def detect(self, document: Document) -> list[Span]:
+        return [
+            Span(match.start(), match.end(), PiiType.PERSON, "PERSON", ("fake",), None)
+            for match in re.finditer(r"John Smith|Anna Smith|Smith", document.text)
+        ]
+
+
+def make_surname_session() -> Session:
+    return Session(SurnameDetector(), InMemoryPlaceholderStore(), AngleBracketFormat(), "en", FakeResolver(), "case-1")
+
+
+def test_new_person_sharing_a_short_form_gets_own_placeholder_for_the_whole_group():
+    session = make_surname_session()
+    first = session.mask("John Smith met Smith.")
+    second = session.mask("Anna Smith met Smith.")
+    assert first.masked_text == "<PERSON_1> met <PERSON_1>."
+    assert second.masked_text == "<PERSON_2> met <PERSON_2>."
+    assert session.restore(second.masked_text).restored_text == "Anna Smith met Anna Smith."
+    assert session.restore(first.masked_text).restored_text == "John Smith met John Smith."
+
+
+def test_short_form_stays_with_its_first_holder_after_another_person_shares_it():
+    session = make_surname_session()
+    session.mask("John Smith met Smith.")
+    session.mask("Anna Smith met Smith.")
+    assert session.mask("Smith left.").masked_text == "<PERSON_1> left."
+
+
+def test_same_full_name_in_later_text_keeps_one_placeholder_with_shared_short_form():
+    session = make_surname_session()
+    session.mask("John Smith met Smith.")
+    assert session.mask("John Smith called Smith.").masked_text == "<PERSON_1> called <PERSON_1>."
+
+
+class LanguageLimitedDetector(FakeDetector):
+    """A fake detector that supports only the given languages."""
+
+    def __init__(self, languages: frozenset[str]) -> None:
+        super().__init__({})
+        self._languages = languages
+
+    @property
+    def languages(self):
+        return self._languages
+
+
+def test_session_refuses_detector_without_its_language():
+    detector = LanguageLimitedDetector(frozenset({"en"}))
+    with pytest.raises(ValueError, match="does not support language fr"):
+        Session(detector, InMemoryPlaceholderStore(), AngleBracketFormat(), "fr")
+
+
+def test_session_accepts_detector_supporting_its_language():
+    detector = LanguageLimitedDetector(frozenset({"en", "fr"}))
+    session = Session(detector, InMemoryPlaceholderStore(), AngleBracketFormat(), "fr")
+    assert session.language == "fr"
+
+
+def test_session_accepts_detector_supporting_every_language():
+    session = Session(FakeDetector(PHRASES), InMemoryPlaceholderStore(), AngleBracketFormat(), "fr")
+    assert session.language == "fr"

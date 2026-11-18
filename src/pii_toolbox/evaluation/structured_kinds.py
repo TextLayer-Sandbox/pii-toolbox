@@ -1,9 +1,4 @@
-"""The structured PII kinds scored in the structured evaluation: groups, dataset label maps, Presidio entity maps and validity checks.
-
-Each dataset label that names a structured kind maps to exactly one kind; every other label is
-ignored. Each kind lists the Presidio entity names that count as the correct kind. A kind with
-an empty entity set has no Presidio recogniser and can only score on "found as any PII".
-"""
+"""The structured PII kinds scored in the structured evaluation: groups, dataset label maps, Presidio entity maps and validity checks."""
 
 import re
 from dataclasses import dataclass

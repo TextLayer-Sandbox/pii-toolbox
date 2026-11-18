@@ -1,11 +1,4 @@
-"""Loaders for two public synthetic datasets of structured PII, read from Hugging Face parquet files.
-
-`nvidia/Nemotron-PII` and `gretelai/synthetic_pii_finance_multilingual` are each pinned to a
-commit and their test split is downloaded into `structured/` under the data directory on first
-use. Both mark character spans with a label and an exclusive end offset. Nemotron stores its
-spans as a Python-literal list whose numbers may arrive as text; Gretel stores them as JSON.
-Spans whose offsets cannot be read as whole numbers are dropped.
-"""
+"""Loaders for two public synthetic datasets of structured PII, read from Hugging Face parquet files."""
 
 import ast
 import json

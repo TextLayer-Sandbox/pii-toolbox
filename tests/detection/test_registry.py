@@ -13,8 +13,8 @@ from pii_toolbox.detection.registry import (
 )
 from pii_toolbox.detection.roberta_detector import RobertaDetector
 from pii_toolbox.detection.spacy_detectors import SpacyDetector
-from pii_toolbox.detection.union import DetectorUnion
-from pii_toolbox.evaluation.model_manifest import default_model_dir
+from pii_toolbox.detection.union import MergingDetectorUnion
+from pii_toolbox.core.model_dir import default_model_dir
 
 # Resolved at import so the per-test sandbox home does not hide the downloaded models.
 MODEL_DIR = default_model_dir()
@@ -94,7 +94,7 @@ def test_presidio_structured_alone_builds_only_that_detector():
 
 def test_plus_builds_a_union():
     detectors = build_from_config(["spacy_lg+roberta", "gliner"], stub_registry())
-    assert isinstance(detectors[0], DetectorUnion)
+    assert isinstance(detectors[0], MergingDetectorUnion)
     assert [member.name for member in detectors[0].members] == ["spacy_lg", "roberta"]
     assert detectors[1].name == "gliner"
 

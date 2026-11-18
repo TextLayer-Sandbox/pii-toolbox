@@ -1,7 +1,4 @@
-"""Translations from each dataset's and tool's own labels to the common type set.
-
-A value of None marks a label with no common counterpart.
-"""
+"""Translations from each dataset's and tool's own labels to the common type set; None marks a label with no common counterpart."""
 
 from collections.abc import Mapping
 
@@ -20,7 +17,7 @@ TAB_LABELS: OptionalLabelMap = {
     "MISC": None,
 }
 
-# DATE and TIME merge because the other dataset has a single date-time type.
+# DATE and TIME merge because the common type set has a single date-time type.
 MAPA_LABELS: OptionalLabelMap = {
     "PERSON": PiiType.PERSON,
     "ORGANISATION": PiiType.ORGANIZATION,

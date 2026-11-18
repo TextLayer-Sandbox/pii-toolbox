@@ -1,13 +1,4 @@
-"""Turns mention clusters from a co-reference model into entity groups of one person each.
-
-A cluster becomes a group only when it holds a detected PERSON span. Name-form mentions
-the detector missed are added to the group; pronouns and descriptions are dropped. Each
-group holds spans by position only, and its canonical span is the longest of them.
-
-A mention that overlaps more than one distinct detected PERSON span links none of them and is ignored.
-A mention is a name form when it overlaps exactly one detected PERSON span, or when it is a title
-followed by capitalised words, or when every word in it is capitalised and none is a pronoun.
-"""
+"""Turns mention clusters from a co-reference model into groups of spans that refer to one person each."""
 
 import re
 from collections.abc import Sequence
@@ -29,10 +20,7 @@ def build_groups(
     detected_spans: Sequence[Span],
     mention_clusters: Sequence[Sequence[tuple[int, int]]],
 ) -> list[PersonMentions]:
-    """Returns one group per cluster that holds a detected PERSON span, ordered by first position.
-
-    Raises ValueError for a mention outside the document text.
-    """
+    """Returns one group per cluster that holds a detected PERSON span, ordered by first position; raises ValueError for a mention outside the document text."""
     person_spans = [span for span in detected_spans if span.pii_type is PiiType.PERSON]
     groups = []
     for cluster in mention_clusters:

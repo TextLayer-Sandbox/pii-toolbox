@@ -8,7 +8,7 @@ from pii_toolbox.detection.spacy_detectors import (
     spacy_lg_detector,
     spacy_sm_detector,
 )
-from pii_toolbox.evaluation.model_manifest import default_model_dir
+from pii_toolbox.core.model_dir import default_model_dir
 
 # Resolved at import so the per-test sandbox home does not hide the downloaded models.
 MODEL_DIR = default_model_dir()

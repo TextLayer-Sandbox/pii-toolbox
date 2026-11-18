@@ -1,11 +1,4 @@
-"""Co-reference worker: answers JSON requests on a ZeroMQ ROUTER socket with mention clusters.
-
-A request is {"id": int, "text": str, "names": [[start, end], ...]} and the reply is
-{"id": int, "clusters": [[[start, end], ...], ...]} with character positions only, so no
-document text ever leaves this process. Once the model is loaded and the socket is bound, it
-sends {"ready": true}. Runs in its own uv environment; `--stub` swaps the model for a
-pattern-based clusterer so the protocol can be exercised without model files.
-"""
+"""Co-reference worker: answers JSON requests on a ZeroMQ ROUTER socket with mention clusters."""
 
 import argparse
 import atexit

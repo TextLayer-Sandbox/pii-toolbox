@@ -6,7 +6,7 @@ import pytest
 from pii_toolbox.core import AnnotatedDocument, AnswerSpan, DatasetSplit, Document, PiiType, ReidentificationRisk, Span
 from pii_toolbox.datasets.download import default_data_dir
 from pii_toolbox.datasets.tab import TabDataset
-from pii_toolbox.evaluation.model_manifest import default_model_dir
+from pii_toolbox.core.model_dir import default_model_dir
 from pii_toolbox.evaluation.tab_metrics import (
     BertInformationWeigher,
     OfficialTabMetricsScorer,

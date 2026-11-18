@@ -1,9 +1,4 @@
-"""The evaluation charts, drawn from saved result files only, as reproducible SVG files.
-
-Matplotlib runs on the Agg backend with a fixed hash salt, no embedded date and text kept
-as text, so two builds of the same results are byte identical and labels can be read from
-the file.
-"""
+"""The evaluation charts, drawn from saved result files only, as reproducible SVG files."""
 
 from collections.abc import Sequence
 from dataclasses import replace

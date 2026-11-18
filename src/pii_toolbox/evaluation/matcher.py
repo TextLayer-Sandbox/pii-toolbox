@@ -41,17 +41,7 @@ def _group_overlapping_answers(scored_answers: Sequence[tuple[int, AnswerSpan]])
 
 
 class GreedySpanMatcher(SpanMatcher):
-    """Pairs a prediction with an answer of the same type; each prediction is used at most once.
-
-    Answers of the same type that overlap, directly or through a chain of overlaps, form one
-    group. A group is one entity: it counts once, is matched by at most one prediction, and
-    is a hit when some member satisfies the match rule against that prediction.
-
-    Under the relaxed rule a pair qualifies only when the overlap is at least half the length
-    of the longer span. Candidate pairs are taken longest overlap first, ties broken by earlier
-    start. Answers whose pii_type is None have no common counterpart and take no part in the
-    counts, so a prediction that only overlaps such an answer is a false positive.
-    """
+    """Pairs each prediction with at most one answer group of the same type, largest overlap first."""
 
     def match(
         self,

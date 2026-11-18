@@ -36,7 +36,7 @@ def _placeholder_look_alike_spans(text: str, placeholder_format: PlaceholderForm
 
 
 def _remap_person_mentions(mentions: list[PersonMentions], merged: list[Span]) -> list[PersonMentions]:
-    """Replaces each span in every PersonMentions with the merged span containing it, keeping only PERSON spans."""
+    """Replaces each mention span with the merged span containing it, keeping only PERSON spans and dropping mentions left with none."""
     starts = [span.start for span in merged]
 
     def containing(span: Span) -> Span:
@@ -67,6 +67,8 @@ class Session(RedactionSession):
         resolver: IdentityResolver | None = None,
         session_id: str | None = None,
     ) -> None:
+        if detector.languages is not None and language not in detector.languages:
+            raise ValueError(f"detector {detector.name} does not support language {language}")
         self._id = session_id if session_id is not None else uuid.uuid4().hex
         self._language = language
         self._store = store
@@ -121,11 +123,15 @@ class Session(RedactionSession):
         for mention in mentions:
             fullest = text[mention.canonical.start : mention.canonical.end]
             label = mention.canonical.pii_type.value
-            held = [
-                self._store.placeholder_for(self._id, label, form)
-                for form in (fullest, *(text[span.start : span.end] for span in mention.spans))
+            forms = (fullest, *(text[span.start : span.end] for span in mention.spans))
+            held = [self._store.placeholder_for(self._id, label, form) for form in forms]
+            # A shared form only vouches for its placeholder when it is the group's fullest form or the placeholder's.
+            existing = [
+                held_placeholder
+                for form, held_placeholder in zip(forms, held)
+                if held_placeholder is not None
+                and form in (fullest, self._store.original(self._id, held_placeholder))
             ]
-            existing = [placeholder for placeholder in held if placeholder is not None]
             if held[0] is not None:
                 placeholder = held[0]
             elif existing:
@@ -135,8 +141,9 @@ class Session(RedactionSession):
             if held[0] is None:
                 self._store.alias(self._id, fullest, placeholder)
             for span in mention.spans:
-                if span != mention.canonical:
-                    self._store.alias(self._id, text[span.start : span.end], placeholder)
+                form = text[span.start : span.end]
+                if span != mention.canonical and self._store.placeholder_for(self._id, label, form) in (None, placeholder):
+                    self._store.alias(self._id, form, placeholder)
                 placeholder_for[span] = placeholder
 
         for span in spans:

@@ -1,19 +1,4 @@
-"""Downloads the TAB, MAPA and Worldwide English NER corpora into a data directory outside the repository.
-
-The directory is PII_DATA_DIR, defaulting to a folder under the user cache. Layout under it:
-
-    tab/echr_train.json  tab/echr_dev.json  tab/echr_test.json  tab/evaluation.py
-    mapa/train.jsonl     mapa/validation.jsonl     mapa/test.jsonl
-    worldwide/en-worldwide-newswire.tar.gz
-
-TAB comes from github.com/NorskRegnesentral/text-anonymization-benchmark and MAPA from
-huggingface.co/datasets/joelniklaus/mapa, each pinned to a commit. Each MAPA file holds
-every language, one JSON record per line with a "language" field (en, fr, de among them).
-Worldwide comes from github.com/stanfordnlp/en-worldwide-newswire as one repository tarball
-at a pinned commit, kept compressed.
-A file is fetched to a temporary name and renamed on success, so an interrupted run
-leaves no partial file that later counts as present.
-"""
+"""Downloads the TAB, MAPA and Worldwide English NER corpora into a data directory outside the repository."""
 
 import os
 import urllib.request

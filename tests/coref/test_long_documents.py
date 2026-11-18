@@ -10,7 +10,7 @@ import pytest
 
 from pii_toolbox.coref.resolver import DEFAULT_REPLY_TIMEOUT_SECONDS, MaverickResolver, WORKER_DIR
 from pii_toolbox.core import Document, PiiType, Span
-from pii_toolbox.evaluation.model_manifest import default_model_dir
+from pii_toolbox.core.model_dir import default_model_dir
 
 # Resolved at import so the per-test sandbox home does not hide the downloaded models.
 MODEL_DIR = default_model_dir()

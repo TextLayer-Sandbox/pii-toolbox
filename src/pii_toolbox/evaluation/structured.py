@@ -1,12 +1,4 @@
-"""Measures how often Presidio's predefined recognisers find labelled structured PII, per kind.
-
-Every pattern and checksum recogniser shipped with the installed presidio-analyzer is switched
-on, whatever its country or language, and run directly on each document text; no NLP engine or
-language model is involved. A labelled item counts as found when any finding overlaps it, and as
-found as the correct kind when a finding whose entity belongs to the item's kind overlaps it. Items of
-kinds with a checksum are also split into validly formed and not, and rates are kept for all items and for
-valid ones only. Only counts and rates are produced, never document text or labelled values.
-"""
+"""Measures how often Presidio's predefined recognisers find labelled structured PII, per kind."""
 
 import inspect
 import itertools
@@ -85,10 +77,7 @@ def _empty_counts() -> dict[str, int]:
 def count_documents(
     dataset: str, documents: Iterable[StructuredDocument], recognisers: list
 ) -> dict[str, dict[str, dict[str, int]]]:
-    """Counts per language and kind (`ALL` is every language) of items and how many were found.
-
-    Items of a kind without a checksum are all valid, so the valid counts equal the all counts.
-    """
+    """Counts per language and kind (`ALL` is every language) of items and how many were found, with valid counts equal to all counts for kinds without a checksum."""
     counts: dict[str, dict[str, dict[str, int]]] = {}
     for document in documents:
         scored = [
@@ -146,7 +135,7 @@ def _chunks(documents: Iterable[StructuredDocument], size: int) -> Iterator[list
 def count_documents_parallel(
     dataset: str, documents: Iterable[StructuredDocument], workers: int, chunk_size: int = 200
 ) -> dict[str, dict[str, dict[str, int]]]:
-    """Counts per language and kind as for one process, spreading chunks of documents over worker processes that each build the recognisers once."""
+    """Counts per language and kind, spreading chunks of documents over worker processes that each build the recognisers once."""
     total: dict[str, dict[str, dict[str, int]]] = {}
     jobs = ((dataset, chunk) for chunk in _chunks(documents, chunk_size))
     with multiprocessing.get_context("spawn").Pool(workers, initializer=_init_worker) as pool:

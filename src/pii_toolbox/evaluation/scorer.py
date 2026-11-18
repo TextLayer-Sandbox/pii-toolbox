@@ -53,7 +53,7 @@ def _pool(counts: Iterable[MatchCounts]) -> MatchCounts:
 def _is_applicable(
     pii_type: PiiType, per_type: Mapping[PiiType, MatchCounts], reported_types: frozenset[PiiType]
 ) -> bool:
-    """A type with no answers and no predictions in the scored data says nothing about the detector."""
+    """True when the detector reports the type and the scored data holds any answer or prediction of it."""
     counts = per_type[pii_type]
     has_data = counts.true_positives + counts.false_positives + counts.false_negatives > 0
     return pii_type in reported_types and has_data
@@ -95,18 +95,7 @@ def overall_scores(
 
 
 class MatchingDetectionScorer(DetectionScorer):
-    """Scores detector output against answers using greedy one-to-one matching.
-
-    `score` takes an optional keyword `reported_types`
-    (default: all six types): the types the detector can report. An unreported type is
-    None in the per-type breakdown and is left out of the macro average; its answers are
-    also left out of the pooled overall and per-language scores. A type with no answers and
-    no predictions in the scored data is likewise None and left out of the macro average.
-
-    The optional keyword `annotated_types` (default None, no filtering) names the types the
-    dataset annotates. Predictions of any other type are dropped before matching, so they are
-    neither true nor false positives in the per-type counts or the pooled score.
-    """
+    """Scores detector output against answers using greedy one-to-one matching."""
 
     def score(
         self,

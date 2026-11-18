@@ -1,10 +1,4 @@
-"""Rebuilds Tables 1 to 6 and Charts A to F from saved result files, with a manifest of where every cell came from.
-
-Inputs are the result files of one folder plus a cost folder (by default its `cost` subfolder) and nothing else: no
-dataset is read and no model is loaded. Only results measured on the test split are accepted,
-so every published number comes from TAB test and MAPA test. Outputs are byte-for-byte
-reproducible.
-"""
+"""Rebuilds Tables 1 to 6 and Charts A to F from saved result files, with a manifest of where every cell came from."""
 
 import json
 from collections.abc import Callable, Mapping, Sequence
@@ -156,10 +150,7 @@ def _chart_sources(index: Records, cost_dir: Path) -> dict[str, list[str]]:
 
 
 def build_outputs(results_dir: Path, out_dir: Path, cost_dir: Path | None = None) -> list[Path]:
-    """Writes every table, chart and the manifest into out_dir; returns the files written.
-
-    cost_dir holds the cost result files and defaults to the `cost` subfolder of results_dir.
-    """
+    """Writes every table, chart and the manifest into out_dir, reading cost results from `cost_dir` or the `cost` subfolder of results_dir, and returns the files written."""
     if cost_dir is None:
         cost_dir = results_dir / COST_FOLDER_NAME
     if not cost_dir.is_dir():

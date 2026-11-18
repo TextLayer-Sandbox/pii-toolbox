@@ -1,8 +1,4 @@
-"""Splits long text into overlapping segments and runs a detector over each one.
-
-Models read a limited input length, so long documents are detected piece by piece and the
-spans are mapped back to positions in the full text.
-"""
+"""Splits long text into overlapping segments and runs a detector over each one."""
 
 from collections.abc import Callable
 from dataclasses import replace
@@ -11,12 +7,7 @@ from pii_toolbox.core import Span, TextSegment, TextSegmenter
 
 
 class OverlappingTextSegmenter(TextSegmenter):
-    """Cuts text into segments of at most `length` characters sharing `overlap` characters.
-
-    Each cut falls on whitespace when the last half of the segment holds any, so words
-    are rarely split; the overlap lets an item cut by one segment edge appear whole in the
-    next segment.
-    """
+    """Cuts text into segments of at most `length` characters that share `overlap` characters, cutting on whitespace where the last half of a segment has any."""
 
     def __init__(self, length: int = 2000, overlap: int = 200) -> None:
         if length <= 0:
@@ -51,11 +42,7 @@ def detect_segmented(
     segmenter: TextSegmenter,
     detect_segment: Callable[[str], list[Span]],
 ) -> list[Span]:
-    """Detects in every segment and returns spans at full-text positions, sorted by start.
-
-    A span found twice in an overlap (same start, end and type) is kept once. A span cut by
-    a segment edge is dropped when another span found in a later or earlier segment contains it.
-    """
+    """Detects in every segment and returns spans at full-text positions sorted by start, deduplicated and without edge-cut spans that another span contains."""
     found: dict[tuple[int, int, object], tuple[Span, bool]] = {}
     segments = segmenter.split(text)
     for segment in segments:

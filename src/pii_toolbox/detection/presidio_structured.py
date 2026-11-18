@@ -1,9 +1,4 @@
-"""Detector for structured identifiers using Presidio's pattern and checksum recognisers.
-
-Only the recognisers listed here run, and only when this detector is part of a
-configuration; Presidio's name-finding recognisers and its spaCy engine are never involved,
-so no model files are read and nothing touches the network.
-"""
+"""Detector for structured identifiers using Presidio's pattern and checksum recognisers."""
 
 from pii_toolbox.core import PRESIDIO_LABELS, Detector, Document, PiiType, Span
 
@@ -95,7 +90,7 @@ class PresidioStructuredDetector(Detector):
 
 
 def _without_contained_spans(spans: list[Span]) -> list[Span]:
-    """Drops spans lying inside a wider one, such as the host name Presidio finds inside an email address."""
+    """Drops spans lying inside another span that is wider or scores higher."""
     kept = [
         span
         for span in spans

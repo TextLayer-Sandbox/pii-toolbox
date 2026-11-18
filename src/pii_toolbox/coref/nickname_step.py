@@ -1,11 +1,4 @@
-"""Joins detected names that the co-reference model left unlinked to a group through a nickname list.
-
-A name's standard form is its given name looked up in the nickname list (dave -> david). An
-unlinked detected PERSON name joins the one group holding a name with the same standard form
-and a compatible surname. Nicknames never link to each other directly: two names that share a
-standard form are linked only when a group already holds one of them. The step reads the
-document text to find the names and returns groups of positions only.
-"""
+"""Joins detected names that no group holds to the one group holding a name with the same standard given name, using a nickname list."""
 
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
@@ -18,10 +11,7 @@ from pii_toolbox.core import Document, PersonMentions, PiiType, Span
 
 @dataclass(frozen=True)
 class NicknameConfig:
-    """Chooses the nickname list: the committed default, another file of the same shape, or none.
-
-    A `list_path` of None turns the step off.
-    """
+    """Chooses the nickname list file, where a `list_path` of None turns the step off."""
 
     list_path: Path | None = DEFAULT_NICKNAME_LIST_PATH
 
@@ -38,12 +28,7 @@ def apply_nickname_step(
     groups: Sequence[PersonMentions],
     nicknames: Mapping[str, str] | None,
 ) -> list[PersonMentions]:
-    """Returns the groups with each unlinked detected name added to the group it matches.
-
-    A name already in a group stays there. A name joins a group only if it matches every name in
-    the group, including names that joined earlier. A name that matches more than one group, or
-    none, stays unlinked. With `nicknames` None (the list turned off) the groups are returned unchanged.
-    """
+    """Returns the groups with each unlinked detected name added to the one group it matches."""
     if nicknames is None:
         return list(groups)
     grouped_positions = {(span.start, span.end) for group in groups for span in group.spans}

@@ -1,10 +1,4 @@
-"""Loads a nickname list: a mapping from each lower-case nickname to its one standard given name.
-
-A list file has two comma-separated columns, nickname then standard given name, and the shape
-is star-shaped: nicknames link to each other only through their standard name. The loader
-refuses a file where one nickname has two different standard names, or where a name is both a
-standard name and a nickname of another.
-"""
+"""Loads a nickname list: a mapping from each lower-case nickname to its one standard given name."""
 
 import csv
 from pathlib import Path
@@ -13,11 +7,7 @@ DEFAULT_NICKNAME_LIST_PATH = Path(__file__).with_name("nicknames.csv")
 
 
 def load_nickname_list(path: Path) -> dict[str, str]:
-    """Return {nickname: standard name} read from the two-column file at `path`.
-
-    Raises ValueError when a row is malformed, a nickname maps to two different standard names,
-    or a name is both a standard name and a nickname of another name.
-    """
+    """Returns {nickname: standard name} from the two-column file at `path`; raises ValueError for a malformed row, a name mapped to itself, a nickname with two standard names, or a name that is both standard and nickname."""
     mapping: dict[str, str] = {}
     with Path(path).open(newline="", encoding="utf-8") as handle:
         for line_number, row in enumerate(csv.reader(handle), start=1):

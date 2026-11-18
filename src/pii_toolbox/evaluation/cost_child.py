@@ -1,9 +1,4 @@
-"""Child process of a cost measurement: loads one detector and prints its cost as JSON.
-
-Runs as `python -m pii_toolbox.evaluation.cost_child <detector> --registry module:attr
---sizes 1000,10000`. Each input size gets one untimed warm-up run and then five timed runs;
-the median of the timed runs is reported. Inputs are synthetic text, never dataset text.
-"""
+"""Loads one detector, measures its cost over synthetic text and prints the result as JSON."""
 
 import argparse
 import importlib

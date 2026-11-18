@@ -1,8 +1,4 @@
-"""Detectors that read the named entities found by an installed-from-wheel spaCy model.
-
-The model is unpacked from the wheel kept in the model directory and loaded from disk,
-so nothing is downloaded or imported from site-packages at detection time.
-"""
+"""Detectors that read the named entities of a spaCy model unpacked from a wheel in the model directory."""
 
 import shutil
 import zipfile
@@ -10,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from pii_toolbox.core import Detector, Document, PiiType, Span
-from pii_toolbox.evaluation.model_manifest import default_model_dir
+from pii_toolbox.core.model_dir import default_model_dir
 
 SPACY_LABELS: dict[str, PiiType] = {
     "PERSON": PiiType.PERSON,
@@ -43,10 +39,7 @@ def unpack_model(model_dir: Path, model_name: str) -> Path:
 
 
 class SpacyDetector(Detector):
-    """Reports the person, organisation, place, date, time and amount entities of a spaCy pipeline.
-
-    `pipeline` may be given to supply an already built pipeline instead of loading the model.
-    """
+    """Reports the person, organisation, place, date, time and amount entities of a spaCy pipeline; an already built `pipeline` may be supplied."""
 
     def __init__(
         self,

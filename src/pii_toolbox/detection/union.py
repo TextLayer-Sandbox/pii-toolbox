@@ -3,7 +3,7 @@
 from collections.abc import Iterable
 
 from pii_toolbox.core import Detector, Document, PiiType, Span
-from pii_toolbox.core import DetectorUnion as DetectorUnionInterface
+from pii_toolbox.core import DetectorUnion
 
 
 def _outranks(candidate: Span, current: Span) -> bool:
@@ -58,7 +58,7 @@ def merge_overlapping(spans: Iterable[Span]) -> list[Span]:
     return merged
 
 
-class DetectorUnion(DetectorUnionInterface):
+class MergingDetectorUnion(DetectorUnion):
     """Runs every member detector and merges overlapping spans into one."""
 
     def __init__(self, members: tuple[Detector, ...]) -> None:

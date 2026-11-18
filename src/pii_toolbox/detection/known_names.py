@@ -1,8 +1,4 @@
-"""Detector for a configured list of names that are always recognised as people.
-
-Matching is exact and whole-word: no fuzzy or typo matching, and a name inside a longer
-word is ignored. No model is involved, so nothing is loaded and nothing touches the network.
-"""
+"""Detector for a configured list of names that are always recognised as people."""
 
 import re
 from collections.abc import Iterable
@@ -11,12 +7,7 @@ from pii_toolbox.core import Detector, Document, PiiType, Span
 
 
 class KnownNamesDetector(Detector):
-    """Reports every whole-word occurrence of a listed name as a person.
-
-    By default an occurrence must start with an upper-case letter and may continue in any
-    case, so listed 'Rose' matches 'Rose' and 'ROSE' but not 'rose'. With `case_insensitive`
-    it matches in any letter case. Multi-word names match as written, with the listed spacing.
-    """
+    """Reports each whole-word occurrence of a listed name as a person, requiring a leading capital unless `case_insensitive` is set."""
 
     def __init__(self, names: Iterable[str], case_insensitive: bool = False) -> None:
         unique_names = sorted({name.strip() for name in names if name.strip()}, key=len, reverse=True)

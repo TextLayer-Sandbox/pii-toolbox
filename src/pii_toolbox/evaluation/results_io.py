@@ -22,12 +22,7 @@ ENVIRONMENT_FILE_NAME = "environment.json"
 
 @dataclass(frozen=True)
 class ResultRecord:
-    """A saved run with the facts about its detector.
-
-    `languages` is the detector's supported ISO codes, None meaning any language;
-    `detects` is the set of types the detector can report; `language` is the single
-    language the run was measured on, None when the file covers every language of its dataset.
-    """
+    """A saved run with its detector's supported languages and reportable types, and the single language it was measured on."""
 
     run: EvaluationRun
     languages: frozenset[str] | None

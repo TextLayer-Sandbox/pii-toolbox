@@ -1,9 +1,4 @@
-"""Runs one detector configuration over one dataset split and scores it into an EvaluationRun.
-
-Detectors come from an injected registry, the optional co-reference resolver adds name forms
-the detector missed, and the dataset answer key is the any-annotator key. Only aggregate
-scores leave this module; documents and their predictions stay in memory.
-"""
+"""Runs one detector configuration over one dataset split and scores it."""
 
 from dataclasses import dataclass
 
@@ -67,11 +62,7 @@ def run_evaluation(
     resolver: IdentityResolver | None = None,
     environment: RunEnvironment | None = None,
 ) -> ResultRecord:
-    """Scores the configuration on the split and records what the detector supports.
-
-    Documents in a language the detector does not support are left out, and so are non-English
-    documents when co-reference is on. `tab_scorer` is needed only for the TAB dataset.
-    """
+    """Scores the configuration on the split and records what the detector supports, leaving out documents in an unsupported language and non-English documents when co-reference is on."""
     if request.coreference and resolver is None:
         raise ValueError("co-reference is on but no resolver was given")
     detector = build_from_config([request.tool], registry)[0]

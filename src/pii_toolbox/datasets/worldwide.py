@@ -1,11 +1,4 @@
-"""Loader for Worldwide English NER, read from the data directory filled by the download script.
-
-Expects the pinned repository tarball at `worldwide/en-worldwide-newswire.tar.gz` under the
-data directory. Each `processed_annotated/*.txt.tsv` member is one article, one token and
-BIO tag per line, a blank line ending a sentence. Every article is used whatever the split,
-because nothing is tuned on them. Tokens are joined by a space and sentences by a newline,
-and answer spans are rebuilt from the BIO tags as character offsets in that text.
-"""
+"""Loader for Worldwide English NER, read from the data directory."""
 
 import tarfile
 from collections.abc import Iterator

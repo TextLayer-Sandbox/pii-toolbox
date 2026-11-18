@@ -3,7 +3,7 @@ import socket
 import pytest
 
 from pii_toolbox.datasets.download import default_data_dir
-from pii_toolbox.evaluation.model_manifest import default_model_dir
+from pii_toolbox.core.model_dir import default_model_dir
 
 
 def _blocked(*args, **kwargs):

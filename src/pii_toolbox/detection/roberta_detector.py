@@ -1,15 +1,11 @@
-"""Detector running the RoBERTa English named-entity model through a token-classification pipeline.
-
-The model reads a limited number of tokens, so long text is cut into overlapping segments.
-Its MISC label has no common counterpart and is dropped.
-"""
+"""Detector running the RoBERTa English named-entity model through a token-classification pipeline."""
 
 from pathlib import Path
 from typing import Any
 
 from pii_toolbox.core import ROBERTA_LABELS, Detector, Document, PiiType, Span
 from pii_toolbox.detection.segmenter import OverlappingTextSegmenter, detect_segmented
-from pii_toolbox.evaluation.model_manifest import default_model_dir
+from pii_toolbox.core.model_dir import default_model_dir
 
 MODEL_FOLDER = "Jean-Baptiste__roberta-large-ner-english"
 SEGMENT_CHARACTERS = 1500
@@ -17,11 +13,7 @@ SEGMENT_OVERLAP_CHARACTERS = 200
 
 
 class RobertaDetector(Detector):
-    """Reports person, organisation and location entities found by RoBERTa.
-
-    `pipeline` may be given to supply an already built token-classification pipeline that
-    returns dicts with entity_group, score, start and end.
-    """
+    """Reports person, organisation and location entities found by RoBERTa; an already built `pipeline` may be supplied."""
 
     def __init__(self, model_dir: Path | None = None, pipeline: Any = None) -> None:
         self._model_dir = model_dir
