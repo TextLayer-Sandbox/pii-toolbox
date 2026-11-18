@@ -54,6 +54,16 @@ def summary_markdown(split: str, reports: dict[str, dict]) -> str:
     return "\n".join(lines) + "\n"
 
 
+def saved_reports(out_dir: Path, split: str) -> dict[str, dict]:
+    """The saved result of each configuration for this split that exists in out_dir."""
+    reports = {}
+    for config in CONFIGS:
+        path = out_dir / result_file_name(config, split)
+        if path.exists():
+            reports[config] = json.loads(path.read_text(encoding="utf-8"))
+    return reports
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--split", required=True, choices=("test", "dev"))
@@ -64,14 +74,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     configs = [config for config in CONFIGS if args.only_config in (None, config)]
     dataset = TabDataset(args.data_dir or default_data_dir())
     args.out.mkdir(parents=True, exist_ok=True)
-    reports: dict[str, dict] = {}
     with MaverickResolver() as resolver:
         for config in configs:
             print(f"{config}", flush=True)
             detector = build_from_config([config])[0]
             detector.load_models()
             measurement = measure_linking(dataset.load(SPLIT_NAMES[args.split]), detector, resolver)
-            reports[config] = {
+            report = {
                 "config": config,
                 "dataset": "tab",
                 "split": args.split,
@@ -79,9 +88,9 @@ def main(argv: Sequence[str] | None = None) -> int:
                 "coref_on": linking_report(measurement.on),
             }
             path = args.out / result_file_name(config, args.split)
-            path.write_text(json.dumps(reports[config], indent=2) + "\n", encoding="utf-8")
+            path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
             print(f"  wrote {path}", flush=True)
-    (args.out / "summary.md").write_text(summary_markdown(args.split, reports), encoding="utf-8")
+    (args.out / "summary.md").write_text(summary_markdown(args.split, saved_reports(args.out, args.split)), encoding="utf-8")
     return 0
 
 

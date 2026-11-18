@@ -1,10 +1,9 @@
 """Identity resolver backed by a co-reference worker process.
 
 The worker runs in its own uv environment and is reached over a ZeroMQ DEALER socket on a
-local ipc:// endpoint. The worker announces {"ready": true} once its model is loaded, and
-start() waits for that before returning. Requests carry an id and replies are matched by it. A reply that does
-not arrive in time restarts the worker and resends the request (Lazy Pirate), up to a capped
-number of retries. Replies hold character positions only; the resolver turns them into
+local ipc:// endpoint. start() waits for a {"ready": true} message before returning. Requests
+carry an id and replies are matched by it. A reply that does not arrive in time restarts the
+worker and resends the request (Lazy Pirate), up to a capped number of retries. Replies hold character positions only; the resolver turns them into
 entity groups.
 """
 
@@ -151,7 +150,7 @@ class MaverickResolver(IdentityResolver):
         self._process = subprocess.Popen(list(self._worker_command(self._endpoint)), env=environment)
 
     def _await_ready(self) -> None:
-        """Blocks until the worker reports its model is loaded; raises if it exits or takes too long."""
+        """Blocks until a ready message arrives; raises if the process exits or the startup timeout passes."""
         deadline = time.monotonic() + WORKER_STARTUP_TIMEOUT_SECONDS
         while time.monotonic() < deadline:
             if self._socket.poll(_POLL_SLICE_MILLISECONDS):

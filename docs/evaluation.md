@@ -68,6 +68,8 @@ The gap between the two scores shows how often a detector finds the right thing 
 
 Setups are therefore graded on different sets of types. The numbers show how good each setup is at what it attempts, not which one covers more: a setup that looks for fewer types is not penalised for the types it leaves out.
 
+**Reading TAB overall scores for combinations.** On TAB, `roberta`, `spacy_lg` and `spacy_sm` cannot report `IDENTIFIER`, so their overall scores leave out TAB's `IDENTIFIER` answers. Adding `presidio_structured` to any of them (for example `roberta+presidio_structured`) lets the combination report `IDENTIFIER`, so those answers are counted and the combination is scored against a larger set of answers. A drop in overall recall from a single detector to its combination (such as `roberta` against `roberta+presidio_structured`) is therefore not a like-for-like comparison. The same applies to every TAB figure built from the overall score: Table 1 (TAB columns), the overall F2 column of Table 3, the TAB reference column of Table 5, and charts A, C, D and F. The by-type scores (Table 2, chart B), TAB's own ER_di, ER_qi and WP columns in Tables 3 and 4, and the before/after comparison within one setup in Table 4 are not affected. MAPA and Worldwide have no `IDENTIFIER` answers and are not affected.
+
 ### Precision, recall and F2
 
 - **Precision**: the share of predictions that matched an answer.

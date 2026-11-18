@@ -6,7 +6,7 @@ from pii_toolbox.core import Placeholder, PlaceholderStore
 
 
 def _normalize_label(label: str) -> str:
-    """Uppercases a detector label and joins its words with underscores so it fits the placeholder token syntax."""
+    """Uppercases a detector label and joins its words with underscores."""
     return label.upper().replace(" ", "_").replace("-", "_")
 
 

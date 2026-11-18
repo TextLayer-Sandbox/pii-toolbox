@@ -149,3 +149,100 @@ def test_result_reports_the_placeholder_each_span_received():
         (0, 12): Placeholder("PERSON", 1),
         (21, 25): Placeholder("PERSON", 1),
     }
+
+
+class FixedSpanDetector(Detector):
+    """Returns the given spans for any text."""
+
+    def __init__(self, spans: list[Span]) -> None:
+        self._spans = spans
+
+    @property
+    def name(self) -> str:
+        return "fixed"
+
+    @property
+    def languages(self):
+        return None
+
+    @property
+    def detects(self):
+        return frozenset(span.pii_type for span in self._spans)
+
+    def load_models(self) -> None:
+        pass
+
+    def detect(self, document: Document) -> list[Span]:
+        return list(self._spans)
+
+
+class AddingResolver(IdentityResolver):
+    """Groups the first span with an extra name-form span at fixed offsets."""
+
+    def __init__(self, added: Span) -> None:
+        self._added = added
+
+    @property
+    def name(self) -> str:
+        return "adding-resolver"
+
+    def resolve(self, document, spans):
+        return [EntityGroup((spans[0], self._added), spans[0])]
+
+
+def test_overlapping_detected_spans_are_merged_before_substitution():
+    spans = [
+        Span(0, 5, PiiType.PERSON, "PERSON", ("fixed",), 0.9),
+        Span(1, 2, PiiType.PERSON, "PERSON", ("fixed",), 0.5),
+    ]
+    session = Session(FixedSpanDetector(spans), InMemoryPlaceholderStore(), AngleBracketFormat(), "en", None, "case-1")
+    result = session.mask("Alice x")
+    assert result.masked_text == "<PERSON_1> x"
+    assert "Alice" not in result.masked_text
+
+
+def test_resolver_added_span_overlapping_other_type_is_merged():
+    person = Span(0, 5, PiiType.PERSON, "PERSON", ("fixed",), 0.9)
+    organization = Span(11, 20, PiiType.ORGANIZATION, "ORGANIZATION", ("fixed",), 0.9)
+    added = Span(16, 24, PiiType.PERSON, "PERSON", ("adding-resolver",), None)
+    session = Session(
+        FixedSpanDetector([person, organization]),
+        InMemoryPlaceholderStore(),
+        AngleBracketFormat(),
+        "en",
+        AddingResolver(added),
+        "case-1",
+    )
+    text = "Alice sees Acme Corp Bob ok"
+    result = session.mask(text)
+    assert "Acme" not in result.masked_text
+    assert "Bob" not in result.masked_text
+    assert result.masked_text == "<PERSON_1> sees <ORGANIZATION_1> ok"
+
+
+def test_placeholder_look_alike_in_input_round_trips_exactly():
+    session = make_session()
+    text = "The log shows <PERSON_1> failed. Email David Parker."
+    result = session.mask(text)
+    assert result.masked_text == "The log shows <PLACEHOLDER_TEXT_1> failed. Email <PERSON_1>."
+    assert session.restore(result.masked_text).restored_text == text
+
+
+def test_placeholder_look_alike_typed_after_its_number_was_minted_round_trips_exactly():
+    session = make_session()
+    first = session.mask("Email David Parker.")
+    assert first.masked_text == "Email <PERSON_1>."
+    text = "Ignore <PERSON_1> here; Maria Stone replied."
+    second = session.mask(text)
+    assert second.masked_text == "Ignore <PLACEHOLDER_TEXT_1> here; <PERSON_2> replied."
+    assert session.restore(second.masked_text).restored_text == text
+    assert session.restore(first.masked_text).restored_text == "Email David Parker."
+
+
+def test_text_not_in_the_rendered_placeholder_form_is_not_masked_as_a_look_alike():
+    session = make_session()
+    first = session.mask("Email David Parker.")
+    text = "Ignore PERSON_1, <person_1>, user_id_2 and item_3 here."
+    result = session.mask(text)
+    assert result.masked_text == text
+    assert session.restore(first.masked_text).restored_text == "Email David Parker."

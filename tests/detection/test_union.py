@@ -1,5 +1,5 @@
 from pii_toolbox.core import Detector, Document, PiiType, Span
-from pii_toolbox.detection.union import DetectorUnion
+from pii_toolbox.detection.union import DetectorUnion, merge_overlapping
 
 
 class FakeDetector(Detector):
@@ -74,6 +74,12 @@ def test_chain_of_overlaps_merges_into_one_span():
     c = FakeDetector("c", [span(18, 40, PiiType.ORGANIZATION, "ORG", "c", 0.7)])
     result = DetectorUnion((a, b, c)).detect(DOC)
     assert result == [Span(0, 40, PiiType.ORGANIZATION, "ORG", ("a", "b", "c"), 0.7)]
+
+
+def test_merge_overlapping_merges_nested_and_duplicate_spans():
+    outer = span(0, 5, PiiType.PERSON, "PERSON", "a", 0.5)
+    inner = span(1, 2, PiiType.LOCATION, "LOC", "b", 0.9)
+    assert merge_overlapping([inner, outer, outer]) == [Span(0, 5, PiiType.PERSON, "PERSON", ("a", "b"), 0.9)]
 
 
 def test_members_name_languages_detects_and_load_models():

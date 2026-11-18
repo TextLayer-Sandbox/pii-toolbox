@@ -27,6 +27,8 @@ The setups are `presidio_structured`, `gliner`, `roberta`, `spacy_lg` and `spacy
 
 Each table comes as a Markdown file (`.md`) for reading and a CSV file (`.csv`) for other tools. Numbers have three decimals. Rows list single detectors first and then combinations. "Strict" and "relaxed" are the two matching rules explained in [Evaluation](evaluation.md). Overall scores count a setup's misses only on the types it can report, so setups are graded on different sets of types: read the numbers as how good a setup is at what it attempts, not as which one covers more.
 
+**Note on TAB overall scores.** On TAB, `roberta`, `spacy_lg` and `spacy_sm` cannot report `IDENTIFIER`, so their overall scores skip TAB's `IDENTIFIER` answers, while a combination with `presidio_structured` counts them. Overall TAB scores of a single detector and of its combination with `presidio_structured` are therefore scored against different sets of answers, and a lower recall for the combination is not a like-for-like drop. This affects Table 1 (TAB columns), the overall F2 column of Table 3, the TAB reference column of Table 5 and charts A, C, D and F; per-type scores, ER_di, ER_qi and WP, and MAPA and Worldwide are unaffected. See [Evaluation](evaluation.md).
+
 | File | What it shows |
 | --- | --- |
 | `table1` | Overall precision, recall and F2 for every setup on TAB, MAPA (English) and Worldwide, each with strict and relaxed matching. |

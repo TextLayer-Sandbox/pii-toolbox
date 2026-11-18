@@ -78,3 +78,28 @@ def test_exclude_and_skip_existing_leave_runs_out(tmp_path, monkeypatch):
     specs = seen[0]
     assert not any(s.dataset == "mapa" and s.language == "en" and s.coreference for s in specs)
     assert all(script.result_file_name(s, DatasetSplit.TEST) != existing for s in specs)
+
+
+def _main_out_dir(monkeypatch, tmp_path, argv):
+    seen = []
+    monkeypatch.setattr(script, "run_all", lambda split, out, specs, **kw: seen.append(out) or [])
+    monkeypatch.setattr(script, "default_data_dir", lambda: tmp_path)
+    assert script.main(argv) == 0
+    return seen[0]
+
+
+def test_max_documents_writes_to_a_partial_folder(monkeypatch, tmp_path):
+    out = _main_out_dir(monkeypatch, tmp_path, ["--split", "test", "--out", str(tmp_path / "res"), "--max-documents", "2"])
+    assert out == tmp_path / "res-partial"
+
+
+def test_default_out_folder_follows_the_split(monkeypatch, tmp_path):
+    assert _main_out_dir(monkeypatch, tmp_path, ["--split", "dev"]) == Path("results/dev")
+    assert _main_out_dir(monkeypatch, tmp_path, ["--split", "dev", "--max-documents", "1"]) == Path("results/dev-partial")
+
+
+def test_unknown_only_config_is_rejected(capsys):
+    with pytest.raises(SystemExit) as exit_info:
+        script.main(["--split", "test", "--only-config", "no_such_config"])
+    assert exit_info.value.code == 2
+    assert "invalid choice" in capsys.readouterr().err

@@ -1,5 +1,7 @@
 """Union of several detectors with overlapping spans merged into the widest."""
 
+from collections.abc import Iterable
+
 from pii_toolbox.core import Detector, Document, PiiType, Span
 from pii_toolbox.core import DetectorUnion as DetectorUnionInterface
 
@@ -36,6 +38,26 @@ def _merge_group(group: list[Span]) -> Span:
     )
 
 
+def merge_overlapping(spans: Iterable[Span]) -> list[Span]:
+    """Merges every cluster of overlapping spans into one span; returns the result sorted by start."""
+    merged: list[Span] = []
+    group: list[Span] = []
+    group_end = 0
+    for span in sorted(spans, key=lambda span: (span.start, span.end)):
+        # Touching spans (end == next start) stay separate.
+        if group and span.start < group_end:
+            group.append(span)
+            group_end = max(group_end, span.end)
+            continue
+        if group:
+            merged.append(_merge_group(group))
+        group = [span]
+        group_end = span.end
+    if group:
+        merged.append(_merge_group(group))
+    return merged
+
+
 class DetectorUnion(DetectorUnionInterface):
     """Runs every member detector and merges overlapping spans into one."""
 
@@ -66,23 +88,4 @@ class DetectorUnion(DetectorUnionInterface):
             member.load_models()
 
     def detect(self, document: Document) -> list[Span]:
-        spans = sorted(
-            (span for member in self._members for span in member.detect(document)),
-            key=lambda span: (span.start, span.end),
-        )
-        merged: list[Span] = []
-        group: list[Span] = []
-        group_end = 0
-        for span in spans:
-            # Touching spans (end == next start) stay separate.
-            if group and span.start < group_end:
-                group.append(span)
-                group_end = max(group_end, span.end)
-                continue
-            if group:
-                merged.append(_merge_group(group))
-            group = [span]
-            group_end = span.end
-        if group:
-            merged.append(_merge_group(group))
-        return merged
+        return merge_overlapping([span for member in self._members for span in member.detect(document)])

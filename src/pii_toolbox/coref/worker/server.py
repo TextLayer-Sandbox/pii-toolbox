@@ -2,9 +2,9 @@
 
 A request is {"id": int, "text": str, "names": [[start, end], ...]} and the reply is
 {"id": int, "clusters": [[[start, end], ...], ...]} with character positions only, so no
-document text ever leaves this process. Once the model is loaded and the socket is bound, the
-worker sends {"ready": true} to the resolver, which connects under a fixed identity. Runs in its own uv environment; `--stub` swaps the
-model for a pattern-based clusterer so the protocol can be exercised without model files.
+document text ever leaves this process. Once the model is loaded and the socket is bound, it
+sends {"ready": true}. Runs in its own uv environment; `--stub` swaps the model for a
+pattern-based clusterer so the protocol can be exercised without model files.
 """
 
 import argparse
@@ -124,7 +124,7 @@ def handle(raw: bytes, predict) -> bytes:
 
 
 def announce_ready(socket) -> None:
-    """Sends the ready message, retrying until the resolver's connection is routable."""
+    """Sends {"ready": true} on the socket, retrying until the peer is routable."""
     socket.setsockopt(zmq.ROUTER_MANDATORY, 1)
     try:
         while True:

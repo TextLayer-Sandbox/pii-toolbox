@@ -19,7 +19,7 @@ from pathlib import Path
 from pii_toolbox.core import Dataset, DatasetSplit, DetectorRegistry, IdentityResolver, PiiType, TabMetricsScorer
 from pii_toolbox.datasets.download import default_data_dir
 from pii_toolbox.evaluation.__main__ import DATASET_FACTORIES, DatasetFactory, SPLIT_NAMES, _default_tab_scorer, evaluate_one
-from pii_toolbox.evaluation.configs import RunSpec, all_runs
+from pii_toolbox.evaluation.configs import RunSpec, all_runs, measured_configs
 from pii_toolbox.evaluation.results_io import run_file_name, write_run
 
 
@@ -114,29 +114,38 @@ def _limited(factory: DatasetFactory, limit: int) -> DatasetFactory:
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--split", required=True, choices=("test", "dev"))
-    parser.add_argument("--out", type=Path, default=Path("results/test"))
+    parser.add_argument("--out", type=Path, default=None, help="default: results/<split>")
     parser.add_argument("--coref", choices=("both", "off"), default="both", help="`off` skips the co-reference runs")
-    parser.add_argument("--max-documents", type=int, default=None, help="score only the first N documents of each load")
+    parser.add_argument(
+        "--max-documents",
+        type=int,
+        default=None,
+        help="score only the first N documents of each load; results go to the output folder with `-partial` appended",
+    )
     parser.add_argument("--skip-existing", action="store_true", help="do not rerun a run whose result file exists")
     parser.add_argument("--exclude", action="append", default=[], metavar="DATASET:LANGUAGE:on|off", help="leave out matching runs")
-    parser.add_argument("--only-config", default=None, help="run a single configuration, such as spacy_sm")
+    parser.add_argument("--only-config", default=None, choices=measured_configs(), help="run a single configuration")
     parser.add_argument("--data-dir", type=Path, default=None, help="default: PII_DATA_DIR, else the user cache")
     args = parser.parse_args(argv)
     split = SPLIT_NAMES[args.split]
+    out_dir = args.out or Path("results") / args.split
+    if args.max_documents is not None:
+        out_dir = out_dir.with_name(f"{out_dir.name}-partial")
+        print(f"--max-documents given: writing partial results to {out_dir}")
     specs = [
         spec
         for spec in all_runs()
         if (args.coref == "both" or not spec.coreference)
         and args.only_config in (None, spec.config)
         and f"{spec.dataset}:{spec.language}:{'on' if spec.coreference else 'off'}" not in args.exclude
-        and not (args.skip_existing and (args.out / result_file_name(spec, split)).exists())
+        and not (args.skip_existing and (out_dir / result_file_name(spec, split)).exists())
     ]
     failures = run_all(
-        split, args.out, specs=specs, max_documents=args.max_documents, data_dir=args.data_dir or default_data_dir()
+        split, out_dir, specs=specs, max_documents=args.max_documents, data_dir=args.data_dir or default_data_dir()
     )
     for failure in failures:
         print(f"FAILED {failure.spec}: {failure.error}", file=sys.stderr)
-    print(f"{len(specs) - len(failures)} of {len(specs)} runs written to {args.out}")
+    print(f"{len(specs) - len(failures)} of {len(specs)} runs written to {out_dir}")
     return 1 if failures else 0
 
 

@@ -109,7 +109,7 @@ def _reports(run: EvaluationRun) -> tuple[DetectionReport, DetectionReport]:
 
 
 def _detects_nothing_annotated(record: ResultRecord, dataset: str) -> bool:
-    """True when the detector can report none of the types the dataset annotates, so its scores carry no information."""
+    """True when the detector can report none of the types the dataset annotates."""
     dataset_classes = {"tab": TabDataset, "mapa": MapaDataset, "worldwide": WorldwideDataset}
     return not record.detects & dataset_classes[dataset]().annotated_types
 
