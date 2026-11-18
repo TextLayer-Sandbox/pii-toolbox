@@ -108,7 +108,7 @@ def main(
         resolver=resolver,
         environment=environment,
     )
-    return write_run(record, args.out)
+    return write_run(record, args.out, args.language)
 
 
 if __name__ == "__main__":

@@ -42,6 +42,15 @@ def test_run_writes_the_named_result_file_and_environment_file(tmp_path):
     assert "pytest" in {name.lower() for name in environment["library_versions"]}
 
 
+def test_runs_with_different_languages_write_different_files(tmp_path):
+    german = run_cli(tmp_path, "--language", "de")
+    french = run_cli(tmp_path, "--language", "fr")
+    assert german.name == "stub__tab__de__dev__coref-off.json"
+    assert french.name == "stub__tab__fr__dev__coref-off.json"
+    assert read_record(german).language == "de"
+    assert read_record(french).language == "fr"
+
+
 def test_result_holds_both_rules_per_type_per_language_and_tab_metrics(tmp_path):
     run = read_record(run_cli(tmp_path)).run
     assert run.tab_metrics == TabOfficialMetrics(0.5, 0.25, 0.75)

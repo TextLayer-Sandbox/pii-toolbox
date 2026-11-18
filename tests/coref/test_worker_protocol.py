@@ -175,3 +175,19 @@ def test_start_raises_when_worker_is_not_ready_in_time(runtime_dir, monkeypatch)
     with pytest.raises(CorefWorkerError, match="not ready within"):
         resolver.start()
     assert resolver.worker_process is None
+
+
+def test_failed_spawn_leaves_resolver_not_started_and_start_can_retry(runtime_dir):
+    def missing_executable(endpoint: str) -> list[str]:
+        return ["/nonexistent/pii-coref-worker"]
+
+    resolver = MaverickResolver(missing_executable, runtime_dir=runtime_dir)
+    with pytest.raises(FileNotFoundError):
+        resolver.start()
+    assert resolver.worker_process is None
+    assert resolver._context is None
+    assert resolver._socket is None
+    with pytest.raises(FileNotFoundError):
+        resolver.start()
+    with pytest.raises(CorefWorkerError, match="not started"):
+        resolver.resolve(DOCUMENT, [person("David Parker")])

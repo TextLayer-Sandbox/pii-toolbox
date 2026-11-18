@@ -92,11 +92,10 @@ def _best_mention(span: Span, mentions: Sequence[_GoldMention]) -> _GoldMention 
 def count_linking(
     document: Document,
     answers: Sequence[AnswerSpan],
-    detected_spans: Sequence[Span],
     placeholder_by_span: Mapping[Span, Placeholder],
 ) -> dict[str, LinkingCounts]:
     """Linking counts per annotator for one document."""
-    person_spans = [span for span in detected_spans if span.pii_type is PiiType.PERSON]
+    person_spans = [span for span in placeholder_by_span if span.pii_type is PiiType.PERSON]
     counts = {}
     for annotator, mentions in _gold_by_annotator(document, answers).items():
         forms_by_entity: dict[str, set[str]] = defaultdict(set)
@@ -170,7 +169,7 @@ def measure_linking(
         spans = detector.detect(document)
         for total, used_resolver in ((off, None), (on, resolver)):
             placeholders = _mask_placeholders(document, spans, used_resolver)
-            _add_counts(total, count_linking(document, annotated.answers, spans, placeholders))
+            _add_counts(total, count_linking(document, annotated.answers, placeholders))
     return LinkingMeasurement(off, on)
 
 

@@ -55,10 +55,8 @@ class LimitedDataset(Dataset):
 
 
 def result_file_name(spec: RunSpec, split: DatasetSplit) -> str:
-    """The saved file of a run; the language is part of the name because MAPA is run once per language."""
-    base = run_file_name(spec.config, spec.dataset, split, spec.coreference)
-    prefix = f"{spec.config}__{spec.dataset}__"
-    return f"{prefix}{spec.language}__{base[len(prefix):]}"
+    """The saved file name of a run."""
+    return run_file_name(spec.config, spec.dataset, split, spec.coreference, spec.language)
 
 
 def run_all(
@@ -99,8 +97,7 @@ def run_all(
                 tab_scorer=tab_scorer,
                 resolver=resolver,
             )
-            # result files carry the language in their name
-            write_run(record, out_dir).replace(out_dir / result_file_name(spec, split))
+            write_run(record, out_dir, spec.language)
         except Exception as error:
             report(f"  failed: {type(error).__name__}: {error}")
             failures.append(RunFailure(spec, f"{type(error).__name__}: {error}"))

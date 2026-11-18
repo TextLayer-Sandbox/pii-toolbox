@@ -91,6 +91,21 @@ def test_resolver_groups_name_forms_under_one_placeholder():
     assert session.store.original("case-1", Placeholder("PERSON", 1)) == "David Parker"
 
 
+def test_group_reuses_placeholder_a_member_already_holds():
+    session = make_session(FakeResolver())
+    assert session.mask("Dave left.").masked_text == "<PERSON_1> left."
+    second = session.mask("David Parker joined. Dave was glad.")
+    assert second.masked_text == "<PERSON_1> joined. <PERSON_1> was glad."
+    assert second.minted == ()
+
+
+def test_restore_after_group_joins_earlier_placeholder_returns_fullest_form_everywhere():
+    session = make_session(FakeResolver())
+    session.mask("Dave left.")
+    masked = session.mask("David Parker joined. Dave was glad.").masked_text
+    assert session.restore(masked).restored_text == "David Parker joined. David Parker was glad."
+
+
 def test_mask_without_resolver_keeps_forms_apart():
     result = make_session().mask("David Parker joined. Dave was glad.")
     assert result.masked_text == "<PERSON_1> joined. <PERSON_2> was glad."
@@ -239,10 +254,10 @@ def test_placeholder_look_alike_typed_after_its_number_was_minted_round_trips_ex
     assert session.restore(first.masked_text).restored_text == "Email David Parker."
 
 
-def test_text_not_in_the_rendered_placeholder_form_is_not_masked_as_a_look_alike():
+def test_text_not_in_the_rendered_placeholder_form_round_trips_unchanged():
     session = make_session()
-    first = session.mask("Email David Parker.")
-    text = "Ignore PERSON_1, <person_1>, user_id_2 and item_3 here."
+    session.mask("Email David Parker.")
+    text = "Ignore person_1, Person_1, PERSON_1, <person_1>, <PERSON_01>, user_id_2 and item_3 here."
     result = session.mask(text)
     assert result.masked_text == text
-    assert session.restore(first.masked_text).restored_text == "Email David Parker."
+    assert session.restore(result.masked_text).restored_text == text

@@ -18,17 +18,9 @@ ENTITY_TYPES = (
 )
 
 
-def _build_recognisers() -> list:
-    from presidio_analyzer.predefined_recognizers import (
-        CreditCardRecognizer,
-        EmailRecognizer,
-        IbanRecognizer,
-        IpRecognizer,
-        PhoneRecognizer,
-        UrlRecognizer,
-        UsSsnRecognizer,
-    )
-
+def build_offline_email_recogniser():
+    """An email recogniser that validates domains against tldextract's bundled suffix list."""
+    from presidio_analyzer.predefined_recognizers import EmailRecognizer
     from tldextract import TLDExtract
 
     # An empty suffix-list URL tuple makes tldextract use its bundled list instead of downloading one.
@@ -38,9 +30,22 @@ def _build_recognisers() -> list:
         def validate_result(self, pattern_text: str) -> bool:
             return offline_domain_parser(pattern_text).fqdn != ""
 
+    return OfflineEmailRecognizer()
+
+
+def _build_recognisers() -> list:
+    from presidio_analyzer.predefined_recognizers import (
+        CreditCardRecognizer,
+        IbanRecognizer,
+        IpRecognizer,
+        PhoneRecognizer,
+        UrlRecognizer,
+        UsSsnRecognizer,
+    )
+
     return [
         CreditCardRecognizer(),
-        OfflineEmailRecognizer(),
+        build_offline_email_recogniser(),
         IbanRecognizer(),
         IpRecognizer(),
         UrlRecognizer(),

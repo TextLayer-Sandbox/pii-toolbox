@@ -105,10 +105,9 @@ class MaverickResolver(IdentityResolver):
             self._runtime_dir = Path(self._own_runtime_dir.name)
         self._endpoint = f"ipc://{self._runtime_dir / 'coref.ipc'}"
         self._context = zmq.Context()
-        self._launch()
         try:
-            self._await_ready()
-        except CorefWorkerError:
+            self._launch()
+        except BaseException:
             self.close()
             raise
 
@@ -141,6 +140,7 @@ class MaverickResolver(IdentityResolver):
         return apply_nickname_step(document, spans, groups, self._nicknames)
 
     def _launch(self) -> None:
+        """Spawns the worker on a fresh socket and blocks until it reports ready; raises if it exits or the startup timeout passes."""
         if self._socket is not None:
             self._socket.close(linger=0)
         self._socket = self._context.socket(zmq.DEALER)
@@ -148,9 +148,6 @@ class MaverickResolver(IdentityResolver):
         self._socket.connect(self._endpoint)
         environment = {**os.environ, "HF_HUB_OFFLINE": "1", "HF_HUB_CACHE": str(self._model_dir / ENCODER_CACHE_DIRECTORY)}
         self._process = subprocess.Popen(list(self._worker_command(self._endpoint)), env=environment)
-
-    def _await_ready(self) -> None:
-        """Blocks until a ready message arrives; raises if the process exits or the startup timeout passes."""
         deadline = time.monotonic() + WORKER_STARTUP_TIMEOUT_SECONDS
         while time.monotonic() < deadline:
             if self._socket.poll(_POLL_SLICE_MILLISECONDS):

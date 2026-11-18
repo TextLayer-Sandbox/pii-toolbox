@@ -38,6 +38,12 @@ class InMemoryPlaceholderStore(PlaceholderStore):
         mappings.forms_by_placeholder[placeholder] = [original]
         return placeholder, True
 
+    def placeholder_for(self, session_id: str, label: str, original: str) -> Placeholder | None:
+        mappings = self._sessions.get(session_id)
+        if mappings is None:
+            return None
+        return mappings.placeholder_by_original.get((label, original))
+
     def alias(self, session_id: str, original: str, placeholder: Placeholder) -> None:
         mappings = self._sessions.setdefault(session_id, _SessionMappings())
         forms = mappings.forms_by_placeholder.get(placeholder)

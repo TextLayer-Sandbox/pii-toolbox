@@ -8,15 +8,15 @@ def test_render_uses_angle_brackets():
     assert FORMAT.render(Placeholder("PERSON", 1)) == "<PERSON_1>"
 
 
-def test_parse_tolerates_dropped_brackets_and_case():
-    text = "hi <PERSON_1>, PERSON_1 and person_1"
+def test_parse_accepts_only_the_exact_rendered_form():
+    text = "<PERSON_1> PERSON_1 person_1 Person_1 <person_1> <PERSON_01> <PERSON_1 PERSON_1>"
     tokens = FORMAT.parse(text)
-    assert [text[t.start : t.end] for t in tokens] == ["<PERSON_1>", "PERSON_1", "person_1"]
-    assert all(t.placeholder == Placeholder("PERSON", 1) for t in tokens)
+    assert [text[t.start : t.end] for t in tokens] == ["<PERSON_1>"]
+    assert tokens[0].placeholder == Placeholder("PERSON", 1)
 
 
 def test_parse_takes_all_digits_of_the_number():
-    tokens = FORMAT.parse("PERSON_10")
+    tokens = FORMAT.parse("<PERSON_10>")
     assert [t.placeholder for t in tokens] == [Placeholder("PERSON", 10)]
 
 
@@ -30,10 +30,7 @@ def test_parse_label_with_underscore():
     assert (tokens[0].start, tokens[0].end) == (0, 14)
 
 
-def test_parse_ignores_token_glued_to_a_longer_word():
-    tokens = FORMAT.parse("XPERSON_1")
-    assert Placeholder("PERSON", 1) not in [t.placeholder for t in tokens]
-
-
-def test_parse_ignores_digits_glued_after_number():
-    assert FORMAT.parse("PERSON_1x") == []
+def test_parse_finds_token_glued_to_surrounding_letters():
+    text = "x<PERSON_1>s"
+    tokens = FORMAT.parse(text)
+    assert [text[t.start : t.end] for t in tokens] == ["<PERSON_1>"]

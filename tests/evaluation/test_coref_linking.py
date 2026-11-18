@@ -55,7 +55,7 @@ def test_missed_merge_correct_merge_and_wrong_merge():
         spans[3]: Placeholder("PERSON", 3),
         spans[4]: Placeholder("PERSON", 4),
     }
-    counts = count_linking(DOCUMENT, gold("A1"), spans, unlinked)["A1"]
+    counts = count_linking(DOCUMENT, gold("A1"), unlinked)["A1"]
     assert counts.unmatched_spans == 1
     assert counts.matched_spans == 4
     assert (counts.multi_mention_entities, counts.multi_mention_entities_linked) == (2, 1)
@@ -64,7 +64,7 @@ def test_missed_merge_correct_merge_and_wrong_merge():
 
     everything_merged = {spans[0]: Placeholder("PERSON", 1), spans[1]: Placeholder("PERSON", 1)}
     everything_merged |= {spans[2]: Placeholder("PERSON", 1), spans[3]: Placeholder("PERSON", 1), spans[4]: Placeholder("PERSON", 4)}
-    counts = count_linking(DOCUMENT, gold("A1"), spans, everything_merged)["A1"]
+    counts = count_linking(DOCUMENT, gold("A1"), everything_merged)["A1"]
     assert (counts.multi_form_entities, counts.multi_form_entities_linked) == (2, 2)
     assert (counts.multi_mention_entities, counts.multi_mention_entities_linked) == (2, 2)
     assert (counts.placeholders, counts.wrongly_merged_placeholders) == (1, 1)
@@ -74,7 +74,7 @@ def test_annotators_are_compared_only_within_themselves():
     spans = [span(*ANNA_FULL), span(*BOB_FULL)]
     shared = {spans[0]: Placeholder("PERSON", 1), spans[1]: Placeholder("PERSON", 1)}
     other = (answer(*ANNA_FULL, "A2", "b_e1"), answer(*BOB_FULL, "A2", "b_e1"))
-    counts = count_linking(DOCUMENT, gold("A1") + other, spans, shared)
+    counts = count_linking(DOCUMENT, gold("A1") + other, shared)
     assert counts["A1"].wrongly_merged_placeholders == 1
     assert counts["A2"].wrongly_merged_placeholders == 0
 
@@ -82,7 +82,7 @@ def test_annotators_are_compared_only_within_themselves():
 def test_only_direct_or_quasi_person_entities_are_gold():
     spans = [span(*ANNA_FULL)]
     answers = (answer(*ANNA_FULL, "A1", "a_e1", ReidentificationRisk.NONE),)
-    assert count_linking(DOCUMENT, answers, spans, {spans[0]: Placeholder("PERSON", 1)}) == {}
+    assert count_linking(DOCUMENT, answers, {spans[0]: Placeholder("PERSON", 1)}) == {}
 
 
 def test_report_pools_counts_and_averages_rates():
@@ -154,3 +154,12 @@ def test_measure_linking_sums_documents_with_resolver_off_and_on():
             wrongly_merged_placeholders=2,
         )
     }
+
+
+def test_measure_linking_counts_merged_span_when_detected_names_overlap():
+    overlapping = [span(*ANNA_FULL), span(ANNA_FULL[0], ANNA_FULL[0] + 4)]
+    documents = [AnnotatedDocument(DOCUMENT, gold("A1"))]
+    measurement = measure_linking(documents, StubDetector(overlapping), OneGroupResolver())
+
+    assert measurement.off["A1"].detected_person_spans == 1
+    assert measurement.on["A1"].detected_person_spans == 1

@@ -68,7 +68,7 @@ Co-reference resolution links the different ways a text refers to one person, su
 
 The result is a `MaskResult` holding the masked text and the placeholders created by this call.
 
-**Restoring a text** (`Session.restore`): find every placeholder-shaped token in the text and replace the ones this session knows with their originals. A token that looks like a placeholder, with a type this session has created but a number it does not know, is left in place and listed in `leftovers`, so a changed number is visible. Look-alikes with a type the session never created are ignored.
+**Restoring a text** (`Session.restore`): find every token written exactly as `<LABEL_N>` (upper-case label, angle brackets, no leading zeros) and replace the ones this session knows with their originals. A token that looks like a placeholder, with a type this session has created but a number it does not know, is left in place and listed in `leftovers`, so a changed number is visible. Look-alikes with a type the session never created are ignored.
 
 **Closing** (`Session.close`, or leaving a `with` block) deletes everything the store holds for the session.
 

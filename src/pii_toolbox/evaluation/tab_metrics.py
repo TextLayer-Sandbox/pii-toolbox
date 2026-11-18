@@ -11,7 +11,6 @@ mention fully covers it, weighted by how much information the token carries.
 
 import math
 import re
-import zipfile
 from bisect import bisect_right
 from collections import defaultdict
 from collections.abc import Callable, Iterable, Sequence
@@ -28,6 +27,7 @@ from pii_toolbox.core import (
     TabMetricsScorer,
     TabOfficialMetrics,
 )
+from pii_toolbox.detection.spacy_detectors import unpack_model
 from pii_toolbox.evaluation.model_manifest import default_model_dir
 
 IGNORED_PARTS_OF_SPEECH = frozenset({"ADP", "PART", "CCONJ", "DET"})
@@ -181,15 +181,7 @@ def spacy_token_annotator(model_dir: Path | None = None) -> TokenAnnotator:
     """Tags tokens with the English medium spaCy model unpacked from its wheel in the model directory."""
     import spacy
 
-    wheel_folder = (model_dir or default_model_dir()) / SPACY_MODEL_NAME
-    unpacked = wheel_folder / "unpacked"
-    if not unpacked.exists():
-        wheels = sorted(wheel_folder.glob("*.whl"))
-        if not wheels:
-            raise FileNotFoundError(f"no wheel for {SPACY_MODEL_NAME} in {wheel_folder}; run scripts/download_models.py")
-        with zipfile.ZipFile(wheels[0]) as archive:
-            archive.extractall(unpacked)
-    pipeline = spacy.load(next(unpacked.glob(f"{SPACY_MODEL_NAME}/{SPACY_MODEL_NAME}-*")))
+    pipeline = spacy.load(unpack_model(model_dir or default_model_dir(), SPACY_MODEL_NAME))
 
     def annotate(text: str) -> list[TokenInfo]:
         return [TokenInfo(token.idx, token.idx + len(token), token.pos_, token.lower_) for token in pipeline(text)]

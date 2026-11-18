@@ -33,22 +33,25 @@ def session_with_people(count: int) -> Session:
     return session
 
 
-def test_restore_tolerates_dropped_brackets_and_case():
+def test_restore_leaves_inexact_forms_untouched():
     session = session_with_people(1)
-    for token in ["<PERSON_1>", "PERSON_1", "person_1"]:
-        assert session.restore(token).restored_text == "Person Number1"
+    for token in ["PERSON_1", "person_1", "Person_1", "<person_1>", "<PERSON_01>"]:
+        result = session.restore(token)
+        assert result.restored_text == token
+        assert result.leftovers == ()
 
 
 def test_restore_matches_whole_tokens_only():
     session = session_with_people(10)
-    assert session.restore("PERSON_10").restored_text == "Person Number10"
-    assert session.restore("PERSON_1 and PERSON_10").restored_text == "Person Number1 and Person Number10"
+    assert session.restore("<PERSON_10>").restored_text == "Person Number10"
+    assert session.restore("<PERSON_1> and <PERSON_10>").restored_text == "Person Number1 and Person Number10"
 
 
-def test_bracketed_token_is_restored_whole_after_a_letter_or_digit():
+def test_token_is_restored_whole_next_to_a_letter_or_digit():
     session = session_with_people(1)
     assert session.restore("x<PERSON_1>").restored_text == "xPerson Number1"
     assert session.restore("5<PERSON_1>").restored_text == "5Person Number1"
+    assert session.restore("<PERSON_1>s lawyer").restored_text == "Person Number1s lawyer"
 
 
 def test_look_alike_passes_through_and_is_not_a_leftover():
@@ -67,7 +70,7 @@ def test_unminted_number_of_minted_label_is_a_leftover():
 
 def test_leftovers_keep_text_order():
     session = session_with_people(1)
-    assert session.restore("PERSON_8 then <PERSON_9>").leftovers == ("PERSON_8", "<PERSON_9>")
+    assert session.restore("<PERSON_8> then <PERSON_9>").leftovers == ("<PERSON_8>", "<PERSON_9>")
 
 
 def test_other_sessions_placeholders_are_not_restored():

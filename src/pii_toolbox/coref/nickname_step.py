@@ -40,8 +40,9 @@ def apply_nickname_step(
 ) -> list[PersonMentions]:
     """Returns the groups with each unlinked detected name added to the group it matches.
 
-    A name already in a group stays there. A name that matches more than one group, or none,
-    stays unlinked. With `nicknames` None (the list turned off) the groups are returned unchanged.
+    A name already in a group stays there. A name joins a group only if it matches every name in
+    the group, including names that joined earlier. A name that matches more than one group, or
+    none, stays unlinked. With `nicknames` None (the list turned off) the groups are returned unchanged.
     """
     if nicknames is None:
         return list(groups)
@@ -62,10 +63,12 @@ def apply_nickname_step(
         matching = [
             index
             for index, forms in enumerate(group_forms)
-            if any(other is not None and _forms_match(form, other) for other in forms)
+            if any(other is not None for other in forms)
+            and all(other is None or _forms_match(form, other) for other in forms)
         ]
         if len(matching) == 1:
             joined[matching[0]].append(span)
+            group_forms[matching[0]].append(form)
     return [
         PersonMentions(spans=tuple(sorted([*group.spans, *extra], key=lambda s: (s.start, s.end))), canonical=group.canonical)
         if extra

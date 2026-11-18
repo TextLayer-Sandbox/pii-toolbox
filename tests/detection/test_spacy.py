@@ -87,3 +87,43 @@ def test_punctuation_only_span_is_dropped_and_name_remains():
     detector = SpacyDetector("stub", "stub_model", pipeline=lambda t: SimpleNamespace(ents=entities))
     spans = detector.detect(Document(id="d", text=text, language="en"))
     assert [text[s.start : s.end] for s in spans] == ["Maria Gonzalez"]
+
+
+def _write_wheel(wheel_path, model_name):
+    import zipfile
+
+    with zipfile.ZipFile(wheel_path, "w") as archive:
+        archive.writestr(f"{model_name}/{model_name}-1.0/meta.json", "{}")
+
+
+def test_unpack_model_extracts_wheel_and_returns_model_folder(tmp_path):
+    from pii_toolbox.detection.spacy_detectors import unpack_model
+
+    (tmp_path / "fake_model").mkdir()
+    _write_wheel(tmp_path / "fake_model" / "fake_model-1.0.whl", "fake_model")
+
+    path = unpack_model(tmp_path, "fake_model")
+
+    assert (path / "meta.json").exists()
+
+
+def test_interrupted_unpack_leaves_no_destination_and_is_retried(tmp_path, monkeypatch):
+    import zipfile
+
+    from pii_toolbox.detection.spacy_detectors import unpack_model
+
+    (tmp_path / "fake_model").mkdir()
+    _write_wheel(tmp_path / "fake_model" / "fake_model-1.0.whl", "fake_model")
+    real_extractall = zipfile.ZipFile.extractall
+
+    def interrupted_extractall(self, path=None, members=None, pwd=None):
+        real_extractall(self, path, members, pwd)
+        raise KeyboardInterrupt
+
+    monkeypatch.setattr(zipfile.ZipFile, "extractall", interrupted_extractall)
+    with pytest.raises(KeyboardInterrupt):
+        unpack_model(tmp_path, "fake_model")
+    assert not (tmp_path / "fake_model" / "unpacked").exists()
+
+    monkeypatch.setattr(zipfile.ZipFile, "extractall", real_extractall)
+    assert (unpack_model(tmp_path, "fake_model") / "meta.json").exists()

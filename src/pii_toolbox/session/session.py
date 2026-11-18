@@ -28,11 +28,10 @@ _PLACEHOLDER_TEXT_SOURCE = "placeholder-look-alike"
 
 
 def _placeholder_look_alike_spans(text: str, placeholder_format: PlaceholderFormat) -> list[Span]:
-    """Spans over every stretch of `text` written exactly as the placeholder format renders a placeholder."""
+    """Spans over every stretch of `text` that the placeholder format reads as a placeholder."""
     return [
         Span(token.start, token.end, PiiType.IDENTIFIER, PiiType.IDENTIFIER.value, (_PLACEHOLDER_TEXT_SOURCE,), None)
         for token in placeholder_format.parse(text)
-        if text[token.start : token.end] == placeholder_format.render(token.placeholder)
     ]
 
 
@@ -121,7 +120,20 @@ class Session(RedactionSession):
 
         for mention in mentions:
             fullest = text[mention.canonical.start : mention.canonical.end]
-            placeholder = get_or_mint(mention.canonical.pii_type.value, fullest)
+            label = mention.canonical.pii_type.value
+            held = [
+                self._store.placeholder_for(self._id, label, form)
+                for form in (fullest, *(text[span.start : span.end] for span in mention.spans))
+            ]
+            existing = [placeholder for placeholder in held if placeholder is not None]
+            if held[0] is not None:
+                placeholder = held[0]
+            elif existing:
+                placeholder = min(existing, key=lambda held_placeholder: held_placeholder.number)
+            else:
+                placeholder = get_or_mint(label, fullest)
+            if held[0] is None:
+                self._store.alias(self._id, fullest, placeholder)
             for span in mention.spans:
                 if span != mention.canonical:
                     self._store.alias(self._id, text[span.start : span.end], placeholder)

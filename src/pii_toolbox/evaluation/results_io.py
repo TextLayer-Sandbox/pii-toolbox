@@ -35,8 +35,10 @@ class ResultRecord:
     language: str | None = None
 
 
-def run_file_name(tool: str, dataset: str, split: DatasetSplit, coreference: bool) -> str:
-    return f"{tool}__{dataset}__{split.name.lower()}__coref-{'on' if coreference else 'off'}.json"
+def run_file_name(tool: str, dataset: str, split: DatasetSplit, coreference: bool, language: str | None = None) -> str:
+    """The result file name of a run; the language segment is present only for a run restricted to one language."""
+    language_part = "" if language is None else f"{language}__"
+    return f"{tool}__{dataset}__{language_part}{split.name.lower()}__coref-{'on' if coreference else 'off'}.json"
 
 
 def language_from_file_name(file_name: str) -> str | None:
@@ -117,11 +119,11 @@ def run_from_dict(raw: Mapping[str, Any]) -> EvaluationRun:
     )
 
 
-def write_run(record: ResultRecord, out_dir: Path) -> Path:
-    """Writes the result file and the environment file into out_dir; returns the result file path."""
+def write_run(record: ResultRecord, out_dir: Path, language: str | None = None) -> Path:
+    """Writes the result file, named for the run's language when given, and the environment file into out_dir; returns the result file path."""
     run = record.run
     out_dir.mkdir(parents=True, exist_ok=True)
-    path = out_dir / run_file_name(run.tool, run.dataset, run.split, run.coreference)
+    path = out_dir / run_file_name(run.tool, run.dataset, run.split, run.coreference, language)
     content = run_to_dict(run)
     content["detector_languages"] = None if record.languages is None else sorted(record.languages)
     content["detector_detects"] = sorted(pii_type.name for pii_type in record.detects)

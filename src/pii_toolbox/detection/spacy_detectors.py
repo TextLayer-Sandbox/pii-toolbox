@@ -4,6 +4,7 @@ The model is unpacked from the wheel kept in the model directory and loaded from
 so nothing is downloaded or imported from site-packages at detection time.
 """
 
+import shutil
 import zipfile
 from pathlib import Path
 from typing import Any
@@ -25,7 +26,7 @@ SPACY_LABELS: dict[str, PiiType] = {
 _UNPACKED_FOLDER = "unpacked"
 
 
-def _unpack_model(model_dir: Path, model_name: str) -> Path:
+def unpack_model(model_dir: Path, model_name: str) -> Path:
     """Extracts the model wheel once and returns the folder spaCy loads from."""
     wheel_folder = model_dir / model_name
     unpacked = wheel_folder / _UNPACKED_FOLDER
@@ -33,8 +34,11 @@ def _unpack_model(model_dir: Path, model_name: str) -> Path:
         wheels = sorted(wheel_folder.glob("*.whl"))
         if not wheels:
             raise FileNotFoundError(f"no wheel for {model_name} in {wheel_folder}; run scripts/download_models.py")
+        partial = wheel_folder / f"{_UNPACKED_FOLDER}.partial"
+        shutil.rmtree(partial, ignore_errors=True)
         with zipfile.ZipFile(wheels[0]) as archive:
-            archive.extractall(unpacked)
+            archive.extractall(partial)
+        partial.rename(unpacked)
     return next(unpacked.glob(f"{model_name}/{model_name}-*"))
 
 
@@ -72,7 +76,7 @@ class SpacyDetector(Detector):
         import spacy
 
         model_dir = self._model_dir or default_model_dir()
-        self._pipeline = spacy.load(_unpack_model(model_dir, self._model_name))
+        self._pipeline = spacy.load(unpack_model(model_dir, self._model_name))
 
     def detect(self, document: Document) -> list[Span]:
         if self._pipeline is None:

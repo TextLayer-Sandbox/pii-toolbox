@@ -15,6 +15,7 @@ from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 
 from pii_toolbox.datasets.structured_pii import StructuredDocument
+from pii_toolbox.detection.presidio_structured import build_offline_email_recogniser
 from pii_toolbox.evaluation.structured_kinds import (
     GROUPS,
     KIND_ENTITIES,
@@ -41,15 +42,7 @@ def build_recognisers() -> list:
     """One instance of every predefined pattern or phone recogniser, with all phone regions on."""
     import phonenumbers
     import presidio_analyzer.predefined_recognizers as predefined
-    import tldextract
     from presidio_analyzer import PatternRecognizer
-
-    # An empty suffix-list URL tuple makes tldextract use its bundled list instead of downloading one.
-    offline_domain_parser = tldextract.TLDExtract(suffix_list_urls=(), cache_dir=None)
-
-    class OfflineEmailRecognizer(predefined.EmailRecognizer):
-        def validate_result(self, pattern_text: str) -> bool:
-            return offline_domain_parser(pattern_text).fqdn != ""
 
     recognisers = []
     for name, recogniser_class in sorted(vars(predefined).items()):
@@ -59,7 +52,7 @@ def build_recognisers() -> list:
             recognisers.append(recogniser_class(supported_regions=sorted(phonenumbers.SUPPORTED_REGIONS)))
         elif issubclass(recogniser_class, PatternRecognizer):
             recognisers.append(recogniser_class())
-    recognisers.append(OfflineEmailRecognizer())
+    recognisers.append(build_offline_email_recogniser())
     return recognisers
 
 

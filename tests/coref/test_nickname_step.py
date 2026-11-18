@@ -79,6 +79,14 @@ def test_a_name_matching_two_groups_stays_unlinked():
     assert all((dave.start, dave.end) not in positions(group) for group in result)
 
 
+def test_two_different_surnames_do_not_both_join_a_first_name_only_group():
+    text = "John spoke. John Adams agreed. John Brown objected."
+    document = Document(id="d10", text=text, language="en")
+    john, adams, brown = locate(text, "John"), locate(text, "John Adams"), locate(text, "John Brown")
+    result = apply_nickname_step(document, [john, adams, brown], [group_of(john)], DEFAULT)
+    assert positions(result[0]) == [(john.start, john.end), (adams.start, adams.end)]
+
+
 def test_a_configured_list_replaces_the_default(tmp_path: Path):
     text = "David Parker met Dave. Davo laughed."
     document = Document(id="d7", text=text, language="en")

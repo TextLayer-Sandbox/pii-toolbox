@@ -254,6 +254,11 @@ class PlaceholderStore(ABC):
         ...
 
     @abstractmethod
+    def placeholder_for(self, session_id: str, label: str, original: str) -> Placeholder | None:
+        """Returns the existing placeholder for the original, or None when it has none; never mints."""
+        ...
+
+    @abstractmethod
     def alias(self, session_id: str, original: str, placeholder: Placeholder) -> None:
         """Makes another original resolve to an existing placeholder, so different forms of one name share it."""
         ...
