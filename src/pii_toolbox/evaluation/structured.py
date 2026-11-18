@@ -153,7 +153,7 @@ def _chunks(documents: Iterable[StructuredDocument], size: int) -> Iterator[list
 def count_documents_parallel(
     dataset: str, documents: Iterable[StructuredDocument], workers: int, chunk_size: int = 200
 ) -> dict[str, dict[str, dict[str, int]]]:
-    """Like count_documents, spreading chunks of documents over worker processes that each build the recognisers once."""
+    """Counts per language and kind as for one process, spreading chunks of documents over worker processes that each build the recognisers once."""
     total: dict[str, dict[str, dict[str, int]]] = {}
     jobs = ((dataset, chunk) for chunk in _chunks(documents, chunk_size))
     with multiprocessing.get_context("spawn").Pool(workers, initializer=_init_worker) as pool:

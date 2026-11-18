@@ -1,4 +1,4 @@
-"""Shared types and interfaces used by every part of the toolbox."""
+"""Shared types and interfaces for detection, masking and evaluation."""
 
 from pii_toolbox.core.label_maps import (
     GLINER_LABELS,

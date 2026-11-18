@@ -2,7 +2,8 @@
 
 A request is {"id": int, "text": str, "names": [[start, end], ...]} and the reply is
 {"id": int, "clusters": [[[start, end], ...], ...]} with character positions only, so no
-document text ever leaves this process. Runs in its own uv environment; `--stub` swaps the
+document text ever leaves this process. Once the model is loaded and the socket is bound, the
+worker sends {"ready": true} to the resolver, which connects under a fixed identity. Runs in its own uv environment; `--stub` swaps the
 model for a pattern-based clusterer so the protocol can be exercised without model files.
 """
 
@@ -12,12 +13,14 @@ import json
 import re
 import shutil
 import tempfile
+import time
 import zipfile
 from pathlib import Path
 
 import zmq
 
 POLL_INTERVAL_MS = 200
+RESOLVER_IDENTITY = b"pii-coref-resolver"
 MAVERICK_DIRECTORY = "sapienzanlp__maverick-mes-ontonotes"
 SPACY_MODEL_NAME = "en_core_web_sm"
 SPACY_MODEL_DIRECTORY = "en_core_web_sm"
@@ -120,11 +123,26 @@ def handle(raw: bytes, predict) -> bytes:
     return json.dumps({"id": request["id"], "clusters": kept}).encode()
 
 
+def announce_ready(socket) -> None:
+    """Sends the ready message, retrying until the resolver's connection is routable."""
+    socket.setsockopt(zmq.ROUTER_MANDATORY, 1)
+    try:
+        while True:
+            try:
+                socket.send_multipart([RESOLVER_IDENTITY, json.dumps({"ready": True}).encode()])
+                return
+            except zmq.ZMQError:
+                time.sleep(POLL_INTERVAL_MS / 1000)
+    finally:
+        socket.setsockopt(zmq.ROUTER_MANDATORY, 0)
+
+
 def serve(endpoint: str, predict) -> None:
     context = zmq.Context()
     socket = context.socket(zmq.ROUTER)
     socket.bind(endpoint)
     try:
+        announce_ready(socket)
         while True:
             if not socket.poll(POLL_INTERVAL_MS):
                 continue

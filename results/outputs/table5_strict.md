@@ -3,7 +3,7 @@
 | Tool | en | fr | de | TAB (English reference) |
 | --- | --- | --- | --- | --- |
 | gliner | 0.492 | 0.447 | 0.545 | 0.644 |
-| presidio_structured | 0.000 | 0.000 | 0.000 | 0.000 |
+| presidio_structured | n/a | n/a | n/a | 0.000 |
 | roberta | 0.314 | n/a | n/a | 0.373 |
 | spacy_lg | 0.378 | n/a | n/a | 0.564 |
 | spacy_sm | 0.332 | n/a | n/a | 0.536 |

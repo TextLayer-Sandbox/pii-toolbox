@@ -1,8 +1,8 @@
 """Turns mention clusters from a co-reference model into entity groups of one person each.
 
 A cluster becomes a group only when it holds a detected PERSON span. Name-form mentions
-the detector missed are added to the group; pronouns and descriptions are dropped. Only
-positions are kept, so no text leaves the document apart from the canonical-form choice.
+the detector missed are added to the group; pronouns and descriptions are dropped. Each
+group holds spans by position only, and its canonical span is the longest of them.
 
 A mention is a name form when it overlaps a detected PERSON span, or when it is a title
 followed by capitalised words, or when every word in it is capitalised and none is a pronoun.

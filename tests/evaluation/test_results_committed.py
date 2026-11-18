@@ -7,6 +7,8 @@ from pii_toolbox.core import DatasetSplit
 from pii_toolbox.evaluation.configs import all_runs, measured_configs
 from pii_toolbox.evaluation.results_io import ENVIRONMENT_FILE_NAME, read_record
 
+pytestmark = pytest.mark.repo_contents
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 RESULTS = REPO_ROOT / "results" / "test"
 RESULT_KEYS = {

@@ -28,11 +28,13 @@ def test_setups_follow_the_agreed_list():
             assert name.count("+") == 1
 
 
+@pytest.mark.repo_contents
 def test_only_listed_setups_have_result_files():
     expected = {result_path(setup).name for setup in SETUPS}
     assert {path.name for path in RESULTS.glob("*.json")} == expected
 
 
+@pytest.mark.repo_contents
 @pytest.mark.parametrize("setup", SETUPS)
 def test_result_file_has_every_figure_and_its_environment(setup):
     result = json.loads(result_path(setup).read_text())

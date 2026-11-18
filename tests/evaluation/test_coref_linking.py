@@ -1,5 +1,16 @@
-from pii_toolbox.core import AnswerSpan, Document, PiiType, Placeholder, ReidentificationRisk, Span
-from pii_toolbox.evaluation.coref_linking import LinkingCounts, count_linking, linking_report
+from pii_toolbox.core import (
+    AnnotatedDocument,
+    AnswerSpan,
+    Detector,
+    Document,
+    EntityGroup,
+    IdentityResolver,
+    PiiType,
+    Placeholder,
+    ReidentificationRisk,
+    Span,
+)
+from pii_toolbox.evaluation.coref_linking import LinkingCounts, count_linking, linking_report, measure_linking
 
 TEXT = "Anna Smith met Annie. Anna Smith met Bob Jones. Bob left. Bob left."
 
@@ -83,3 +94,63 @@ def test_report_pools_counts_and_averages_rates():
     assert report["macro_average_rates"]["linked_rate_multi_form_entities"] == 0.5
     assert report["pooled"]["wrongly_merged_rate_of_placeholders"] == 0.25
     assert report["macro_average_rates"]["linked_rate_multi_mention_entities"] is None
+
+
+class StubDetector(Detector):
+    """Returns the same spans for every document."""
+
+    name = "stub"
+    languages = None
+    detects = frozenset(PiiType)
+
+    def __init__(self, spans: list[Span]) -> None:
+        self._spans = spans
+
+    def load_models(self) -> None:
+        pass
+
+    def detect(self, document: Document) -> list[Span]:
+        return list(self._spans)
+
+
+class OneGroupResolver(IdentityResolver):
+    """Puts every PERSON span into a single group whose canonical span is the longest."""
+
+    @property
+    def name(self) -> str:
+        return "one-group"
+
+    def resolve(self, document, spans):
+        people = [s for s in spans if s.pii_type is PiiType.PERSON]
+        return [EntityGroup(tuple(people), max(people, key=lambda s: s.end - s.start))]
+
+
+def test_measure_linking_sums_documents_with_resolver_off_and_on():
+    detector = StubDetector([span(*ANNA_FULL), span(*ANNA_SHORT), span(*BOB_FULL)])
+    documents = [
+        AnnotatedDocument(Document("doc-1", TEXT, "en"), gold("A1")),
+        AnnotatedDocument(Document("doc-2", TEXT, "en"), gold("A1")),
+    ]
+    measurement = measure_linking(documents, detector, OneGroupResolver())
+
+    assert measurement.off == {
+        "A1": LinkingCounts(
+            detected_person_spans=6,
+            matched_spans=6,
+            multi_mention_entities=2,
+            multi_form_entities=2,
+            placeholders=6,
+        )
+    }
+    assert measurement.on == {
+        "A1": LinkingCounts(
+            detected_person_spans=6,
+            matched_spans=6,
+            multi_mention_entities=2,
+            multi_mention_entities_linked=2,
+            multi_form_entities=2,
+            multi_form_entities_linked=2,
+            placeholders=2,
+            wrongly_merged_placeholders=2,
+        )
+    }

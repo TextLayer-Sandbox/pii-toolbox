@@ -3,7 +3,7 @@
 | Tool | TAB P strict | TAB R strict | TAB F2 strict | TAB P relaxed | TAB R relaxed | TAB F2 relaxed | MAPA (en) P strict | MAPA (en) R strict | MAPA (en) F2 strict | MAPA (en) P relaxed | MAPA (en) R relaxed | MAPA (en) F2 relaxed | Worldwide P strict | Worldwide R strict | Worldwide F2 strict | Worldwide P relaxed | Worldwide R relaxed | Worldwide F2 relaxed |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | gliner | 0.521 | 0.685 | 0.644 | 0.533 | 0.700 | 0.659 | 0.274 | 0.613 | 0.492 | 0.276 | 0.618 | 0.495 | 0.665 | 0.478 | 0.507 | 0.745 | 0.536 | 0.568 |
-| presidio_structured | 0.000 | 0.000 | 0.000 | 0.375 | 0.009 | 0.011 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 |
+| presidio_structured | 0.000 | 0.000 | 0.000 | 0.375 | 0.009 | 0.011 | n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a |
 | roberta | 0.225 | 0.447 | 0.373 | 0.409 | 0.811 | 0.678 | 0.116 | 0.545 | 0.314 | 0.150 | 0.705 | 0.405 | 0.772 | 0.903 | 0.873 | 0.798 | 0.934 | 0.903 |
 | spacy_lg | 0.423 | 0.616 | 0.564 | 0.576 | 0.838 | 0.768 | 0.152 | 0.600 | 0.378 | 0.182 | 0.720 | 0.453 | 0.572 | 0.666 | 0.645 | 0.666 | 0.776 | 0.751 |
 | spacy_sm | 0.400 | 0.586 | 0.536 | 0.546 | 0.801 | 0.732 | 0.130 | 0.542 | 0.332 | 0.169 | 0.702 | 0.430 | 0.529 | 0.602 | 0.585 | 0.624 | 0.710 | 0.691 |

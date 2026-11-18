@@ -97,7 +97,7 @@ def overall_scores(
 class MatchingDetectionScorer(DetectionScorer):
     """Scores detector output against answers using greedy one-to-one matching.
 
-    Beyond the abstract signature, `score` takes an optional keyword `reported_types`
+    `score` takes an optional keyword `reported_types`
     (default: all six types): the types the detector can report. An unreported type is
     None in the per-type breakdown and is left out of the macro average; its answers are
     also left out of the pooled overall and per-language scores. A type with no answers and

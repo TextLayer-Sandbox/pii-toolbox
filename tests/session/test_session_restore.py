@@ -45,6 +45,12 @@ def test_restore_matches_whole_tokens_only():
     assert session.restore("PERSON_1 and PERSON_10").restored_text == "Person Number1 and Person Number10"
 
 
+def test_bracketed_token_is_restored_whole_after_a_letter_or_digit():
+    session = session_with_people(1)
+    assert session.restore("x<PERSON_1>").restored_text == "xPerson Number1"
+    assert session.restore("5<PERSON_1>").restored_text == "5Person Number1"
+
+
 def test_look_alike_passes_through_and_is_not_a_leftover():
     session = session_with_people(1)
     result = session.restore("ask TEAM_7 about <PERSON_1>")
@@ -67,7 +73,6 @@ def test_leftovers_keep_text_order():
 def test_other_sessions_placeholders_are_not_restored():
     first = session_with_people(1)
     second = make_session("case-2")
-    assert second.restore("<PERSON_1>") == second.restore("<PERSON_1>")
     assert second.restore("<PERSON_1>").restored_text == "<PERSON_1>"
     assert second.restore("<PERSON_1>").leftovers == ()
     assert first.restore("<PERSON_1>").restored_text == "Person Number1"
@@ -77,3 +82,13 @@ def test_empty_text_restores_to_empty_text():
     result = session_with_people(1).restore("")
     assert result.restored_text == ""
     assert result.leftovers == ()
+
+
+def test_lowercase_spaced_detector_labels_are_restored_and_flagged_as_leftovers():
+    session = make_session()
+    person, _ = session.store.get_or_mint(session.id, "person", "Alice Smith")
+    case, _ = session.store.get_or_mint(session.id, "case number", "12-345")
+    assert session.format.render(person) == "<PERSON_1>"
+    assert session.format.render(case) == "<CASE_NUMBER_1>"
+    assert session.restore("<PERSON_1> / <CASE_NUMBER_1>").restored_text == "Alice Smith / 12-345"
+    assert session.restore("<CASE_NUMBER_2>").leftovers == ("<CASE_NUMBER_2>",)

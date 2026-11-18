@@ -82,3 +82,19 @@ def test_removing_a_column_makes_the_golden_comparison_fail(tmp_path, monkeypatc
     monkeypatch.setattr(tables, "table3", without_wp)
     write_built_tables("table3", RESULTS, tmp_path)
     assert (tmp_path / "table3.md").read_bytes() != (GOLDEN / "table3.md").read_bytes()
+
+
+def test_table1_marks_a_detector_with_no_annotated_type_not_applicable_but_keeps_a_real_zero():
+    records = tables.load_records(RESULTS, DatasetSplit.TEST)
+    table = tables.table1(records)
+    for tool in {row[0] for row in table.rows}:
+        for dataset, label in (("tab", "TAB"), ("mapa", "MAPA (en)"), ("worldwide", "Worldwide")):
+            record = tables._english_record(records, tool, dataset)
+            if record is None:
+                continue
+            row = next(r for r in table.rows if r[0] == tool)
+            cells = [row[i] for i, column in enumerate(table.header) if column.startswith(f"{label} ")]
+            if tables._detects_nothing_annotated(record, dataset):
+                assert set(cells) == {"n/a"}
+            else:
+                assert "n/a" not in cells

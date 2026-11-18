@@ -1,7 +1,8 @@
 """Identity resolver backed by a co-reference worker process.
 
 The worker runs in its own uv environment and is reached over a ZeroMQ DEALER socket on a
-local ipc:// endpoint. Requests carry an id and replies are matched by it. A reply that does
+local ipc:// endpoint. The worker announces {"ready": true} once its model is loaded, and
+start() waits for that before returning. Requests carry an id and replies are matched by it. A reply that does
 not arrive in time restarts the worker and resends the request (Lazy Pirate), up to a capped
 number of retries. Replies hold character positions only; the resolver turns them into
 entity groups.
@@ -29,6 +30,8 @@ from pii_toolbox.evaluation.model_manifest import default_model_dir
 WORKER_DIR = Path(__file__).parent / "worker"
 ENCODER_CACHE_DIRECTORY = "huggingface_cache"
 DEFAULT_REPLY_TIMEOUT_SECONDS = 120.0
+WORKER_STARTUP_TIMEOUT_SECONDS = 600.0
+RESOLVER_IDENTITY = b"pii-coref-resolver"
 DEFAULT_MAX_RETRIES = 2
 _POLL_SLICE_MILLISECONDS = 100
 
@@ -104,6 +107,11 @@ class MaverickResolver(IdentityResolver):
         self._endpoint = f"ipc://{self._runtime_dir / 'coref.ipc'}"
         self._context = zmq.Context()
         self._launch()
+        try:
+            self._await_ready()
+        except CorefWorkerError:
+            self.close()
+            raise
 
     def close(self) -> None:
         self._stop_worker()
@@ -137,9 +145,22 @@ class MaverickResolver(IdentityResolver):
         if self._socket is not None:
             self._socket.close(linger=0)
         self._socket = self._context.socket(zmq.DEALER)
+        self._socket.setsockopt(zmq.IDENTITY, RESOLVER_IDENTITY)
         self._socket.connect(self._endpoint)
         environment = {**os.environ, "HF_HUB_OFFLINE": "1", "HF_HUB_CACHE": str(self._model_dir / ENCODER_CACHE_DIRECTORY)}
         self._process = subprocess.Popen(list(self._worker_command(self._endpoint)), env=environment)
+
+    def _await_ready(self) -> None:
+        """Blocks until the worker reports its model is loaded; raises if it exits or takes too long."""
+        deadline = time.monotonic() + WORKER_STARTUP_TIMEOUT_SECONDS
+        while time.monotonic() < deadline:
+            if self._socket.poll(_POLL_SLICE_MILLISECONDS):
+                if json.loads(self._socket.recv()).get("ready") is True:
+                    return
+                continue
+            if self._process.poll() is not None:
+                raise CorefWorkerError(f"the co-reference worker exited with code {self._process.returncode} before it was ready")
+        raise CorefWorkerError(f"the co-reference worker was not ready within {WORKER_STARTUP_TIMEOUT_SECONDS:g} seconds")
 
     def _stop_worker(self) -> None:
         if self._process is None:

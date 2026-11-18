@@ -2,8 +2,8 @@
 
     uv run python scripts/run_all_evaluations.py --split test --out results/test
 
-Each (configuration, dataset, language, co-reference off or on) from all_runs() is scored through
-the evaluation function and saved as `<tool>__<dataset>__<language>__<split>__coref-<off|on>.json`,
+Each (configuration, dataset, language, co-reference off or on) in the configuration plan is scored
+and saved as `<tool>__<dataset>__<language>__<split>__coref-<off|on>.json`,
 next to one environment.json. A run that fails is reported at the end and makes the exit code 1;
 the remaining runs still execute. `--skip-existing` leaves runs whose file is already in the output
 folder alone and `--exclude dataset:language:on|off` leaves a kind of run out. Only aggregate scores are written.

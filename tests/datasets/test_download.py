@@ -69,6 +69,7 @@ def looks_like_dataset_file(path: Path, size: int) -> bool:
     )
 
 
+@pytest.mark.repo_contents
 def test_repository_tracks_no_dataset_files():
     listing = subprocess.run(
         ["git", "ls-files", "-z"], cwd=REPO_ROOT, capture_output=True, check=True

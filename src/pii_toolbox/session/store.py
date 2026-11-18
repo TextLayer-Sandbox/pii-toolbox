@@ -5,6 +5,11 @@ from dataclasses import dataclass, field
 from pii_toolbox.core import Placeholder, PlaceholderStore
 
 
+def _normalize_label(label: str) -> str:
+    """Uppercases a detector label and joins its words with underscores so it fits the placeholder token syntax."""
+    return label.upper().replace(" ", "_").replace("-", "_")
+
+
 @dataclass(slots=True, repr=False)
 class _SessionMappings:
     """Everything one session knows; dropped as a whole when the session is discarded."""
@@ -27,6 +32,7 @@ class InMemoryPlaceholderStore(PlaceholderStore):
         return f"InMemoryPlaceholderStore(sessions={len(self._sessions)})"
 
     def get_or_mint(self, session_id: str, label: str, original: str) -> tuple[Placeholder, bool]:
+        label = _normalize_label(label)
         mappings = self._sessions.setdefault(session_id, _SessionMappings())
         existing = mappings.placeholder_by_original.get((label, original))
         if existing is not None:

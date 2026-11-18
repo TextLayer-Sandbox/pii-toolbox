@@ -1,4 +1,4 @@
-"""Tables 1 to 6 of the article, built from saved result files only.
+"""The evaluation tables 1 to 6, built from saved result files only.
 
 Each builder reads the result JSON files of one split with co-reference off and writes a
 Markdown and a CSV file per table. Rows are tools, single detectors first and then
@@ -14,6 +14,9 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from pii_toolbox.core import DatasetSplit, DetectionReport, DetectionScore, EvaluationRun, PiiType, SpanMatchRule
+from pii_toolbox.datasets.mapa import MapaDataset
+from pii_toolbox.datasets.tab import TabDataset
+from pii_toolbox.datasets.worldwide import WorldwideDataset
 from pii_toolbox.evaluation.results_io import ResultRecord, read_record
 
 DATASETS = ("tab", "mapa", "worldwide")
@@ -105,6 +108,12 @@ def _reports(run: EvaluationRun) -> tuple[DetectionReport, DetectionReport]:
     return run.exact_boundaries, run.any_overlap
 
 
+def _detects_nothing_annotated(record: ResultRecord, dataset: str) -> bool:
+    """True when the detector can report none of the types the dataset annotates, so its scores carry no information."""
+    dataset_classes = {"tab": TabDataset, "mapa": MapaDataset, "worldwide": WorldwideDataset}
+    return not record.detects & dataset_classes[dataset]().annotated_types
+
+
 def _english_record(
     records: dict[tuple[str, str, str | None], ResultRecord], tool: str, dataset: str
 ) -> ResultRecord | None:
@@ -135,7 +144,11 @@ def table1(records: dict[tuple[str, str, str | None], ResultRecord]) -> Table:
         for dataset in DATASETS:
             for report_of in (lambda run: run.exact_boundaries, lambda run: run.any_overlap):
                 score = scores(tool, dataset, report_of)
-                row += [_number(score.precision), _number(score.recall), _number(score.f2)] if score else [""] * 3
+                record = _english_record(records, tool, dataset)
+                if record is not None and _detects_nothing_annotated(record, dataset):
+                    row += [NOT_APPLICABLE] * 3
+                else:
+                    row += [_number(score.precision), _number(score.recall), _number(score.f2)] if score else [""] * 3
         rows.append(tuple(row))
     return Table("table1", "Table 1: Detection by tool, overall (micro)", tuple(header), tuple(rows))
 
@@ -311,7 +324,11 @@ def table5(
                 (r for r in tool_records if r.language is None), None
             )
             score = report(measured).by_language.get(language) if measured else None
-            cells.append(_language_cell(measured or next(iter(tool_records), None), language, score.f2 if score else None))
+            cell_record = measured or next(iter(tool_records), None)
+            if cell_record is not None and _detects_nothing_annotated(cell_record, "mapa"):
+                cells.append(NOT_APPLICABLE)
+            else:
+                cells.append(_language_cell(cell_record, language, score.f2 if score else None))
         tab_record = _english_record(records, tool, "tab")
         tab_f2 = report(tab_record).overall_micro.f2 if tab_record else None
         rows.append((tool, *cells, _language_cell(tab_record, "en", tab_f2)))

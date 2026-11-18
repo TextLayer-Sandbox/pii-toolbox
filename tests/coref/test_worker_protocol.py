@@ -7,13 +7,36 @@ import pytest
 import zmq
 
 from pii_toolbox.coref.nickname_step import NicknameConfig
-from pii_toolbox.coref.resolver import CorefWorkerError, MaverickResolver, stub_worker_command
+from pii_toolbox.coref import resolver as resolver_module
+from pii_toolbox.coref.resolver import WORKER_DIR, CorefWorkerError, MaverickResolver, stub_worker_command
 from pii_toolbox.core import Document, PiiType, Span
 
 PASSAGE = "David Parker joined in May. Dave was glad, and Mr. Parker thanked the team. Anna Lee waved."
 DOCUMENT = Document(id="d1", text=PASSAGE, language="en")
 MAX_STRING_LENGTH = 20
 MIN_TEXT_FRAGMENT = 4
+
+
+READY_THEN_SILENT_WORKER = """
+import json, sys, time, zmq
+socket = zmq.Context().socket(zmq.ROUTER)
+socket.setsockopt(zmq.ROUTER_MANDATORY, 1)
+socket.bind(sys.argv[1])
+while True:
+    try:
+        socket.send_multipart([b"pii-coref-resolver", json.dumps({"ready": True}).encode()])
+        break
+    except zmq.ZMQError:
+        time.sleep(0.05)
+time.sleep(60)
+"""
+
+DELAYED_STUB_WORKER = """
+import runpy, sys, time
+time.sleep(float(sys.argv[1]))
+sys.argv = [sys.argv[2], "--endpoint", sys.argv[3], "--stub"]
+runpy.run_path(sys.argv[0], run_name="__main__")
+"""
 
 
 @pytest.fixture
@@ -104,7 +127,7 @@ def test_unresponsive_worker_raises_after_capped_retries(runtime_dir):
 
     def silent_worker(endpoint: str) -> list[str]:
         launches.append(endpoint)
-        return [sys.executable, "-c", "import time; time.sleep(60)"]
+        return [sys.executable, "-c", READY_THEN_SILENT_WORKER, endpoint]
 
     with MaverickResolver(silent_worker, reply_timeout_seconds=0.3, max_retries=2, runtime_dir=runtime_dir) as resolver:
         with pytest.raises(CorefWorkerError):
@@ -121,3 +144,34 @@ def test_resolve_before_start_raises(runtime_dir):
 def test_no_person_spans_needs_no_worker(runtime_dir):
     resolver = MaverickResolver(stub_worker_command, runtime_dir=runtime_dir)
     assert resolver.resolve(DOCUMENT, []) == []
+
+
+def test_slow_model_load_does_not_use_up_the_reply_timeout(runtime_dir):
+    def slow_loading_worker(endpoint: str) -> list[str]:
+        return [sys.executable, "-c", DELAYED_STUB_WORKER, "1.5", str(WORKER_DIR / "server.py"), endpoint]
+
+    with MaverickResolver(slow_loading_worker, reply_timeout_seconds=0.5, max_retries=0, runtime_dir=runtime_dir) as resolver:
+        groups = resolver.resolve(DOCUMENT, [person("David Parker")])
+    assert len(groups) == 1
+
+
+def test_start_raises_when_worker_exits_before_ready(runtime_dir):
+    def crashing_worker(endpoint: str) -> list[str]:
+        return [sys.executable, "-c", "raise SystemExit(3)"]
+
+    resolver = MaverickResolver(crashing_worker, runtime_dir=runtime_dir)
+    with pytest.raises(CorefWorkerError, match="exited with code 3 before it was ready"):
+        resolver.start()
+    assert resolver.worker_process is None
+
+
+def test_start_raises_when_worker_is_not_ready_in_time(runtime_dir, monkeypatch):
+    monkeypatch.setattr(resolver_module, "WORKER_STARTUP_TIMEOUT_SECONDS", 0.3)
+
+    def never_ready_worker(endpoint: str) -> list[str]:
+        return [sys.executable, "-c", "import time; time.sleep(60)"]
+
+    resolver = MaverickResolver(never_ready_worker, runtime_dir=runtime_dir)
+    with pytest.raises(CorefWorkerError, match="not ready within"):
+        resolver.start()
+    assert resolver.worker_process is None

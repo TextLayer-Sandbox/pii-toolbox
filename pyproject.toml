@@ -45,12 +45,13 @@ coref = [
 ]
 
 [tool.pytest.ini_options]
-addopts = "--strict-markers -m 'not model and not data and not network'"
+addopts = "--strict-markers -m 'not model and not data and not network and not repo_contents'"
 testpaths = ["tests"]
 markers = [
     "model: needs model files downloaded",
     "data: needs a dataset downloaded",
     "network: needs network access",
+    "repo_contents: checks what is committed in the repository",
 ]
 
 [tool.uv]

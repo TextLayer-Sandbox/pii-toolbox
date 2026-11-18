@@ -62,7 +62,5 @@ The folders mirror the packages in `src/pii_toolbox`:
 
 ## Other top-level files
 
-- `sketch/`: design notes written before the code. `sketch/redaction_pipeline.md` explains in plain words how masking and restoring work step by step, with a glossary and the decisions behind it. `sketch/shapes.py` is a sketch of the shared types and interfaces; the real ones are in `src/pii_toolbox/core/types.py`. Treat both as background reading; where they differ from the code, the code is right.
-- `toolbox_draft.md`: the original plan for the toolbox. It describes the purpose, the detection tools, the datasets, how evaluation was to be done, the tables and charts to produce, and how the results feed the article they support. It is a planning document, not a description of the current code, so some of what it plans (for example a local language-model detector) was not built.
 - `examples/round_trip.py`: the runnable masking example, explained in [Masking toolbox](masking-toolbox.md).
 - `scripts/`: command-line scripts, explained in [Evaluation](evaluation.md).

@@ -155,7 +155,7 @@ class DetectorUnion(Detector):
 class DetectorRegistry(ABC):
     """The fixed list of detector names known to the program, each with how to build it.
 
-    Selection by configuration is checked against it at startup.
+    A configuration can be checked against it before anything is built.
     """
 
     @abstractmethod
@@ -214,7 +214,7 @@ class PlaceholderToken:
 
 
 class PlaceholderFormat(ABC):
-    """The single definition of what a placeholder looks like in text, shared by masking and restoring."""
+    """The single definition of what a placeholder looks like in text."""
 
     @abstractmethod
     def render(self, placeholder: Placeholder) -> str:

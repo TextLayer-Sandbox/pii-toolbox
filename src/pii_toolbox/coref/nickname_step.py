@@ -3,8 +3,8 @@
 A name's standard form is its given name looked up in the nickname list (dave -> david). An
 unlinked detected PERSON name joins the one group holding a name with the same standard form
 and a compatible surname. Nicknames never link to each other directly: two names that share a
-standard form are linked only when a group already holds one of them. The step reads text and
-positions and returns groups of positions, so it adds no text to any reply.
+standard form are linked only when a group already holds one of them. The step reads the
+document text to find the names and returns groups of positions only.
 """
 
 from collections.abc import Mapping, Sequence

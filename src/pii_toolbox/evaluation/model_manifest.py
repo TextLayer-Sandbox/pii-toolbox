@@ -21,7 +21,7 @@ class ModelEntry:
     source: str
     revision: str
     location: str
-    # Set when the consumer reads a fixed folder name rather than one derived from the model name.
+    # Folder name under the model directory; when None the folder is derived from the model name.
     directory: str | None = None
 
     @property

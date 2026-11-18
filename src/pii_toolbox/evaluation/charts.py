@@ -1,4 +1,4 @@
-"""Charts of the article, drawn from saved result files only, as reproducible SVG files.
+"""The evaluation charts, drawn from saved result files only, as reproducible SVG files.
 
 Matplotlib runs on the Agg backend with a fixed hash salt, no embedded date and text kept
 as text, so two builds of the same results are byte identical and labels can be read from

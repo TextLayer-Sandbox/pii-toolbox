@@ -24,8 +24,7 @@ class FixedDetectorRegistry(DetectorRegistry):
     """Every detector the toolbox offers, built by name.
 
     Presidio's structured recognisers are in the table but only run when a configuration
-    names `presidio_structured`. `factory_overrides` replaces entries, for tests that supply
-    stand-in models.
+    names `presidio_structured`. `factory_overrides` replaces entries with other builders.
     """
 
     def __init__(
