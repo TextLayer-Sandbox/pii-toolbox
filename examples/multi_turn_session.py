@@ -15,7 +15,7 @@ USER_TURNS = (
 )
 
 # A model sees only placeholders, yet can refer back to a person introduced in an earlier turn.
-MODEL_REPLY = "<KNOWN_NAME_2> should ask <KNOWN_NAME_1>, who is leading the audit."
+MODEL_REPLY = "<PERSON_2> should ask <PERSON_1>, who is leading the audit."
 
 
 def main() -> None:

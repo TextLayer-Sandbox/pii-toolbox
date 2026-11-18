@@ -13,7 +13,7 @@ from pathlib import Path
 
 from pii_toolbox.coref.groups import TITLES
 from pii_toolbox.coref.nicknames import DEFAULT_NICKNAME_LIST_PATH, load_nickname_list
-from pii_toolbox.core import Document, EntityGroup, PiiType, Span
+from pii_toolbox.core import Document, PersonMentions, PiiType, Span
 
 
 @dataclass(frozen=True)
@@ -35,9 +35,9 @@ class NicknameConfig:
 def apply_nickname_step(
     document: Document,
     detected_spans: Sequence[Span],
-    groups: Sequence[EntityGroup],
+    groups: Sequence[PersonMentions],
     nicknames: Mapping[str, str] | None,
-) -> list[EntityGroup]:
+) -> list[PersonMentions]:
     """Returns the groups with each unlinked detected name added to the group it matches.
 
     A name already in a group stays there. A name that matches more than one group, or none,
@@ -67,7 +67,7 @@ def apply_nickname_step(
         if len(matching) == 1:
             joined[matching[0]].append(span)
     return [
-        EntityGroup(spans=tuple(sorted([*group.spans, *extra], key=lambda s: (s.start, s.end))), canonical=group.canonical)
+        PersonMentions(spans=tuple(sorted([*group.spans, *extra], key=lambda s: (s.start, s.end))), canonical=group.canonical)
         if extra
         else group
         for group, extra in zip(groups, joined)

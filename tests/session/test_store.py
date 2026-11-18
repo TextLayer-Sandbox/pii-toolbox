@@ -12,7 +12,7 @@ def test_numbering_is_per_label():
     store = InMemoryPlaceholderStore()
     store.get_or_mint("s1", "PERSON", "David")
     assert store.get_or_mint("s1", "PERSON", "Maria")[0] == Placeholder("PERSON", 2)
-    assert store.get_or_mint("s1", "EMAIL_ADDRESS", "a@example.test")[0] == Placeholder("EMAIL_ADDRESS", 1)
+    assert store.get_or_mint("s1", "IDENTIFIER", "a@example.test")[0] == Placeholder("IDENTIFIER", 1)
 
 
 def test_sessions_number_independently():

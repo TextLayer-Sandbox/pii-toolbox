@@ -20,15 +20,14 @@ def test_parse_takes_all_digits_of_the_number():
     assert [t.placeholder for t in tokens] == [Placeholder("PERSON", 10)]
 
 
-def test_parse_does_not_filter_unknown_labels():
-    tokens = FORMAT.parse("TEAM_7")
-    assert [t.placeholder for t in tokens] == [Placeholder("TEAM", 7)]
+def test_parse_ignores_labels_that_are_not_pii_types():
+    assert FORMAT.parse("TEAM_7 <EMAIL_ADDRESS_2>") == []
 
 
 def test_parse_label_with_underscore():
-    tokens = FORMAT.parse("<EMAIL_ADDRESS_2>")
-    assert [t.placeholder for t in tokens] == [Placeholder("EMAIL_ADDRESS", 2)]
-    assert (tokens[0].start, tokens[0].end) == (0, 17)
+    tokens = FORMAT.parse("<IDENTIFIER_2>")
+    assert [t.placeholder for t in tokens] == [Placeholder("IDENTIFIER", 2)]
+    assert (tokens[0].start, tokens[0].end) == (0, 14)
 
 
 def test_parse_ignores_token_glued_to_a_longer_word():

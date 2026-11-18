@@ -3,7 +3,7 @@ from pii_toolbox.core import (
     AnswerSpan,
     Detector,
     Document,
-    EntityGroup,
+    PersonMentions,
     IdentityResolver,
     PiiType,
     Placeholder,
@@ -122,7 +122,7 @@ class OneGroupResolver(IdentityResolver):
 
     def resolve(self, document, spans):
         people = [s for s in spans if s.pii_type is PiiType.PERSON]
-        return [EntityGroup(tuple(people), max(people, key=lambda s: s.end - s.start))]
+        return [PersonMentions(tuple(people), max(people, key=lambda s: s.end - s.start))]
 
 
 def test_measure_linking_sums_documents_with_resolver_off_and_on():

@@ -6,7 +6,7 @@ from pii_toolbox.core import (
     Dataset,
     Detector,
     Document,
-    EntityGroup,
+    PersonMentions,
     IdentityResolver,
     PiiType,
     ReidentificationRisk,
@@ -41,7 +41,7 @@ class StubResolver(IdentityResolver):
 
     def resolve(self, document, spans):
         added = Span(*SHORT_NAME, PiiType.PERSON, "PERSON", ("stub_resolver",), None)
-        return [EntityGroup((spans[0], added), spans[0])]
+        return [PersonMentions((spans[0], added), spans[0])]
 
 
 class StubTabScorer(TabMetricsScorer):

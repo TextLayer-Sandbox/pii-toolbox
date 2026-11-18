@@ -9,7 +9,7 @@ from typing import Self
 from pii_toolbox.core import (
     Detector,
     Document,
-    EntityGroup,
+    PersonMentions,
     IdentityResolver,
     MaskResult,
     PiiType,
@@ -24,41 +24,36 @@ from pii_toolbox.detection.union import merge_overlapping
 
 logger = logging.getLogger(__name__)
 
-PLACEHOLDER_TEXT_LABEL = "PLACEHOLDER_TEXT"
 _PLACEHOLDER_TEXT_SOURCE = "placeholder-look-alike"
 
 
 def _placeholder_look_alike_spans(text: str, placeholder_format: PlaceholderFormat) -> list[Span]:
     """Spans over every stretch of `text` written exactly as the placeholder format renders a placeholder."""
     return [
-        Span(token.start, token.end, PiiType.IDENTIFIER, PLACEHOLDER_TEXT_LABEL, (_PLACEHOLDER_TEXT_SOURCE,), None)
+        Span(token.start, token.end, PiiType.IDENTIFIER, PiiType.IDENTIFIER.value, (_PLACEHOLDER_TEXT_SOURCE,), None)
         for token in placeholder_format.parse(text)
         if text[token.start : token.end] == placeholder_format.render(token.placeholder)
     ]
 
 
-def _merge_overlaps(
-    spans: list[Span], groups: list[EntityGroup], extra_spans: list[Span]
-) -> tuple[list[Span], list[EntityGroup]]:
-    """Returns the spans with overlaps merged and the groups rewritten onto the merged spans."""
-    group_spans = [span for group in groups for span in group.spans]
-    merged = merge_overlapping([*spans, *group_spans, *extra_spans])
+def _remap_person_mentions(mentions: list[PersonMentions], merged: list[Span]) -> list[PersonMentions]:
+    """Replaces each span in every PersonMentions with the merged span containing it, keeping only PERSON spans."""
     starts = [span.start for span in merged]
 
     def containing(span: Span) -> Span:
         return merged[bisect_right(starts, span.start) - 1]
 
-    remapped: list[EntityGroup] = []
-    for group in groups:
-        members = list(dict.fromkeys(containing(span) for span in group.spans))
+    remapped: list[PersonMentions] = []
+    for mention in mentions:
+        members = list(dict.fromkeys(containing(span) for span in mention.spans))
         members = [span for span in members if span.pii_type is PiiType.PERSON]
         if not members:
             continue
-        canonical = containing(group.canonical)
+        canonical = containing(mention.canonical)
         if canonical not in members:
             canonical = max(members, key=lambda span: span.end - span.start)
-        remapped.append(EntityGroup(tuple(members), canonical))
-    return merged, remapped
+        remapped.append(PersonMentions(tuple(members), canonical))
+    return remapped
 
 
 class Session(RedactionSession):
@@ -119,20 +114,22 @@ class Session(RedactionSession):
                 minted.append(placeholder)
             return placeholder
 
-        groups = self._resolver.resolve(document, spans) if self._resolver is not None else []
-        spans, groups = _merge_overlaps(spans, groups, _placeholder_look_alike_spans(text, self._format))
+        mentions = self._resolver.resolve(document, spans) if self._resolver is not None else []
+        mention_spans = [span for mention in mentions for span in mention.spans]
+        spans = merge_overlapping([*spans, *mention_spans, *_placeholder_look_alike_spans(text, self._format)])
+        mentions = _remap_person_mentions(mentions, spans)
 
-        for group in groups:
-            fullest = text[group.canonical.start : group.canonical.end]
-            placeholder = get_or_mint(group.canonical.detector_label, fullest)
-            for span in group.spans:
-                if span != group.canonical:
+        for mention in mentions:
+            fullest = text[mention.canonical.start : mention.canonical.end]
+            placeholder = get_or_mint(mention.canonical.pii_type.value, fullest)
+            for span in mention.spans:
+                if span != mention.canonical:
                     self._store.alias(self._id, text[span.start : span.end], placeholder)
                 placeholder_for[span] = placeholder
 
         for span in spans:
             if span not in placeholder_for:
-                placeholder_for[span] = get_or_mint(span.detector_label, text[span.start : span.end])
+                placeholder_for[span] = get_or_mint(span.pii_type.value, text[span.start : span.end])
 
         masked = text
         # Replacing from the end keeps the earlier offsets valid.

@@ -1,4 +1,4 @@
-from pii_toolbox.core import Detector, Document, Span
+from pii_toolbox.core import Detector, Document, PiiType, Span
 from pii_toolbox.session import AngleBracketFormat, InMemoryPlaceholderStore, Session
 
 
@@ -84,11 +84,14 @@ def test_empty_text_restores_to_empty_text():
     assert result.leftovers == ()
 
 
-def test_lowercase_spaced_detector_labels_are_restored_and_flagged_as_leftovers():
-    session = make_session()
-    person, _ = session.store.get_or_mint(session.id, "person", "Alice Smith")
-    case, _ = session.store.get_or_mint(session.id, "case number", "12-345")
-    assert session.format.render(person) == "<PERSON_1>"
-    assert session.format.render(case) == "<CASE_NUMBER_1>"
-    assert session.restore("<PERSON_1> / <CASE_NUMBER_1>").restored_text == "Alice Smith / 12-345"
-    assert session.restore("<CASE_NUMBER_2>").leftovers == ("<CASE_NUMBER_2>",)
+def test_span_with_free_text_detector_label_masks_by_its_type_and_restores():
+    case_number_span = Span(5, 11, PiiType.IDENTIFIER, "case number", ("test",), None)
+
+    class CaseNumberDetector(NoDetector):
+        def detect(self, document: Document) -> list[Span]:
+            return [case_number_span]
+
+    session = Session(CaseNumberDetector(), InMemoryPlaceholderStore(), AngleBracketFormat(), "en", None, "case-1")
+    masked = session.mask("Case 12-345 open").masked_text
+    assert masked == "Case <IDENTIFIER_1> open"
+    assert session.restore(masked).restored_text == "Case 12-345 open"

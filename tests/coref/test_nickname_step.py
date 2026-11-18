@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from pii_toolbox.coref.nickname_step import NicknameConfig, apply_nickname_step
-from pii_toolbox.core import Document, EntityGroup, PiiType, Span
+from pii_toolbox.core import Document, PersonMentions, PiiType, Span
 
 DEFAULT = NicknameConfig().load()
 
@@ -17,11 +17,11 @@ def locate(text: str, needle: str, occurrence: int = 0) -> Span:
     return Span(start, start + len(needle), PiiType.PERSON, "PERSON", ("presidio",), 0.9)
 
 
-def group_of(*spans: Span) -> EntityGroup:
-    return EntityGroup(spans=spans, canonical=max(spans, key=lambda span: span.end - span.start))
+def group_of(*spans: Span) -> PersonMentions:
+    return PersonMentions(spans=spans, canonical=max(spans, key=lambda span: span.end - span.start))
 
 
-def positions(group: EntityGroup) -> list[tuple[int, int]]:
+def positions(group: PersonMentions) -> list[tuple[int, int]]:
     return [(span.start, span.end) for span in group.spans]
 
 

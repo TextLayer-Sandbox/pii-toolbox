@@ -38,8 +38,7 @@ class Span:
     start: int
     end: int
     pii_type: PiiType  # common type, used for scoring
-    # The detector's own detailed name (e.g. EMAIL_ADDRESS, IBAN_CODE, both IDENTIFIER);
-    # used in placeholders so text read downstream still says what kind of value was masked.
+    # The detector's own name for the entity type (e.g. EMAIL_ADDRESS, IBAN_CODE, both IDENTIFIER).
     detector_label: str
     source: tuple[str, ...]  # names of every detector that contributed; more than one after a merge
     score: float | None  # detector confidence, None when the detector gives none
@@ -87,7 +86,7 @@ class AnnotatedDocument:
 
 
 @dataclass(frozen=True, slots=True)
-class EntityGroup:
+class PersonMentions:
     """Spans that refer to the same person. Holds positions only, never text.
 
     A group may hold a span the detector did not find; such a span's `source` names the
@@ -188,7 +187,7 @@ class IdentityResolver(ABC):
     def name(self) -> str: ...
 
     @abstractmethod
-    def resolve(self, document: Document, spans: Sequence[Span]) -> list[EntityGroup]:
+    def resolve(self, document: Document, spans: Sequence[Span]) -> list[PersonMentions]:
         """Never returns a group that contains no detected name."""
         ...
 

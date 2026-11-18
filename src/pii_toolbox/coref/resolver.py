@@ -23,7 +23,7 @@ import zmq
 
 from pii_toolbox.coref.groups import RESOLVER_NAME, build_groups
 from pii_toolbox.coref.nickname_step import NicknameConfig, apply_nickname_step
-from pii_toolbox.core import Document, EntityGroup, IdentityResolver, PiiType, Span
+from pii_toolbox.core import Document, PersonMentions, IdentityResolver, PiiType, Span
 from pii_toolbox.evaluation.model_manifest import default_model_dir
 
 WORKER_DIR = Path(__file__).parent / "worker"
@@ -132,7 +132,7 @@ class MaverickResolver(IdentityResolver):
     def __exit__(self, exc_type: type[BaseException] | None, exc_value: BaseException | None, traceback: TracebackType | None) -> None:
         self.close()
 
-    def resolve(self, document: Document, spans: Sequence[Span]) -> list[EntityGroup]:
+    def resolve(self, document: Document, spans: Sequence[Span]) -> list[PersonMentions]:
         person_spans = [span for span in spans if span.pii_type is PiiType.PERSON]
         if not person_spans:
             return []

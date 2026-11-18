@@ -5,7 +5,7 @@ Run from the repository root with `uv run python examples/round_trip.py`.
 
 import re
 
-from pii_toolbox.core import Detector, Document, EntityGroup, IdentityResolver, PiiType, Span
+from pii_toolbox.core import Detector, Document, PersonMentions, IdentityResolver, PiiType, Span
 from pii_toolbox.session import AngleBracketFormat, InMemoryPlaceholderStore, Session
 
 KNOWN_NAMES = ("David Parker", "Dave")
@@ -48,11 +48,11 @@ class SinglePersonResolver(IdentityResolver):
     def name(self) -> str:
         return "single-person"
 
-    def resolve(self, document: Document, spans: list[Span]) -> list[EntityGroup]:
+    def resolve(self, document: Document, spans: list[Span]) -> list[PersonMentions]:
         people = tuple(span for span in spans if span.pii_type is PiiType.PERSON)
         if not people:
             return []
-        return [EntityGroup(people, max(people, key=lambda span: span.end - span.start))]
+        return [PersonMentions(people, max(people, key=lambda span: span.end - span.start))]
 
 
 def stand_in_model(text: str) -> str:

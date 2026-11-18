@@ -2,12 +2,14 @@
 
 import re
 
-from pii_toolbox.core import Placeholder, PlaceholderFormat, PlaceholderToken
+from pii_toolbox.core import PiiType, Placeholder, PlaceholderFormat, PlaceholderToken
 
-# One definition of a whole token; brackets are optional so a model that drops them is still understood.
-# A bracketed token matches wherever it sits; a bare one must not follow a letter, digit or underscore.
+_LABEL_ALTERNATIVES = "|".join(pii_type.value for pii_type in PiiType)
+# A type name, underscore and number, in any case, with optional angle brackets.
+# A bracketed token matches anywhere; a bare one must not follow a letter, digit or underscore.
 _TOKEN_PATTERN = re.compile(
-    r"(?:<|(?<![A-Za-z0-9_]))(?P<label>[A-Za-z][A-Za-z_]*)_(?P<number>\d+)>?(?![A-Za-z0-9_])"
+    rf"(?:<|(?<![A-Za-z0-9_]))(?P<label>{_LABEL_ALTERNATIVES})_(?P<number>\d+)>?(?![A-Za-z0-9_])",
+    re.IGNORECASE,
 )
 
 

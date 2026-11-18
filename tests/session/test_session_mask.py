@@ -3,7 +3,7 @@ import re
 
 import pytest
 
-from pii_toolbox.core import Detector, Document, EntityGroup, IdentityResolver, PiiType, Placeholder, Span
+from pii_toolbox.core import Detector, Document, PersonMentions, IdentityResolver, PiiType, Placeholder, Span
 from pii_toolbox.session import AngleBracketFormat, InMemoryPlaceholderStore, Session
 
 
@@ -47,7 +47,7 @@ class FakeResolver(IdentityResolver):
         people = [s for s in spans if s.pii_type is PiiType.PERSON]
         if not people:
             return []
-        return [EntityGroup(tuple(people), max(people, key=lambda s: s.end - s.start))]
+        return [PersonMentions(tuple(people), max(people, key=lambda s: s.end - s.start))]
 
 
 PHRASES = {
@@ -96,16 +96,16 @@ def test_mask_without_resolver_keeps_forms_apart():
     assert result.masked_text == "<PERSON_1> joined. <PERSON_2> was glad."
 
 
-def test_detailed_label_is_used_and_adjacent_spans_replace_from_the_end():
+def test_placeholder_uses_the_common_type_and_adjacent_spans_replace_from_the_end():
     result = make_session().mask("Dave@x dave@example.test David Parker")
-    assert result.masked_text == "<PERSON_1>@x <EMAIL_ADDRESS_1> <PERSON_2>"
+    assert result.masked_text == "<PERSON_1>@x <IDENTIFIER_1> <PERSON_2>"
 
 
 def test_minted_lists_only_this_calls_placeholders():
     session = make_session()
     assert session.mask("David Parker").minted == (Placeholder("PERSON", 1),)
     second = session.mask("David Parker and Maria Stone and dave@example.test")
-    assert second.minted == (Placeholder("PERSON", 2), Placeholder("EMAIL_ADDRESS", 1))
+    assert second.minted == (Placeholder("PERSON", 2), Placeholder("IDENTIFIER", 1))
 
 
 def test_no_original_in_logs_stdout_or_files(caplog, capsys, tmp_path, monkeypatch):
@@ -120,7 +120,7 @@ def test_no_original_in_logs_stdout_or_files(caplog, capsys, tmp_path, monkeypat
         assert original not in captured.out + captured.err
     assert list(tmp_path.iterdir()) == []
     assert "<PERSON_1>" in caplog.text
-    assert "<EMAIL_ADDRESS_1>" in caplog.text
+    assert "<IDENTIFIER_1>" in caplog.text
     assert "3 spans" in caplog.text
 
 
@@ -187,7 +187,7 @@ class AddingResolver(IdentityResolver):
         return "adding-resolver"
 
     def resolve(self, document, spans):
-        return [EntityGroup((spans[0], self._added), spans[0])]
+        return [PersonMentions((spans[0], self._added), spans[0])]
 
 
 def test_overlapping_detected_spans_are_merged_before_substitution():
@@ -224,7 +224,7 @@ def test_placeholder_look_alike_in_input_round_trips_exactly():
     session = make_session()
     text = "The log shows <PERSON_1> failed. Email David Parker."
     result = session.mask(text)
-    assert result.masked_text == "The log shows <PLACEHOLDER_TEXT_1> failed. Email <PERSON_1>."
+    assert result.masked_text == "The log shows <IDENTIFIER_1> failed. Email <PERSON_1>."
     assert session.restore(result.masked_text).restored_text == text
 
 
@@ -234,7 +234,7 @@ def test_placeholder_look_alike_typed_after_its_number_was_minted_round_trips_ex
     assert first.masked_text == "Email <PERSON_1>."
     text = "Ignore <PERSON_1> here; Maria Stone replied."
     second = session.mask(text)
-    assert second.masked_text == "Ignore <PLACEHOLDER_TEXT_1> here; <PERSON_2> replied."
+    assert second.masked_text == "Ignore <IDENTIFIER_1> here; <PERSON_2> replied."
     assert session.restore(second.masked_text).restored_text == text
     assert session.restore(first.masked_text).restored_text == "Email David Parker."
 

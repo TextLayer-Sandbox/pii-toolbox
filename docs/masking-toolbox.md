@@ -8,8 +8,8 @@ The idea: before text goes to another system (for example a language model), a s
 
 - **Span**: a stretch of text with a start position, an end position and a type. Positions count characters from the start of the text; the start is included and the end is not.
 - **Type**: one of six broad kinds used for scoring: `PERSON`, `ORGANIZATION`, `LOCATION`, `DATE_TIME`, `QUANTITY` and `IDENTIFIER` (emails, phone numbers, card numbers, IBANs, IP addresses, URLs and similar codes).
-- **Label**: a detector's own finer name for what it found, such as `EMAIL_ADDRESS`. Placeholders use the label, so masked text still says what kind of value was hidden.
-- **Placeholder**: a label plus a number, written `<LABEL_N>`. The number counts how many of that label the session has created.
+- **Label**: a detector's own finer name for what it found, such as `EMAIL_ADDRESS`. Placeholders use the type, so masked text still says what kind of value was hidden.
+- **Placeholder**: a type plus a number, written `<TYPE_N>`. The number counts how many of that type the session has created.
 - **Store**: the in-memory table from placeholder to original value.
 
 ## The four packages
@@ -20,7 +20,7 @@ Shared types and the abstract interfaces everything else is built on, kept in `s
 
 - `Span`, `Document` and `PiiType` describe detected text.
 - `Detector` takes a `Document` and returns a list of spans. It also says which languages it supports and which types it can report.
-- `IdentityResolver` takes a document and its spans and returns groups of spans that refer to the same person (`EntityGroup`). Each group names one span as the canonical one: the fullest form of the name.
+- `IdentityResolver` takes a document and its spans and returns groups of spans that refer to the same person (`PersonMentions`). Each group names one span as the canonical one: the fullest form of the name.
 - `PlaceholderFormat`, `PlaceholderStore` and `RedactionSession` describe the masking side.
 
 `core/label_maps.py` holds the translation tables from each tool's or dataset's own labels to the six common types.
@@ -63,12 +63,12 @@ Co-reference resolution links the different ways a text refers to one person, su
 
 1. Detect spans with the detector.
 2. If a resolver is set, ask it for groups. Each group gets one placeholder, created for the canonical (fullest) form; every other form in the group is stored as an alias of it.
-3. Every remaining span gets a placeholder for its own label, reusing an existing one if the same original was seen before.
+3. Every remaining span gets a placeholder for its own type, reusing an existing one if the same original was seen before.
 4. Replace the spans in the text with the rendered placeholders.
 
 The result is a `MaskResult` holding the masked text and the placeholders created by this call.
 
-**Restoring a text** (`Session.restore`): find every placeholder-shaped token in the text and replace the ones this session knows with their originals. A token that looks like a placeholder, with a label this session has created but a number it does not know, is left in place and listed in `leftovers`, so a changed number is visible. Look-alikes with a label the session never created are ignored.
+**Restoring a text** (`Session.restore`): find every placeholder-shaped token in the text and replace the ones this session knows with their originals. A token that looks like a placeholder, with a type this session has created but a number it does not know, is left in place and listed in `leftovers`, so a changed number is visible. Look-alikes with a type the session never created are ignored.
 
 **Closing** (`Session.close`, or leaving a `with` block) deletes everything the store holds for the session.
 
@@ -90,15 +90,15 @@ It uses no models, so it runs straight away. The script defines three small piec
 Output:
 
 ```
-masked: <PERSON_1> wrote to <EMAIL_ADDRESS_1>. <PERSON_1> replied.
-reply: Summary: <PERSON_1> emailed <EMAIL_ADDRESS_1>. <PERSON_1> replied.
+masked: <PERSON_1> wrote to <IDENTIFIER_1>. <PERSON_1> replied.
+reply: Summary: <PERSON_1> emailed <IDENTIFIER_1>. <PERSON_1> replied.
 restored: Summary: David Parker emailed dave@acme.example. David Parker replied.
 ```
 
 Points to notice:
 
 - "David Parker" and "Dave" both became `<PERSON_1>`, because the resolver grouped them and the session aliased the shorter form to the same placeholder.
-- The email address became `<EMAIL_ADDRESS_1>`: the placeholder uses the detector's label, not the broad type.
+- The email address became `<IDENTIFIER_1>`: the placeholder uses the type.
 - On restore, both `<PERSON_1>` tokens came back as "David Parker", the fullest form, so the second mention ("Dave") is not restored to its original wording.
 - The `with` block closed the session on exit, which discarded the stored originals.
 

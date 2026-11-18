@@ -11,7 +11,7 @@ followed by capitalised words, or when every word in it is capitalised and none 
 import re
 from collections.abc import Sequence
 
-from pii_toolbox.core import Document, EntityGroup, PiiType, Span
+from pii_toolbox.core import Document, PersonMentions, PiiType, Span
 
 RESOLVER_NAME = "maverick"
 
@@ -27,7 +27,7 @@ def build_groups(
     document: Document,
     detected_spans: Sequence[Span],
     mention_clusters: Sequence[Sequence[tuple[int, int]]],
-) -> list[EntityGroup]:
+) -> list[PersonMentions]:
     """Returns one group per cluster that holds a detected PERSON span, ordered by first position.
 
     Raises ValueError for a mention outside the document text.
@@ -46,7 +46,7 @@ def _group_from_cluster(
     document: Document,
     person_spans: Sequence[Span],
     cluster: Sequence[tuple[int, int]],
-) -> EntityGroup | None:
+) -> PersonMentions | None:
     detected_in_cluster: dict[tuple[int, int], Span] = {}
     added: dict[tuple[int, int], Span] = {}
     for start, end in cluster:
@@ -68,7 +68,7 @@ def _group_from_cluster(
         return None
     spans = sorted([*detected_in_cluster.values(), *added.values()], key=lambda span: (span.start, span.end))
     canonical = max(spans, key=lambda span: span.end - span.start)
-    return EntityGroup(spans=tuple(spans), canonical=canonical)
+    return PersonMentions(spans=tuple(spans), canonical=canonical)
 
 
 def _is_name_form(text: str) -> bool:
