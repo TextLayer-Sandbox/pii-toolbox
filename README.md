@@ -24,12 +24,12 @@ uv run pytest -q
 uv run python examples/round_trip.py
 ```
 
-A plain `uv sync` installs the groups that the tests and the lightweight examples need. The model detectors and the results notebook need extra groups, which [Development](docs/development.md) lists (`uv sync --group models`, `uv sync --group notebook`, or `uv sync --all-groups` for everything).
+`uv sync` installs the groups that the tests and the lightweight examples need. The model detectors and the results notebook need extra groups, which [Development](docs/development.md) lists (`uv sync --group models`, `uv sync --group notebook`, or `uv sync --all-groups` for everything).
 
 ## Further reading
 
 - [Masking toolbox](docs/masking-toolbox.md): how text is masked and restored, with a walk-through of the example.
-- [Vocabulary](docs/vocab.md): the terms the docs and code use, each defined once.
+- [Vocabulary](docs/vocab.md): the terms the docs and code use.
 - [Evaluation](docs/evaluation.md): the datasets, how detectors are scored, and how to rerun an evaluation.
 - [Results](docs/results.md): what each saved table and chart shows and how they are rebuilt.
 - [Results notebook](notebooks/results.ipynb): the results explained with charts, and a way to score your own detector on your own data.
