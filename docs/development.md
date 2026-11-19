@@ -30,25 +30,27 @@ Datasets and models are not part of the repository. See [Evaluation](evaluation.
 uv run pytest -q
 ```
 
-This runs the fast tests, which need no downloaded data or models and no network. At the time of writing that is 522 tests passing in a few seconds, with 17 not selected.
+This runs the fast tests, which need no downloaded data or models and no network, and finishes in a few seconds.
 
 ### Tests that are not selected by default
 
-`pyproject.toml` sets `-m 'not model and not data and not network'`, so three kinds of test are skipped unless asked for. Each carries a marker:
+`pyproject.toml` sets `-m 'not model and not data and not network and not repo_contents'`, so four kinds of test are skipped unless asked for. Each carries a marker:
 
 - `model`: needs model files downloaded (for example the real GLiNER, RoBERTa, spaCy and Maverick models).
 - `data`: needs a dataset downloaded (for example the real TAB, MAPA and Worldwide files).
 - `network`: is allowed to use the network. Every other test has the network blocked.
+- `repo_contents`: checks what is committed in the repository (for example that the saved results under `results/` are complete and that no dataset files are tracked). Nothing needs downloading.
 
 Run them by choosing the marker:
 
 ```
 uv run pytest -m model
 uv run pytest -m data
-uv run pytest -m "model or data or network"
+uv run pytest -m repo_contents
+uv run pytest -m "model or data or network or repo_contents"
 ```
 
-An `-m` on the command line replaces the default filter. The 17 deselected tests are the ones marked `model` or `data`. Before running them, download the files (`scripts/download_datasets.py` and `scripts/download_models.py`) and set `PII_DATA_DIR` and `PII_MODEL_DIR` to the folders that hold them, since tests marked `data` or `model` use the folders you set and every other test is pointed at an empty temporary folder.
+An `-m` on the command line replaces the default filter. Before running them, download the files (`scripts/download_datasets.py` and `scripts/download_models.py`) and set `PII_DATA_DIR` and `PII_MODEL_DIR` to the folders that hold them, since tests marked `data` or `model` use the folders you set and every other test is pointed at an empty temporary folder.
 
 ### Test safety net
 
@@ -71,4 +73,10 @@ The folders mirror the packages in `src/pii_toolbox`:
 ## Other top-level files
 
 - `examples/round_trip.py`: the runnable masking example, explained in [Masking toolbox](masking-toolbox.md).
+- `examples/multi_turn_session.py`: one session masks a whole conversation and restores a later reply.
+- `examples/known_names.py`: always masks a list of names you already know about; needs no models.
+- `examples/score_your_own_data.py`: measures a detector on a small hand-labelled dataset; needs no models.
+- `examples/combined_detectors.py`: a name detector and Presidio's structured recognisers in one union; needs the downloaded models.
+- `examples/compare_detectors.py`: runs one text through each single detector and prints what each finds; needs the downloaded models and the `models` group.
+- `examples/coreference.py`: masks one text without and with identity resolution; needs the downloaded models and the `models` group.
 - `scripts/`: command-line scripts, explained in [Evaluation](evaluation.md).

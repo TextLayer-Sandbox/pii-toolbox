@@ -62,7 +62,7 @@ Co-reference resolution links the different ways a text refers to one person, su
 **Masking a text** (`Session.mask`):
 
 1. Detect spans with the detector.
-2. If a resolver is set, ask it for groups. Each group gets one placeholder, created for the canonical (fullest) form; every other form in the group is stored as an alias of it.
+2. If a resolver is set, ask it for groups. Each group gets one placeholder, created for the canonical (fullest) form; every other form in the group is stored as an alias of it. Across texts in one session, a group joins an existing placeholder when the store already holds the group's fullest form, or when one of the group's forms is the fullest form that placeholder holds. So a lone "Smith" in one text and a later group of "Bob Smith" and "Smith" share a placeholder, and both then restore as "Bob Smith". A short form that is already an alias of a different fuller name (for example "Smith" under "John Smith") does not pull the group in; the group gets a new placeholder.
 3. Every remaining span gets a placeholder for its own type, reusing an existing one if the same original was seen before.
 4. Replace the spans in the text with the rendered placeholders.
 

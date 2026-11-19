@@ -333,7 +333,7 @@ class Dataset(ABC):
 
 class SpanMatchRule(Enum):
     EXACT_BOUNDARIES = "EXACT_BOUNDARIES"  # same start and end
-    ANY_OVERLAP = "ANY_OVERLAP"  # any overlap
+    ANY_OVERLAP = "ANY_OVERLAP"  # overlap covers at least half of the longer span
 
 
 @dataclass(frozen=True, slots=True)

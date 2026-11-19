@@ -10,7 +10,7 @@ We also provide tools for measuring how accurately detectors find PII, as well a
 ## What is in the repository
 
 - `src/pii_toolbox/`: the Python package (shared types, detectors, name linking, masking sessions, datasets and the evaluation code).
-- `examples/`: a small runnable example that masks a text and restores it.
+- `examples/`: several runnable examples, starting with `round_trip.py`, which masks a text and restores it.
 - `scripts/`: command-line scripts to download data and models, run evaluations and rebuild the results.
 - `tests/`: the automated tests.
 - `results/`: saved scores, tables and charts from the evaluation runs.
