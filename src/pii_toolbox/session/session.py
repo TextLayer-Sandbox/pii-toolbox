@@ -55,6 +55,35 @@ def _remap_person_mentions(mentions: list[PersonMentions], merged: list[Span]) -
     return remapped
 
 
+def _existing_placeholder(
+    fullest: str,
+    forms: tuple[str, ...],
+    held: list[Placeholder | None],
+    originals: list[str | None],
+) -> Placeholder | None:
+    """Picks the stored placeholder a group of person forms belongs to, or None when the group needs a new one."""
+    if held[0] is not None:
+        return held[0]
+    # A shared form only vouches for its placeholder when it is the group's fullest form or the placeholder's.
+    existing = [
+        held_placeholder
+        for form, held_placeholder, original in zip(forms, held, originals)
+        if held_placeholder is not None and form in (fullest, original)
+    ]
+    if existing:
+        return min(existing, key=lambda held_placeholder: held_placeholder.number)
+    return None
+
+
+def _rewrite_text(text: str, placeholder_for: dict[Span, Placeholder], placeholder_format: PlaceholderFormat) -> str:
+    """Replaces every span of `text` with its rendered placeholder."""
+    masked = text
+    # Replacing from the end keeps the earlier offsets valid.
+    for span in sorted(placeholder_for, key=lambda s: s.start, reverse=True):
+        masked = masked[: span.start] + placeholder_format.render(placeholder_for[span]) + masked[span.end :]
+    return masked
+
+
 class Session(RedactionSession):
     """Masks every text of one case against a shared store, so equal originals share a placeholder."""
 
@@ -104,40 +133,49 @@ class Session(RedactionSession):
     def mask(self, text: str) -> MaskResult:
         self._text_counter += 1
         document = Document(f"{self._id}-{self._text_counter}", text, self._language)
+        spans, mentions = self._find_spans(document)
+        placeholder_for, minted = self._assign_placeholders(text, spans, mentions)
+        masked = _rewrite_text(text, placeholder_for, self._format)
+
+        logger.info(
+            "masked text %s: %d spans replaced, minted %s",
+            document.id,
+            len(placeholder_for),
+            [self._format.render(placeholder) for placeholder in minted],
+        )
+        return MaskResult(masked, tuple(minted), placeholder_for)
+
+    def _find_spans(self, document: Document) -> tuple[list[Span], list[PersonMentions]]:
+        """Detects, resolves and merges the spans of a document and returns them with the remapped person mentions."""
         spans = self._detector.detect(document)
-
-        placeholder_for: dict[Span, Placeholder] = {}
-        minted: list[Placeholder] = []
-
-        def get_or_mint(label: str, original: str) -> Placeholder:
-            placeholder, was_minted = self._store.get_or_mint(self._id, label, original)
-            if was_minted:
-                minted.append(placeholder)
-            return placeholder
-
         mentions = self._resolver.resolve(document, spans) if self._resolver is not None else []
         mention_spans = [span for mention in mentions for span in mention.spans]
-        spans = merge_overlapping([*spans, *mention_spans, *_placeholder_look_alike_spans(text, self._format)])
-        mentions = _remap_person_mentions(mentions, spans)
+        spans = merge_overlapping(
+            [*spans, *mention_spans, *_placeholder_look_alike_spans(document.text, self._format)]
+        )
+        return spans, _remap_person_mentions(mentions, spans)
+
+    def _assign_placeholders(
+        self, text: str, spans: list[Span], mentions: list[PersonMentions]
+    ) -> tuple[dict[Span, Placeholder], list[Placeholder]]:
+        """Looks up or mints a placeholder for every span, registers person aliases and returns the span mapping with the newly minted placeholders."""
+        placeholder_for: dict[Span, Placeholder] = {}
+        minted: list[Placeholder] = []
 
         for mention in mentions:
             fullest = text[mention.canonical.start : mention.canonical.end]
             label = mention.canonical.pii_type.value
             forms = (fullest, *(text[span.start : span.end] for span in mention.spans))
             held = [self._store.placeholder_for(self._id, label, form) for form in forms]
-            # A shared form only vouches for its placeholder when it is the group's fullest form or the placeholder's.
-            existing = [
-                held_placeholder
-                for form, held_placeholder in zip(forms, held)
-                if held_placeholder is not None
-                and form in (fullest, self._store.original(self._id, held_placeholder))
+            originals = [
+                self._store.original(self._id, held_placeholder) if held_placeholder is not None else None
+                for held_placeholder in held
             ]
-            if held[0] is not None:
-                placeholder = held[0]
-            elif existing:
-                placeholder = min(existing, key=lambda held_placeholder: held_placeholder.number)
-            else:
-                placeholder = get_or_mint(label, fullest)
+            placeholder = _existing_placeholder(fullest, forms, held, originals)
+            if placeholder is None:
+                placeholder, was_minted = self._store.get_or_mint(self._id, label, fullest)
+                if was_minted:
+                    minted.append(placeholder)
             if held[0] is None:
                 self._store.alias(self._id, fullest, placeholder)
             for span in mention.spans:
@@ -148,20 +186,12 @@ class Session(RedactionSession):
 
         for span in spans:
             if span not in placeholder_for:
-                placeholder_for[span] = get_or_mint(span.pii_type.value, text[span.start : span.end])
+                placeholder, was_minted = self._store.get_or_mint(self._id, span.pii_type.value, text[span.start : span.end])
+                if was_minted:
+                    minted.append(placeholder)
+                placeholder_for[span] = placeholder
 
-        masked = text
-        # Replacing from the end keeps the earlier offsets valid.
-        for span in sorted(placeholder_for, key=lambda s: s.start, reverse=True):
-            masked = masked[: span.start] + self._format.render(placeholder_for[span]) + masked[span.end :]
-
-        logger.info(
-            "masked text %s: %d spans replaced, minted %s",
-            document.id,
-            len(placeholder_for),
-            [self._format.render(placeholder) for placeholder in minted],
-        )
-        return MaskResult(masked, tuple(minted), placeholder_for)
+        return placeholder_for, minted
 
     def restore(self, text: str) -> RestoreResult:
         minted_labels = self._store.labels(self._id)
