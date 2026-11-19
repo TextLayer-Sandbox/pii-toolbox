@@ -57,7 +57,7 @@ An `-m` on the command line replaces the default filter. Before running them, do
 `tests/conftest.py` applies two rules to every test automatically:
 
 - Network calls fail with an error unless the test is marked `network`, so no text can leave the machine during a test.
-- Home, cache, data and model folders point into a temporary folder, so tests do not touch your real files. Tests marked `data` or `model` keep the folders you set.
+- Home, cache, data and model folders point into a temporary folder, so tests do not touch your real files. Tests marked `data` or `model` keep the folders you set, or the default folders if you set none.
 
 ### Layout of `tests/`
 
@@ -68,7 +68,7 @@ The folders mirror the packages in `src/pii_toolbox`:
 - `tests/coref/`: grouping of mentions, the nickname list and step, long documents, the worker protocol, and the real Maverick worker (marked `model`).
 - `tests/datasets/`: the dataset loaders, the answer key and the download logic. `tests/datasets/fixtures/` holds small TAB-shaped sample files. Tests against the real corpora are marked `data`.
 - `tests/evaluation/`: matching, scoring, TAB's metrics, the run command, the run-all script, cost measurement, tables and charts. `tests/evaluation/fixtures/` holds small saved results with the tables and charts expected from them, used to check the rebuild is exact. Some tests check that the files committed under `results/` are complete and consistent.
-- `tests/session/`: the masking session, the placeholder format, the store and the example script.
+- `tests/session/`: masking and restoring in the session, the placeholder format and the store.
 
 ## Other top-level files
 

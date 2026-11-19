@@ -20,7 +20,7 @@ Shared types and the abstract interfaces everything else is built on, kept in `s
 
 - `Span`, `Document` and `PiiType` describe detected text.
 - `Detector` takes a `Document` and returns a list of spans. It also says which languages it supports and which types it can report.
-- `IdentityResolver` takes a document and its spans and returns groups of spans that refer to the same person (`PersonMentions`). Each group names one span as the canonical one: the fullest form of the name.
+- `IdentityResolver` takes a document and its spans and returns groups of spans that refer to the same person (`PersonMentions`). Each group names one span as the canonical one: the fullest form of the name. See [Vocabulary](vocab.md) for these terms.
 - `PlaceholderFormat`, `PlaceholderStore` and `RedactionSession` describe the masking side.
 
 `core/label_maps.py` holds the translation tables from each tool's or dataset's own labels to the six common types.
@@ -49,14 +49,14 @@ Model files are read from a model folder (see [Evaluation](evaluation.md) for ho
 Co-reference resolution links the different ways a text refers to one person, such as "David Parker", "Mr. Parker" and "Dave". It is an `IdentityResolver`.
 
 - `MaverickResolver` (`coref/resolver.py`) asks a separate worker process, which runs the Maverick co-reference model in its own `uv` environment (`coref/worker`). The two talk over a local ZeroMQ socket. Only character positions travel back, never text. If the worker does not answer in time it is restarted and the request is sent again, up to a limit. Start it with `start()` or use it as a context manager. It handles English only.
-- `groups.py` turns the model's clusters of mentions into groups. A group is only made when it already contains a name the detector found, so the resolver never invents a person. Other mentions in the cluster are added only if they look like a name (a title followed by capitalised words, or all capitalised words) and are not pronouns.
+- `groups.py` turns the model's clusters into groups. A group is only made when it already contains a name the detector found, so the resolver never invents a person. Other spans in the cluster that the detector missed are added to the group as `PERSON` spans only if they overlap no detected person and look like a name (a title followed by capitalised words, or all capitalised words) and are not pronouns.
 - `nickname_step.py` then adds detected names the model left unlinked, using a nickname list (`coref/nicknames.csv`, for example `dave` goes to `david`). A name joins a group only when exactly one group holds a name with the same standard given name and a compatible surname.
 
 ### `session`
 
 `Session` (`session/session.py`) ties the pieces together. It is built from a detector, a placeholder store, a placeholder format, a language code and, optionally, an identity resolver.
 
-- `AngleBracketFormat` writes `<LABEL_N>` and, when restoring, also reads tokens that a model has lightly changed: brackets dropped or letter case changed. A token must stand alone, so `PERSON_1` is not picked out of `PERSON_10`.
+- `AngleBracketFormat` writes `<LABEL_N>` and, when restoring, reads back only that exact form. A token with the brackets dropped or the letter case changed is not read.
 - `InMemoryPlaceholderStore` keeps, for each session id, which placeholder stands for which original. It never writes originals to disk or logs. When several forms of a name share one placeholder, restoring gives back the longest form.
 
 **Masking a text** (`Session.mask`):

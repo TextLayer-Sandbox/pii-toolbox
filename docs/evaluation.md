@@ -57,7 +57,7 @@ Every run is scored two ways:
 
 In both cases, matching is one to one: each prediction is used at most once, and the pairs with the longest overlap are taken first. Prediction and answer must have the same common type. Answers with no common type (such as TAB's `DEM` and `MISC`) take no part in the normal counts, so a prediction that only overlaps one of those counts as a false positive.
 
-Answers of the same type that overlap each other, directly or through a chain of overlaps, form a group that counts as one entity. A prediction gets credit if it matches any span in the group under the rule in use, and a group is credited at most once. The spans are not merged into one wider span, so strict matching still needs the exact boundaries of one member of the group.
+Answers of the same type that overlap each other, directly or through a chain of overlaps, form an answer group that counts as one entity (see [Vocabulary](vocab.md)). A prediction gets credit if it matches any span in the group under the rule in use, and a group is credited at most once. The spans are not merged into one wider span, so strict matching still needs the exact boundaries of one member of the group.
 
 The gap between the two scores shows how often a detector finds the right thing but cuts it short or runs it long.
 
