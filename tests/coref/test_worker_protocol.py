@@ -70,6 +70,7 @@ def assert_positions_only(reply: dict) -> None:
 
 def test_worker_reply_holds_positions_only(runtime_dir):
     with MaverickResolver(stub_worker_command, reply_timeout_seconds=20, runtime_dir=runtime_dir) as resolver:
+        assert resolver._context is not None
         socket = resolver._context.socket(zmq.DEALER)
         socket.connect(resolver._endpoint)
         names = [[0, 12]]
@@ -114,11 +115,14 @@ def test_killed_worker_is_restarted_and_request_succeeds(runtime_dir):
     with MaverickResolver(stub_worker_command, reply_timeout_seconds=20, runtime_dir=runtime_dir) as resolver:
         assert resolver.resolve(DOCUMENT, [person("David Parker")])
         first = resolver.worker_process
+        assert first is not None
         first.kill()
         first.wait()
         groups = resolver.resolve(DOCUMENT, [person("David Parker")])
-        assert resolver.worker_process.pid != first.pid
-        assert resolver.worker_process.poll() is None
+        restarted = resolver.worker_process
+        assert restarted is not None
+        assert restarted.pid != first.pid
+        assert restarted.poll() is None
     assert len(groups) == 1
 
 

@@ -20,6 +20,7 @@ LONG_DOCUMENT_WORDS = 10_000
 
 def load_worker_module():
     spec = importlib.util.spec_from_file_location("coref_worker_server", WORKER_DIR / "server.py")
+    assert spec is not None and spec.loader is not None
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module

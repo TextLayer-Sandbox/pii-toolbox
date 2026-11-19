@@ -3,6 +3,7 @@
 from collections.abc import Sequence
 from dataclasses import replace
 from pathlib import Path
+from typing import Any
 
 import matplotlib
 
@@ -11,6 +12,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 from matplotlib.figure import Figure  # noqa: E402
+from matplotlib.typing import RcKeyType  # noqa: E402
 
 from pii_toolbox.core import DatasetSplit, DetectionReport, EvaluationRun, PiiType, SpanMatchRule  # noqa: E402
 from pii_toolbox.evaluation.tables import (  # noqa: E402
@@ -28,7 +30,7 @@ _CURVE_POINTS = 200
 MEMORY_MARKER_AREA_PER_GIB = 300
 
 
-def _svg_settings() -> dict[str, object]:
+def _svg_settings() -> dict[RcKeyType, Any]:
     return {"svg.hashsalt": SVG_HASH_SALT, "svg.fonttype": "none", "font.family": "DejaVu Sans"}
 
 

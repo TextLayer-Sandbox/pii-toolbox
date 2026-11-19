@@ -1,6 +1,6 @@
 import pytest
 
-from pii_toolbox.core import AnswerSpan, Document, PiiType, Span, SpanMatchRule
+from pii_toolbox.core import AnswerSpan, DetectionReport, DetectionScore, Document, PiiType, Span, SpanMatchRule
 from pii_toolbox.evaluation.scorer import MatchingDetectionScorer
 
 
@@ -28,15 +28,21 @@ def f2(precision, recall):
     return 5 * precision * recall / (4 * precision + recall)
 
 
+def type_score(report: DetectionReport, pii_type: PiiType) -> DetectionScore:
+    score = report.by_type[pii_type]
+    assert score is not None
+    return score
+
+
 def score(results, rule=SpanMatchRule.ANY_OVERLAP, **kwargs):
     return MatchingDetectionScorer().score(results, rule, **kwargs)
 
 
 def test_per_type_scores():
     report = score(unbalanced_fixture())
-    person = report.by_type[PiiType.PERSON]
+    person = type_score(report, PiiType.PERSON)
     assert (person.precision, person.recall, person.f2) == pytest.approx((0.8, 0.8, 0.8))
-    location = report.by_type[PiiType.LOCATION]
+    location = type_score(report, PiiType.LOCATION)
     assert location.precision == 1.0
     assert location.recall == 0.25
     assert location.f2 == pytest.approx(5 * 1.0 * 0.25 / (4 * 1.0 + 0.25))
@@ -87,8 +93,8 @@ def test_each_rule_has_its_own_report():
     strict = score(results, SpanMatchRule.EXACT_BOUNDARIES)
     assert relaxed.rule is SpanMatchRule.ANY_OVERLAP
     assert strict.rule is SpanMatchRule.EXACT_BOUNDARIES
-    assert relaxed.by_type[PiiType.PERSON].f2 == 1.0
-    assert strict.by_type[PiiType.PERSON].f2 == 0.0
+    assert type_score(relaxed, PiiType.PERSON).f2 == 1.0
+    assert type_score(strict, PiiType.PERSON).f2 == 0.0
 
 
 def mapa_like_results():
@@ -102,8 +108,8 @@ def test_type_with_no_answers_and_no_predictions_is_left_out_of_macro():
     report = score(mapa_like_results())
     assert report.by_type[PiiType.IDENTIFIER] is None
     assert report.by_type[PiiType.QUANTITY] is None
-    person = report.by_type[PiiType.PERSON]
-    location = report.by_type[PiiType.LOCATION]
+    person = type_score(report, PiiType.PERSON)
+    location = type_score(report, PiiType.LOCATION)
     assert report.macro.recall == pytest.approx((person.recall + location.recall) / 2)
     assert report.macro.f2 == pytest.approx((person.f2 + location.f2) / 2)
 
@@ -111,7 +117,7 @@ def test_type_with_no_answers_and_no_predictions_is_left_out_of_macro():
 def test_type_with_answers_but_no_predictions_still_scores_zero():
     results = [(Document("d", "x" * 50, "en"), [], [answer(0, 5, PiiType.IDENTIFIER)])]
     report = score(results)
-    assert report.by_type[PiiType.IDENTIFIER].recall == 0.0
+    assert type_score(report, PiiType.IDENTIFIER).recall == 0.0
     assert report.by_type[PiiType.PERSON] is None
 
 
@@ -139,7 +145,7 @@ def test_false_positive_of_annotated_type_still_lowers_micro_precision():
     results = [(Document("d", "x" * 200, "en"), spans, [answer(0, 5, PiiType.PERSON)])]
     report = score(results, annotated_types=annotated)
     assert report.overall_micro.precision == pytest.approx(0.5)
-    assert report.by_type[PiiType.PERSON].precision == pytest.approx(0.5)
+    assert type_score(report, PiiType.PERSON).precision == pytest.approx(0.5)
 
 
 def person_and_date_answer_results():

@@ -4,6 +4,7 @@ Run from the repository root with `uv run python examples/round_trip.py`.
 """
 
 import re
+from collections.abc import Sequence
 
 from pii_toolbox.core import Detector, Document, PersonMentions, IdentityResolver, PiiType, Span
 from pii_toolbox.session import AngleBracketFormat, InMemoryPlaceholderStore, Session
@@ -48,7 +49,7 @@ class SinglePersonResolver(IdentityResolver):
     def name(self) -> str:
         return "single-person"
 
-    def resolve(self, document: Document, spans: list[Span]) -> list[PersonMentions]:
+    def resolve(self, document: Document, spans: Sequence[Span]) -> list[PersonMentions]:
         people = tuple(span for span in spans if span.pii_type is PiiType.PERSON)
         if not people:
             return []

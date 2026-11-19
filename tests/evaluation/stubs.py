@@ -25,9 +25,17 @@ SHORT_NAME = (18, 22)
 class StubDetector(Detector):
     """Finds the full name only, in English documents."""
 
-    name = "stub"
-    languages = frozenset({"en"})
-    detects = frozenset({PiiType.PERSON})
+    @property
+    def name(self) -> str:
+        return "stub"
+
+    @property
+    def languages(self) -> frozenset[str] | None:
+        return frozenset({"en"})
+
+    @property
+    def detects(self) -> frozenset[PiiType]:
+        return frozenset({PiiType.PERSON})
 
     def load_models(self) -> None:
         pass
@@ -37,7 +45,9 @@ class StubDetector(Detector):
 
 
 class StubResolver(IdentityResolver):
-    name = "stub_resolver"
+    @property
+    def name(self) -> str:
+        return "stub_resolver"
 
     def resolve(self, document, spans):
         added = Span(*SHORT_NAME, PiiType.PERSON, "PERSON", ("stub_resolver",), None)

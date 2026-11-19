@@ -5,7 +5,7 @@ from dataclasses import replace
 
 from pii_toolbox.core import AnswerKeyBuilder, AnswerSpan, ReidentificationRisk
 
-_RISK_STRENGTH = {ReidentificationRisk.QUASI: 1, ReidentificationRisk.DIRECT: 2}
+_RISK_STRENGTH: dict[ReidentificationRisk | None, int] = {ReidentificationRisk.QUASI: 1, ReidentificationRisk.DIRECT: 2}
 
 
 class AnyAnnotatorAnswerKeyBuilder(AnswerKeyBuilder):

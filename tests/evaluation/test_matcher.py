@@ -6,7 +6,7 @@ def predicted(start, end, pii_type=PiiType.PERSON):
     return Span(start, end, pii_type, pii_type.value, ("test",), None)
 
 
-def answer(start, end, pii_type=PiiType.PERSON):
+def answer(start, end, pii_type: PiiType | None = PiiType.PERSON):
     return AnswerSpan(start, end, pii_type, "LABEL", None, None, None)
 
 

@@ -18,7 +18,7 @@ class FakeDetector(Detector):
         return "fake"
 
     @property
-    def languages(self):
+    def languages(self) -> frozenset[str] | None:
         return None
 
     @property
@@ -154,6 +154,7 @@ def test_exception_inside_with_block_discards_the_mapping():
         with session:
             placeholder = session.mask("David Parker").minted[0]
             raise RuntimeError("boom")
+    assert placeholder is not None
     assert session.store.original("case-1", placeholder) is None
     assert session.store.labels("case-1") == frozenset()
 
@@ -311,7 +312,7 @@ class LanguageLimitedDetector(FakeDetector):
         self._languages = languages
 
     @property
-    def languages(self):
+    def languages(self) -> frozenset[str] | None:
         return self._languages
 
 

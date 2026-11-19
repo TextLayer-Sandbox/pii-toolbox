@@ -74,6 +74,7 @@ def run_evaluation(
             continue
         spans = detector.detect(annotated.document)
         if request.coreference:
+            assert resolver is not None
             spans = _with_resolved_names(resolver, annotated, spans)
         scored.append((annotated, spans))
     results = [
@@ -100,7 +101,7 @@ def run_evaluation(
             reported_types=detector.detects,
             annotated_types=request.dataset.annotated_types,
         ),
-        tab_metrics=tab_scorer.score(scored) if is_tab else None,
+        tab_metrics=tab_scorer.score(scored) if is_tab and tab_scorer is not None else None,
         environment=environment or collect_environment(),
     )
     return ResultRecord(run, detector.languages, detector.detects)

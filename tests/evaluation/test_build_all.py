@@ -19,6 +19,7 @@ KEY_COLUMNS = {"table1": 1, "table2_strict": 2, "table2_relaxed": 2, "table3": 1
 
 def load_script():
     spec = importlib.util.spec_from_file_location("build_outputs", SCRIPT)
+    assert spec is not None and spec.loader is not None
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module

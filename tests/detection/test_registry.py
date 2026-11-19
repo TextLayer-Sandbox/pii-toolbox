@@ -2,7 +2,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from pii_toolbox.core import Document, PiiType
+from pii_toolbox.core import Detector, Document, PiiType
 from pii_toolbox.detection.gliner_detector import GlinerDetector
 from pii_toolbox.detection.known_names import KnownNamesDetector
 from pii_toolbox.detection.presidio_structured import PresidioStructuredDetector
@@ -81,7 +81,12 @@ def test_unknown_name_raises_at_startup_listing_every_known_name():
 
 def test_unknown_member_of_a_union_is_rejected_before_anything_is_built():
     built = []
-    registry = FixedDetectorRegistry(factory_overrides={"spacy_sm": lambda: built.append("x")})
+
+    def build_recorded_detector() -> Detector:
+        built.append("x")
+        return KnownNamesDetector(["x"])
+
+    registry = FixedDetectorRegistry(factory_overrides={"spacy_sm": build_recorded_detector})
     with pytest.raises(UnknownDetectorError):
         build_from_config(["spacy_sm+nonexistent"], registry)
     assert built == []

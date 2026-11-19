@@ -185,10 +185,10 @@ class BertInformationWeigher:
 
     def __init__(self, model_dir: Path | None = None, segment_size: int = BERT_SEGMENT_SIZE) -> None:
         import torch
-        from transformers import BertForMaskedLM, BertTokenizerFast
+        from transformers import AutoTokenizer, BertForMaskedLM
 
         cache_dir = str((model_dir or default_model_dir()) / "huggingface_cache")
-        self._tokenizer = BertTokenizerFast.from_pretrained(BERT_MODEL_LOCATION, cache_dir=cache_dir, local_files_only=True)
+        self._tokenizer = AutoTokenizer.from_pretrained(BERT_MODEL_LOCATION, cache_dir=cache_dir, local_files_only=True)
         self._model = BertForMaskedLM.from_pretrained(BERT_MODEL_LOCATION, cache_dir=cache_dir, local_files_only=True)
         self._model.eval()
         self._segment_size = segment_size
@@ -219,8 +219,8 @@ class BertInformationWeigher:
         ids = torch.tensor(input_ids)
         mask = torch.tensor(attention)
         split_at = list(range(self._segment_size, len(input_ids), self._segment_size))
-        id_segments = torch.tensor_split(ids, split_at)
-        mask_segments = torch.tensor_split(mask, split_at)
+        id_segments = list(torch.tensor_split(ids, split_at))
+        mask_segments = list(torch.tensor_split(mask, split_at))
         padded_ids = torch.nn.utils.rnn.pad_sequence(id_segments, batch_first=True)
         padded_mask = torch.nn.utils.rnn.pad_sequence(mask_segments, batch_first=True)
         with torch.no_grad():

@@ -3,8 +3,9 @@
 import inspect
 import itertools
 import multiprocessing
-from collections.abc import Iterable, Iterator
+from collections.abc import Callable, Iterable, Iterator
 from dataclasses import dataclass
+from typing import cast
 
 from pii_toolbox.datasets.structured_pii import StructuredDocument
 from pii_toolbox.detection.presidio_structured import build_offline_email_recogniser
@@ -43,7 +44,8 @@ def build_recognisers() -> list:
         if recogniser_class is predefined.PhoneRecognizer:
             recognisers.append(recogniser_class(supported_regions=sorted(phonenumbers.SUPPORTED_REGIONS)))
         elif issubclass(recogniser_class, PatternRecognizer):
-            recognisers.append(recogniser_class())
+            # every predefined pattern recogniser defaults its constructor arguments
+            recognisers.append(cast(Callable[[], PatternRecognizer], recogniser_class)())
     recognisers.append(build_offline_email_recogniser())
     return recognisers
 

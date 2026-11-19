@@ -1,6 +1,6 @@
 import textwrap
 
-from pii_toolbox.core import Document
+from pii_toolbox.core import Detector, Document, PiiType
 from pii_toolbox.evaluation.cost import SubprocessCostRunner
 from pii_toolbox.evaluation.cost_child import measure_detector
 
@@ -39,9 +39,21 @@ STUB_REGISTRY = textwrap.dedent(
 SIZES = [1000, 10000, 100000]
 
 
-class CountingDetector:
+class CountingDetector(Detector):
     def __init__(self):
         self.detect_calls = 0
+
+    @property
+    def name(self) -> str:
+        return "counting"
+
+    @property
+    def languages(self) -> frozenset[str] | None:
+        return None
+
+    @property
+    def detects(self) -> frozenset[PiiType]:
+        return frozenset()
 
     def load_models(self):
         pass

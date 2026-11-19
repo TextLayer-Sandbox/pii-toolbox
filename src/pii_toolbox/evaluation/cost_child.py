@@ -9,6 +9,7 @@ import statistics
 import sys
 import time
 from collections.abc import Callable, Sequence
+from typing import cast
 
 from pii_toolbox.core import Detector, DetectorRegistry, Document
 
@@ -40,7 +41,7 @@ def peak_memory_bytes() -> int:
 def load_registry(spec: str) -> DetectorRegistry:
     module_name, attribute = spec.split(":")
     target = getattr(importlib.import_module(module_name), attribute)
-    return target() if callable(target) else target
+    return cast(DetectorRegistry, target() if callable(target) else target)
 
 
 def measure_detector(

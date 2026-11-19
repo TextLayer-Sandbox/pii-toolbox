@@ -90,6 +90,7 @@ class GreedySpanMatcher(SpanMatcher):
                 false_positives[prediction.pii_type] += 1
         for group, answer in {group_of_answer[index]: answer for index, answer in scored_answers}.items():
             if group not in used_groups:
+                assert answer.pii_type is not None
                 false_negatives[answer.pii_type] += 1
         return {
             pii_type: MatchCounts(true_positives[pii_type], false_positives[pii_type], false_negatives[pii_type])

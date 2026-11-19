@@ -6,7 +6,7 @@ QUASI = ReidentificationRisk.QUASI
 NO_MASK = ReidentificationRisk.NONE
 
 
-def mark(annotator, start, end, risk, label="PERSON", pii_type=PiiType.PERSON):
+def mark(annotator, start, end, risk, label="PERSON", pii_type: PiiType | None = PiiType.PERSON):
     return AnswerSpan(start, end, pii_type, label, annotator, risk, f"{annotator}-e")
 
 

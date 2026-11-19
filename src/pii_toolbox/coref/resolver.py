@@ -130,15 +130,17 @@ class MaverickResolver(IdentityResolver):
         """Spawns the worker on a fresh socket and blocks until it reports ready; raises if it exits or the startup timeout passes."""
         if self._socket is not None:
             self._socket.close(linger=0)
-        self._socket = self._context.socket(zmq.DEALER)
-        self._socket.setsockopt(zmq.IDENTITY, RESOLVER_IDENTITY)
-        self._socket.connect(self._endpoint)
+        assert self._context is not None
+        socket = self._context.socket(zmq.DEALER)
+        socket.setsockopt(zmq.IDENTITY, RESOLVER_IDENTITY)
+        socket.connect(self._endpoint)
+        self._socket = socket
         environment = {**os.environ, "HF_HUB_OFFLINE": "1", "HF_HUB_CACHE": str(self._model_dir / ENCODER_CACHE_DIRECTORY)}
         self._process = subprocess.Popen(list(self._worker_command(self._endpoint)), env=environment)
         deadline = time.monotonic() + WORKER_STARTUP_TIMEOUT_SECONDS
         while time.monotonic() < deadline:
-            if self._socket.poll(_POLL_SLICE_MILLISECONDS):
-                if json.loads(self._socket.recv()).get("ready") is True:
+            if socket.poll(_POLL_SLICE_MILLISECONDS):
+                if json.loads(socket.recv()).get("ready") is True:
                     return
                 continue
             if self._process.poll() is not None:
@@ -164,6 +166,7 @@ class MaverickResolver(IdentityResolver):
     def _request_clusters(self, text: str, name_positions: list[tuple[int, int]]) -> list[list[tuple[int, int]]]:
         if self._context is None:
             raise CorefWorkerError("the co-reference worker is not started; call start() first")
+        assert self._socket is not None
         request_id = next(self._request_ids)
         payload = json.dumps({"id": request_id, "text": text, "names": name_positions}).encode()
         for attempt in range(self._max_retries + 1):
@@ -176,6 +179,7 @@ class MaverickResolver(IdentityResolver):
         raise CorefWorkerError(f"no reply from the co-reference worker after {self._max_retries} restarts")
 
     def _await_reply(self, request_id: int) -> dict | None:
+        assert self._socket is not None
         deadline = time.monotonic() + self._reply_timeout_seconds
         while time.monotonic() < deadline:
             if self._socket.poll(_POLL_SLICE_MILLISECONDS):

@@ -1,7 +1,10 @@
 import re
 from pathlib import Path
+from typing import cast
 
 import pytest
+from matplotlib.collections import PathCollection
+from matplotlib.patches import Rectangle
 
 from pii_toolbox.core import DatasetSplit, PiiType
 from pii_toolbox.evaluation import charts
@@ -75,7 +78,7 @@ def test_chart_c_relaxed_bars_are_not_lower_than_strict():
     from pii_toolbox.evaluation.tables import load_runs
 
     runs = [run for (_, dataset), run in load_runs(RESULTS, DatasetSplit.TEST).items() if dataset == "tab"]
-    heights = [patch.get_height() for patch in chart_c_figure(runs).axes[0].patches]
+    heights = [cast(Rectangle, patch).get_height() for patch in chart_c_figure(runs).axes[0].patches]
     strict, relaxed = heights[:TAB_TOOLS], heights[TAB_TOOLS:]
     assert all(r >= s for s, r in zip(strict, relaxed))
 
@@ -86,7 +89,7 @@ def test_chart_d_has_a_point_per_costed_tool_with_area_scaling_with_memory(tmp_p
 
     runs = [run for (_, dataset), run in load_runs(RESULTS, DatasetSplit.TEST).items() if dataset == "tab"]
     axes = charts.chart_d_figure(runs, load_cost_results(COST)).axes[0]
-    sizes = {c.get_label(): float(c.get_sizes()[0]) for c in axes.collections}
+    sizes = {c.get_label(): float(cast(PathCollection, c).get_sizes()[0]) for c in axes.collections}
     assert sizes["spacy_lg"] == pytest.approx(3 * sizes["presidio_structured"])
     assert sizes["spacy_lg+presidio_structured"] == pytest.approx(4 * sizes["presidio_structured"])
 

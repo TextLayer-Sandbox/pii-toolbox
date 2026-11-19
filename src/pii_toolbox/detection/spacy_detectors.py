@@ -51,7 +51,7 @@ class SpacyDetector(Detector):
         self._name = name
         self._model_name = model_name
         self._model_dir = model_dir
-        self._pipeline = pipeline
+        self._pipeline: Any = pipeline
 
     @property
     def name(self) -> str:
@@ -74,6 +74,7 @@ class SpacyDetector(Detector):
     def detect(self, document: Document) -> list[Span]:
         if self._pipeline is None:
             self.load_models()
+        assert self._pipeline is not None
         return [
             Span(
                 start=entity.start_char,

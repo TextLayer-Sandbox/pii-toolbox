@@ -1,3 +1,5 @@
+![PII Toolbox](docs/banner.svg)
+
 # PII Toolbox
 
 A set of tools for finding personal information (PII) in text, swapping it for placeholders, and swapping it back in afterwards.

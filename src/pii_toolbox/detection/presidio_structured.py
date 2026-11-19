@@ -73,6 +73,7 @@ class PresidioStructuredDetector(Detector):
     def detect(self, document: Document) -> list[Span]:
         if self._recognisers is None:
             self.load_models()
+        assert self._recognisers is not None
         spans = [
             Span(
                 start=result.start,
@@ -98,7 +99,7 @@ def _without_contained_spans(spans: list[Span]) -> list[Span]:
             other is not span
             and other.start <= span.start
             and span.end <= other.end
-            and (other.end - other.start > span.end - span.start or other.score > span.score)
+            and (other.end - other.start > span.end - span.start or (other.score or 0.0) > (span.score or 0.0))
             for other in spans
         )
     ]

@@ -27,7 +27,7 @@ MAPA_LABELS: OptionalLabelMap = {
     "AMOUNT": PiiType.QUANTITY,
 }
 
-PRESIDIO_LABELS: OptionalLabelMap = {
+PRESIDIO_LABELS: Mapping[str, PiiType] = {
     "PERSON": PiiType.PERSON,
     "ORGANIZATION": PiiType.ORGANIZATION,
     "LOCATION": PiiType.LOCATION,
@@ -41,7 +41,7 @@ PRESIDIO_LABELS: OptionalLabelMap = {
     "US_SSN": PiiType.IDENTIFIER,
 }
 
-GLINER_LABELS: OptionalLabelMap = {
+GLINER_LABELS: Mapping[str, PiiType] = {
     "person": PiiType.PERSON,
     "name": PiiType.PERSON,
     "organization": PiiType.ORGANIZATION,

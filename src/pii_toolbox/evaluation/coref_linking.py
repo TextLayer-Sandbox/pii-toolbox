@@ -131,9 +131,17 @@ def count_linking(
 
 
 class _FixedSpansDetector(Detector):
-    name = "fixed_spans"
-    languages = None
-    detects = frozenset(PiiType)
+    @property
+    def name(self) -> str:
+        return "fixed_spans"
+
+    @property
+    def languages(self) -> frozenset[str] | None:
+        return None
+
+    @property
+    def detects(self) -> frozenset[PiiType]:
+        return frozenset(PiiType)
 
     def __init__(self, spans: Sequence[Span]) -> None:
         self._spans = list(spans)

@@ -139,6 +139,7 @@ def test_empty_input_scores_zero():
 
 def _load_tab_script(data_dir):
     spec = importlib.util.spec_from_file_location("tab_evaluation_script", data_dir / "tab" / "evaluation.py")
+    assert spec is not None and spec.loader is not None
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module

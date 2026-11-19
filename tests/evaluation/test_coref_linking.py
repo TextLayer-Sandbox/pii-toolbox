@@ -99,9 +99,17 @@ def test_report_pools_counts_and_averages_rates():
 class StubDetector(Detector):
     """Returns the same spans for every document."""
 
-    name = "stub"
-    languages = None
-    detects = frozenset(PiiType)
+    @property
+    def name(self) -> str:
+        return "stub"
+
+    @property
+    def languages(self) -> frozenset[str] | None:
+        return None
+
+    @property
+    def detects(self) -> frozenset[PiiType]:
+        return frozenset(PiiType)
 
     def __init__(self, spans: list[Span]) -> None:
         self._spans = spans

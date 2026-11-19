@@ -2,7 +2,7 @@
 
 import argparse
 from collections.abc import Callable, Mapping, Sequence
-from contextlib import nullcontext
+from contextlib import AbstractContextManager, nullcontext
 from pathlib import Path
 
 from pii_toolbox.core import Dataset, DatasetSplit, DetectorRegistry, IdentityResolver, RunEnvironment, TabMetricsScorer
@@ -76,7 +76,7 @@ def evaluate_one(
     if coreference and resolver is None:
         resolver = _default_resolver()
     request = RunRequest(tool, dataset, split, coreference, language)
-    with resolver if hasattr(resolver, "__enter__") else nullcontext():
+    with resolver if isinstance(resolver, AbstractContextManager) else nullcontext():
         return run_evaluation(request, registry or FixedDetectorRegistry(), tab_scorer, resolver, environment)
 
 

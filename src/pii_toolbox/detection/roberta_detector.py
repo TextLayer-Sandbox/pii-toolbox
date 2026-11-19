@@ -17,7 +17,7 @@ class RobertaDetector(Detector):
 
     def __init__(self, model_dir: Path | None = None, pipeline: Any = None) -> None:
         self._model_dir = model_dir
-        self._pipeline = pipeline
+        self._pipeline: Any = pipeline
         self._segmenter = OverlappingTextSegmenter(SEGMENT_CHARACTERS, SEGMENT_OVERLAP_CHARACTERS)
 
     @property

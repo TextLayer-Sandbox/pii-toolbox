@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from pii_toolbox.core import DatasetSplit, PiiType, TabOfficialMetrics
+from pii_toolbox.core import DatasetSplit, DetectionReport, DetectionScore, PiiType, TabOfficialMetrics
 from pii_toolbox.evaluation.__main__ import main
 from pii_toolbox.evaluation.results_io import (
     ENVIRONMENT_FILE_NAME,
@@ -11,6 +11,13 @@ from pii_toolbox.evaluation.results_io import (
 )
 from pii_toolbox.evaluation.run import RunRequest, run_evaluation
 from stubs import CANARY, StubDataset, StubResolver, StubTabScorer, stub_registry
+
+
+def type_score(report: DetectionReport, pii_type: PiiType) -> DetectionScore:
+    score = report.by_type[pii_type]
+    assert score is not None
+    return score
+
 
 def run_cli(tmp_path, *extra, dataset="tab", split="dev", coref="off"):
     argv = ["run", "--tool", "stub", "--dataset", dataset, "--split", split, "--coref", coref, "--out", str(tmp_path)]
@@ -54,8 +61,8 @@ def test_runs_with_different_languages_write_different_files(tmp_path):
 def test_result_holds_both_rules_per_type_per_language_and_tab_metrics(tmp_path):
     run = read_record(run_cli(tmp_path)).run
     assert run.tab_metrics == TabOfficialMetrics(0.5, 0.25, 0.75)
-    assert run.exact_boundaries.by_type[PiiType.PERSON].recall == pytest.approx(0.5)
-    assert run.any_overlap.by_type[PiiType.PERSON].recall == pytest.approx(0.5)
+    assert type_score(run.exact_boundaries, PiiType.PERSON).recall == pytest.approx(0.5)
+    assert type_score(run.any_overlap, PiiType.PERSON).recall == pytest.approx(0.5)
     assert set(run.exact_boundaries.by_language) == {"en"}
 
 
@@ -82,8 +89,8 @@ def test_coreference_on_adds_the_resolved_name_form_and_scores_english_only(tmp_
     assert on_path.name == "stub__tab__dev__coref-on.json"
     on = read_record(on_path).run
     assert on.coreference and not off.coreference
-    assert off.exact_boundaries.by_type[PiiType.PERSON].recall == pytest.approx(0.5)
-    assert on.exact_boundaries.by_type[PiiType.PERSON].recall == pytest.approx(1.0)
+    assert type_score(off.exact_boundaries, PiiType.PERSON).recall == pytest.approx(0.5)
+    assert type_score(on.exact_boundaries, PiiType.PERSON).recall == pytest.approx(1.0)
 
 
 def test_run_requires_a_resolver_when_coreference_is_on():

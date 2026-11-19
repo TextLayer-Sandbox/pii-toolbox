@@ -15,6 +15,7 @@ packages = ["src/pii_toolbox"]
 
 [dependency-groups]
 dev = [
+    "pyright>=1.1.414",
     "pytest>=8",  # test runner
 ]
 detection = [
@@ -54,6 +55,16 @@ markers = [
     "network: needs network access",
     "repo_contents: checks what is committed in the repository",
 ]
+
+[tool.pyright]
+include = ["src", "tests", "scripts", "examples"]
+pythonVersion = "3.12"
+typeCheckingMode = "standard"
+
+# The worker runs in its own environment; create it with `uv sync --project src/pii_toolbox/coref/worker`.
+[[tool.pyright.executionEnvironments]]
+root = "src/pii_toolbox/coref/worker"
+extraPaths = ["src/pii_toolbox/coref/worker/.venv/lib/python3.12/site-packages"]
 
 [tool.uv]
 default-groups = ["dev", "detection", "evaluation", "coref"]

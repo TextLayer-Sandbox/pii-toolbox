@@ -27,7 +27,7 @@ class MissingCostResultsError(FileNotFoundError):
     """Raised when the cost folder does not exist."""
 
 
-def _index_results(results_dir: Path) -> dict[tuple[str, str, bool], tuple[ResultRecord, str]]:
+def _index_results(results_dir: Path) -> dict[tuple[str, str, str | None, bool], tuple[ResultRecord, str]]:
     """Reads every run result file, refusing any that is not a test-split result; keyed by (tool, dataset, language, co-reference)."""
     index = {}
     for path in sorted(results_dir.glob(tables.RESULT_FILE_PATTERN)):

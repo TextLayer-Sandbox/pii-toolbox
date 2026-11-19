@@ -208,10 +208,10 @@ def table4(
                 continue
             before, after = before_record.run, after_record.run
             if dataset == "mapa":
-                scores = [_rule_report(r, rule).by_language.get(ENGLISH) for r in (before, after)]
-                if None in scores:
+                score_off, score_on = (_rule_report(r, rule).by_language.get(ENGLISH) for r in (before, after))
+                if score_off is None or score_on is None:
                     continue
-                f2_off, f2_on = scores[0].f2, scores[1].f2
+                f2_off, f2_on = score_off.f2, score_on.f2
             else:
                 f2_off, f2_on = _rule_report(before, rule).overall_micro.f2, _rule_report(after, rule).overall_micro.f2
             recall = ["", "", "", "", "", ""]
