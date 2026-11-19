@@ -3,6 +3,7 @@
 import logging
 import uuid
 from bisect import bisect_right
+from collections.abc import Sequence
 from types import TracebackType
 from typing import Self
 
@@ -35,51 +36,31 @@ def _placeholder_look_alike_spans(text: str, placeholder_format: PlaceholderForm
     ]
 
 
-def _remap_person_mentions(mentions: list[PersonMentions], merged: list[Span]) -> list[PersonMentions]:
-    """Replaces each mention span with the merged span containing it, keeping only PERSON spans and dropping mentions left with none."""
-    starts = [span.start for span in merged]
+def _remap_person_mentions(people: list[PersonMentions], merged_spans: list[Span]) -> list[PersonMentions]:
+    """Updates each person's group after merging: a span that was swallowed is swapped for the merged span containing it, then non-person spans and emptied groups are dropped."""
+    merged_starts = [span.start for span in merged_spans]
 
     def containing(span: Span) -> Span:
-        return merged[bisect_right(starts, span.start) - 1]
+        return merged_spans[bisect_right(merged_starts, span.start) - 1]
 
     remapped: list[PersonMentions] = []
-    for mention in mentions:
-        members = list(dict.fromkeys(containing(span) for span in mention.spans))
+    for person in people:
+        members = list(dict.fromkeys(containing(span) for span in person.spans))
         members = [span for span in members if span.pii_type is PiiType.PERSON]
         if not members:
             continue
-        canonical = containing(mention.canonical)
+        canonical = containing(person.canonical)
         if canonical not in members:
             canonical = max(members, key=lambda span: span.end - span.start)
         remapped.append(PersonMentions(tuple(members), canonical))
     return remapped
 
 
-def _existing_placeholder(
-    fullest: str,
-    forms: tuple[str, ...],
-    held: list[Placeholder | None],
-    originals: list[str | None],
-) -> Placeholder | None:
-    """Picks the stored placeholder a group of person forms belongs to, or None when the group needs a new one."""
-    if held[0] is not None:
-        return held[0]
-    # A shared form only vouches for its placeholder when it is the group's fullest form or the placeholder's.
-    existing = [
-        held_placeholder
-        for form, held_placeholder, original in zip(forms, held, originals)
-        if held_placeholder is not None and form in (fullest, original)
-    ]
-    if existing:
-        return min(existing, key=lambda held_placeholder: held_placeholder.number)
-    return None
-
-
 def _rewrite_text(text: str, placeholder_for: dict[Span, Placeholder], placeholder_format: PlaceholderFormat) -> str:
     """Replaces every span of `text` with its rendered placeholder."""
     masked = text
     # Replacing from the end keeps the earlier offsets valid.
-    for span in sorted(placeholder_for, key=lambda s: s.start, reverse=True):
+    for span in sorted(placeholder_for, key=lambda span: span.start, reverse=True):
         masked = masked[: span.start] + placeholder_format.render(placeholder_for[span]) + masked[span.end :]
     return masked
 
@@ -133,8 +114,8 @@ class Session(RedactionSession):
     def mask(self, text: str) -> MaskResult:
         self._text_counter += 1
         document = Document(f"{self._id}-{self._text_counter}", text, self._language)
-        spans, mentions = self._find_spans(document)
-        placeholder_for, minted = self._assign_placeholders(text, spans, mentions)
+        spans, people = self._find_spans(document)
+        placeholder_for, minted = self._assign_placeholders(text, spans, people)
         masked = _rewrite_text(text, placeholder_for, self._format)
 
         logger.info(
@@ -147,51 +128,56 @@ class Session(RedactionSession):
 
     def _find_spans(self, document: Document) -> tuple[list[Span], list[PersonMentions]]:
         """Detects, resolves and merges the spans of a document and returns them with the remapped person mentions."""
-        spans = self._detector.detect(document)
-        mentions = self._resolver.resolve(document, spans) if self._resolver is not None else []
-        mention_spans = [span for mention in mentions for span in mention.spans]
-        spans = merge_overlapping(
-            [*spans, *mention_spans, *_placeholder_look_alike_spans(document.text, self._format)]
+        detected = self._detector.detect(document)
+        people = self._resolver.resolve(document, detected) if self._resolver is not None else []
+        person_spans = [span for person in people for span in person.spans]
+        merged_spans = merge_overlapping(
+            [*detected, *person_spans, *_placeholder_look_alike_spans(document.text, self._format)]
         )
-        return spans, _remap_person_mentions(mentions, spans)
+        return merged_spans, _remap_person_mentions(people, merged_spans)
 
     def _assign_placeholders(
-        self, text: str, spans: list[Span], mentions: list[PersonMentions]
+        self, text: str, spans: list[Span], people: list[PersonMentions]
     ) -> tuple[dict[Span, Placeholder], list[Placeholder]]:
         """Looks up or mints a placeholder for every span, registers person aliases and returns the span mapping with the newly minted placeholders."""
         placeholder_for: dict[Span, Placeholder] = {}
         minted: list[Placeholder] = []
 
-        for mention in mentions:
-            fullest = text[mention.canonical.start : mention.canonical.end]
-            label = mention.canonical.pii_type.value
-            forms = (fullest, *(text[span.start : span.end] for span in mention.spans))
-            held = [self._store.placeholder_for(self._id, label, form) for form in forms]
-            originals = [
-                self._store.original(self._id, held_placeholder) if held_placeholder is not None else None
-                for held_placeholder in held
-            ]
-            placeholder = _existing_placeholder(fullest, forms, held, originals)
-            if placeholder is None:
-                placeholder, was_minted = self._store.get_or_mint(self._id, label, fullest)
-                if was_minted:
-                    minted.append(placeholder)
-            if held[0] is None:
-                self._store.alias(self._id, fullest, placeholder)
-            for span in mention.spans:
-                form = text[span.start : span.end]
-                if span != mention.canonical and self._store.placeholder_for(self._id, label, form) in (None, placeholder):
-                    self._store.alias(self._id, form, placeholder)
-                placeholder_for[span] = placeholder
+        linked_spans = {span for person in people for span in person.spans}
+        groups = [(person.canonical, person.spans) for person in people]
+        groups.extend((span, (span,)) for span in spans if span not in linked_spans)
 
-        for span in spans:
-            if span not in placeholder_for:
-                placeholder, was_minted = self._store.get_or_mint(self._id, span.pii_type.value, text[span.start : span.end])
+        for fullest_span, group_spans in groups:
+            label = fullest_span.pii_type.value
+            fullest_name = text[fullest_span.start : fullest_span.end]
+            names = [text[span.start : span.end] for span in group_spans]
+            placeholder = self._known_placeholder(label, fullest_name, names)
+            if placeholder is None:
+                placeholder, was_minted = self._store.get_or_mint(self._id, label, fullest_name)
                 if was_minted:
                     minted.append(placeholder)
+            for name in names:
+                if self._store.placeholder_for(self._id, label, name) is None:
+                    self._store.alias(self._id, name, placeholder)
+            for span in group_spans:
                 placeholder_for[span] = placeholder
 
         return placeholder_for, minted
+
+    def _known_placeholder(self, label: str, fullest_name: str, names: Sequence[str]) -> Placeholder | None:
+        """Returns the stored placeholder a group of names already belongs to, or None when the group needs a new one."""
+        for_fullest = self._store.placeholder_for(self._id, label, fullest_name)
+        if for_fullest is not None:
+            return for_fullest
+        fullest_in_group = [
+            candidate
+            for name in names
+            if (candidate := self._store.placeholder_for(self._id, label, name)) is not None
+            and self._store.original(self._id, candidate) == name
+        ]
+        if fullest_in_group:
+            return min(fullest_in_group, key=lambda candidate: candidate.number)
+        return None
 
     def restore(self, text: str) -> RestoreResult:
         minted_labels = self._store.labels(self._id)
@@ -199,7 +185,7 @@ class Session(RedactionSession):
         restored = text
 
         # Substituting from the last token to the first keeps the earlier offsets valid.
-        for token in sorted(self._format.parse(text), key=lambda t: t.start, reverse=True):
+        for token in sorted(self._format.parse(text), key=lambda token: token.start, reverse=True):
             original = self._store.original(self._id, token.placeholder)
             if original is not None:
                 restored = restored[: token.start] + original + restored[token.end :]
